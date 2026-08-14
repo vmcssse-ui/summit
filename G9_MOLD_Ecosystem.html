@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Matters of Life and Death — Grade 9 Summit · Unit at a Glance</title>
+<style>
+  :root{
+    --ink:#3E1163;       /* unit family colour */
+    --ink-2:#2A0B45;
+    --mint:#F0E9F8;
+    --mint-2:#E4D8F1;
+    --amber:#F2B705;      /* summit amber */
+    --amber-soft:#FFD95C;
+    --rubric:#B01C2E;
+    --teal:#0E8A7B;
+    --blue:#1565C0;
+    --green:#2E7D32;
+    --paper:#F8F5FC;
+    --line:rgba(62,17,99,.16);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--paper);color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;line-height:1.5;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1060px;margin:0 auto;padding:0 24px}
+  .eyebrow{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;font-weight:700}
+  .hero{background:
+      radial-gradient(1200px 400px at 80% -10%, rgba(242,183,5,.16), transparent 60%),
+      linear-gradient(180deg,var(--ink) 0%, var(--ink-2) 100%);
+    color:var(--mint);padding:64px 0 72px;position:relative;overflow:hidden;border-bottom:3px solid var(--amber)}
+  .hero::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.06;
+    background:repeating-linear-gradient(180deg,transparent 0 38px,#fff 38px 39px)}
+  .hero .wrap{position:relative;z-index:2}
+  .crest{display:flex;align-items:center;gap:16px;margin-bottom:34px}
+  .crest svg{width:54px;height:54px;flex:none}
+  .crest .who{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;color:var(--amber-soft)}
+  .crest .who b{color:var(--mint);display:block;letter-spacing:.14em;font-size:.86rem;margin-top:3px}
+  h1{font-size:clamp(2.2rem,5.6vw,3.8rem);line-height:1.04;font-weight:700;letter-spacing:-.01em}
+  h1 .amp{color:var(--amber);font-style:italic}
+  .sub{margin-top:20px;max-width:58ch;font-size:1.12rem;color:#E3D8F2}
+  .bigq{margin-top:30px;display:inline-flex;gap:14px;align-items:flex-start;border-left:3px solid var(--amber);padding:8px 0 8px 18px;max-width:62ch}
+  .bigq .q{font-family:"Trebuchet MS",sans-serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--amber-soft);padding-top:5px}
+  .bigq p{font-size:1.22rem;font-style:italic;color:#fff}
+  section{padding:64px 0}
+  .sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:8px}
+  .sec-head .num{font-family:"Trebuchet MS",sans-serif;color:var(--amber);font-weight:700;font-size:.9rem;letter-spacing:.15em}
+  .sec-head h2{font-size:clamp(1.6rem,3.4vw,2.3rem);letter-spacing:-.01em}
+  .sec-lead{color:#4d4458;max-width:66ch;margin-bottom:34px;font-size:1.05rem}
+  .spectrum-card{background:linear-gradient(180deg,#fff, var(--paper));border:1px solid var(--line);border-radius:14px;
+    box-shadow:0 18px 40px -28px rgba(62,17,99,.5);padding:28px 26px 34px}
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:26px}
+  .tab{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.8rem;letter-spacing:.03em;
+    border:1px solid var(--line);background:#fff;color:var(--ink);padding:8px 14px;border-radius:999px;cursor:pointer;transition:.18s}
+  .tab[aria-selected="true"]{background:var(--ink);color:var(--mint);border-color:var(--ink)}
+  .tab:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+  .axis{position:relative;margin:8px 4px 0}
+  .axis-labels{display:flex;justify-content:space-between;font-family:"Trebuchet MS",sans-serif;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:#6d6278;margin-bottom:10px}
+  .axis-labels .l{color:var(--rubric);font-weight:700}
+  .axis-labels .r{color:var(--blue);font-weight:700}
+  .bar{height:10px;border-radius:999px;background:linear-gradient(90deg,var(--rubric),#b06a1e 40%,#5a7d3a 66%,var(--blue));position:relative}
+  .ticks{position:relative;height:118px;margin-top:0}
+  .node{position:absolute;top:0;transform:translateX(-50%);width:150px;text-align:center;cursor:pointer}
+  .node .dot{width:20px;height:20px;border-radius:50%;background:#fff;border:3px solid var(--ink);margin:0 auto;position:relative;top:-15px;transition:.18s}
+  .node .nm{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.8rem;margin-top:-6px;line-height:1.2}
+  .node .sb{font-size:.74rem;color:#6d6278;font-style:italic;margin-top:2px;line-height:1.25}
+  .node:hover .dot,.node[data-active="true"] .dot{transform:scale(1.25);border-color:var(--amber);box-shadow:0 0 0 5px rgba(242,183,5,.22)}
+  .node:focus-visible{outline:none}
+  .node:focus-visible .dot{outline:3px solid var(--amber);outline-offset:3px}
+  .readout{margin-top:14px;background:var(--ink);color:var(--mint);border-radius:12px;padding:20px 22px;min-height:112px;display:flex;gap:18px;align-items:flex-start}
+  .readout .badge{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;
+    background:var(--amber);color:var(--ink-2);padding:6px 10px;border-radius:6px;white-space:nowrap;margin-top:2px}
+  .readout .body h4{font-size:1.12rem;margin-bottom:4px}
+  .readout .body p{color:#E3D8F2;font-size:.98rem}
+  .readout .body .g9{margin-top:10px;font-size:.88rem}
+  .readout .body .g9 .k{font-family:"Trebuchet MS",sans-serif;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--amber-soft)}
+  .hint{font-family:"Trebuchet MS",sans-serif;font-size:.76rem;color:#847a91;margin-top:14px;text-align:center}
+  .thread{background:var(--ink);color:var(--mint);border-radius:14px;padding:34px 30px;position:relative;overflow:hidden}
+  .thread::before{content:"";position:absolute;inset:0;opacity:.07;background:repeating-linear-gradient(180deg,transparent 0 30px,#fff 30px 31px)}
+  .thread .wrap2{position:relative;z-index:2}
+  .thread h2{color:#fff;font-size:clamp(1.5rem,3vw,2.1rem);margin-bottom:8px}
+  .thread .lead{color:#E3D8F2;max-width:64ch;margin-bottom:24px}
+  .threads{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .tcard{border:1px solid rgba(255,217,92,.32);border-radius:10px;padding:16px 16px 18px;background:rgba(255,255,255,.03)}
+  .tcard .t{font-family:"Trebuchet MS",sans-serif;color:var(--amber);font-weight:700;font-size:.82rem;letter-spacing:.05em;margin-bottom:6px}
+  .tcard p{font-size:.9rem;color:#E3D8F2}
+  .triptych{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
+  .panel{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;display:flex;flex-direction:column}
+  .panel .cap{padding:16px 18px;color:#fff;position:relative}
+  .panel .cap .n{font-family:"Trebuchet MS",sans-serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;opacity:.85}
+  .panel .cap h3{font-size:1.22rem;margin-top:3px}
+  .panel .cap .ask{font-style:italic;font-size:.88rem;margin-top:8px;opacity:.95}
+  .panel .body{padding:16px 18px;font-size:.92rem}
+  .panel .body .row{display:flex;gap:9px;padding:7px 0;border-bottom:1px dashed var(--line)}
+  .panel .body .row:last-child{border-bottom:0}
+  .panel .body .row .v{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.74rem;white-space:normal;color:var(--ink);min-width:118px;max-width:118px}
+  .panel .body .row .d{color:#4d4458}
+  .revise{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:start}
+  .steps{counter-reset:s;display:flex;flex-direction:column;gap:14px}
+  .step{display:flex;gap:16px;align-items:flex-start;border-left:2px solid var(--line);padding:2px 0 2px 18px;position:relative}
+  .step::before{counter-increment:s;content:counter(s);position:absolute;left:-15px;top:-2px;width:28px;height:28px;border-radius:50%;
+    background:var(--amber);color:var(--ink-2);font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.9rem;display:grid;place-items:center}
+  .step h4{font-size:1.02rem}
+  .step p{font-size:.9rem;color:#4d4458;margin-top:2px}
+  .ao{border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .ao .h{padding:12px 16px;font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.82rem;letter-spacing:.06em;color:#fff}
+  .ao .h.ao1{background:var(--ink)}
+  .ao .h.ao2{background:var(--rubric)}
+  .ao .c{padding:14px 16px;font-size:.9rem;border-bottom:1px solid var(--line)}
+  .ao .c:last-child{border-bottom:0}
+  .ao .c b{font-family:"Trebuchet MS",sans-serif;font-size:.78rem;letter-spacing:.04em}
+  .video-frame{position:relative;width:100%;aspect-ratio:16/9;border-radius:14px;overflow:hidden;
+    border:1px solid var(--line);box-shadow:0 20px 44px -30px rgba(62,17,99,.5);background:var(--ink)}
+  .video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .video-placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:14px;text-align:center;padding:30px;color:#C9BCDA;
+    background:radial-gradient(700px 300px at 50% 30%,rgba(242,183,5,.14),transparent 60%),linear-gradient(180deg,var(--ink),var(--ink-2))}
+  .video-placeholder .vp-badge{font-family:"Trebuchet MS",Verdana,sans-serif;font-weight:700;font-size:.72rem;letter-spacing:.14em;
+    text-transform:uppercase;background:var(--amber);color:var(--ink-2);padding:6px 12px;border-radius:6px}
+  .video-placeholder p{max-width:52ch;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.92rem;line-height:1.55}
+  .video-placeholder code{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:4px;padding:1px 6px}
+  .fc-controls{display:flex;gap:18px;flex-wrap:wrap;align-items:center;margin-bottom:24px}
+  .fc-tabs,.fc-type{display:flex;gap:8px;flex-wrap:wrap}
+  .fc-btn{font-family:"Trebuchet MS",Verdana,sans-serif;font-weight:700;font-size:.78rem;border:1px solid var(--line);
+    background:#fff;color:var(--ink);padding:8px 13px;border-radius:999px;cursor:pointer;transition:.18s}
+  .fc-btn[aria-selected="true"]{background:var(--ink);color:var(--mint);border-color:var(--ink)}
+  .fc-btn:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+  .fc-hint{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.78rem;color:#847a91;margin-left:auto}
+  .fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+  .fc-card{perspective:1200px;height:190px;cursor:pointer;background:none;border:0;padding:0;font-family:inherit;text-align:left}
+  .fc-inner{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+  .fc-card[data-flipped="true"] .fc-inner{transform:rotateY(180deg)}
+  .fc-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+    border-radius:12px;padding:18px;display:flex;flex-direction:column;border:1px solid var(--line);overflow:auto}
+  .fc-front{background:linear-gradient(180deg,#fff,var(--paper))}
+  .fc-back{transform:rotateY(180deg);color:var(--mint)}
+  .fc-tag{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--amber);font-weight:700;margin-bottom:8px}
+  .fc-front .fc-tag{color:#94741a}
+  .fc-term{font-size:1.18rem;font-weight:700;line-height:1.16}
+  .fc-front .fc-flip{margin-top:auto;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.72rem;color:#847a91}
+  .fc-def{font-size:.9rem;line-height:1.4}
+  .res-note{background:#FCF3D6;border:1px solid var(--amber);border-left:4px solid var(--amber);
+    border-radius:8px;padding:12px 16px;margin-bottom:22px;font-size:.9rem;color:#5a4a10;
+    font-family:"Trebuchet MS",Verdana,sans-serif}
+  .res-note code{background:#fff;border:1px solid var(--line);border-radius:4px;padding:1px 6px;font-size:.85em}
+  .res-note.hide{display:none}
+  .res-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;margin-bottom:16px}
+  .res-col{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff}
+  .rc-head{padding:14px 16px;color:#fff}
+  .rc-head .rc-n{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;opacity:.85}
+  .rc-head h3{font-size:1.12rem;margin-top:2px}
+  .res-btn{display:flex;align-items:center;gap:12px;padding:13px 16px;border-top:1px solid var(--line);
+    font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.92rem;color:var(--ink);text-decoration:none;cursor:pointer;transition:background .15s}
+  .res-col .res-btn:first-of-type{border-top:0}
+  .res-btn:hover{background:var(--mint)}
+  .res-btn .ic{width:26px;height:26px;flex:none;display:grid;place-items:center;border-radius:6px;background:var(--ink);color:var(--amber);font-size:.9rem}
+  .res-btn .go{margin-left:auto;color:var(--amber);font-weight:700;opacity:0;transition:.15s}
+  .res-btn:hover .go{opacity:1}
+  .res-btn:focus-visible{outline:3px solid var(--amber);outline-offset:-3px}
+  .res-btn.unset{opacity:.5;cursor:not-allowed}
+  .res-btn.unset::after{content:"Link not set";margin-left:auto;font-size:.74rem;color:#94741a;
+    background:#FCF3D6;border:1px solid var(--amber-soft);border-radius:5px;padding:2px 7px}
+  .res-wide{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:2px}
+  .res-btn.big{border:1px solid var(--line);border-radius:12px;background:#fff;padding:16px 18px}
+  .res-btn.big:hover{background:var(--mint)}
+  .res-btn.big .ic{width:34px;height:34px;font-size:1.1rem}
+  footer{background:var(--ink-2);color:#C9BCDA;padding:26px 0;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.8rem}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+  footer .amber{color:var(--amber)}
+  @media(max-width:820px){
+    .threads{grid-template-columns:1fr}
+    .revise{grid-template-columns:1fr}
+    .node{width:104px}
+    .node .sb{display:none}
+    .res-wide{grid-template-columns:1fr}
+    .fc-grid{grid-template-columns:1fr 1fr}
+    .fc-hint{width:100%;margin-left:0}
+  }
+  @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+.panel.a1 .cap{background:linear-gradient(135deg,#1F4E79,#12294D)}
+.rc1 .rc-head{background:linear-gradient(135deg,#1F4E79,#12294D)}
+.fc-card.t1 .fc-back{background:linear-gradient(160deg,#1F4E79,#12294D)}
+.panel.a2 .cap{background:linear-gradient(135deg,#1565C0,#12447A)}
+.rc2 .rc-head{background:linear-gradient(135deg,#1565C0,#12447A)}
+.fc-card.t2 .fc-back{background:linear-gradient(160deg,#1565C0,#12447A)}
+.panel.a3 .cap{background:linear-gradient(135deg,#8E24AA,#6A1B9A)}
+.rc3 .rc-head{background:linear-gradient(135deg,#8E24AA,#6A1B9A)}
+.fc-card.t3 .fc-back{background:linear-gradient(160deg,#8E24AA,#6A1B9A)}
+.panel.a4 .cap{background:linear-gradient(135deg,#00897B,#00695C)}
+.rc4 .rc-head{background:linear-gradient(135deg,#00897B,#00695C)}
+.fc-card.t4 .fc-back{background:linear-gradient(160deg,#00897B,#00695C)}
+.panel.a5 .cap{background:linear-gradient(135deg,#B8860B,#8A6D1B)}
+.rc5 .rc-head{background:linear-gradient(135deg,#B8860B,#8A6D1B)}
+.fc-card.t5 .fc-back{background:linear-gradient(160deg,#B8860B,#8A6D1B)}
+.panel.a6 .cap{background:linear-gradient(135deg,#D33648,#B01C2E)}
+.rc6 .rc-head{background:linear-gradient(135deg,#D33648,#B01C2E)}
+.fc-card.t6 .fc-back{background:linear-gradient(160deg,#D33648,#B01C2E)}
+.panel.a7 .cap{background:linear-gradient(135deg,#43A047,#2E7D32)}
+.rc7 .rc-head{background:linear-gradient(135deg,#43A047,#2E7D32)}
+.fc-card.t7 .fc-back{background:linear-gradient(160deg,#43A047,#2E7D32)}
+.panel.a8 .cap{background:linear-gradient(135deg,#E8425F,#B71C3A)}
+.rc8 .rc-head{background:linear-gradient(135deg,#E8425F,#B71C3A)}
+.fc-card.t8 .fc-back{background:linear-gradient(160deg,#E8425F,#B71C3A)}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <div class="crest">
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <rect x="2" y="2" width="60" height="60" rx="13" fill="#2A0B45" stroke="#F2B705" stroke-width="1.5"/>
+        <g fill="none" stroke="#E9F4EE" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M32 12 L14 46 h36 z"/>
+          <path d="M25 33 l7-8 7 8"/>
+        </g>
+        <circle cx="32" cy="20" r="3" fill="#F2B705"/>
+      </svg>
+      <div class="who">Edexcel GCSE (9–1) Religious Studies B · Paper 1, Question 4 · Christianity
+        <b>Harlington School · Grade 9 Summit</b></div>
+    </div>
+    <h1>Matters <span class="amp">of</span> Life <span class="amp">and</span> Death</h1>
+    <p class="sub">Eight topics, one summit. The divergent views set side by side, the key ideas connected, and the (d) evaluated the Level-4 way — everything for the top of the mark scheme, in one place.</p>
+    <div class="bigq">
+      <span class="q">The<br>big<br>question</span>
+      <p>Who decides when life begins and ends — God, science, or us?</p>
+    </div>
+  </div>
+</header>
+<section id="spectrum">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">01</span><h2>The divergent views explorer</h2></div>
+    <p class="sec-lead">Every (d) in this unit turns on the <b>divergent views</b> — set side by side, exactly as the examiner wants. Pick a topic, then tap a position to see what it claims. The Grade 9 move and the 7-minute discussion question travel with each topic.</p>
+    <div class="spectrum-card">
+      <div class="tabs" role="tablist" aria-label="Choose a topic">
+<button class="tab" role="tab" aria-selected="true" data-topic="t1">Origins</button>
+<button class="tab" role="tab" aria-selected="false" data-topic="t2">Sanctity of life</button>
+<button class="tab" role="tab" aria-selected="false" data-topic="t3">Abortion</button>
+<button class="tab" role="tab" aria-selected="false" data-topic="t4">The afterlife</button>
+<button class="tab" role="tab" aria-selected="false" data-topic="t5">Non-religious views</button>
+<button class="tab" role="tab" aria-selected="false" data-topic="t6">Euthanasia</button>
+<button class="tab" role="tab" aria-selected="false" data-topic="t7">Human origins</button>
+<button class="tab" role="tab" aria-selected="false" data-topic="t8">Natural world</button>
+      </div>
+      <div class="axis">
+        <div class="axis-labels"><span class="l" id="poleL"></span><span class="r" id="poleR"></span></div>
+        <div class="bar"></div>
+        <div class="ticks" id="ticks"></div>
+      </div>
+      <div class="readout" id="readout" aria-live="polite"></div>
+      <p class="hint">Tap a circle — or use Tab and Enter — to explore each position.</p>
+    </div>
+  </div>
+</section>
+<section>
+  <div class="wrap">
+    <div class="thread">
+      <div class="wrap2">
+        <h2>The thread that ties it together</h2>
+        <p class="lead">Grade 9 is not more content — it is three habits applied to every topic. Spot them and every (d) in this unit opens the same way.</p>
+        <div class="threads">
+          <div class="tcard"><div class="t">Divergent views, side by side</div><p>Never one view at a time. Set them against each other — where they agree, and the exact point they part. That comparison IS the analysis.</p></div>
+          <div class="tcard"><div class="t">The (d) regulation</div><p>Chain each point (claim → because → this means → therefore), steelman the other side, weigh BOTH arguments — a strength AND a limit — then justify the conclusion.</p></div>
+          <div class="tcard"><div class="t">Textbook-first accuracy</div><p>A correctly named source beats a vague paraphrase. One learned line from each source, placed precisely, is worth more than a paragraph of drift.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="topics">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">02</span><h2>Eight topics, one summit</h2></div>
+    <p class="sec-lead">Each panel is a topic’s <b>key idea</b> — the connective explanation that links the key words into one argument. Learn the chain, not the list.</p>
+    <div class="triptych">
+<div class="panel a1"><div class="cap"><div class="n">Topic 1 · C25</div><h3>Origins</h3><div class="ask">Where did the universe come from, and how should Christians treat it?</div></div><div class="body"><div class="row"><span class="v">REDSHIFT</span><span class="d">Light from galaxies is stretched to the RED end of the spectrum — proof the universe is still expanding outward.</span></div><div class="row"><span class="v">BACKGROUND RADIATION</span><span class="d">Radio telescopes detect background radiation everywhere in space — the cooled afterglow the Big Bang left behind.</span></div><div class="row"><span class="v">GRAVITATIONAL WAVES</span><span class="d">In March 2014 a South Pole telescope caught ripples from the universe’s first rapid expansion, confirming inflation.</span></div><div class="row"><span class="v">HIGGS BOSON</span><span class="d">In 2012 the Large Hadron Collider recreated post-Big-Bang conditions, showing how the Higgs field gave particles mass.</span></div></div></div>
+<div class="panel a2"><div class="cap"><div class="n">Topic 2 · C26</div><h3>Sanctity of life</h3><div class="ask">Why do Christians call life holy — and does that rule out war, self-defence and the death penalty?</div></div><div class="body"><div class="row"><span class="v">GIVEN</span><span class="d">God creates life, so it is a GIFT, not a possession — no one, not even the person living it, fully owns it.</span></div><div class="row"><span class="v">OWNED BY GOD</span><span class="d">Because life belongs to its creator, life-and-death decisions must stay “in the hands of God”, not humans.</span></div><div class="row"><span class="v">SO</span><span class="d">So any human act ending a life — war, self-defence, execution — now needs special justification to avoid being murder.</span></div><div class="row"><span class="v">KNOCK-ON</span><span class="d">The same logic drives the later clashes over abortion and euthanasia — each one is a human, not God, ending a life.</span></div></div></div>
+<div class="panel a3"><div class="cap"><div class="n">Topic 3 · C27</div><h3>Abortion</h3><div class="ask">Is abortion ever right — and can a Christian ever say yes?</div></div><div class="body"><div class="row"><span class="v">1967 ACT</span><span class="d">Legal only if TWO doctors agree — a medical gatekeeping system, not the “abortion on demand” Humanists ask for.</span></div><div class="row"><span class="v">1990 LIMIT</span><span class="d">No abortion after 24 weeks, unless the mother’s life is in grave danger or the foetus is severely abnormal.</span></div><div class="row"><span class="v">WHY 24 WEEKS</span><span class="d">24 weeks was chosen because that is roughly when medical advances let a foetus survive outside the mother.</span></div><div class="row"><span class="v">NOT UK-WIDE</span><span class="d">Abortion was still illegal in Northern Ireland — so the same law gave women different rights by postcode.</span></div></div></div>
+<div class="panel a4"><div class="cap"><div class="n">Topic 4 · C28</div><h3>The afterlife</h3><div class="ask">What reasons do people have for believing in life after death?</div></div><div class="body"><div class="row"><span class="v">EVIDENCE</span><span class="d">All four Gospels record the empty tomb and Jesus’ resurrection appearances — the first link in the chain.</span></div><div class="row"><span class="v">PROMISE</span><span class="d">St Paul teaches Christians share “a resurrection like that of Jesus” (1 Corinthians 15) — his rising guarantees theirs.</span></div><div class="row"><span class="v">GRACE</span><span class="d">God’s great love raises believers to eternal life, saving them from sin so death is not the end (Ephesians 2).</span></div><div class="row"><span class="v">JUDGEMENT</span><span class="d">Jesus will return at the end of the world to judge everyone, sending them to heaven or hell forever.</span></div></div></div>
+<div class="panel a5"><div class="cap"><div class="n">Topic 5 · C29</div><h3>Non-religious views</h3><div class="ask">Do the non-religious arguments defeat belief in life after death?</div></div><div class="body"><div class="row"><span class="v">NO ORGANISER</span><span class="d">With no God, there is no divine being to arrange an afterlife or create the place for it to happen.</span></div><div class="row"><span class="v">NO MIND WITHOUT BRAIN</span><span class="d">The mind develops as the brain grows complex, so it cannot survive the body’s death — brain-dead patients need machines.</span></div><div class="row"><span class="v">NOWHERE TO GO</span><span class="d">Space exploration found no heaven above, and physics finds no “non-material” realm anywhere on earth.</span></div><div class="row"><span class="v">NO WAY TO KNOW YOU</span><span class="d">We recognise people by their bodies, so a bodiless soul could not be known, seen, or contact anyone else.</span></div></div></div>
+<div class="panel a6"><div class="cap"><div class="n">Topic 6 · C30</div><h3>Euthanasia</h3><div class="ask">Should the dying in agony be helped to die — or helped to live well to the end?</div></div><div class="body"><div class="row"><span class="v">POSITIVE = ACT</span><span class="d">Actively ending a life — assisted suicide, voluntary or non-voluntary euthanasia — is illegal, a murder charge.</span></div><div class="row"><span class="v">PASSIVE = LET GO</span><span class="d">Withdrawing nutrition and hydration, or switching off life-support after brain death, is NOT classed as murder.</span></div><div class="row"><span class="v">WHY IT MATTERS</span><span class="d">This distinction lets most Christians reject killing yet still accept turning off a machine or refusing treatment.</span></div><div class="row"><span class="v">DOUBLE EFFECT</span><span class="d">Painkillers that may shorten life are allowed, because the intention is to remove pain, not to kill (Catechism 2279).</span></div></div></div>
+<div class="panel a7"><div class="cap"><div class="n">Topic 7 · C31</div><h3>Human origins</h3><div class="ask">Did humans evolve by chance, or were we created by God — and can both be true?</div></div><div class="body"><div class="row"><span class="v">NO ADAM</span><span class="d">If humans evolved gradually from earlier species, there was no first couple specially created in Eden.</span></div><div class="row"><span class="v">NO FALL, NO SIN</span><span class="d">With no Adam to disobey God, there is no Fall and no original sin passed to humanity (Romans 5:12).</span></div><div class="row"><span class="v">NO ATONEMENT</span><span class="d">With no original sin to inherit, there is no need for Jesus’ atoning death to save humanity from it.</span></div><div class="row"><span class="v">NO SPECIAL VALUE</span><span class="d">And if we are just evolved animals, human life has “no special value other than what humans choose to give it”.</span></div></div></div>
+<div class="panel a8"><div class="cap"><div class="n">Topic 8 · C32</div><h3>Natural world</h3><div class="ask">What does it mean to be a steward of the earth — and do animals have rights?</div></div><div class="body"><div class="row"><span class="v">NOT OURS</span><span class="d">God made the earth, so it “belongs to God, not to humans” — Christians are only tenants, not owners.</span></div><div class="row"><span class="v">HAND ON MORE</span><span class="d">In the Parable of the Talents (Luke 19:11–26), God expects humans to pass on more than they were given.</span></div><div class="row"><span class="v">LEAVE IT BETTER</span><span class="d">So Christians have a duty to leave the earth better than they found it, for the next generation to inherit.</span></div><div class="row"><span class="v">JUDGEMENT DAY</span><span class="d">People will be judged partly on how they cared for God’s creation — damaging it is treated as a sin (Assisi, 1986).</span></div></div></div>
+    </div>
+  </div>
+</section>
+<section id="resources">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">03</span><h2>Your resources</h2></div>
+    <p class="sec-lead">Everything for the unit, in one place: each topic’s lesson, booklet pages and podcast episode — plus the unit-wide booklet editions, schemes of work and the guide.</p>
+    <div class="res-note" id="resNote">
+      <b>Teacher setup:</b> links aren't set yet. Open this file, find the <code>LINKS</code> list near the bottom, and paste each SharePoint share link once. Buttons with no link show as "Link not set".
+    </div>
+    <div class="res-grid">
+<div class="res-col rc1"><div class="rc-head"><span class="rc-n">Topic 1 · C25</span><h3>Origins</h3></div><a class="res-btn" data-key="t1_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a><a class="res-btn" data-key="t1_booklet"><span class="ic">✎</span><span>Booklet pages</span><span class="go">↗</span></a><a class="res-btn" data-key="t1_podcast"><span class="ic">♪</span><span>Podcast · C25</span><span class="go">↗</span></a></div>
+<div class="res-col rc2"><div class="rc-head"><span class="rc-n">Topic 2 · C26</span><h3>Sanctity of life</h3></div><a class="res-btn" data-key="t2_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a><a class="res-btn" data-key="t2_booklet"><span class="ic">✎</span><span>Booklet pages</span><span class="go">↗</span></a><a class="res-btn" data-key="t2_podcast"><span class="ic">♪</span><span>Podcast · C26</span><span class="go">↗</span></a></div>
+<div class="res-col rc3"><div class="rc-head"><span class="rc-n">Topic 3 · C27</span><h3>Abortion</h3></div><a class="res-btn" data-key="t3_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a><a class="res-btn" data-key="t3_booklet"><span class="ic">✎</span><span>Booklet pages</span><span class="go">↗</span></a><a class="res-btn" data-key="t3_podcast"><span class="ic">♪</span><span>Podcast · C27</span><span class="go">↗</span></a></div>
+<div class="res-col rc4"><div class="rc-head"><span class="rc-n">Topic 4 · C28</span><h3>The afterlife</h3></div><a class="res-btn" data-key="t4_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a><a class="res-btn" data-key="t4_booklet"><span class="ic">✎</span><span>Booklet pages</span><span class="go">↗</span></a><a class="res-btn" data-key="t4_podcast"><span class="ic">♪</span><span>Podcast · C28</span><span class="go">↗</span></a></div>
+<div class="res-col rc5"><div class="rc-head"><span class="rc-n">Topic 5 · C29</span><h3>Non-religious views</h3></div><a class="res-btn" data-key="t5_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a><a class="res-btn" data-key="t5_booklet"><span class="ic">✎</span><span>Booklet pages</span><span class="go">↗</span></a><a class="res-btn" data-key="t5_podcast"><span class="ic">♪</span><span>Podcast · C29</span><span class="go">↗</span></a></div>
+<div class="res-col rc6"><div class="rc-head"><span class="rc-n">Topic 6 · C30</span><h3>Euthanasia</h3></div><a class="res-btn" data-key="t6_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a><a class="res-btn" data-key="t6_booklet"><span class="ic">✎</span><span>Booklet pages</span><span class="go">↗</span></a><a class="res-btn" data-key="t6_podcast"><span class="ic">♪</span><span>Podcast · C30</span><span class="go">↗</span></a></div>
+<div class="res-col rc7"><div class="rc-head"><span class="rc-n">Topic 7 · C31</span><h3>Human origins</h3></div><a class="res-btn" data-key="t7_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a><a class="res-btn" data-key="t7_booklet"><span class="ic">✎</span><span>Booklet pages</span><span class="go">↗</span></a><a class="res-btn" data-key="t7_podcast"><span class="ic">♪</span><span>Podcast · C31</span><span class="go">↗</span></a></div>
+<div class="res-col rc8"><div class="rc-head"><span class="rc-n">Topic 8 · C32</span><h3>Natural world</h3></div><a class="res-btn" data-key="t8_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a><a class="res-btn" data-key="t8_booklet"><span class="ic">✎</span><span>Booklet pages</span><span class="go">↗</span></a><a class="res-btn" data-key="t8_podcast"><span class="ic">♪</span><span>Podcast · C32</span><span class="go">↗</span></a></div>
+    </div>
+    <div class="res-wide">
+      <a class="res-btn big" data-key="booklet"><span class="ic">✎</span><span><b>Unit booklet</b> — the close-reading companion, four pages per topic</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="booklet_keyidea"><span class="ic">◈</span><span><b>Key Idea edition</b> — the booklet with the key-idea panels and 7-minute discussions</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="sow"><span class="ic">▤</span><span><b>Schemes of work</b> — one planning document per lesson</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="guide"><span class="ic">🏔</span><span><b>How to use the lessons</b> — the Grade 9 Summit teacher guide</span><span class="go">↗</span></a>
+    </div>
+  </div>
+</section>
+<section id="revise">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">04</span><h2>How to revise this unit</h2></div>
+    <p class="sec-lead">Use the resources in this order — the same loop as the lessons, so revision feels like coming home.</p>
+    <div class="revise">
+      <div class="steps">
+        <div class="step"><div><h4>Bell work first — retrieve before you re-read</h4><p>Five recall questions from memory, self-scored /5. Then the come-back tracker: the same five at +1 week and +1 month.</p></div></div>
+        <div class="step"><div><h4>Listen along to the episode</h4><p>One six-minute podcast per topic. Capture the six mind-map branches as it plays — the episode does the exposition so you can do the thinking.</p></div></div>
+        <div class="step"><div><h4>Work the booklet pages</h4><p>Four pages per topic: the key idea, two scripture quotes, the divergent views side by side, and the full (d). The Key Idea edition adds the 7-minute discussion.</p></div></div>
+        <div class="step"><div><h4>Write the (d) the Level-4 way</h4><p>Chain · steelman · weigh both (strength AND limit) · justify. Check yourself against the Level 3-vs-Level 4 models on lessons 3 and 6.</p></div></div>
+      </div>
+      <div class="ao">
+        <div class="h ao1">The marks map · (a) (b) (c) — 12 marks</div>
+        <div class="c"><b>(a) 3 marks —</b> outline three. Three crisp sentences, no development needed.</div>
+        <div class="c"><b>(b) 4 marks —</b> explain two. Each point + one development.</div>
+        <div class="c"><b>(c) 5 marks —</b> explain two WITH a named source — one learned line, placed exactly.</div>
+        <div class="h ao2">The (d) · 12 marks — half the question</div>
+        <div class="c"><b>What it is —</b> a full evaluation: agree and disagree developed, the non-religious voice engaged where the question invites it.</div>
+        <div class="c"><b>The grade 9 gap —</b> Level 3 asserts its judgement; Level 4 chains, weighs both sides, and justifies a conclusion that survives the strongest counter.</div>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="watch">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">05</span><h2>Watch: the whole unit in one go</h2></div>
+    <p class="sec-lead">A full review of <b>Matters of Life and Death</b> — all eight topics as one argument. Best watched before you revise, then again to check recall.</p>
+    <div class="video-frame" id="videoFrame">
+      <div class="video-placeholder" id="videoPlaceholder">
+        <div class="vp-badge">Video not set</div>
+        <p><b>Teacher:</b> paste the YouTube link in the <code>VIDEO_URL</code> line near the bottom of this file. The player then appears here automatically.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="flashcards">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">06</span><h2>Flashcards — test yourself</h2></div>
+    <p class="sec-lead">Flip a card to check yourself. Switch between <b>key terms</b> (term → meaning) and <b>divergent views</b> (view → what it claims), and filter by topic.</p>
+    <div class="fc-controls">
+      <div class="fc-tabs" role="tablist" aria-label="Topic">
+<button class="fc-btn" role="tab" aria-selected="true" data-topic="all">All</button>
+<button class="fc-btn" role="tab" aria-selected="false" data-topic="t1">Origins</button>
+<button class="fc-btn" role="tab" aria-selected="false" data-topic="t2">Sanctity of life</button>
+<button class="fc-btn" role="tab" aria-selected="false" data-topic="t3">Abortion</button>
+<button class="fc-btn" role="tab" aria-selected="false" data-topic="t4">The afterlife</button>
+<button class="fc-btn" role="tab" aria-selected="false" data-topic="t5">Non-religious views</button>
+<button class="fc-btn" role="tab" aria-selected="false" data-topic="t6">Euthanasia</button>
+<button class="fc-btn" role="tab" aria-selected="false" data-topic="t7">Human origins</button>
+<button class="fc-btn" role="tab" aria-selected="false" data-topic="t8">Natural world</button>
+      </div>
+      <div class="fc-type" role="tablist" aria-label="Card type">
+        <button class="fc-btn" role="tab" aria-selected="true"  data-type="terms">Key terms</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-type="views">Divergent views</button>
+      </div>
+      <span class="fc-hint">Tap any card to flip · <span id="fcCount"></span></span>
+    </div>
+    <div class="fc-grid" id="fcGrid"></div>
+  </div>
+</section>
+<footer>
+  <div class="wrap">
+    <span>Matters of Life and Death · Grade 9 Summit · unit at a glance</span>
+    <span class="amber">Harlington School · Edexcel GCSE (9–1) RS Spec B</span>
+  </div>
+</footer>
+<script>
+const DATA = {"t1":{"poles":["Creationism","The shared belief"],"punch":"The Big Bang isn’t a guess — it’s the theory the evidence keeps pointing back to.","discuss":"If the evidence for the Big Bang is this strong, does a “creator” still add anything science needs to explain?","nodes":[{"x":10,"nm":"Creationism","sb":"Science is wrong","auth":"Science is wrong","claim":"The Bible is right and science is wrong. God created the universe as Genesis describes. The Apparent Age theory says God made a universe that only LOOKS billions of years old — trees created with rings, the Grand Canyon looking ancient when it was one second old."},{"x":37,"nm":"Intelligent design","sb":"Too complex for chance","auth":"Too complex for chance","claim":"The universe is so complex it cannot have happened by chance — its “irreducible complexity” (remove one part and the whole system stops) and “specified complexity” (patterns in DNA). It must have been made by an intelligent designer: God."},{"x":64,"nm":"The compatibility response","sb":"Both are true","auth":"Both are true","claim":"Both science and the Bible are true. Genesis teaches WHO created and WHY, not the scientific HOW. God set off the Big Bang and controlled how the world developed — and Georges Lemaître, who first proposed the Big Bang, was a Catholic priest."},{"x":90,"nm":"The shared belief","sb":"What all three hold","auth":"What all three hold","claim":"All three agree God is the ultimate cause of the universe, that God made it good, and that humans are placed in it as stewards to look after this valuable creation — not to treat it as a commodity to exploit."}]},"t2":{"poles":["Pacifist Christians","The shared belief"],"punch":"Sanctity of life isn’t the easy answer — it’s the reason the hard questions exist.","discuss":"If humans can never fully own their own lives, can ending one — even your own — ever truly be “your choice”?","nodes":[{"x":10,"nm":"Pacifist Christians","sb":"Never take life","auth":"Never take life","claim":"The sanctity of life means Christians should never fight or kill. Pacifism is the refusal to fight in wars — held by the Quakers, Plymouth Brethren, Christadelphians and Pax Christi. Jesus said, “Love your enemies and pray for those who persecute you” (Matthew 5:44)."},{"x":37,"nm":"Just-war Christians","sb":"To protect the innocent","auth":"To protect the innocent","claim":"Most Christians believe it is legitimate to take life in self-defence or a just war, because protecting the innocent from an aggressor can justify it. As the Catechism says, legitimate defence “can be not only a right but a grave duty” (2265)."},{"x":64,"nm":"Capital punishment — divided","sb":"The state and the guilty","auth":"The state and the guilty","claim":"Christians disagree over the death penalty. Some say it is un-Christian: if all life is sacred, the state must not take it. Others note the Bible gives the death penalty, and the Church has not cancelled it “if this is the only possible way of… defending human lives” (Catechism 2267)."},{"x":90,"nm":"The shared belief","sb":"What all hold","auth":"What all hold","claim":"All agree human life is sacred because God gives it, and that murdering the innocent is always wrong. The divergence is only over whether taking a life — to protect others, or to punish — can ever be an exception."}]},"t3":{"poles":["Catholic & Evangelical","Common ground"],"punch":"“Pro-life” and “pro-choice” are really arguing about where that legal line should fall.","discuss":"Should the legal time limit for abortion change as medical advances let younger and younger foetuses survive?","nodes":[{"x":10,"nm":"Catholic & Evangelical","sb":"Pro-life — always wrong","auth":"Pro-life — always wrong","claim":"All abortion is wrong whatever the circumstances, because life begins at conception and is sacred. Abortion breaks “You shall not murder” and destroys a human being’s right to life. The only exception is the doctrine of double effect (e.g. saving the mother’s life)."},{"x":37,"nm":"Liberal Protestant","sb":"Pro-choice — lesser evil","auth":"Pro-choice — lesser evil","claim":"Abortion is wrong but may be permitted in some circumstances. Life does not begin at conception, and Jesus’ command to love your neighbour can make abortion the most loving choice — for example after rape, or when a foetus is gravely handicapped."},{"x":64,"nm":"Atheist & Humanist","sb":"The woman decides","auth":"The woman decides","claim":"A foetus is not a separate life until it can survive outside the mother, so it is part of her body and her decision. The woman’s rights over her own body, and the quality of life of mother and child, come first — some support “abortion on demand”."},{"x":90,"nm":"Common ground","sb":"Where they meet","auth":"Where they meet","claim":"The textbook notes there is “little difference” between the liberal Protestant and Humanist views: both weigh the situation and its consequences, using Situation Ethics to ask what the most loving thing to do would be."}]},"t4":{"poles":["Christian belief","Shared reasons"],"punch":"Jesus’ empty tomb is the first link in the chain; the believer’s own resurrection is the last.","discuss":"If Jesus’ resurrection is the proof, can one event 2,000 years ago still count as good evidence today?","nodes":[{"x":10,"nm":"Christian belief","sb":"The resurrection of Jesus","auth":"The resurrection of Jesus","claim":"Jesus rose from the dead — all four Gospels record the empty tomb and the resurrection appearances. St Paul teaches Christians will be raised like Jesus (1 Corinthians 15), and many believe in the immortality of the soul, which lives on with God."},{"x":37,"nm":"The paranormal","sb":"Non-religious evidence","auth":"Non-religious evidence","claim":"Near-death experiences (Dr Sam Parnia, Dr Pim van Lommel) — peace, a bright light, meeting the dead — and mediums who claim to contact the spirit world suggest something survives death. But the textbook stresses this is “not the same as resurrection”."},{"x":64,"nm":"Remembered lives","sb":"Reincarnation","auth":"Reincarnation","claim":"Many non-religious people, and Hindus, Sikhs and Buddhists, point to children who remember past lives (e.g. Taranjit Singh) as evidence that the soul is reborn into a new body — reincarnation."},{"x":90,"nm":"Shared reasons","sb":"Why people believe","auth":"Why people believe","claim":"Beyond the evidence, people believe because it gives life meaning and purpose, brings comfort when a loved one dies, and seems demanded by justice — that the good are rewarded and the evil punished."}]},"t5":{"poles":["“No reliable evidence”","The real question"],"punch":"The objection isn’t only “no proof” — it’s that there’s no room in the universe for it.","discuss":"Does science’s failure to find an afterlife’s “location” prove none exists, or just that we haven’t found it yet?","nodes":[{"x":10,"nm":"“No reliable evidence”","sb":"Non-religious","auth":"Non-religious","claim":"Near-death experiences rely on fallible memories (Dr Chris Freeman); mediums are fraudulent (Robert Thouless’s coded message was never decoded); remembered-life cases are flawed; and the religions contradict each other, so no holy book can be trusted as proof."},{"x":37,"nm":"“Comfort & control”","sb":"Non-religious","auth":"Non-religious","claim":"Belief in an afterlife is just comfort for the bereaved, with no factual basis. Karl Marx called it social control — “pie in the sky” — to keep the poor content. And science shows no non-material realm where an afterlife could take place."},{"x":64,"nm":"The Christian reply","sb":"Why Christians reject this","auth":"Why Christians reject this","claim":"The biblical record of the resurrection is reliable, and the disciples would not have died for a lie. Descartes argued the mind is separate from the body, and heaven is a spiritual dimension outside the material universe. “Christ… was put to death in the body but made alive in the Spirit” (1 Peter 3:18)."},{"x":90,"nm":"The real question","sb":"Where it turns","auth":"Where it turns","claim":"Both sides agree the debate hangs on two things: whether the evidence — the resurrection, near-death experiences, mediums — can be trusted, and whether a mind or soul could exist at all without a physical body."}]},"t6":{"poles":["Accept passive euthanasia","Atheist & Humanist"],"punch":"The debate isn’t kill-or-don’t — it’s where law and Church draw the line between acting and letting go.","discuss":"Is “letting someone die” really different from “helping them die” — or just a legal label for the same outcome?","nodes":[{"x":10,"nm":"Accept passive euthanasia","sb":"Most Christians, incl. Catholics","auth":"Most Christians, incl. Catholics","claim":"Assisted suicide and voluntary and non-voluntary euthanasia are all wrong. But switching off a life-support machine after brain death, refusing “extraordinary treatment”, or giving painkillers that may shorten life (the doctrine of double effect) are not euthanasia (Catechism 2278–9)."},{"x":37,"nm":"All euthanasia is wrong","sb":"Mainly Evangelical Protestants","auth":"Mainly Evangelical Protestants","claim":"Any form of euthanasia is wrong — no switching off machines, no refusing treatment, no large doses of painkillers. Life is ended by humans, not God; euthanasia is murder, banned in the Ten Commandments; Job teaches acceptance of suffering."},{"x":64,"nm":"Accept limited use","sb":"A few Christians","auth":"A few Christians","claim":"A few Christians accept living wills, and even assisting suicide, because modern medicine means we cannot be sure of God’s wishes, Jesus’ command to love your neighbour could justify it, and people have a basic right to control what is done to them."},{"x":90,"nm":"Atheist & Humanist","sb":"Quality of life","auth":"Quality of life","claim":"Humanists have no agreed position. Many support legalising euthanasia because quality of life matters most and people have a right to a painless death; others oppose it, fearing pressure on the vulnerable. They use Situation Ethics to decide the most loving act."}]},"t7":{"poles":["Creationist Christians","The non-religious view"],"punch":"Touch the first domino — Adam — and salvation and the sanctity of life fall with it.","discuss":"If evolution is true, can Christian teaching on sin and salvation still make sense in some other way?","nodes":[{"x":10,"nm":"Creationist Christians","sb":"Reject evolution","auth":"Reject evolution","claim":"“New-age creationists” reject evolution and say the earth was created about 10,000 years ago as the Bible says. Fossils are the remains of animals destroyed in Noah’s flood, and there are no fossils showing one species changing into another."},{"x":37,"nm":"Intelligent design","sb":"God guided it","auth":"God guided it","claim":"Life is too complex to have evolved by chance, so God must have created each species or intervened in the process. Evolution only happens WITHIN species (e.g. finches’ beaks). As Cardinal Schönborn said, an “unguided, unplanned process… is not” true."},{"x":64,"nm":"Compatibility Christians","sb":"Evolution is God’s method","auth":"Evolution is God’s method","claim":"Evolution is the way God designed the universe to develop. Pope Francis said God “created human beings and let them develop according to the internal laws that he gave to each one”. Special Agenda IV (2010) affirmed that science and belief in God are compatible."},{"x":90,"nm":"The non-religious view","sb":"No special value","auth":"No special value","claim":"Evolution and natural selection mean human life “has no special value other than what humans choose to give to it”. Thinkers such as Richard Dawkins argue science now answers the big questions — and nature is “red in tooth and claw”, not the work of a good creator."}]},"t8":{"poles":["Most Christians","The utilitarian view"],"punch":"A Christian is a tenant, not an owner — and the landlord checks the state of the place.","discuss":"Does calling humans “stewards, not owners” of the earth actually change behaviour, or is it just words?","nodes":[{"x":10,"nm":"Most Christians","sb":"Use of animals is allowed","auth":"Use of animals is allowed","claim":"Only humans are made in God’s image and have souls, and God “put humankind in charge” of animals. So using animals for research and food is acceptable (Genesis 1:29–30); animal testing has produced vaccines. The Catechism allows it “within reasonable limits” (2417)."},{"x":37,"nm":"Some Christians","sb":"Animal rights / vegetarian","auth":"Animal rights / vegetarian","claim":"All animals are made by God and are intrinsically valuable, with souls of their own. Jesus said not one sparrow “will fall to the ground apart from the will of your Father” (Matthew 10:29–31). Christians should never be cruel, and eating animals wastes resources."},{"x":64,"nm":"The shared duty","sb":"Stewardship","auth":"Stewardship","claim":"Both sides agree humans are stewards of God’s earth, must treat animals humanely, and will be judged on how they cared for creation. The Assisi Declaration (1986) says dominion is “to protect, not destroy” — damaging creation is a sin."},{"x":90,"nm":"The utilitarian view","sb":"Non-religious ethics","auth":"Non-religious ethics","claim":"Non-religious thinkers judge by John Stuart Mill’s utilitarianism — “the greatest happiness of the greatest number”. This can justify EITHER using animals or protecting them, depending on which brings the best consequences."}]}};
+const LABELS = {"t1":"Origins","t2":"Sanctity of life","t3":"Abortion","t4":"The afterlife","t5":"Non-religious views","t6":"Euthanasia","t7":"Human origins","t8":"Natural world"};
+const ticks=document.getElementById("ticks");
+const readout=document.getElementById("readout");
+const poleL=document.getElementById("poleL"), poleR=document.getElementById("poleR");
+const firstKey=Object.keys(DATA)[0];
+let topic=firstKey, active=0;
+function esc2(s){return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+function renderReadout(n){
+  const d=DATA[topic];
+  let html='<span class="badge">'+esc2(n.auth)+'</span><div class="body">'+
+    '<h4>'+esc2(n.nm)+' <span style="opacity:.6;font-style:italic;font-weight:400">· '+esc2(n.sb)+'</span></h4>'+
+    '<p>'+esc2(n.claim)+'</p>';
+  if(d.punch) html+='<div class="g9"><span class="k">The grade 9 move</span><br>'+esc2(d.punch)+'</div>';
+  if(d.discuss) html+='<div class="g9"><span class="k">Discuss · 7 min</span><br>'+esc2(d.discuss)+'</div>';
+  html+='</div>';
+  readout.innerHTML=html;
+}
+function renderTopic(){
+  const d=DATA[topic];
+  poleL.textContent=d.poles[0]; poleR.textContent=d.poles[1];
+  ticks.innerHTML="";
+  d.nodes.forEach(function(n,i){
+    const el=document.createElement("div");
+    el.className="node"; el.style.left=n.x+"%"; el.tabIndex=0;
+    el.setAttribute("role","button");
+    el.setAttribute("aria-label",n.nm+": "+n.sb);
+    el.dataset.active=(i===active);
+    el.innerHTML='<div class="dot"></div><div class="nm">'+esc2(n.nm)+'</div><div class="sb">'+esc2(n.sb)+'</div>';
+    const pick=function(){active=i;[].slice.call(ticks.children).forEach(function(c,j){c.dataset.active=(j===i)});renderReadout(n);};
+    el.addEventListener("click",pick);
+    el.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();pick();}});
+    ticks.appendChild(el);
+  });
+  active=Math.min(active,d.nodes.length-1);
+  [].slice.call(ticks.children).forEach(function(c,j){c.dataset.active=(j===active)});
+  renderReadout(d.nodes[active]);
+}
+document.querySelectorAll(".tab").forEach(function(t){
+  t.addEventListener("click",function(){
+    document.querySelectorAll(".tab").forEach(function(x){x.setAttribute("aria-selected","false")});
+    t.setAttribute("aria-selected","true");
+    topic=t.dataset.topic; active=0; renderTopic();
+  });
+});
+renderTopic();
+const FLASHCARDS = {"t1":{"terms":[{"term":"Creationism","def":"The belief that the universe, and humans, were created in the way the Bible says."},{"term":"Apparent Age","def":"The idea that the world would have looked billions of years old when it was only a second old."},{"term":"Commodity","def":"Something humans need or want, which can be used and used up."},{"term":"Conservation","def":"Protecting and preserving natural resources and the environment."}],"views":[{"n":"Creationism","tag":"Science is wrong","c":"The Bible is right and science is wrong. God created the universe as Genesis describes. The Apparent Age theory says God made a universe that only LOOKS billions of years old — trees created with rings, the Grand Canyon looking ancient when it was one second old."},{"n":"Intelligent design","tag":"Too complex for chance","c":"The universe is so complex it cannot have happened by chance — its “irreducible complexity” (remove one part and the whole system stops) and “specified complexity” (patterns in DNA). It must have been made by an intelligent designer: God."},{"n":"The compatibility response","tag":"Both are true","c":"Both science and the Bible are true. Genesis teaches WHO created and WHY, not the scientific HOW. God set off the Big Bang and controlled how the world developed — and Georges Lemaître, who first proposed the Big Bang, was a Catholic priest."},{"n":"The shared belief","tag":"What all three hold","c":"All three agree God is the ultimate cause of the universe, that God made it good, and that humans are placed in it as stewards to look after this valuable creation — not to treat it as a commodity to exploit."}]},"t2":{"terms":[{"term":"Sanctity of life","def":"The belief that life is holy or sacred because it is a gift from God."},{"term":"Sanctified","def":"Made holy — Christians believe God sanctified human life by becoming human in Jesus."},{"term":"Pacifism","def":"Refusing to fight in wars."},{"term":"Capital punishment","def":"The death penalty for a crime."}],"views":[{"n":"Pacifist Christians","tag":"Never take life","c":"The sanctity of life means Christians should never fight or kill. Pacifism is the refusal to fight in wars — held by the Quakers, Plymouth Brethren, Christadelphians and Pax Christi. Jesus said, “Love your enemies and pray for those who persecute you” (Matthew 5:44)."},{"n":"Just-war Christians","tag":"To protect the innocent","c":"Most Christians believe it is legitimate to take life in self-defence or a just war, because protecting the innocent from an aggressor can justify it. As the Catechism says, legitimate defence “can be not only a right but a grave duty” (2265)."},{"n":"Capital punishment — divided","tag":"The state and the guilty","c":"Christians disagree over the death penalty. Some say it is un-Christian: if all life is sacred, the state must not take it. Others note the Bible gives the death penalty, and the Church has not cancelled it “if this is the only possible way of… defending human lives” (Catechism 2267)."},{"n":"The shared belief","tag":"What all hold","c":"All agree human life is sacred because God gives it, and that murdering the innocent is always wrong. The divergence is only over whether taking a life — to protect others, or to punish — can ever be an exception."}]},"t3":{"terms":[{"term":"Conception","def":"The fertilisation of the egg by the sperm — where the Catholic Church says life begins."},{"term":"Doctrine of double effect","def":"The principle that it is acceptable to perform an action with a bad side-effect as long as the intention was to achieve a good first effect."},{"term":"Quality of life","def":"The idea that life must have some benefits for it to be worth living."},{"term":"Abortion on demand","def":"The right to have an abortion whatever the woman’s reasons."}],"views":[{"n":"Catholic & Evangelical","tag":"Pro-life — always wrong","c":"All abortion is wrong whatever the circumstances, because life begins at conception and is sacred. Abortion breaks “You shall not murder” and destroys a human being’s right to life. The only exception is the doctrine of double effect (e.g. saving the mother’s life)."},{"n":"Liberal Protestant","tag":"Pro-choice — lesser evil","c":"Abortion is wrong but may be permitted in some circumstances. Life does not begin at conception, and Jesus’ command to love your neighbour can make abortion the most loving choice — for example after rape, or when a foetus is gravely handicapped."},{"n":"Atheist & Humanist","tag":"The woman decides","c":"A foetus is not a separate life until it can survive outside the mother, so it is part of her body and her decision. The woman’s rights over her own body, and the quality of life of mother and child, come first — some support “abortion on demand”."},{"n":"Common ground","tag":"Where they meet","c":"The textbook notes there is “little difference” between the liberal Protestant and Humanist views: both weigh the situation and its consequences, using Situation Ethics to ask what the most loving thing to do would be."}]},"t4":{"terms":[{"term":"Immortality of the soul","def":"The idea that the soul lives on after the death of the body."},{"term":"Paranormal","def":"Unexplained events thought to have spiritual causes, e.g. ghosts and mediums."},{"term":"Near-death experiences","def":"When people about to die have out-of-body feelings."},{"term":"Reincarnation","def":"The belief that, after death, souls are reborn in a new body."}],"views":[{"n":"Christian belief","tag":"The resurrection of Jesus","c":"Jesus rose from the dead — all four Gospels record the empty tomb and the resurrection appearances. St Paul teaches Christians will be raised like Jesus (1 Corinthians 15), and many believe in the immortality of the soul, which lives on with God."},{"n":"The paranormal","tag":"Non-religious evidence","c":"Near-death experiences (Dr Sam Parnia, Dr Pim van Lommel) — peace, a bright light, meeting the dead — and mediums who claim to contact the spirit world suggest something survives death. But the textbook stresses this is “not the same as resurrection”."},{"n":"Remembered lives","tag":"Reincarnation","c":"Many non-religious people, and Hindus, Sikhs and Buddhists, point to children who remember past lives (e.g. Taranjit Singh) as evidence that the soul is reborn into a new body — reincarnation."},{"n":"Shared reasons","tag":"Why people believe","c":"Beyond the evidence, people believe because it gives life meaning and purpose, brings comfort when a loved one dies, and seems demanded by justice — that the good are rewarded and the evil punished."}]},"t5":{"terms":[{"term":"Fallible memories","def":"Memory can be mistaken — used to challenge near-death experiences."},{"term":"Bereaved","def":"Deprived of a close relation or friend through their death."},{"term":"Non-material","def":"Not physical — a realm science says there is no evidence for."},{"term":"Social control","def":"Using a belief, e.g. in heaven, to keep a group content with an unjust situation (Marx)."}],"views":[{"n":"“No reliable evidence”","tag":"Non-religious","c":"Near-death experiences rely on fallible memories (Dr Chris Freeman); mediums are fraudulent (Robert Thouless’s coded message was never decoded); remembered-life cases are flawed; and the religions contradict each other, so no holy book can be trusted as proof."},{"n":"“Comfort & control”","tag":"Non-religious","c":"Belief in an afterlife is just comfort for the bereaved, with no factual basis. Karl Marx called it social control — “pie in the sky” — to keep the poor content. And science shows no non-material realm where an afterlife could take place."},{"n":"The Christian reply","tag":"Why Christians reject this","c":"The biblical record of the resurrection is reliable, and the disciples would not have died for a lie. Descartes argued the mind is separate from the body, and heaven is a spiritual dimension outside the material universe. “Christ… was put to death in the body but made alive in the Spirit” (1 Peter 3:18)."},{"n":"The real question","tag":"Where it turns","c":"Both sides agree the debate hangs on two things: whether the evidence — the resurrection, near-death experiences, mediums — can be trusted, and whether a mind or soul could exist at all without a physical body."}]},"t6":{"terms":[{"term":"Euthanasia","def":"The painless killing of someone dying from a painful disease."},{"term":"Voluntary euthanasia","def":"Ending life painlessly when someone in great pain asks for death."},{"term":"Non-voluntary euthanasia","def":"Ending someone’s life painlessly when they cannot ask, but there is good reason to think they would want it."},{"term":"Palliative care","def":"Medical or nursing care that reduces pain and improves the quality of life of those with terminal illnesses."}],"views":[{"n":"Accept passive euthanasia","tag":"Most Christians, incl. Catholics","c":"Assisted suicide and voluntary and non-voluntary euthanasia are all wrong. But switching off a life-support machine after brain death, refusing “extraordinary treatment”, or giving painkillers that may shorten life (the doctrine of double effect) are not euthanasia (Catechism 2278–9)."},{"n":"All euthanasia is wrong","tag":"Mainly Evangelical Protestants","c":"Any form of euthanasia is wrong — no switching off machines, no refusing treatment, no large doses of painkillers. Life is ended by humans, not God; euthanasia is murder, banned in the Ten Commandments; Job teaches acceptance of suffering."},{"n":"Accept limited use","tag":"A few Christians","c":"A few Christians accept living wills, and even assisting suicide, because modern medicine means we cannot be sure of God’s wishes, Jesus’ command to love your neighbour could justify it, and people have a basic right to control what is done to them."},{"n":"Atheist & Humanist","tag":"Quality of life","c":"Humanists have no agreed position. Many support legalising euthanasia because quality of life matters most and people have a right to a painless death; others oppose it, fearing pressure on the vulnerable. They use Situation Ethics to decide the most loving act."}]},"t7":{"terms":[{"term":"Natural selection","def":"The idea that life evolved through mutations, so life forms better suited to the environment survive and the less suited die out."},{"term":"Original sin","def":"The sin of Adam and Eve, which some Christians believe is passed on to all humans at birth."},{"term":"Fall of Man","def":"The idea that when Adam disobeyed God by eating the forbidden fruit, sin came into the world."},{"term":"Fossil record","def":"The evidence for evolution provided in fossils."}],"views":[{"n":"Creationist Christians","tag":"Reject evolution","c":"“New-age creationists” reject evolution and say the earth was created about 10,000 years ago as the Bible says. Fossils are the remains of animals destroyed in Noah’s flood, and there are no fossils showing one species changing into another."},{"n":"Intelligent design","tag":"God guided it","c":"Life is too complex to have evolved by chance, so God must have created each species or intervened in the process. Evolution only happens WITHIN species (e.g. finches’ beaks). As Cardinal Schönborn said, an “unguided, unplanned process… is not” true."},{"n":"Compatibility Christians","tag":"Evolution is God’s method","c":"Evolution is the way God designed the universe to develop. Pope Francis said God “created human beings and let them develop according to the internal laws that he gave to each one”. Special Agenda IV (2010) affirmed that science and belief in God are compatible."},{"n":"The non-religious view","tag":"No special value","c":"Evolution and natural selection mean human life “has no special value other than what humans choose to give to it”. Thinkers such as Richard Dawkins argue science now answers the big questions — and nature is “red in tooth and claw”, not the work of a good creator."}]},"t8":{"terms":[{"term":"Stewardship","def":"Looking after something (the earth) so it can be passed on to the next generation."},{"term":"Global warming","def":"The increase in the temperature of the earth’s atmosphere, thought to be caused by the greenhouse effect."},{"term":"Finite resources","def":"Resources which can only be used once, for example oil and metals."},{"term":"Environment","def":"The surroundings in which plants and animals live and on which they depend for survival."}],"views":[{"n":"Most Christians","tag":"Use of animals is allowed","c":"Only humans are made in God’s image and have souls, and God “put humankind in charge” of animals. So using animals for research and food is acceptable (Genesis 1:29–30); animal testing has produced vaccines. The Catechism allows it “within reasonable limits” (2417)."},{"n":"Some Christians","tag":"Animal rights / vegetarian","c":"All animals are made by God and are intrinsically valuable, with souls of their own. Jesus said not one sparrow “will fall to the ground apart from the will of your Father” (Matthew 10:29–31). Christians should never be cruel, and eating animals wastes resources."},{"n":"The shared duty","tag":"Stewardship","c":"Both sides agree humans are stewards of God’s earth, must treat animals humanely, and will be judged on how they cared for creation. The Assisi Declaration (1986) says dominion is “to protect, not destroy” — damaging creation is a sin."},{"n":"The utilitarian view","tag":"Non-religious ethics","c":"Non-religious thinkers judge by John Stuart Mill’s utilitarianism — “the greatest happiness of the greatest number”. This can justify EITHER using animals or protecting them, depending on which brings the best consequences."}]}};
+(function(){
+  let fcTopic="all", fcType="terms";
+  const grid=document.getElementById("fcGrid"), count=document.getElementById("fcCount");
+  function build(){
+    const all=Object.keys(FLASHCARDS);
+    const topics = fcTopic==="all" ? all : [fcTopic];
+    let cards=[];
+    topics.forEach(function(tp){
+      const d=FLASHCARDS[tp]; if(!d) return;
+      if(fcType==="terms"){ d.terms.forEach(function(t){cards.push({tp:tp,front:t.term,tag:LABELS[tp],back:'<div class="fc-def">'+esc2(t.def)+'</div>'})}); }
+      else { d.views.forEach(function(v){cards.push({tp:tp,front:v.n,tag:LABELS[tp]+(v.tag?' · '+v.tag:''),back:'<div class="fc-def">'+esc2(v.c)+'</div>'})}); }
+    });
+    grid.innerHTML=cards.map(function(c){return '<button class="fc-card '+c.tp+'" data-flipped="false" aria-label="Flashcard: '+esc2(c.front)+'. Tap to reveal.">'+
+      '<div class="fc-inner">'+
+      '<div class="fc-face fc-front"><div class="fc-tag">'+esc2(c.tag)+'</div><div class="fc-term">'+esc2(c.front)+'</div><div class="fc-flip">tap to flip ↺</div></div>'+
+      '<div class="fc-face fc-back"><div class="fc-tag">'+esc2(c.tag)+'</div>'+c.back+'</div>'+
+      '</div></button>';}).join("");
+    count.textContent = cards.length + " cards";
+    grid.querySelectorAll(".fc-card").forEach(function(el){
+      el.addEventListener("click",function(){el.dataset.flipped = el.dataset.flipped==="true" ? "false":"true";});
+    });
+  }
+  document.querySelectorAll('#flashcards .fc-tabs .fc-btn').forEach(function(b){b.addEventListener("click",function(){
+    document.querySelectorAll('#flashcards .fc-tabs .fc-btn').forEach(function(x){x.setAttribute("aria-selected","false")});
+    b.setAttribute("aria-selected","true"); fcTopic=b.dataset.topic; build();
+  })});
+  document.querySelectorAll('#flashcards .fc-type .fc-btn').forEach(function(b){b.addEventListener("click",function(){
+    document.querySelectorAll('#flashcards .fc-type .fc-btn').forEach(function(x){x.setAttribute("aria-selected","false")});
+    b.setAttribute("aria-selected","true"); fcType=b.dataset.type; build();
+  })});
+  build();
+})();
+/* =====================================================================
+   TEACHER: paste your YouTube link between the quotes below.
+   Any format works — youtube.com/watch?v=..., youtu.be/..., or an embed URL.
+   Leave it empty ("") and the page shows a "Video not set" placeholder.
+   ===================================================================== */
+const VIDEO_URL = "";
+(function wireVideo(){
+  const url=(VIDEO_URL||"").trim();
+  if(!url) return;
+  let id="";
+  const m = url.match(/(?:youtu\.be\/|v=|\/embed\/|\/shorts\/)([A-Za-z0-9_-]{11})/);
+  if(m) id=m[1];
+  else if(/^[A-Za-z0-9_-]{11}$/.test(url)) id=url;
+  const frame=document.getElementById("videoFrame");
+  if(id && frame){
+    frame.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+id+'?rel=0" title="Unit review" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>';
+  } else if(frame){
+    frame.innerHTML='<div class="video-placeholder"><a class="res-btn big" style="background:#fff" href="'+url+'" target="_blank" rel="noopener"><span class="ic">▶</span><span><b>Watch the full unit review</b></span><span class="go">↗</span></a></div>';
+  }
+})();
+/* =====================================================================
+   TEACHER: paste your SharePoint share links between the quotes below.
+   Leave a link empty ("") and its button will show "Link not set".
+   Tip: in SharePoint, open the file's ... menu -> Copy link -> paste here.
+   ===================================================================== */
+const LINKS = {
+  t1_lesson: "",
+  t1_booklet: "",
+  t1_podcast: "",
+  t2_lesson: "",
+  t2_booklet: "",
+  t2_podcast: "",
+  t3_lesson: "",
+  t3_booklet: "",
+  t3_podcast: "",
+  t4_lesson: "",
+  t4_booklet: "",
+  t4_podcast: "",
+  t5_lesson: "",
+  t5_booklet: "",
+  t5_podcast: "",
+  t6_lesson: "",
+  t6_booklet: "",
+  t6_podcast: "",
+  t7_lesson: "",
+  t7_booklet: "",
+  t7_podcast: "",
+  t8_lesson: "",
+  t8_booklet: "",
+  t8_podcast: "",
+  booklet: "",
+  booklet_keyidea: "",
+  sow: "",
+  guide: ""
+};
+(function wireResources(){
+  let anySet=false;
+  document.querySelectorAll(".res-btn").forEach(function(btn){
+    const url=(LINKS[btn.dataset.key]||"").trim();
+    if(url){ btn.href=url; btn.target="_blank"; btn.rel="noopener"; anySet=true; }
+    else{ btn.classList.add("unset"); btn.removeAttribute("href"); btn.setAttribute("aria-disabled","true"); }
+  });
+  if(anySet){ const n=document.getElementById("resNote"); if(n) n.classList.add("hide"); }
+})();
+</script>
+</body>
+</html>

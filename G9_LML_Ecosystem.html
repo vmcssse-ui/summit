@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Living the Muslim Life — Grade 9 Summit · Unit at a Glance</title>
+<style>
+  :root{
+    --ink:#0B3D36;       /* unit family colour */
+    --ink-2:#062A25;
+    --mint:#E9F4EE;
+    --mint-2:#DCEBE2;
+    --amber:#F2B705;      /* summit amber */
+    --amber-soft:#FFD95C;
+    --rubric:#B01C2E;
+    --teal:#0E8A7B;
+    --blue:#1565C0;
+    --green:#2E7D32;
+    --paper:#F5FAF7;
+    --line:rgba(11,61,54,.16);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--paper);color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;line-height:1.5;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1060px;margin:0 auto;padding:0 24px}
+  .eyebrow{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;font-weight:700}
+  .hero{background:
+      radial-gradient(1200px 400px at 80% -10%, rgba(242,183,5,.16), transparent 60%),
+      linear-gradient(180deg,var(--ink) 0%, var(--ink-2) 100%);
+    color:var(--mint);padding:64px 0 72px;position:relative;overflow:hidden;border-bottom:3px solid var(--amber)}
+  .hero::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.06;
+    background:repeating-linear-gradient(180deg,transparent 0 38px,#fff 38px 39px)}
+  .hero .wrap{position:relative;z-index:2}
+  .crest{display:flex;align-items:center;gap:16px;margin-bottom:34px}
+  .crest svg{width:54px;height:54px;flex:none}
+  .crest .who{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;color:var(--amber-soft)}
+  .crest .who b{color:var(--mint);display:block;letter-spacing:.14em;font-size:.86rem;margin-top:3px}
+  h1{font-size:clamp(2.2rem,5.6vw,3.8rem);line-height:1.04;font-weight:700;letter-spacing:-.01em}
+  h1 .amp{color:var(--amber);font-style:italic}
+  .sub{margin-top:20px;max-width:58ch;font-size:1.12rem;color:#D7E8DD}
+  .bigq{margin-top:30px;display:inline-flex;gap:14px;align-items:flex-start;border-left:3px solid var(--amber);padding:8px 0 8px 18px;max-width:62ch}
+  .bigq .q{font-family:"Trebuchet MS",sans-serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--amber-soft);padding-top:5px}
+  .bigq p{font-size:1.22rem;font-style:italic;color:#fff}
+  section{padding:64px 0}
+  .sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:8px}
+  .sec-head .num{font-family:"Trebuchet MS",sans-serif;color:var(--amber);font-weight:700;font-size:.9rem;letter-spacing:.15em}
+  .sec-head h2{font-size:clamp(1.6rem,3.4vw,2.3rem);letter-spacing:-.01em}
+  .sec-lead{color:#41504a;max-width:66ch;margin-bottom:34px;font-size:1.05rem}
+  .spectrum-card{background:linear-gradient(180deg,#fff, var(--paper));border:1px solid var(--line);border-radius:14px;
+    box-shadow:0 18px 40px -28px rgba(11,61,54,.5);padding:28px 26px 34px}
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:26px}
+  .tab{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.8rem;letter-spacing:.03em;
+    border:1px solid var(--line);background:#fff;color:var(--ink);padding:8px 14px;border-radius:999px;cursor:pointer;transition:.18s}
+  .tab[aria-selected="true"]{background:var(--ink);color:var(--mint);border-color:var(--ink)}
+  .tab:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+  .axis{position:relative;margin:8px 4px 0}
+  .axis-labels{display:flex;justify-content:space-between;font-family:"Trebuchet MS",sans-serif;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:#5f6f68;margin-bottom:10px}
+  .axis-labels .l{color:var(--rubric);font-weight:700}
+  .axis-labels .r{color:var(--blue);font-weight:700}
+  .bar{height:10px;border-radius:999px;background:linear-gradient(90deg,var(--rubric),#b06a1e 40%,#5a7d3a 66%,var(--blue));position:relative}
+  .ticks{position:relative;height:118px;margin-top:0}
+  .node{position:absolute;top:0;transform:translateX(-50%);width:150px;text-align:center;cursor:pointer}
+  .node .dot{width:20px;height:20px;border-radius:50%;background:#fff;border:3px solid var(--ink);margin:0 auto;position:relative;top:-15px;transition:.18s}
+  .node .nm{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.8rem;margin-top:-6px;line-height:1.2}
+  .node .sb{font-size:.74rem;color:#5f6f68;font-style:italic;margin-top:2px;line-height:1.25}
+  .node:hover .dot,.node[data-active="true"] .dot{transform:scale(1.25);border-color:var(--amber);box-shadow:0 0 0 5px rgba(242,183,5,.22)}
+  .node:focus-visible{outline:none}
+  .node:focus-visible .dot{outline:3px solid var(--amber);outline-offset:3px}
+  .readout{margin-top:14px;background:var(--ink);color:var(--mint);border-radius:12px;padding:20px 22px;min-height:112px;display:flex;gap:18px;align-items:flex-start}
+  .readout .badge{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;
+    background:var(--amber);color:var(--ink-2);padding:6px 10px;border-radius:6px;white-space:nowrap;margin-top:2px}
+  .readout .body h4{font-size:1.12rem;margin-bottom:4px}
+  .readout .body p{color:#D7E8DD;font-size:.98rem}
+  .readout .body .g9{margin-top:10px;font-size:.88rem}
+  .readout .body .g9 .k{font-family:"Trebuchet MS",sans-serif;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--amber-soft)}
+  .hint{font-family:"Trebuchet MS",sans-serif;font-size:.76rem;color:#7c8a84;margin-top:14px;text-align:center}
+  .thread{background:var(--ink);color:var(--mint);border-radius:14px;padding:34px 30px;position:relative;overflow:hidden}
+  .thread::before{content:"";position:absolute;inset:0;opacity:.07;background:repeating-linear-gradient(180deg,transparent 0 30px,#fff 30px 31px)}
+  .thread .wrap2{position:relative;z-index:2}
+  .thread h2{color:#fff;font-size:clamp(1.5rem,3vw,2.1rem);margin-bottom:8px}
+  .thread .lead{color:#D7E8DD;max-width:64ch;margin-bottom:24px}
+  .threads{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .tcard{border:1px solid rgba(255,217,92,.32);border-radius:10px;padding:16px 16px 18px;background:rgba(255,255,255,.03)}
+  .tcard .t{font-family:"Trebuchet MS",sans-serif;color:var(--amber);font-weight:700;font-size:.82rem;letter-spacing:.05em;margin-bottom:6px}
+  .tcard p{font-size:.9rem;color:#D7E8DD}
+  .triptych{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
+  .panel{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;display:flex;flex-direction:column}
+  .panel .cap{padding:16px 18px;color:#fff;position:relative}
+  .panel .cap .n{font-family:"Trebuchet MS",sans-serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;opacity:.85}
+  .panel .cap h3{font-size:1.22rem;margin-top:3px}
+  .panel .cap .ask{font-style:italic;font-size:.88rem;margin-top:8px;opacity:.95}
+  .panel .body{padding:16px 18px;font-size:.92rem}
+  .panel .body .row{display:flex;gap:9px;padding:7px 0;border-bottom:1px dashed var(--line)}
+  .panel .body .row:last-child{border-bottom:0}
+  .panel .body .row .v{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.74rem;white-space:normal;color:var(--ink);min-width:118px;max-width:118px}
+  .panel .body .row .d{color:#41504a}
+  .revise{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:start}
+  .steps{counter-reset:s;display:flex;flex-direction:column;gap:14px}
+  .step{display:flex;gap:16px;align-items:flex-start;border-left:2px solid var(--line);padding:2px 0 2px 18px;position:relative}
+  .step::before{counter-increment:s;content:counter(s);position:absolute;left:-15px;top:-2px;width:28px;height:28px;border-radius:50%;
+    background:var(--amber);color:var(--ink-2);font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.9rem;display:grid;place-items:center}
+  .step h4{font-size:1.02rem}
+  .step p{font-size:.9rem;color:#41504a;margin-top:2px}
+  .ao{border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .ao .h{padding:12px 16px;font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.82rem;letter-spacing:.06em;color:#fff}
+  .ao .h.ao1{background:var(--ink)}
+  .ao .h.ao2{background:var(--rubric)}
+  .ao .c{padding:14px 16px;font-size:.9rem;border-bottom:1px solid var(--line)}
+  .ao .c:last-child{border-bottom:0}
+  .ao .c b{font-family:"Trebuchet MS",sans-serif;font-size:.78rem;letter-spacing:.04em}
+  .video-frame{position:relative;width:100%;aspect-ratio:16/9;border-radius:14px;overflow:hidden;
+    border:1px solid var(--line);box-shadow:0 20px 44px -30px rgba(11,61,54,.5);background:var(--ink)}
+  .video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .video-placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:14px;text-align:center;padding:30px;color:#BFD4C8;
+    background:radial-gradient(700px 300px at 50% 30%,rgba(242,183,5,.14),transparent 60%),linear-gradient(180deg,var(--ink),var(--ink-2))}
+  .video-placeholder .vp-badge{font-family:"Trebuchet MS",Verdana,sans-serif;font-weight:700;font-size:.72rem;letter-spacing:.14em;
+    text-transform:uppercase;background:var(--amber);color:var(--ink-2);padding:6px 12px;border-radius:6px}
+  .video-placeholder p{max-width:52ch;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.92rem;line-height:1.55}
+  .video-placeholder code{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:4px;padding:1px 6px}
+  .fc-controls{display:flex;gap:18px;flex-wrap:wrap;align-items:center;margin-bottom:24px}
+  .fc-tabs,.fc-type{display:flex;gap:8px;flex-wrap:wrap}
+  .fc-btn{font-family:"Trebuchet MS",Verdana,sans-serif;font-weight:700;font-size:.78rem;border:1px solid var(--line);
+    background:#fff;color:var(--ink);padding:8px 13px;border-radius:999px;cursor:pointer;transition:.18s}
+  .fc-btn[aria-selected="true"]{background:var(--ink);color:var(--mint);border-color:var(--ink)}
+  .fc-btn:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+  .fc-hint{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.78rem;color:#7c8a84;margin-left:auto}
+  .fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+  .fc-card{perspective:1200px;height:190px;cursor:pointer;background:none;border:0;padding:0;font-family:inherit;text-align:left}
+  .fc-inner{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+  .fc-card[data-flipped="true"] .fc-inner{transform:rotateY(180deg)}
+  .fc-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+    border-radius:12px;padding:18px;display:flex;flex-direction:column;border:1px solid var(--line);overflow:auto}
+  .fc-front{background:linear-gradient(180deg,#fff,var(--paper))}
+  .fc-back{transform:rotateY(180deg);color:var(--mint)}
+  .fc-tag{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--amber);font-weight:700;margin-bottom:8px}
+  .fc-front .fc-tag{color:#94741a}
+  .fc-term{font-size:1.18rem;font-weight:700;line-height:1.16}
+  .fc-front .fc-flip{margin-top:auto;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.72rem;color:#7c8a84}
+  .fc-def{font-size:.9rem;line-height:1.4}
+  .res-note{background:#FCF3D6;border:1px solid var(--amber);border-left:4px solid var(--amber);
+    border-radius:8px;padding:12px 16px;margin-bottom:22px;font-size:.9rem;color:#5a4a10;
+    font-family:"Trebuchet MS",Verdana,sans-serif}
+  .res-note code{background:#fff;border:1px solid var(--line);border-radius:4px;padding:1px 6px;font-size:.85em}
+  .res-note.hide{display:none}
+  .res-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;margin-bottom:16px}
+  .res-col{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff}
+  .rc-head{padding:14px 16px;color:#fff}
+  .rc-head .rc-n{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;opacity:.85}
+  .rc-head h3{font-size:1.12rem;margin-top:2px}
+  .res-btn{display:flex;align-items:center;gap:12px;padding:13px 16px;border-top:1px solid var(--line);
+    font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.92rem;color:var(--ink);text-decoration:none;cursor:pointer;transition:background .15s}
+  .res-col .res-btn:first-of-type{border-top:0}
+  .res-btn:hover{background:var(--mint)}
+  .res-btn .ic{width:26px;height:26px;flex:none;display:grid;place-items:center;border-radius:6px;background:var(--ink);color:var(--amber);font-size:.9rem}
+  .res-btn .go{margin-left:auto;color:var(--amber);font-weight:700;opacity:0;transition:.15s}
+  .res-btn:hover .go{opacity:1}
+  .res-btn:focus-visible{outline:3px solid var(--amber);outline-offset:-3px}
+  .res-btn.unset{opacity:.5;cursor:not-allowed}
+  .res-btn.unset::after{content:"Link not set";margin-left:auto;font-size:.74rem;color:#94741a;
+    background:#FCF3D6;border:1px solid var(--amber-soft);border-radius:5px;padding:2px 7px}
+  .res-wide{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:2px}
+  .res-btn.big{border:1px solid var(--line);border-radius:12px;background:#fff;padding:16px 18px}
+  .res-btn.big:hover{background:var(--mint)}
+  .res-btn.big .ic{width:34px;height:34px;font-size:1.1rem}
+  footer{background:var(--ink-2);color:#BFD4C8;padding:26px 0;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.8rem}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+  footer .amber{color:var(--amber)}
+  @media(max-width:820px){
+    .threads{grid-template-columns:1fr}
+    .revise{grid-template-columns:1fr}
+    .node{width:104px}
+    .node .sb{display:none}
+    .res-wide{grid-template-columns:1fr}
+    .fc-grid{grid-template-columns:1fr 1fr}
+    .fc-hint{width:100%;margin-left:0}
+  }
+  @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+.panel.a1 .cap{background:linear-gradient(135deg,#1F4E79,#12294D)}
+.rc1 .rc-head{background:linear-gradient(135deg,#1F4E79,#12294D)}
+.fc-card.t1 .fc-back{background:linear-gradient(160deg,#1F4E79,#12294D)}
+.panel.a2 .cap{background:linear-gradient(135deg,#1565C0,#12447A)}
+.rc2 .rc-head{background:linear-gradient(135deg,#1565C0,#12447A)}
+.fc-card.t2 .fc-back{background:linear-gradient(160deg,#1565C0,#12447A)}
+.panel.a3 .cap{background:linear-gradient(135deg,#8E24AA,#6A1B9A)}
+.rc3 .rc-head{background:linear-gradient(135deg,#8E24AA,#6A1B9A)}
+.fc-card.t3 .fc-back{background:linear-gradient(160deg,#8E24AA,#6A1B9A)}
+.panel.a4 .cap{background:linear-gradient(135deg,#00897B,#00695C)}
+.rc4 .rc-head{background:linear-gradient(135deg,#00897B,#00695C)}
+.fc-card.t4 .fc-back{background:linear-gradient(160deg,#00897B,#00695C)}
+.panel.a5 .cap{background:linear-gradient(135deg,#B8860B,#8A6D1B)}
+.rc5 .rc-head{background:linear-gradient(135deg,#B8860B,#8A6D1B)}
+.fc-card.t5 .fc-back{background:linear-gradient(160deg,#B8860B,#8A6D1B)}
+.panel.a6 .cap{background:linear-gradient(135deg,#D33648,#B01C2E)}
+.rc6 .rc-head{background:linear-gradient(135deg,#D33648,#B01C2E)}
+.fc-card.t6 .fc-back{background:linear-gradient(160deg,#D33648,#B01C2E)}
+.panel.a7 .cap{background:linear-gradient(135deg,#43A047,#2E7D32)}
+.rc7 .rc-head{background:linear-gradient(135deg,#43A047,#2E7D32)}
+.fc-card.t7 .fc-back{background:linear-gradient(160deg,#43A047,#2E7D32)}
+.panel.a8 .cap{background:linear-gradient(135deg,#E8425F,#B71C3A)}
+.rc8 .rc-head{background:linear-gradient(135deg,#E8425F,#B71C3A)}
+.fc-card.t8 .fc-back{background:linear-gradient(160deg,#E8425F,#B71C3A)}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <div class="crest">
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <rect x="2" y="2" width="60" height="60" rx="13" fill="#062A25" stroke="#F2B705" stroke-width="1.5"/>
+        <g fill="none" stroke="#E9F4EE" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M32 12 L14 46 h36 z"/>
+          <path d="M25 33 l7-8 7 8"/>
+        </g>
+        <circle cx="32" cy="20" r="3" fill="#F2B705"/>
+      </svg>
+      <div class="who">Edexcel GCSE (9–1) Religious Studies B · Paper 2, Question 3 · Islam
+        <b>Harlington School · Grade 9 Summit</b></div>
+    </div>
+    <h1>Living the Muslim Life</h1>
+    <p class="sub">Eight topics, one summit. The divergent views set side by side, the key ideas connected, and the (d) evaluated the Level-4 way — everything for the top of the mark scheme, in one place.</p>
+    <div class="bigq">
+      <span class="q">The<br>big<br>question</span>
+      <p>How is Islam lived, pillar by pillar — and which practices are truly essential?</p>
+    </div>
+  </div>
+</header>
+<section id="spectrum">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">01</span><h2>The divergent views explorer</h2></div>
+    <p class="sec-lead">Every (d) in this unit turns on the <b>divergent views</b> — set side by side, exactly as the examiner wants. Pick a topic, then tap a position to see what it claims. The Grade 9 move and the 7-minute discussion question travel with each topic.</p>
+    <div class="spectrum-card">
+      <div class="tabs" role="tablist" aria-label="Choose a topic">
+<button class="tab" role="tab" aria-selected="true" data-topic="t1">Ten Obligatory Acts</button>
+<button class="tab" role="tab" aria-selected="false" data-topic="t2">Shahadah</button>
+<button class="tab" role="tab" aria-selected="false" data-topic="t3">Salah</button>
+<button class="tab" role="tab" aria-selected="false" data-topic="t4">Sawm</button>
+<button class="tab" role="tab" aria-selected="false" data-topic="t5">Zakah &amp; khums</button>
+<button class="tab" role="tab" aria-selected="false" data-topic="t6">Hajj</button>
+<button class="tab" role="tab" aria-selected="false" data-topic="t7">Jihad</button>
+<button class="tab" role="tab" aria-selected="false" data-topic="t8">Celebrations</button>
+      </div>
+      <div class="axis">
+        <div class="axis-labels"><span class="l" id="poleL"></span><span class="r" id="poleR"></span></div>
+        <div class="bar"></div>
+        <div class="ticks" id="ticks"></div>
+      </div>
+      <div class="readout" id="readout" aria-live="polite"></div>
+      <p class="hint">Tap a circle — or use Tab and Enter — to explore each position.</p>
+    </div>
+  </div>
+</section>
+<section>
+  <div class="wrap">
+    <div class="thread">
+      <div class="wrap2">
+        <h2>The thread that ties it together</h2>
+        <p class="lead">Grade 9 is not more content — it is three habits applied to every topic. Spot them and every (d) in this unit opens the same way.</p>
+        <div class="threads">
+          <div class="tcard"><div class="t">Divergent views, side by side</div><p>Never one view at a time. Set them against each other — where they agree, and the exact point they part. That comparison IS the analysis.</p></div>
+          <div class="tcard"><div class="t">The (d) regulation</div><p>Chain each point (claim → because → this means → therefore), steelman the other side, weigh BOTH arguments — a strength AND a limit — then justify the conclusion.</p></div>
+          <div class="tcard"><div class="t">Textbook-first accuracy</div><p>A correctly named source beats a vague paraphrase. One learned line from each source, placed precisely, is worth more than a paragraph of drift.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="topics">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">02</span><h2>Eight topics, one summit</h2></div>
+    <p class="sec-lead">Each panel is a topic’s <b>key idea</b> — the connective explanation that links the key words into one argument. Learn the chain, not the list.</p>
+    <div class="triptych">
+<div class="panel a1"><div class="cap"><div class="n">Topic 1 · I17</div><h3>Ten Obligatory Acts</h3><div class="ask">What must a Muslim DO to live the faith — and why do Sunnis and Shi’as answer differently?</div></div><div class="body"><div class="row"><span class="v">MINUS ONE</span><span class="d">Remove shahadah — Shi’as still see it as essential to become a Muslim, just not an Act to perform.</span></div><div class="row"><span class="v">THE FOUR</span><span class="d">Salah, sawm, zakah and hajj carry straight across, proving both systems share one practical core.</span></div><div class="row"><span class="v">PLUS SIX</span><span class="d">Add khums, jihad, amr-bil-ma’ruf, nahi anil munkar, tawalla and tabarra = ten, marking Shi’a identity.</span></div><div class="row"><span class="v">WHY NO SHAHADAH</span><span class="d">The Imams fixed the ten before Sunnis had made shahadah the first pillar — history, not rejection.</span></div></div></div>
+<div class="panel a2"><div class="cap"><div class="n">Topic 2 · I18</div><h3>Shahadah</h3><div class="ask">Why is the shahadah called the first and most important pillar — and how do Shi’as say it differently?</div></div><div class="body"><div class="row"><span class="v">HALF ONE</span><span class="d">“No god but God” → tawhid: the oneness of creation, humanity, angels and holy books, no rivals.</span></div><div class="row"><span class="v">HALF TWO</span><span class="d">“Muhammad is the prophet of God” → the Qur’an as God’s Word, so the sunnah becomes the path to follow.</span></div><div class="row"><span class="v">SO IT COMES FIRST</span><span class="d">Believe the shahadah and the pillars follow; with no baptism, reciting it before witnesses makes you Muslim.</span></div><div class="row"><span class="v">THE NON-ACTION PILLAR</span><span class="d">The only pillar you do not DO — Kurshid Ahmad calls Iman the pillar that sustains the whole structure.</span></div></div></div>
+<div class="panel a3"><div class="cap"><div class="n">Topic 3 · I19</div><h3>Salah</h3><div class="ask">How and why do Muslims pray — and is salah the most important of the Five Pillars?</div></div><div class="body"><div class="row"><span class="v">FACING JERUSALEM</span><span class="d">Muhammad first prayed toward Bayt al-Maqdis (Jerusalem) for 16–17 months, a hadith records.</span></div><div class="row"><span class="v">THE MOVE</span><span class="d">In Madinah, 622CE, God turned prayer to Makkah (Surah 2:149) — the qibla Muslims still face today.</span></div><div class="row"><span class="v">BUILT UP OVER TIME</span><span class="d">An afternoon prayer was added; by 628CE salah was fixed at five daily times, as Muhammad demonstrated.</span></div></div></div>
+<div class="panel a4"><div class="cap"><div class="n">Topic 4 · I20</div><h3>Sawm</h3><div class="ask">Why do Muslims fast in Ramadan, and what makes the Night of Power so important?</div></div><div class="body"><div class="row"><span class="v">CAVE HIRA</span><span class="d">c.610CE Muhammad, meditating in Cave Hira after growing troubled by Makkah’s idols, meets the angel Jibril.</span></div><div class="row"><span class="v">“RECITE”</span><span class="d">Jibril’s command, given twice, brings the first of 23 years of revelation — Surah 96:1–5.</span></div><div class="row"><span class="v">THE LAST TEN NIGHTS</span><span class="d">It falls in the last ten nights of Ramadan; most Sunnis mark the 27th with mosque prayers.</span></div><div class="row"><span class="v">“BETTER THAN A THOUSAND MONTHS”</span><span class="d">Surah 97: worship that night outweighs 83 years and can bring forgiveness of all a person’s sins.</span></div></div></div>
+<div class="panel a5"><div class="cap"><div class="n">Topic 5 · I21</div><h3>Zakah &amp; khums</h3><div class="ask">Why do Muslims give away part of their wealth, and why do Shi’as pay khums as well as zakah?</div></div><div class="body"><div class="row"><span class="v">WEALTH CAN CUT YOU OFF</span><span class="d">Islam teaches hoarded wealth can be evil and cut a person off from God, so giving keeps faith alive.</span></div><div class="row"><span class="v">THE THRESHOLD</span><span class="d">Only wealth above the nisab is liable (about £2220 in the UK) — those below it pay nothing at all.</span></div><div class="row"><span class="v">PAY TO PURIFY</span><span class="d">Giving the fixed share purifies the wealth kept back; some scholars say it helps prayers be accepted.</span></div><div class="row"><span class="v">BOTH GAIN</span><span class="d">Giver purifies wealth and worships God; receiver escapes poverty — both gain forgiveness of sins.</span></div></div></div>
+<div class="panel a6"><div class="cap"><div class="n">Topic 6 · I22</div><h3>Hajj</h3><div class="ask">Why do Muslims make hajj, and is it truly essential for every Muslim?</div></div><div class="body"><div class="row"><span class="v">8TH — KA’ABA</span><span class="d">Circle the Ka’aba seven times (tawaf) reciting the talbiya, run the Ma’sa, then walk on to Mina.</span></div><div class="row"><span class="v">9TH — ARAFAT</span><span class="d">Stand at Arafat (Waquf) confessing sins believed instantly forgiven; missing it means repeating hajj.</span></div><div class="row"><span class="v">10TH — MINA</span><span class="d">Stone the pillars (rejecting Satan) and sacrifice — shared worldwide by all Muslims as Id-ul-Adha.</span></div><div class="row"><span class="v">THEN — HOME</span><span class="d">A final tawaf and circuit of the Ma’sa completes hajj; the pilgrim returns home a respected hajji.</span></div></div></div>
+<div class="panel a7"><div class="cap"><div class="n">Topic 7 · I23</div><h3>Jihad</h3><div class="ask">What does jihad really mean — and which struggle matters more, the greater or the lesser?</div></div><div class="body"><div class="row"><span class="v">GREATER = INNER</span><span class="d">Struggling to perform the Pillars, follow Shari’ah and copy Muhammad — this stops a Muslim being a hypocrite.</span></div><div class="row"><span class="v">LESSER = OUTER</span><span class="d">Only THEN tackle Muslim societies’ underdevelopment, unfair trading and poverty, before the wider world.</span></div><div class="row"><span class="v">ORDER, NOT SIZE</span><span class="d">You cannot cleanse society while corrupt yourself; Muslim lawyers teach self must be conquered first.</span></div><div class="row"><span class="v">STRICT LIMITS</span><span class="d">Holy War needs self-defence, a pious leader, faithful soldiers, a real chance of success, sparing the innocent.</span></div></div></div>
+<div class="panel a8"><div class="cap"><div class="n">Topic 8 · I24</div><h3>Celebrations</h3><div class="ask">Which days do Muslims mark, and why do Id-ul-Ghadeer and Ashura divide Sunnis from Shi’as?</div></div><div class="body"><div class="row"><span class="v">ID-UL-FITR ← SAWM</span><span class="d">The first daylight meal in a month; Muhammad kept the first Id-ul-Fitr, so Muslims feel they copy him.</span></div><div class="row"><span class="v">ID-UL-ADHA ← HAJJ</span><span class="d">The Mina sacrifice remembers Ibrahim; meat is split between the poor, relatives and family, worldwide.</span></div><div class="row"><span class="v">NOT CELEBRATION FOR ITS OWN SAKE</span><span class="d">Both draw worshippers close to God, unlike parties for their own sake such as Christmas or Diwali.</span></div><div class="row"><span class="v">THE SHIRK LINE</span><span class="d">Salafi Muslims reject extra festivals like Mawlid al-Nabi as verging on the grave sin of shirk.</span></div></div></div>
+    </div>
+  </div>
+</section>
+<section id="resources">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">03</span><h2>Your resources</h2></div>
+    <p class="sec-lead">Everything for the unit, in one place: each topic’s lesson, booklet pages and podcast episode — plus the unit-wide booklet editions, schemes of work and the guide.</p>
+    <div class="res-note" id="resNote">
+      <b>Teacher setup:</b> links aren't set yet. Open this file, find the <code>LINKS</code> list near the bottom, and paste each SharePoint share link once. Buttons with no link show as "Link not set".
+    </div>
+    <div class="res-grid">
+<div class="res-col rc1"><div class="rc-head"><span class="rc-n">Topic 1 · I17</span><h3>Ten Obligatory Acts</h3></div><a class="res-btn" data-key="t1_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a><a class="res-btn" data-key="t1_booklet"><span class="ic">✎</span><span>Booklet pages</span><span class="go">↗</span></a><a class="res-btn" data-key="t1_podcast"><span class="ic">♪</span><span>Podcast · I17</span><span class="go">↗</span></a></div>
+<div class="res-col rc2"><div class="rc-head"><span class="rc-n">Topic 2 · I18</span><h3>Shahadah</h3></div><a class="res-btn" data-key="t2_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a><a class="res-btn" data-key="t2_booklet"><span class="ic">✎</span><span>Booklet pages</span><span class="go">↗</span></a><a class="res-btn" data-key="t2_podcast"><span class="ic">♪</span><span>Podcast · I18</span><span class="go">↗</span></a></div>
+<div class="res-col rc3"><div class="rc-head"><span class="rc-n">Topic 3 · I19</span><h3>Salah</h3></div><a class="res-btn" data-key="t3_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a><a class="res-btn" data-key="t3_booklet"><span class="ic">✎</span><span>Booklet pages</span><span class="go">↗</span></a><a class="res-btn" data-key="t3_podcast"><span class="ic">♪</span><span>Podcast · I19</span><span class="go">↗</span></a></div>
+<div class="res-col rc4"><div class="rc-head"><span class="rc-n">Topic 4 · I20</span><h3>Sawm</h3></div><a class="res-btn" data-key="t4_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a><a class="res-btn" data-key="t4_booklet"><span class="ic">✎</span><span>Booklet pages</span><span class="go">↗</span></a><a class="res-btn" data-key="t4_podcast"><span class="ic">♪</span><span>Podcast · I20</span><span class="go">↗</span></a></div>
+<div class="res-col rc5"><div class="rc-head"><span class="rc-n">Topic 5 · I21</span><h3>Zakah &amp; khums</h3></div><a class="res-btn" data-key="t5_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a><a class="res-btn" data-key="t5_booklet"><span class="ic">✎</span><span>Booklet pages</span><span class="go">↗</span></a><a class="res-btn" data-key="t5_podcast"><span class="ic">♪</span><span>Podcast · I21</span><span class="go">↗</span></a></div>
+<div class="res-col rc6"><div class="rc-head"><span class="rc-n">Topic 6 · I22</span><h3>Hajj</h3></div><a class="res-btn" data-key="t6_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a><a class="res-btn" data-key="t6_booklet"><span class="ic">✎</span><span>Booklet pages</span><span class="go">↗</span></a><a class="res-btn" data-key="t6_podcast"><span class="ic">♪</span><span>Podcast · I22</span><span class="go">↗</span></a></div>
+<div class="res-col rc7"><div class="rc-head"><span class="rc-n">Topic 7 · I23</span><h3>Jihad</h3></div><a class="res-btn" data-key="t7_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a><a class="res-btn" data-key="t7_booklet"><span class="ic">✎</span><span>Booklet pages</span><span class="go">↗</span></a><a class="res-btn" data-key="t7_podcast"><span class="ic">♪</span><span>Podcast · I23</span><span class="go">↗</span></a></div>
+<div class="res-col rc8"><div class="rc-head"><span class="rc-n">Topic 8 · I24</span><h3>Celebrations</h3></div><a class="res-btn" data-key="t8_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a><a class="res-btn" data-key="t8_booklet"><span class="ic">✎</span><span>Booklet pages</span><span class="go">↗</span></a><a class="res-btn" data-key="t8_podcast"><span class="ic">♪</span><span>Podcast · I24</span><span class="go">↗</span></a></div>
+    </div>
+    <div class="res-wide">
+      <a class="res-btn big" data-key="booklet"><span class="ic">✎</span><span><b>Unit booklet</b> — the close-reading companion, four pages per topic</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="booklet_keyidea"><span class="ic">◈</span><span><b>Key Idea edition</b> — the booklet with the key-idea panels and 7-minute discussions</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="sow"><span class="ic">▤</span><span><b>Schemes of work</b> — one planning document per lesson</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="guide"><span class="ic">🏔</span><span><b>How to use the lessons</b> — the Grade 9 Summit teacher guide</span><span class="go">↗</span></a>
+    </div>
+  </div>
+</section>
+<section id="revise">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">04</span><h2>How to revise this unit</h2></div>
+    <p class="sec-lead">Use the resources in this order — the same loop as the lessons, so revision feels like coming home.</p>
+    <div class="revise">
+      <div class="steps">
+        <div class="step"><div><h4>Bell work first — retrieve before you re-read</h4><p>Five recall questions from memory, self-scored /5. Then the come-back tracker: the same five at +1 week and +1 month.</p></div></div>
+        <div class="step"><div><h4>Listen along to the episode</h4><p>One six-minute podcast per topic. Capture the six mind-map branches as it plays — the episode does the exposition so you can do the thinking.</p></div></div>
+        <div class="step"><div><h4>Work the booklet pages</h4><p>Four pages per topic: the key idea, two scripture quotes, the divergent views side by side, and the full (d). The Key Idea edition adds the 7-minute discussion.</p></div></div>
+        <div class="step"><div><h4>Write the (d) the Level-4 way</h4><p>Chain · steelman · weigh both (strength AND limit) · justify. Check yourself against the Level 3-vs-Level 4 models on lessons 3 and 6.</p></div></div>
+      </div>
+      <div class="ao">
+        <div class="h ao1">The marks map · (a) (b) (c) — 12 marks</div>
+        <div class="c"><b>(a) 3 marks —</b> outline three. Three crisp sentences, no development needed.</div>
+        <div class="c"><b>(b) 4 marks —</b> explain two. Each point + one development.</div>
+        <div class="c"><b>(c) 5 marks —</b> explain two WITH a named source — one learned line, placed exactly.</div>
+        <div class="h ao2">The (d) · 12 marks — half the question</div>
+        <div class="c"><b>What it is —</b> a full evaluation: agree and disagree developed, the non-religious voice engaged where the question invites it.</div>
+        <div class="c"><b>The grade 9 gap —</b> Level 3 asserts its judgement; Level 4 chains, weighs both sides, and justifies a conclusion that survives the strongest counter.</div>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="watch">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">05</span><h2>Watch: the whole unit in one go</h2></div>
+    <p class="sec-lead">A full review of <b>Living the Muslim Life</b> — all eight topics as one argument. Best watched before you revise, then again to check recall.</p>
+    <div class="video-frame" id="videoFrame">
+      <div class="video-placeholder" id="videoPlaceholder">
+        <div class="vp-badge">Video not set</div>
+        <p><b>Teacher:</b> paste the YouTube link in the <code>VIDEO_URL</code> line near the bottom of this file. The player then appears here automatically.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="flashcards">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">06</span><h2>Flashcards — test yourself</h2></div>
+    <p class="sec-lead">Flip a card to check yourself. Switch between <b>key terms</b> (term → meaning) and <b>divergent views</b> (view → what it claims), and filter by topic.</p>
+    <div class="fc-controls">
+      <div class="fc-tabs" role="tablist" aria-label="Topic">
+<button class="fc-btn" role="tab" aria-selected="true" data-topic="all">All</button>
+<button class="fc-btn" role="tab" aria-selected="false" data-topic="t1">Ten Obligatory Acts</button>
+<button class="fc-btn" role="tab" aria-selected="false" data-topic="t2">Shahadah</button>
+<button class="fc-btn" role="tab" aria-selected="false" data-topic="t3">Salah</button>
+<button class="fc-btn" role="tab" aria-selected="false" data-topic="t4">Sawm</button>
+<button class="fc-btn" role="tab" aria-selected="false" data-topic="t5">Zakah &amp; khums</button>
+<button class="fc-btn" role="tab" aria-selected="false" data-topic="t6">Hajj</button>
+<button class="fc-btn" role="tab" aria-selected="false" data-topic="t7">Jihad</button>
+<button class="fc-btn" role="tab" aria-selected="false" data-topic="t8">Celebrations</button>
+      </div>
+      <div class="fc-type" role="tablist" aria-label="Card type">
+        <button class="fc-btn" role="tab" aria-selected="true"  data-type="terms">Key terms</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-type="views">Divergent views</button>
+      </div>
+      <span class="fc-hint">Tap any card to flip · <span id="fcCount"></span></span>
+    </div>
+    <div class="fc-grid" id="fcGrid"></div>
+  </div>
+</section>
+<footer>
+  <div class="wrap">
+    <span>Living the Muslim Life · Grade 9 Summit · unit at a glance</span>
+    <span class="amber">Harlington School · Edexcel GCSE (9–1) RS Spec B</span>
+  </div>
+</footer>
+<script>
+const DATA = {"t1":{"poles":["Sunni — the Five Pillars","What both share"],"punch":"4 + 6 = 10 — same core duties, but the last two (tawalla, tabarra) point to the Imams Sunnis reject.","discuss":"Does adding six extra duties make Shi’a Islam more demanding, or just more explicit about shared values?","nodes":[{"x":12,"nm":"Sunni — the Five Pillars","sb":"the House of Islam","auth":"the House of Islam","claim":"Shahadah, salah, zakah, sawm and hajj. Performing the Five Pillars is the practical expression of being a Muslim, and observing all five shows a person is a good Muslim. Shahadah is the first pillar."},{"x":50,"nm":"Shi’a — the Ten Obligatory Acts","sb":"established by the Imams","auth":"established by the Imams","claim":"The four practical pillars (salah, sawm, zakah, hajj) PLUS khums, jihad, amr-bil-ma’ruf (doing good), nahi anil munkar (avoiding evil), tawalla and tabarra. Shahadah is NOT one of the ten. The last acts refer to the Imams, whom Sunnis reject."},{"x":88,"nm":"What both share","sb":"why it matters","auth":"why it matters","claim":"Both agree that doing good and avoiding evil are essential to being Muslim, that the acts follow the example of Muhammad, and that fulfilling them lets a believer face the Day of Judgement confident Allah will allow them into heaven."}]},"t2":{"poles":["Sunni Muslims","What both share"],"punch":"Miss one of the other pillars and you may still be a Muslim; miss this belief and you are not.","discuss":"Can a belief said in words alone really be the “most important” pillar over actions repeated daily?","nodes":[{"x":12,"nm":"Sunni Muslims","sb":"first pillar","auth":"first pillar","claim":"The shahadah is the FIRST pillar and the most important — the creed that sums up Islam. Recited in Arabic, it is all that is needed to become a Muslim, and it shows that Islam rejects polytheism and the Christian belief that Jesus is the Son of God."},{"x":50,"nm":"Shi’a Muslims","sb":"add Ali","auth":"add Ali","claim":"Shi’as agree the oneness of God and the prophethood of Muhammad are essential, but most ADD that “Ali is the vicegerent of God”, because they believe God instructed Muhammad to designate Ali as leader. For Shi’as the shahadah is not one of the Ten Obligatory Acts."},{"x":88,"nm":"What both share","sb":"why it matters","auth":"why it matters","claim":"Both agree that reciting the shahadah in Arabic is all that is required to become a Muslim, that it declares the unity of God (tawhid) and the prophethood of Muhammad, and that good Muslims say it at least five times a day."}]},"t3":{"poles":["Sunni practice","What both share"],"punch":"One city, one language, one direction — but that unity of the ummah was SET by revelation, not assumed.","discuss":"If salah’s direction and timing changed during Muhammad’s life, could its practice still change today?","nodes":[{"x":12,"nm":"Sunni practice","sb":"five separate times","auth":"five separate times","claim":"Salah is prayed at five separate set times a day on a prayer mat, facing Makkah, in Arabic, repeating the shahadah in each prayer. It is one of the Five Pillars and is preferably performed in the mosque behind the imam."},{"x":50,"nm":"Shi’a practice","sb":"a hadith’s guidance","auth":"a hadith’s guidance","claim":"Shi’as face Makkah too, but with differences drawn from a Shi’a hadith: praying on a tablet of wood or holy soil rather than a mat, and combining the second and third prayers and the fourth and fifth — praying at three times rather than five. Salah is one of the Ten Obligatory Acts."},{"x":88,"nm":"What both share","sb":"why it matters","auth":"why it matters","claim":"For both, salah puts the believer in direct contact with God five times a day, reminds them of submission, unites the ummah praying the same words in the same direction, and — a hadith says — “the five prayers remove sins as water removes dirt”."}]},"t4":{"poles":["Sunni belief","What both share"],"punch":"Ramadan is not about hunger — it thanks God for the Qur’an, and the Night of Power is why the month exists.","discuss":"If no one knows the exact date of the Night of Power, does that make it more or less meaningful?","nodes":[{"x":12,"nm":"Sunni belief","sb":"27th of Ramadan","auth":"27th of Ramadan","claim":"Most Sunnis celebrate the Night of Power on the 27th of Ramadan, attending mosque for special prayers and reading the Qur’an. Praying that night is better than a thousand months of prayer and can bring forgiveness of all a person’s sins."},{"x":50,"nm":"Shi’a belief","sb":"destiny & the Imamate","auth":"destiny & the Imamate","claim":"Shi’as stress that on Laylat al-Qadr Allah determines everyone’s destiny (qadr) for the coming year. A hadith from Imam Ali teaches that on this night God decreed the Imamate of Ali and his offspring — tying the night to Shi’a belief about the Imams."},{"x":88,"nm":"What both share","sb":"why it matters","auth":"why it matters","claim":"Both fast the whole month dawn to dusk, keep the exemptions, and honour the Night of Power as when the Qur’an began to be revealed — “the night of al-Qadr is better than a thousand months”. Ramadan trains self-control and thanks God for the Qur’an."}]},"t5":{"poles":["Sunni Muslims","What both share"],"punch":"“Zakah” means purification: you give a portion precisely so the rest is clean.","discuss":"Is a fixed 2½% rate fairer than voluntary giving, or does it let the very wealthy off too lightly?","nodes":[{"x":12,"nm":"Sunni Muslims","sb":"zakah + sadaqah","auth":"zakah + sadaqah","claim":"Pay zakah (2½% above the nisab) as the third pillar, following the Shari’ah based on the sunnah. On top they give voluntary sadaqah. They read the “fifth” of Surah 8:41 as applying only to the spoils of war, not to income."},{"x":50,"nm":"Shi’a Muslims","sb":"zakah + khums","auth":"zakah + khums","claim":"Also pay zakah (on farm produce, gold and silver) and sadaqah, but ADD khums — one fifth of yearly surplus — reading Surah 8:41 as applying to business profit. Half of khums supports the descendants of the Prophet and religious scholars, keeping Shi’a leaders independent."},{"x":88,"nm":"What both share","sb":"why it matters","auth":"why it matters","claim":"Both hold that giving is a sign of submission to God, that it purifies the wealth kept back, that it redistributes wealth from rich to poor, and that both giver and receiver gain spiritual benefit — helping a fellow Muslim have their sins forgiven."}]},"t6":{"poles":["Hajj is essential","What both share"],"punch":"The order IS the meaning: standing at Arafat prepares the pilgrim for Judgement before the sins can count.","discuss":"Since missing Arafat means repeating the whole hajj, is that rule fair given how costly and risky it is?","nodes":[{"x":12,"nm":"Hajj is essential","sb":"the fifth pillar","auth":"the fifth pillar","claim":"Hajj completes the Five Pillars and so completes a Muslim’s life. It lets pilgrims follow Muhammad’s actions in the very places he did them, visit the holiest sites, and prepare for the Day of Judgement at Arafat so their sins will not count against them."},{"x":50,"nm":"Hajj is not required of all","sb":"the Qur’an excuses some","auth":"the Qur’an excuses some","claim":"Hajj is the ONLY pillar that is not compulsory. Muslims should only go if they have enough money for their dependants and are physically and mentally fit. The challenges are real: huge cost, deadly crowds (over 1,800 died in the 2015 stampede), extreme heat and language problems."},{"x":88,"nm":"What both share","sb":"why it matters","auth":"why it matters","claim":"Both agree hajj is deeply significant: it shows devotion, unites many races and languages into one ummah performing the same actions, brings the pilgrim as close to God as possible in this life, and earns the honoured status of hajji."}]},"t7":{"poles":["Greater jihad","What Islam actually teaches"],"punch":"Most Muslims call the INNER struggle greater — it is harder, and everything else depends on winning it first.","discuss":"Could a group calling itself “jihadi” ever meet all six strict conditions scholars set for a lawful Holy War?","nodes":[{"x":10,"nm":"Greater jihad","sb":"the inner struggle","auth":"the inner struggle","claim":"Most Muslims believe the GREATER jihad is the struggle to make oneself a perfect Muslim — keeping the Pillars and Shari’ah, following Muhammad’s example, removing evil from oneself first. It stops a Muslim being a hypocrite (Surah 61:2)."},{"x":37,"nm":"Lesser jihad","sb":"removing evil from society","auth":"removing evil from society","claim":"Having conquered evil in themselves, Muslims fight injustice in society — underdevelopment, unfair trading, poverty. Holy War is allowed ONLY under strict conditions: self-defence, led by a religious leader, sparing women and children, after inviting the enemy to Islam peaceably."},{"x":64,"nm":"The “jihadi” view","sb":"a minority","auth":"a minority","claim":"Some Muslims feel entitled to wage Holy War on non-Muslims and call themselves jihadi, citing that those who die in God’s way “go straight to paradise” (Surah 3:169). They argue Muhammad was forced to fight to defend Makkah."},{"x":90,"nm":"What Islam actually teaches","sb":"the condemnation","auth":"the condemnation","claim":"True Islam replies that “those who kill innocent people in the name of Islam… should think twice. Their act is categorically condemned by God.” Such people disobey God’s commandments and follow the fabricated claims of their leaders."}]},"t8":{"poles":["Shared by all Muslims","Why Sunnis reject them"],"punch":"Islam has no festivals of its own — the two Ids are the pillars sawm and hajj reaching their end.","discuss":"If Islam has only two official festivals, is celebrating extra ones like Mawlid devotion or dangerous shirk?","nodes":[{"x":10,"nm":"Shared by all Muslims","sb":"Id-ul-Fitr & Id-ul-Adha","auth":"Id-ul-Fitr & Id-ul-Adha","claim":"Islam has only two official festivals, both tied to the pillars. Id-ul-Fitr celebrates the completion of the Ramadan fast (sawm); Id-ul-Adha, during hajj, remembers Ibrahim’s willingness to sacrifice Ismail. Both Sunnis and Shi’as keep them."},{"x":37,"nm":"Shi’a only — Id-ul-Ghadeer","sb":"Ali as successor","auth":"Ali as successor","claim":"On 18 Dhu al-Hijjah Shi’as celebrate Muhammad appointing Ali as his successor at Ghadeer Khum, saluted as Amir al-Mu’minin. It means Ali should have been the first Caliph and that Shi’a beliefs about Ali are correct."},{"x":64,"nm":"Shi’a only — Ashura","sb":"Husayn at Karbala","auth":"Husayn at Karbala","claim":"On 10 Muharram Shi’as mourn Husayn, Muhammad’s grandson, killed by Yazid’s army at Karbala. Through fasting, processions and grief they identify with his martyrdom as the struggle of good against tyranny and injustice."},{"x":90,"nm":"Why Sunnis reject them","sb":"the objection","auth":"the objection","claim":"Sunnis argue Muhammad would have appointed Ali at his final sermon before millions, not at Ghadeer, and cannot accept the Shi’a view of Ashura, since Yazid was a Sunni caliph — so these days deepen the Sunni–Shi’a divide."}]}};
+const LABELS = {"t1":"Ten Obligatory Acts","t2":"Shahadah","t3":"Salah","t4":"Sawm","t5":"Zakah & khums","t6":"Hajj","t7":"Jihad","t8":"Celebrations"};
+const ticks=document.getElementById("ticks");
+const readout=document.getElementById("readout");
+const poleL=document.getElementById("poleL"), poleR=document.getElementById("poleR");
+const firstKey=Object.keys(DATA)[0];
+let topic=firstKey, active=0;
+function esc2(s){return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+function renderReadout(n){
+  const d=DATA[topic];
+  let html='<span class="badge">'+esc2(n.auth)+'</span><div class="body">'+
+    '<h4>'+esc2(n.nm)+' <span style="opacity:.6;font-style:italic;font-weight:400">· '+esc2(n.sb)+'</span></h4>'+
+    '<p>'+esc2(n.claim)+'</p>';
+  if(d.punch) html+='<div class="g9"><span class="k">The grade 9 move</span><br>'+esc2(d.punch)+'</div>';
+  if(d.discuss) html+='<div class="g9"><span class="k">Discuss · 7 min</span><br>'+esc2(d.discuss)+'</div>';
+  html+='</div>';
+  readout.innerHTML=html;
+}
+function renderTopic(){
+  const d=DATA[topic];
+  poleL.textContent=d.poles[0]; poleR.textContent=d.poles[1];
+  ticks.innerHTML="";
+  d.nodes.forEach(function(n,i){
+    const el=document.createElement("div");
+    el.className="node"; el.style.left=n.x+"%"; el.tabIndex=0;
+    el.setAttribute("role","button");
+    el.setAttribute("aria-label",n.nm+": "+n.sb);
+    el.dataset.active=(i===active);
+    el.innerHTML='<div class="dot"></div><div class="nm">'+esc2(n.nm)+'</div><div class="sb">'+esc2(n.sb)+'</div>';
+    const pick=function(){active=i;[].slice.call(ticks.children).forEach(function(c,j){c.dataset.active=(j===i)});renderReadout(n);};
+    el.addEventListener("click",pick);
+    el.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();pick();}});
+    ticks.appendChild(el);
+  });
+  active=Math.min(active,d.nodes.length-1);
+  [].slice.call(ticks.children).forEach(function(c,j){c.dataset.active=(j===active)});
+  renderReadout(d.nodes[active]);
+}
+document.querySelectorAll(".tab").forEach(function(t){
+  t.addEventListener("click",function(){
+    document.querySelectorAll(".tab").forEach(function(x){x.setAttribute("aria-selected","false")});
+    t.setAttribute("aria-selected","true");
+    topic=t.dataset.topic; active=0; renderTopic();
+  });
+});
+renderTopic();
+const FLASHCARDS = {"t1":{"terms":[{"term":"Five Pillars","def":"The five duties of Sunni Islam: shahadah, salah, zakah, sawm and hajj — the ‘House of Islam’."},{"term":"Ten Obligatory Acts","def":"The ten duties a good Shi’a Muslim must perform, established by Muhammad, Ali and the Imams."},{"term":"Amr-bil-ma’ruf","def":"“Always doing that which is good” — seeking out and helping those in trouble (a Shi’a act)."},{"term":"Tabarra","def":"“Hating those who hate Allah and his chosen ones” — one of the last two acts, tied to the Imams."}],"views":[{"n":"Sunni — the Five Pillars","tag":"the House of Islam","c":"Shahadah, salah, zakah, sawm and hajj. Performing the Five Pillars is the practical expression of being a Muslim, and observing all five shows a person is a good Muslim. Shahadah is the first pillar."},{"n":"Shi’a — the Ten Obligatory Acts","tag":"established by the Imams","c":"The four practical pillars (salah, sawm, zakah, hajj) PLUS khums, jihad, amr-bil-ma’ruf (doing good), nahi anil munkar (avoiding evil), tawalla and tabarra. Shahadah is NOT one of the ten. The last acts refer to the Imams, whom Sunnis reject."},{"n":"What both share","tag":"why it matters","c":"Both agree that doing good and avoiding evil are essential to being Muslim, that the acts follow the example of Muhammad, and that fulfilling them lets a believer face the Day of Judgement confident Allah will allow them into heaven."}]},"t2":{"terms":[{"term":"Shahadah","def":"The declaration of faith: “There is no god but God, and Muhammad is the prophet of God.”"},{"term":"Iman","def":"Faith — the belief on which all Muslim worship (ibadah) is based."},{"term":"Polytheism","def":"Worshipping many gods — rejected by the shahadah."},{"term":"Vicegerency","def":"Looking after something on behalf of someone else; Shi’as call Ali the vicegerent of God."}],"views":[{"n":"Sunni Muslims","tag":"first pillar","c":"The shahadah is the FIRST pillar and the most important — the creed that sums up Islam. Recited in Arabic, it is all that is needed to become a Muslim, and it shows that Islam rejects polytheism and the Christian belief that Jesus is the Son of God."},{"n":"Shi’a Muslims","tag":"add Ali","c":"Shi’as agree the oneness of God and the prophethood of Muhammad are essential, but most ADD that “Ali is the vicegerent of God”, because they believe God instructed Muhammad to designate Ali as leader. For Shi’as the shahadah is not one of the Ten Obligatory Acts."},{"n":"What both share","tag":"why it matters","c":"Both agree that reciting the shahadah in Arabic is all that is required to become a Muslim, that it declares the unity of God (tawhid) and the prophethood of Muhammad, and that good Muslims say it at least five times a day."}]},"t3":{"terms":[{"term":"Salah","def":"The five-times-a-day ritual prayer of Islam, performed at set times."},{"term":"Wudu","def":"The ritual washing of hands, face, arms, head and feet before salah."},{"term":"Qibla","def":"The direction of the Ka’aba in Makkah that Muslims face to pray."},{"term":"Jummah","def":"The Friday midday congregational prayer, said in the mosque with a khutba (sermon)."}],"views":[{"n":"Sunni practice","tag":"five separate times","c":"Salah is prayed at five separate set times a day on a prayer mat, facing Makkah, in Arabic, repeating the shahadah in each prayer. It is one of the Five Pillars and is preferably performed in the mosque behind the imam."},{"n":"Shi’a practice","tag":"a hadith’s guidance","c":"Shi’as face Makkah too, but with differences drawn from a Shi’a hadith: praying on a tablet of wood or holy soil rather than a mat, and combining the second and third prayers and the fourth and fifth — praying at three times rather than five. Salah is one of the Ten Obligatory Acts."},{"n":"What both share","tag":"why it matters","c":"For both, salah puts the believer in direct contact with God five times a day, reminds them of submission, unites the ummah praying the same words in the same direction, and — a hadith says — “the five prayers remove sins as water removes dirt”."}]},"t4":{"terms":[{"term":"Sawm","def":"Fasting — the fourth pillar; the compulsory fast during Ramadan."},{"term":"Ramadan","def":"The ninth month of the Islamic year, when the Qur’an was first revealed."},{"term":"Iftar","def":"The meal breaking the fast at night (suhur is the meal before dawn)."},{"term":"Laylat al-Qadr","def":"The Night of Power — the night Muhammad received the first revelation of the Qur’an."}],"views":[{"n":"Sunni belief","tag":"27th of Ramadan","c":"Most Sunnis celebrate the Night of Power on the 27th of Ramadan, attending mosque for special prayers and reading the Qur’an. Praying that night is better than a thousand months of prayer and can bring forgiveness of all a person’s sins."},{"n":"Shi’a belief","tag":"destiny & the Imamate","c":"Shi’as stress that on Laylat al-Qadr Allah determines everyone’s destiny (qadr) for the coming year. A hadith from Imam Ali teaches that on this night God decreed the Imamate of Ali and his offspring — tying the night to Shi’a belief about the Imams."},{"n":"What both share","tag":"why it matters","c":"Both fast the whole month dawn to dusk, keep the exemptions, and honour the Night of Power as when the Qur’an began to be revealed — “the night of al-Qadr is better than a thousand months”. Ramadan trains self-control and thanks God for the Qur’an."}]},"t5":{"terms":[{"term":"Zakah","def":"The annual charity tax of 2½ per cent on wealth — the third pillar."},{"term":"Nisab","def":"The minimum wealth a Muslim must have before they are liable for zakah."},{"term":"Sadaqah","def":"Voluntary giving to the poor, over and above compulsory zakah."},{"term":"Khums","def":"A Shi’a tax of one fifth (20%) of yearly surplus, based on Surah 8:41."}],"views":[{"n":"Sunni Muslims","tag":"zakah + sadaqah","c":"Pay zakah (2½% above the nisab) as the third pillar, following the Shari’ah based on the sunnah. On top they give voluntary sadaqah. They read the “fifth” of Surah 8:41 as applying only to the spoils of war, not to income."},{"n":"Shi’a Muslims","tag":"zakah + khums","c":"Also pay zakah (on farm produce, gold and silver) and sadaqah, but ADD khums — one fifth of yearly surplus — reading Surah 8:41 as applying to business profit. Half of khums supports the descendants of the Prophet and religious scholars, keeping Shi’a leaders independent."},{"n":"What both share","tag":"why it matters","c":"Both hold that giving is a sign of submission to God, that it purifies the wealth kept back, that it redistributes wealth from rich to poor, and that both giver and receiver gain spiritual benefit — helping a fellow Muslim have their sins forgiven."}]},"t6":{"terms":[{"term":"Hajj","def":"The annual pilgrimage to Makkah — the fifth pillar; compulsory once for those able."},{"term":"Ihram","def":"The pilgrim’s state of purity and the two white unsewn cloths men wear on hajj."},{"term":"Tawaf","def":"Circling the Ka’aba seven times."},{"term":"Arafat","def":"The plain where pilgrims stand and confess their sins — the central part of hajj."}],"views":[{"n":"Hajj is essential","tag":"the fifth pillar","c":"Hajj completes the Five Pillars and so completes a Muslim’s life. It lets pilgrims follow Muhammad’s actions in the very places he did them, visit the holiest sites, and prepare for the Day of Judgement at Arafat so their sins will not count against them."},{"n":"Hajj is not required of all","tag":"the Qur’an excuses some","c":"Hajj is the ONLY pillar that is not compulsory. Muslims should only go if they have enough money for their dependants and are physically and mentally fit. The challenges are real: huge cost, deadly crowds (over 1,800 died in the 2015 stampede), extreme heat and language problems."},{"n":"What both share","tag":"why it matters","c":"Both agree hajj is deeply significant: it shows devotion, unites many races and languages into one ummah performing the same actions, brings the pilgrim as close to God as possible in this life, and earns the honoured status of hajji."}]},"t7":{"terms":[{"term":"Jihad","def":"“To strive” in the cause of God — the struggle to be a good Muslim."},{"term":"Greater jihad","def":"The inner struggle to make oneself a perfect Muslim."},{"term":"Lesser jihad","def":"The outward struggle to remove evil from society — including, under strict conditions, Holy War."},{"term":"Halal","def":"That which is permitted; keeping halal in a non-Muslim country is itself a jihad (haram = forbidden)."}],"views":[{"n":"Greater jihad","tag":"the inner struggle","c":"Most Muslims believe the GREATER jihad is the struggle to make oneself a perfect Muslim — keeping the Pillars and Shari’ah, following Muhammad’s example, removing evil from oneself first. It stops a Muslim being a hypocrite (Surah 61:2)."},{"n":"Lesser jihad","tag":"removing evil from society","c":"Having conquered evil in themselves, Muslims fight injustice in society — underdevelopment, unfair trading, poverty. Holy War is allowed ONLY under strict conditions: self-defence, led by a religious leader, sparing women and children, after inviting the enemy to Islam peaceably."},{"n":"The “jihadi” view","tag":"a minority","c":"Some Muslims feel entitled to wage Holy War on non-Muslims and call themselves jihadi, citing that those who die in God’s way “go straight to paradise” (Surah 3:169). They argue Muhammad was forced to fight to defend Makkah."},{"n":"What Islam actually teaches","tag":"the condemnation","c":"True Islam replies that “those who kill innocent people in the name of Islam… should think twice. Their act is categorically condemned by God.” Such people disobey God’s commandments and follow the fabricated claims of their leaders."}]},"t8":{"terms":[{"term":"Id-ul-Fitr","def":"The festival breaking the Ramadan fast, on 1 Shawwal — celebrated by all Muslims."},{"term":"Id-ul-Adha","def":"The festival of sacrifice during hajj, remembering Ibrahim — celebrated by all Muslims."},{"term":"Id-ul-Ghadeer","def":"A Shi’a festival marking Muhammad appointing Ali as his successor at Ghadeer Khum."},{"term":"Ashura","def":"A Shi’a commemoration of the martyrdom of Husayn at Karbala, on 10 Muharram."}],"views":[{"n":"Shared by all Muslims","tag":"Id-ul-Fitr & Id-ul-Adha","c":"Islam has only two official festivals, both tied to the pillars. Id-ul-Fitr celebrates the completion of the Ramadan fast (sawm); Id-ul-Adha, during hajj, remembers Ibrahim’s willingness to sacrifice Ismail. Both Sunnis and Shi’as keep them."},{"n":"Shi’a only — Id-ul-Ghadeer","tag":"Ali as successor","c":"On 18 Dhu al-Hijjah Shi’as celebrate Muhammad appointing Ali as his successor at Ghadeer Khum, saluted as Amir al-Mu’minin. It means Ali should have been the first Caliph and that Shi’a beliefs about Ali are correct."},{"n":"Shi’a only — Ashura","tag":"Husayn at Karbala","c":"On 10 Muharram Shi’as mourn Husayn, Muhammad’s grandson, killed by Yazid’s army at Karbala. Through fasting, processions and grief they identify with his martyrdom as the struggle of good against tyranny and injustice."},{"n":"Why Sunnis reject them","tag":"the objection","c":"Sunnis argue Muhammad would have appointed Ali at his final sermon before millions, not at Ghadeer, and cannot accept the Shi’a view of Ashura, since Yazid was a Sunni caliph — so these days deepen the Sunni–Shi’a divide."}]}};
+(function(){
+  let fcTopic="all", fcType="terms";
+  const grid=document.getElementById("fcGrid"), count=document.getElementById("fcCount");
+  function build(){
+    const all=Object.keys(FLASHCARDS);
+    const topics = fcTopic==="all" ? all : [fcTopic];
+    let cards=[];
+    topics.forEach(function(tp){
+      const d=FLASHCARDS[tp]; if(!d) return;
+      if(fcType==="terms"){ d.terms.forEach(function(t){cards.push({tp:tp,front:t.term,tag:LABELS[tp],back:'<div class="fc-def">'+esc2(t.def)+'</div>'})}); }
+      else { d.views.forEach(function(v){cards.push({tp:tp,front:v.n,tag:LABELS[tp]+(v.tag?' · '+v.tag:''),back:'<div class="fc-def">'+esc2(v.c)+'</div>'})}); }
+    });
+    grid.innerHTML=cards.map(function(c){return '<button class="fc-card '+c.tp+'" data-flipped="false" aria-label="Flashcard: '+esc2(c.front)+'. Tap to reveal.">'+
+      '<div class="fc-inner">'+
+      '<div class="fc-face fc-front"><div class="fc-tag">'+esc2(c.tag)+'</div><div class="fc-term">'+esc2(c.front)+'</div><div class="fc-flip">tap to flip ↺</div></div>'+
+      '<div class="fc-face fc-back"><div class="fc-tag">'+esc2(c.tag)+'</div>'+c.back+'</div>'+
+      '</div></button>';}).join("");
+    count.textContent = cards.length + " cards";
+    grid.querySelectorAll(".fc-card").forEach(function(el){
+      el.addEventListener("click",function(){el.dataset.flipped = el.dataset.flipped==="true" ? "false":"true";});
+    });
+  }
+  document.querySelectorAll('#flashcards .fc-tabs .fc-btn').forEach(function(b){b.addEventListener("click",function(){
+    document.querySelectorAll('#flashcards .fc-tabs .fc-btn').forEach(function(x){x.setAttribute("aria-selected","false")});
+    b.setAttribute("aria-selected","true"); fcTopic=b.dataset.topic; build();
+  })});
+  document.querySelectorAll('#flashcards .fc-type .fc-btn').forEach(function(b){b.addEventListener("click",function(){
+    document.querySelectorAll('#flashcards .fc-type .fc-btn').forEach(function(x){x.setAttribute("aria-selected","false")});
+    b.setAttribute("aria-selected","true"); fcType=b.dataset.type; build();
+  })});
+  build();
+})();
+/* =====================================================================
+   TEACHER: paste your YouTube link between the quotes below.
+   Any format works — youtube.com/watch?v=..., youtu.be/..., or an embed URL.
+   Leave it empty ("") and the page shows a "Video not set" placeholder.
+   ===================================================================== */
+const VIDEO_URL = "";
+(function wireVideo(){
+  const url=(VIDEO_URL||"").trim();
+  if(!url) return;
+  let id="";
+  const m = url.match(/(?:youtu\.be\/|v=|\/embed\/|\/shorts\/)([A-Za-z0-9_-]{11})/);
+  if(m) id=m[1];
+  else if(/^[A-Za-z0-9_-]{11}$/.test(url)) id=url;
+  const frame=document.getElementById("videoFrame");
+  if(id && frame){
+    frame.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+id+'?rel=0" title="Unit review" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>';
+  } else if(frame){
+    frame.innerHTML='<div class="video-placeholder"><a class="res-btn big" style="background:#fff" href="'+url+'" target="_blank" rel="noopener"><span class="ic">▶</span><span><b>Watch the full unit review</b></span><span class="go">↗</span></a></div>';
+  }
+})();
+/* =====================================================================
+   TEACHER: paste your SharePoint share links between the quotes below.
+   Leave a link empty ("") and its button will show "Link not set".
+   Tip: in SharePoint, open the file's ... menu -> Copy link -> paste here.
+   ===================================================================== */
+const LINKS = {
+  t1_lesson: "",
+  t1_booklet: "",
+  t1_podcast: "",
+  t2_lesson: "",
+  t2_booklet: "",
+  t2_podcast: "",
+  t3_lesson: "",
+  t3_booklet: "",
+  t3_podcast: "",
+  t4_lesson: "",
+  t4_booklet: "",
+  t4_podcast: "",
+  t5_lesson: "",
+  t5_booklet: "",
+  t5_podcast: "",
+  t6_lesson: "",
+  t6_booklet: "",
+  t6_podcast: "",
+  t7_lesson: "",
+  t7_booklet: "",
+  t7_podcast: "",
+  t8_lesson: "",
+  t8_booklet: "",
+  t8_podcast: "",
+  booklet: "",
+  booklet_keyidea: "",
+  sow: "",
+  guide: ""
+};
+(function wireResources(){
+  let anySet=false;
+  document.querySelectorAll(".res-btn").forEach(function(btn){
+    const url=(LINKS[btn.dataset.key]||"").trim();
+    if(url){ btn.href=url; btn.target="_blank"; btn.rel="noopener"; anySet=true; }
+    else{ btn.classList.add("unset"); btn.removeAttribute("href"); btn.setAttribute("aria-disabled","true"); }
+  });
+  if(anySet){ const n=document.getElementById("resNote"); if(n) n.classList.add("hide"); }
+})();
+</script>
+</body>
+</html>

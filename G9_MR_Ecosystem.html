@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marriage and the Family — Grade 9 Summit · Unit at a Glance</title>
+<style>
+  :root{
+    --ink:#3E1163;       /* unit family colour */
+    --ink-2:#2A0B45;
+    --mint:#F0E9F8;
+    --mint-2:#E4D8F1;
+    --amber:#F2B705;      /* summit amber */
+    --amber-soft:#FFD95C;
+    --rubric:#B01C2E;
+    --teal:#0E8A7B;
+    --blue:#1565C0;
+    --green:#2E7D32;
+    --paper:#F8F5FC;
+    --line:rgba(62,17,99,.16);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--paper);color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;line-height:1.5;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1060px;margin:0 auto;padding:0 24px}
+  .eyebrow{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;font-weight:700}
+  .hero{background:
+      radial-gradient(1200px 400px at 80% -10%, rgba(242,183,5,.16), transparent 60%),
+      linear-gradient(180deg,var(--ink) 0%, var(--ink-2) 100%);
+    color:var(--mint);padding:64px 0 72px;position:relative;overflow:hidden;border-bottom:3px solid var(--amber)}
+  .hero::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.06;
+    background:repeating-linear-gradient(180deg,transparent 0 38px,#fff 38px 39px)}
+  .hero .wrap{position:relative;z-index:2}
+  .crest{display:flex;align-items:center;gap:16px;margin-bottom:34px}
+  .crest svg{width:54px;height:54px;flex:none}
+  .crest .who{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;color:var(--amber-soft)}
+  .crest .who b{color:var(--mint);display:block;letter-spacing:.14em;font-size:.86rem;margin-top:3px}
+  h1{font-size:clamp(2.2rem,5.6vw,3.8rem);line-height:1.04;font-weight:700;letter-spacing:-.01em}
+  h1 .amp{color:var(--amber);font-style:italic}
+  .sub{margin-top:20px;max-width:58ch;font-size:1.12rem;color:#E3D8F2}
+  .bigq{margin-top:30px;display:inline-flex;gap:14px;align-items:flex-start;border-left:3px solid var(--amber);padding:8px 0 8px 18px;max-width:62ch}
+  .bigq .q{font-family:"Trebuchet MS",sans-serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--amber-soft);padding-top:5px}
+  .bigq p{font-size:1.22rem;font-style:italic;color:#fff}
+  section{padding:64px 0}
+  .sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:8px}
+  .sec-head .num{font-family:"Trebuchet MS",sans-serif;color:var(--amber);font-weight:700;font-size:.9rem;letter-spacing:.15em}
+  .sec-head h2{font-size:clamp(1.6rem,3.4vw,2.3rem);letter-spacing:-.01em}
+  .sec-lead{color:#4d4458;max-width:66ch;margin-bottom:34px;font-size:1.05rem}
+  .spectrum-card{background:linear-gradient(180deg,#fff, var(--paper));border:1px solid var(--line);border-radius:14px;
+    box-shadow:0 18px 40px -28px rgba(62,17,99,.5);padding:28px 26px 34px}
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:26px}
+  .tab{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.8rem;letter-spacing:.03em;
+    border:1px solid var(--line);background:#fff;color:var(--ink);padding:8px 14px;border-radius:999px;cursor:pointer;transition:.18s}
+  .tab[aria-selected="true"]{background:var(--ink);color:var(--mint);border-color:var(--ink)}
+  .tab:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+  .axis{position:relative;margin:8px 4px 0}
+  .axis-labels{display:flex;justify-content:space-between;font-family:"Trebuchet MS",sans-serif;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:#6d6278;margin-bottom:10px}
+  .axis-labels .l{color:var(--rubric);font-weight:700}
+  .axis-labels .r{color:var(--blue);font-weight:700}
+  .bar{height:10px;border-radius:999px;background:linear-gradient(90deg,var(--rubric),#b06a1e 40%,#5a7d3a 66%,var(--blue));position:relative}
+  .ticks{position:relative;height:118px;margin-top:0}
+  .node{position:absolute;top:0;transform:translateX(-50%);width:150px;text-align:center;cursor:pointer}
+  .node .dot{width:20px;height:20px;border-radius:50%;background:#fff;border:3px solid var(--ink);margin:0 auto;position:relative;top:-15px;transition:.18s}
+  .node .nm{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.8rem;margin-top:-6px;line-height:1.2}
+  .node .sb{font-size:.74rem;color:#6d6278;font-style:italic;margin-top:2px;line-height:1.25}
+  .node:hover .dot,.node[data-active="true"] .dot{transform:scale(1.25);border-color:var(--amber);box-shadow:0 0 0 5px rgba(242,183,5,.22)}
+  .node:focus-visible{outline:none}
+  .node:focus-visible .dot{outline:3px solid var(--amber);outline-offset:3px}
+  .readout{margin-top:14px;background:var(--ink);color:var(--mint);border-radius:12px;padding:20px 22px;min-height:112px;display:flex;gap:18px;align-items:flex-start}
+  .readout .badge{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;
+    background:var(--amber);color:var(--ink-2);padding:6px 10px;border-radius:6px;white-space:nowrap;margin-top:2px}
+  .readout .body h4{font-size:1.12rem;margin-bottom:4px}
+  .readout .body p{color:#E3D8F2;font-size:.98rem}
+  .readout .body .g9{margin-top:10px;font-size:.88rem}
+  .readout .body .g9 .k{font-family:"Trebuchet MS",sans-serif;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--amber-soft)}
+  .hint{font-family:"Trebuchet MS",sans-serif;font-size:.76rem;color:#847a91;margin-top:14px;text-align:center}
+  .thread{background:var(--ink);color:var(--mint);border-radius:14px;padding:34px 30px;position:relative;overflow:hidden}
+  .thread::before{content:"";position:absolute;inset:0;opacity:.07;background:repeating-linear-gradient(180deg,transparent 0 30px,#fff 30px 31px)}
+  .thread .wrap2{position:relative;z-index:2}
+  .thread h2{color:#fff;font-size:clamp(1.5rem,3vw,2.1rem);margin-bottom:8px}
+  .thread .lead{color:#E3D8F2;max-width:64ch;margin-bottom:24px}
+  .threads{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .tcard{border:1px solid rgba(255,217,92,.32);border-radius:10px;padding:16px 16px 18px;background:rgba(255,255,255,.03)}
+  .tcard .t{font-family:"Trebuchet MS",sans-serif;color:var(--amber);font-weight:700;font-size:.82rem;letter-spacing:.05em;margin-bottom:6px}
+  .tcard p{font-size:.9rem;color:#E3D8F2}
+  .triptych{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
+  .panel{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;display:flex;flex-direction:column}
+  .panel .cap{padding:16px 18px;color:#fff;position:relative}
+  .panel .cap .n{font-family:"Trebuchet MS",sans-serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;opacity:.85}
+  .panel .cap h3{font-size:1.22rem;margin-top:3px}
+  .panel .cap .ask{font-style:italic;font-size:.88rem;margin-top:8px;opacity:.95}
+  .panel .body{padding:16px 18px;font-size:.92rem}
+  .panel .body .row{display:flex;gap:9px;padding:7px 0;border-bottom:1px dashed var(--line)}
+  .panel .body .row:last-child{border-bottom:0}
+  .panel .body .row .v{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.74rem;white-space:normal;color:var(--ink);min-width:118px;max-width:118px}
+  .panel .body .row .d{color:#4d4458}
+  .revise{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:start}
+  .steps{counter-reset:s;display:flex;flex-direction:column;gap:14px}
+  .step{display:flex;gap:16px;align-items:flex-start;border-left:2px solid var(--line);padding:2px 0 2px 18px;position:relative}
+  .step::before{counter-increment:s;content:counter(s);position:absolute;left:-15px;top:-2px;width:28px;height:28px;border-radius:50%;
+    background:var(--amber);color:var(--ink-2);font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.9rem;display:grid;place-items:center}
+  .step h4{font-size:1.02rem}
+  .step p{font-size:.9rem;color:#4d4458;margin-top:2px}
+  .ao{border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .ao .h{padding:12px 16px;font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.82rem;letter-spacing:.06em;color:#fff}
+  .ao .h.ao1{background:var(--ink)}
+  .ao .h.ao2{background:var(--rubric)}
+  .ao .c{padding:14px 16px;font-size:.9rem;border-bottom:1px solid var(--line)}
+  .ao .c:last-child{border-bottom:0}
+  .ao .c b{font-family:"Trebuchet MS",sans-serif;font-size:.78rem;letter-spacing:.04em}
+  .video-frame{position:relative;width:100%;aspect-ratio:16/9;border-radius:14px;overflow:hidden;
+    border:1px solid var(--line);box-shadow:0 20px 44px -30px rgba(62,17,99,.5);background:var(--ink)}
+  .video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .video-placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:14px;text-align:center;padding:30px;color:#C9BCDA;
+    background:radial-gradient(700px 300px at 50% 30%,rgba(242,183,5,.14),transparent 60%),linear-gradient(180deg,var(--ink),var(--ink-2))}
+  .video-placeholder .vp-badge{font-family:"Trebuchet MS",Verdana,sans-serif;font-weight:700;font-size:.72rem;letter-spacing:.14em;
+    text-transform:uppercase;background:var(--amber);color:var(--ink-2);padding:6px 12px;border-radius:6px}
+  .video-placeholder p{max-width:52ch;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.92rem;line-height:1.55}
+  .video-placeholder code{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:4px;padding:1px 6px}
+  .fc-controls{display:flex;gap:18px;flex-wrap:wrap;align-items:center;margin-bottom:24px}
+  .fc-tabs,.fc-type{display:flex;gap:8px;flex-wrap:wrap}
+  .fc-btn{font-family:"Trebuchet MS",Verdana,sans-serif;font-weight:700;font-size:.78rem;border:1px solid var(--line);
+    background:#fff;color:var(--ink);padding:8px 13px;border-radius:999px;cursor:pointer;transition:.18s}
+  .fc-btn[aria-selected="true"]{background:var(--ink);color:var(--mint);border-color:var(--ink)}
+  .fc-btn:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+  .fc-hint{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.78rem;color:#847a91;margin-left:auto}
+  .fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+  .fc-card{perspective:1200px;height:190px;cursor:pointer;background:none;border:0;padding:0;font-family:inherit;text-align:left}
+  .fc-inner{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+  .fc-card[data-flipped="true"] .fc-inner{transform:rotateY(180deg)}
+  .fc-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+    border-radius:12px;padding:18px;display:flex;flex-direction:column;border:1px solid var(--line);overflow:auto}
+  .fc-front{background:linear-gradient(180deg,#fff,var(--paper))}
+  .fc-back{transform:rotateY(180deg);color:var(--mint)}
+  .fc-tag{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--amber);font-weight:700;margin-bottom:8px}
+  .fc-front .fc-tag{color:#94741a}
+  .fc-term{font-size:1.18rem;font-weight:700;line-height:1.16}
+  .fc-front .fc-flip{margin-top:auto;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.72rem;color:#847a91}
+  .fc-def{font-size:.9rem;line-height:1.4}
+  .res-note{background:#FCF3D6;border:1px solid var(--amber);border-left:4px solid var(--amber);
+    border-radius:8px;padding:12px 16px;margin-bottom:22px;font-size:.9rem;color:#5a4a10;
+    font-family:"Trebuchet MS",Verdana,sans-serif}
+  .res-note code{background:#fff;border:1px solid var(--line);border-radius:4px;padding:1px 6px;font-size:.85em}
+  .res-note.hide{display:none}
+  .res-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;margin-bottom:16px}
+  .res-col{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff}
+  .rc-head{padding:14px 16px;color:#fff}
+  .rc-head .rc-n{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;opacity:.85}
+  .rc-head h3{font-size:1.12rem;margin-top:2px}
+  .res-btn{display:flex;align-items:center;gap:12px;padding:13px 16px;border-top:1px solid var(--line);
+    font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.92rem;color:var(--ink);text-decoration:none;cursor:pointer;transition:background .15s}
+  .res-col .res-btn:first-of-type{border-top:0}
+  .res-btn:hover{background:var(--mint)}
+  .res-btn .ic{width:26px;height:26px;flex:none;display:grid;place-items:center;border-radius:6px;background:var(--ink);color:var(--amber);font-size:.9rem}
+  .res-btn .go{margin-left:auto;color:var(--amber);font-weight:700;opacity:0;transition:.15s}
+  .res-btn:hover .go{opacity:1}
+  .res-btn:focus-visible{outline:3px solid var(--amber);outline-offset:-3px}
+  .res-btn.unset{opacity:.5;cursor:not-allowed}
+  .res-btn.unset::after{content:"Link not set";margin-left:auto;font-size:.74rem;color:#94741a;
+    background:#FCF3D6;border:1px solid var(--amber-soft);border-radius:5px;padding:2px 7px}
+  .res-wide{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:2px}
+  .res-btn.big{border:1px solid var(--line);border-radius:12px;background:#fff;padding:16px 18px}
+  .res-btn.big:hover{background:var(--mint)}
+  .res-btn.big .ic{width:34px;height:34px;font-size:1.1rem}
+  footer{background:var(--ink-2);color:#C9BCDA;padding:26px 0;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.8rem}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+  footer .amber{color:var(--amber)}
+  @media(max-width:820px){
+    .threads{grid-template-columns:1fr}
+    .revise{grid-template-columns:1fr}
+    .node{width:104px}
+    .node .sb{display:none}
+    .res-wide{grid-template-columns:1fr}
+    .fc-grid{grid-template-columns:1fr 1fr}
+    .fc-hint{width:100%;margin-left:0}
+  }
+  @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+.panel.a1 .cap{background:linear-gradient(135deg,#1F4E79,#12294D)}
+.rc1 .rc-head{background:linear-gradient(135deg,#1F4E79,#12294D)}
+.fc-card.t1 .fc-back{background:linear-gradient(160deg,#1F4E79,#12294D)}
+.panel.a2 .cap{background:linear-gradient(135deg,#1565C0,#12447A)}
+.rc2 .rc-head{background:linear-gradient(135deg,#1565C0,#12447A)}
+.fc-card.t2 .fc-back{background:linear-gradient(160deg,#1565C0,#12447A)}
+.panel.a3 .cap{background:linear-gradient(135deg,#8E24AA,#6A1B9A)}
+.rc3 .rc-head{background:linear-gradient(135deg,#8E24AA,#6A1B9A)}
+.fc-card.t3 .fc-back{background:linear-gradient(160deg,#8E24AA,#6A1B9A)}
+.panel.a4 .cap{background:linear-gradient(135deg,#00897B,#00695C)}
+.rc4 .rc-head{background:linear-gradient(135deg,#00897B,#00695C)}
+.fc-card.t4 .fc-back{background:linear-gradient(160deg,#00897B,#00695C)}
+.panel.a5 .cap{background:linear-gradient(135deg,#B8860B,#8A6D1B)}
+.rc5 .rc-head{background:linear-gradient(135deg,#B8860B,#8A6D1B)}
+.fc-card.t5 .fc-back{background:linear-gradient(160deg,#B8860B,#8A6D1B)}
+.panel.a6 .cap{background:linear-gradient(135deg,#D33648,#B01C2E)}
+.rc6 .rc-head{background:linear-gradient(135deg,#D33648,#B01C2E)}
+.fc-card.t6 .fc-back{background:linear-gradient(160deg,#D33648,#B01C2E)}
+.panel.a7 .cap{background:linear-gradient(135deg,#43A047,#2E7D32)}
+.rc7 .rc-head{background:linear-gradient(135deg,#43A047,#2E7D32)}
+.fc-card.t7 .fc-back{background:linear-gradient(160deg,#43A047,#2E7D32)}
+.panel.a8 .cap{background:linear-gradient(135deg,#E8425F,#B71C3A)}
+.rc8 .rc-head{background:linear-gradient(135deg,#E8425F,#B71C3A)}
+.fc-card.t8 .fc-back{background:linear-gradient(160deg,#E8425F,#B71C3A)}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <div class="crest">
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <rect x="2" y="2" width="60" height="60" rx="13" fill="#2A0B45" stroke="#F2B705" stroke-width="1.5"/>
+        <g fill="none" stroke="#E9F4EE" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M32 12 L14 46 h36 z"/>
+          <path d="M25 33 l7-8 7 8"/>
+        </g>
+        <circle cx="32" cy="20" r="3" fill="#F2B705"/>
+      </svg>
+      <div class="who">Edexcel GCSE (9–1) Religious Studies B · Paper 1, Question 2 · Christianity
+        <b>Harlington School · Grade 9 Summit</b></div>
+    </div>
+    <h1>Marriage <span class="amp">and</span> the Family</h1>
+    <p class="sub">Eight topics, one summit. The divergent views set side by side, the key ideas connected, and the (d) evaluated the Level-4 way — everything for the top of the mark scheme, in one place.</p>
+    <div class="bigq">
+      <span class="q">The<br>big<br>question</span>
+      <p>How should Christians love, marry and raise a family — and can the teaching survive modern Britain?</p>
+    </div>
+  </div>
+</header>
+<section id="spectrum">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">01</span><h2>The divergent views explorer</h2></div>
+    <p class="sec-lead">Every (d) in this unit turns on the <b>divergent views</b> — set side by side, exactly as the examiner wants. Pick a topic, then tap a position to see what it claims. The Grade 9 move and the 7-minute discussion question travel with each topic.</p>
+    <div class="spectrum-card">
+      <div class="tabs" role="tablist" aria-label="Choose a topic">
+<button class="tab" role="tab" aria-selected="true" data-topic="t1">Marriage</button>
+<button class="tab" role="tab" aria-selected="false" data-topic="t2">Sexual relationships</button>
+<button class="tab" role="tab" aria-selected="false" data-topic="t3">Families</button>
+<button class="tab" role="tab" aria-selected="false" data-topic="t4">The parish</button>
+<button class="tab" role="tab" aria-selected="false" data-topic="t5">Family planning</button>
+<button class="tab" role="tab" aria-selected="false" data-topic="t6">Divorce</button>
+<button class="tab" role="tab" aria-selected="false" data-topic="t7">Equality</button>
+<button class="tab" role="tab" aria-selected="false" data-topic="t8">Gender prejudice</button>
+      </div>
+      <div class="axis">
+        <div class="axis-labels"><span class="l" id="poleL"></span><span class="r" id="poleR"></span></div>
+        <div class="bar"></div>
+        <div class="ticks" id="ticks"></div>
+      </div>
+      <div class="readout" id="readout" aria-live="polite"></div>
+      <p class="hint">Tap a circle — or use Tab and Enter — to explore each position.</p>
+    </div>
+  </div>
+</section>
+<section>
+  <div class="wrap">
+    <div class="thread">
+      <div class="wrap2">
+        <h2>The thread that ties it together</h2>
+        <p class="lead">Grade 9 is not more content — it is three habits applied to every topic. Spot them and every (d) in this unit opens the same way.</p>
+        <div class="threads">
+          <div class="tcard"><div class="t">Divergent views, side by side</div><p>Never one view at a time. Set them against each other — where they agree, and the exact point they part. That comparison IS the analysis.</p></div>
+          <div class="tcard"><div class="t">The (d) regulation</div><p>Chain each point (claim → because → this means → therefore), steelman the other side, weigh BOTH arguments — a strength AND a limit — then justify the conclusion.</p></div>
+          <div class="tcard"><div class="t">Textbook-first accuracy</div><p>A correctly named source beats a vague paraphrase. One learned line from each source, placed precisely, is worth more than a paragraph of drift.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="topics">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">02</span><h2>Eight topics, one summit</h2></div>
+    <p class="sec-lead">Each panel is a topic’s <b>key idea</b> — the connective explanation that links the key words into one argument. Learn the chain, not the list.</p>
+    <div class="triptych">
+<div class="panel a1"><div class="cap"><div class="n">Topic 1 · C09</div><h3>Marriage</h3><div class="ask">What do Christians believe marriage is for — and is it still more important than simply living together?</div></div><div class="body"><div class="row"><span class="v">CREATION</span><span class="d">“God made them male and female” (Mark 10:6) — marriage is God’s design, not just a social custom to redefine.</span></div><div class="row"><span class="v">ONE FLESH</span><span class="d">“The two will become one flesh” (Mark 10:8) — fused into one new unit, so what harms one harms both.</span></div><div class="row"><span class="v">JOINED BY GOD</span><span class="d">“What God has joined together, let no one separate” (Mark 10:9) — only God can end it, so divorce defies that bond.</span></div><div class="row"><span class="v">THEREFORE</span><span class="d">“Anyone who divorces… commits adultery” (Mark 10:11) — the conclusion of the chain, why Catholics forbid remarriage.</span></div></div></div>
+<div class="panel a2"><div class="cap"><div class="n">Topic 2 · C10</div><h3>Sexual relationships</h3><div class="ask">What do Christians teach about sex outside marriage and homosexuality — and who has the most sensible view?</div></div><div class="body"><div class="row"><span class="v">TEMPLE</span><span class="d">“Your body is a temple of the Holy Spirit” (1 Cor 6:19) — God dwells in it, so sex is never purely private.</span></div><div class="row"><span class="v">NOT YOUR OWN</span><span class="d">“You are not your own” — so you can’t treat your body as private property to use however you choose.</span></div><div class="row"><span class="v">BOUGHT AT A PRICE</span><span class="d">“You were bought at a price” — Christ’s death paid for it, so misusing it dishonours that sacrifice.</span></div><div class="row"><span class="v">SO HONOUR GOD</span><span class="d">“Therefore honour God with your bodies” — a sexual choice is an act of worship, not just preference.</span></div></div></div>
+<div class="panel a3"><div class="cap"><div class="n">Topic 3 · C11</div><h3>Families</h3><div class="ask">Why do Christians value the family so highly — and does it matter more to them than to the non-religious?</div></div><div class="body"><div class="row"><span class="v">CHILDREN</span><span class="d">“Obey your parents… honour your father and mother” — the duty runs upward, teaching respect for authority beyond home.</span></div><div class="row"><span class="v">THE PROMISE</span><span class="d">It is “the first commandment with a promise” — “that it may go well with you and you may live long” rewards obedience.</span></div><div class="row"><span class="v">PARENTS</span><span class="d">“Fathers, do not exasperate your children” but “bring them up… of the Lord” — harshness and neglect both fail this duty.</span></div><div class="row"><span class="v">THE POINT</span><span class="d">The family is where children are “introduced to the faith” — get it right and the Church gains its next generation.</span></div></div></div>
+<div class="panel a4"><div class="cap"><div class="n">Topic 4 · C12</div><h3>The parish</h3><div class="ask">How and why does the local church try to support families — and can parents manage without it?</div></div><div class="body"><div class="row"><span class="v">THE PROMISE</span><span class="d">At baptism the clergy and congregation promise God to help parents raise the child in the faith, not just the parents alone.</span></div><div class="row"><span class="v">THE DUTY</span><span class="d">That promise becomes a DUTY — the parish must provide schools, Sunday schools and sacraments, not treat them as optional.</span></div><div class="row"><span class="v">THE FAMILY</span><span class="d">“The family is where children are introduced to the faith” — if it fails, the parish’s teaching has nowhere to land.</span></div><div class="row"><span class="v">THE STAKES</span><span class="d">If the parish fails the family, “Christianity will not grow and the Church will have failed” — the next generation is lost.</span></div></div></div>
+<div class="panel a5"><div class="cap"><div class="n">Topic 5 · C13</div><h3>Family planning</h3><div class="ask">Is contraception against God’s intentions, or a responsible and loving choice?</div></div><div class="body"><div class="row"><span class="v">TWO PURPOSES</span><span class="d">Sex has a unitive (bonding) AND a creative (life-making) purpose that God joined together as one act.</span></div><div class="row"><span class="v">THE RULE</span><span class="d">Artificial methods “render procreation impossible” — they actively SEPARATE the two purposes God intended.</span></div><div class="row"><span class="v">THE LOOPHOLE</span><span class="d">Natural methods (NFP) block nothing — they simply time sex to the woman’s infertile days, leaving both purposes intact.</span></div><div class="row"><span class="v">SO</span><span class="d">Working WITH God’s design is allowed; overriding it is not — Humanae Vitae (1968) draws that line, though many disagree.</span></div></div></div>
+<div class="panel a6"><div class="cap"><div class="n">Topic 6 · C14</div><h3>Divorce</h3><div class="ask">Should Christians ever divorce — and can a divorced person marry again?</div></div><div class="body"><div class="row"><span class="v">THE BAN</span><span class="d">In Mark 10 Jesus bans divorce flat out — “what God has joined together, let no one separate” — the Catholic ‘never’ basis.</span></div><div class="row"><span class="v">THE EXCEPTION</span><span class="d">But Matthew 19:9 adds “except for sexual immorality” — one escape hatch Jesus himself allows, which non-Catholics build on.</span></div><div class="row"><span class="v">CATHOLICS TAKE THE BAN</span><span class="d">Marriage is a covenant only death can dissolve — so no remarriage, ever, only annulment if it was never truly valid.</span></div><div class="row"><span class="v">NON-CATHOLICS TAKE THE EXCEPTION</span><span class="d">If adultery can end it, divorce can be the “lesser of two evils” — and forgiveness allows a repentant couple a second chance.</span></div></div></div>
+<div class="panel a7"><div class="cap"><div class="n">Topic 7 · C15</div><h3>Equality</h3><div class="ask">Should men and women have equal roles in the family, or God-given different ones?</div></div><div class="body"><div class="row"><span class="v">GENESIS 1</span><span class="d">“Male and female he created them” in God’s image (Gen 1:27) — total equality, the text liberals rely on.</span></div><div class="row"><span class="v">GENESIS 2–3</span><span class="d">Woman made second, from the rib; “he will rule over you” (Gen 3:16) — subordination, the text Evangelicals rely on.</span></div><div class="row"><span class="v">EPHESIANS 5</span><span class="d">“Wives, submit…” — yet the SAME passage says “husbands, love your wives as Christ loved the church,” a duty owed back.</span></div><div class="row"><span class="v">THE SPLIT</span><span class="d">Each Church weights a different text: liberals take Genesis 1, Evangelicals Genesis 2–3 and Paul, so both claim ‘the Bible’.</span></div></div></div>
+<div class="panel a8"><div class="cap"><div class="n">Topic 8 · C16</div><h3>Gender prejudice</h3><div class="ask">Should Christians work against gender prejudice — and is refusing to ordain women discrimination or vocation?</div></div><div class="body"><div class="row"><span class="v">1975</span><span class="d">General Synod agrees “there are no fundamental objections” to ordaining women — but waits 18 more years to act.</span></div><div class="row"><span class="v">1978</span><span class="d">The Movement for the Ordination of Women wins over the laity and bishops — but the clergy still refuse to move.</span></div><div class="row"><span class="v">1993</span><span class="d">The first women priests in the Church of England are ordained at Bristol Cathedral, ending centuries of male-only clergy.</span></div><div class="row"><span class="v">2013 →</span><span class="d">The first C of E woman bishop follows — yet Rome still says no, so Catholic Women’s Ordination keeps fighting for change.</span></div></div></div>
+    </div>
+  </div>
+</section>
+<section id="resources">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">03</span><h2>Your resources</h2></div>
+    <p class="sec-lead">Everything for the unit, in one place: each topic’s lesson, booklet pages and podcast episode — plus the unit-wide booklet editions, schemes of work and the guide.</p>
+    <div class="res-note" id="resNote">
+      <b>Teacher setup:</b> links aren't set yet. Open this file, find the <code>LINKS</code> list near the bottom, and paste each SharePoint share link once. Buttons with no link show as "Link not set".
+    </div>
+    <div class="res-grid">
+<div class="res-col rc1"><div class="rc-head"><span class="rc-n">Topic 1 · C09</span><h3>Marriage</h3></div><a class="res-btn" data-key="t1_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a><a class="res-btn" data-key="t1_booklet"><span class="ic">✎</span><span>Booklet pages</span><span class="go">↗</span></a><a class="res-btn" data-key="t1_podcast"><span class="ic">♪</span><span>Podcast · C09</span><span class="go">↗</span></a></div>
+<div class="res-col rc2"><div class="rc-head"><span class="rc-n">Topic 2 · C10</span><h3>Sexual relationships</h3></div><a class="res-btn" data-key="t2_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a><a class="res-btn" data-key="t2_booklet"><span class="ic">✎</span><span>Booklet pages</span><span class="go">↗</span></a><a class="res-btn" data-key="t2_podcast"><span class="ic">♪</span><span>Podcast · C10</span><span class="go">↗</span></a></div>
+<div class="res-col rc3"><div class="rc-head"><span class="rc-n">Topic 3 · C11</span><h3>Families</h3></div><a class="res-btn" data-key="t3_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a><a class="res-btn" data-key="t3_booklet"><span class="ic">✎</span><span>Booklet pages</span><span class="go">↗</span></a><a class="res-btn" data-key="t3_podcast"><span class="ic">♪</span><span>Podcast · C11</span><span class="go">↗</span></a></div>
+<div class="res-col rc4"><div class="rc-head"><span class="rc-n">Topic 4 · C12</span><h3>The parish</h3></div><a class="res-btn" data-key="t4_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a><a class="res-btn" data-key="t4_booklet"><span class="ic">✎</span><span>Booklet pages</span><span class="go">↗</span></a><a class="res-btn" data-key="t4_podcast"><span class="ic">♪</span><span>Podcast · C12</span><span class="go">↗</span></a></div>
+<div class="res-col rc5"><div class="rc-head"><span class="rc-n">Topic 5 · C13</span><h3>Family planning</h3></div><a class="res-btn" data-key="t5_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a><a class="res-btn" data-key="t5_booklet"><span class="ic">✎</span><span>Booklet pages</span><span class="go">↗</span></a><a class="res-btn" data-key="t5_podcast"><span class="ic">♪</span><span>Podcast · C13</span><span class="go">↗</span></a></div>
+<div class="res-col rc6"><div class="rc-head"><span class="rc-n">Topic 6 · C14</span><h3>Divorce</h3></div><a class="res-btn" data-key="t6_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a><a class="res-btn" data-key="t6_booklet"><span class="ic">✎</span><span>Booklet pages</span><span class="go">↗</span></a><a class="res-btn" data-key="t6_podcast"><span class="ic">♪</span><span>Podcast · C14</span><span class="go">↗</span></a></div>
+<div class="res-col rc7"><div class="rc-head"><span class="rc-n">Topic 7 · C15</span><h3>Equality</h3></div><a class="res-btn" data-key="t7_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a><a class="res-btn" data-key="t7_booklet"><span class="ic">✎</span><span>Booklet pages</span><span class="go">↗</span></a><a class="res-btn" data-key="t7_podcast"><span class="ic">♪</span><span>Podcast · C15</span><span class="go">↗</span></a></div>
+<div class="res-col rc8"><div class="rc-head"><span class="rc-n">Topic 8 · C16</span><h3>Gender prejudice</h3></div><a class="res-btn" data-key="t8_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a><a class="res-btn" data-key="t8_booklet"><span class="ic">✎</span><span>Booklet pages</span><span class="go">↗</span></a><a class="res-btn" data-key="t8_podcast"><span class="ic">♪</span><span>Podcast · C16</span><span class="go">↗</span></a></div>
+    </div>
+    <div class="res-wide">
+      <a class="res-btn big" data-key="booklet"><span class="ic">✎</span><span><b>Unit booklet</b> — the close-reading companion, four pages per topic</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="booklet_keyidea"><span class="ic">◈</span><span><b>Key Idea edition</b> — the booklet with the key-idea panels and 7-minute discussions</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="sow"><span class="ic">▤</span><span><b>Schemes of work</b> — one planning document per lesson</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="guide"><span class="ic">🏔</span><span><b>How to use the lessons</b> — the Grade 9 Summit teacher guide</span><span class="go">↗</span></a>
+    </div>
+  </div>
+</section>
+<section id="revise">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">04</span><h2>How to revise this unit</h2></div>
+    <p class="sec-lead">Use the resources in this order — the same loop as the lessons, so revision feels like coming home.</p>
+    <div class="revise">
+      <div class="steps">
+        <div class="step"><div><h4>Bell work first — retrieve before you re-read</h4><p>Five recall questions from memory, self-scored /5. Then the come-back tracker: the same five at +1 week and +1 month.</p></div></div>
+        <div class="step"><div><h4>Listen along to the episode</h4><p>One six-minute podcast per topic. Capture the six mind-map branches as it plays — the episode does the exposition so you can do the thinking.</p></div></div>
+        <div class="step"><div><h4>Work the booklet pages</h4><p>Four pages per topic: the key idea, two scripture quotes, the divergent views side by side, and the full (d). The Key Idea edition adds the 7-minute discussion.</p></div></div>
+        <div class="step"><div><h4>Write the (d) the Level-4 way</h4><p>Chain · steelman · weigh both (strength AND limit) · justify. Check yourself against the Level 3-vs-Level 4 models on lessons 3 and 6.</p></div></div>
+      </div>
+      <div class="ao">
+        <div class="h ao1">The marks map · (a) (b) (c) — 12 marks</div>
+        <div class="c"><b>(a) 3 marks —</b> outline three. Three crisp sentences, no development needed.</div>
+        <div class="c"><b>(b) 4 marks —</b> explain two. Each point + one development.</div>
+        <div class="c"><b>(c) 5 marks —</b> explain two WITH a named source — one learned line, placed exactly.</div>
+        <div class="h ao2">The (d) · 12 marks — half the question</div>
+        <div class="c"><b>What it is —</b> a full evaluation: agree and disagree developed, the non-religious voice engaged where the question invites it.</div>
+        <div class="c"><b>The grade 9 gap —</b> Level 3 asserts its judgement; Level 4 chains, weighs both sides, and justifies a conclusion that survives the strongest counter.</div>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="watch">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">05</span><h2>Watch: the whole unit in one go</h2></div>
+    <p class="sec-lead">A full review of <b>Marriage and the Family</b> — all eight topics as one argument. Best watched before you revise, then again to check recall.</p>
+    <div class="video-frame" id="videoFrame">
+      <div class="video-placeholder" id="videoPlaceholder">
+        <div class="vp-badge">Video not set</div>
+        <p><b>Teacher:</b> paste the YouTube link in the <code>VIDEO_URL</code> line near the bottom of this file. The player then appears here automatically.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="flashcards">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">06</span><h2>Flashcards — test yourself</h2></div>
+    <p class="sec-lead">Flip a card to check yourself. Switch between <b>key terms</b> (term → meaning) and <b>divergent views</b> (view → what it claims), and filter by topic.</p>
+    <div class="fc-controls">
+      <div class="fc-tabs" role="tablist" aria-label="Topic">
+<button class="fc-btn" role="tab" aria-selected="true" data-topic="all">All</button>
+<button class="fc-btn" role="tab" aria-selected="false" data-topic="t1">Marriage</button>
+<button class="fc-btn" role="tab" aria-selected="false" data-topic="t2">Sexual relationships</button>
+<button class="fc-btn" role="tab" aria-selected="false" data-topic="t3">Families</button>
+<button class="fc-btn" role="tab" aria-selected="false" data-topic="t4">The parish</button>
+<button class="fc-btn" role="tab" aria-selected="false" data-topic="t5">Family planning</button>
+<button class="fc-btn" role="tab" aria-selected="false" data-topic="t6">Divorce</button>
+<button class="fc-btn" role="tab" aria-selected="false" data-topic="t7">Equality</button>
+<button class="fc-btn" role="tab" aria-selected="false" data-topic="t8">Gender prejudice</button>
+      </div>
+      <div class="fc-type" role="tablist" aria-label="Card type">
+        <button class="fc-btn" role="tab" aria-selected="true"  data-type="terms">Key terms</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-type="views">Divergent views</button>
+      </div>
+      <span class="fc-hint">Tap any card to flip · <span id="fcCount"></span></span>
+    </div>
+    <div class="fc-grid" id="fcGrid"></div>
+  </div>
+</section>
+<footer>
+  <div class="wrap">
+    <span>Marriage and the Family · Grade 9 Summit · unit at a glance</span>
+    <span class="amber">Harlington School · Edexcel GCSE (9–1) RS Spec B</span>
+  </div>
+</footer>
+<script>
+const DATA = {"t1":{"poles":["Catholic & conservative Protestant","What the surveys show"],"punch":"Each link follows from the last: design → union → God’s bond → no divorce. Snap any link and the sacred bond falls apart.","discuss":"Does framing marriage as God’s unbreakable design make it more meaningful, or just harder to leave when it fails?","nodes":[{"x":10,"nm":"Catholic & conservative Protestant","sb":"Marriage as sacred","auth":"Marriage as sacred","claim":"Marriage was created by God as a lifelong, monogamous bond and the only acceptable place for sex. Sex before marriage is wrong; couples should refrain until they have had a Christian marriage. For Catholics it is a sacrament — a sign of God’s grace."},{"x":37,"nm":"Liberal Protestant","sb":"A step towards marriage","auth":"A step towards marriage","claim":"Couples may live together before marriage, but should marry when starting a family. A sexual relationship is only accepted within a long-term commitment — cohabitation is “a step along the way to the fuller commitment of marriage” (Something to Celebrate, Church of England, 1997)."},{"x":64,"nm":"Humanist & atheist","sb":"A personal choice","auth":"A personal choice","claim":"Sex and marriage are matters for individuals: couples may cohabit or marry in a civil ceremony. Relationships should be exclusive and built on respect and trust. Many still value marriage for raising a family — but as a good choice, not a religious duty."},{"x":90,"nm":"What the surveys show","sb":"Common ground","auth":"Common ground","claim":"Most cohabiting couples still want to marry eventually, because marriage gives legal and financial security, social acceptance, a stable home and a public celebration of love. Even Prof. Woodhead found 80% of British Catholics accept premarital sex and 90% accept cohabitation."}]},"t2":{"poles":["Catholic","Humanist & atheist"],"punch":"Sexual sin is uniquely “against your own body” because the body is sacred — that’s the logic under every Christian rule on sex.","discuss":"Should the belief that your body ‘belongs to God’ shape sexual choices, or is that entirely a private decision?","nodes":[{"x":10,"nm":"Catholic","sb":"Orientation ok, acts sinful","auth":"Orientation ok, acts sinful","claim":"Being homosexual is not a sin, but homosexual acts are — sex should be “creative” (open to children), which same-sex couples cannot be. Homosexuals are asked to live without sexual activity. The Church rejects same-sex marriage but is less opposed to civil partnerships, and says it is sinful to harass homosexuals."},{"x":37,"nm":"Evangelical Protestant","sb":"A sin to be changed","auth":"A sin to be changed","claim":"Homosexuality is a sin because the Bible is the direct Word of God and condemns it. Some hold prayer meetings to give homosexuals the power to change their orientation — yet the Evangelical Alliance now “utterly repudiates homophobia”."},{"x":64,"nm":"Liberal Protestant","sb":"Welcomed and accepted","auth":"Welcomed and accepted","claim":"Lifelong homosexual relationships are acceptable and homosexuals are welcomed into the Church. The anti-gay Bible texts reflect Jewish culture of the time and need reinterpreting; love and acceptance mean gay people must be accepted. Quakers celebrate same-sex weddings."},{"x":90,"nm":"Humanist & atheist","sb":"Nobody else’s business","auth":"Nobody else’s business","claim":"Humanists and most atheists see no problem with same-sex relationships — a person’s sexuality is their own concern unless it harms others’ human rights. The Christian objections are religious, so with no religion the reasons for disapproving disappear."}]},"t3":{"poles":["Traditional Christian view","What all agree"],"punch":"Not one-way obedience but a mutual covenant with a payoff — obey, honour, nurture, and “it will go well.”","discuss":"Is obedience owed to parents unconditional, or should children only obey when parents act lovingly first?","nodes":[{"x":10,"nm":"Traditional Christian view","sb":"A place to raise Christians","auth":"A place to raise Christians","claim":"The family was created by God as the basic unit of society and the ONLY place children should be brought up. Its purpose is to bring children up safely, meet their physical and material needs, instil moral values, and introduce them to the faith so they come to love God and follow Jesus."},{"x":37,"nm":"Other Christian views","sb":"Freedom to choose","auth":"Freedom to choose","claim":"Some Christians say the purpose is love, security and education — but it is NOT the family’s role to make children Christians; a Christian family should encourage children to develop their own ideas and make up their own minds about religion when they are old enough."},{"x":64,"nm":"Non-religious (Humanist)","sb":"Safety, values, support","auth":"Safety, values, support","claim":"The family exists to bring up children safely (meeting physical and material needs), to pass on moral values so they become responsible citizens, and to give emotional and financial support throughout life — the “selfish gene” drive to see our genes continue."},{"x":90,"nm":"What all agree","sb":"Common ground","auth":"Common ground","claim":"Whether religious or not, all see the family as vital: a place of safety, nurture and moral formation. 80% of parents expect to help their adult children (General Lifestyle Survey 2011), and non-religious families gather at times like Christmas just as religious families do."}]},"t4":{"poles":["Catholic & Anglican","Non-religious view"],"punch":"Baptism promise → duty → the family as nursery of the faith → the Church’s survival. That’s why it isn’t optional.","discuss":"Should a parish’s baptism promise bind it to support a family forever, even if that family stops attending church?","nodes":[{"x":12,"nm":"Catholic & Anglican","sb":"Support is essential","auth":"Support is essential","claim":"Parishes have a DUTY to help families they have baptised. Raising children as Christians means taking them to church, teaching them the faith (Church schools, Sunday schools) and preparing them for the sacraments — which needs the expertise and support of the clergy. Without the parish, “Christianity will not grow and the Church will have failed.”"},{"x":50,"nm":"Free Churches","sb":"Same help, no parish","auth":"Same help, no parish","claim":"Baptist, Methodist and Pentecostal churches are not based on the parish system, yet do similar things — family worship, youth groups, counselling and Messy Church — showing the SUPPORT matters more than the parish structure that delivers it."},{"x":88,"nm":"Non-religious view","sb":"Parents can manage alone","auth":"Parents can manage alone","claim":"From a non-religious standpoint, a family does not need a church at all to raise children safely, pass on moral values and give emotional and financial support. Church schools, Sunday schools and the sacraments only matter if you are trying to raise children AS Christians."}]},"t5":{"poles":["Catholic","What most agree on"],"punch":"It’s not really about preventing birth — it’s about whether you SPLIT what God joined or work within it.","discuss":"Is timing sex to avoid conception really different, morally, from using a condom to achieve the same result?","nodes":[{"x":10,"nm":"Catholic","sb":"Natural methods only","auth":"Natural methods only","claim":"Sex has a unitive AND a creative purpose; artificial contraception separates the two and so goes against God’s intentions. Humanae Vitae allows only natural methods (NFP). Some contraceptives are abortifacient, and the Church links contraception to promiscuity, broken families, divorce and STDs."},{"x":37,"nm":"Non-Catholic Christian","sb":"All methods allowed","auth":"All methods allowed","claim":"All forms are permissible if used to limit — not refuse — a family. There is nothing in the Bible that forbids contraception; God made sex to cement marriage as well as to make children; it improves maternal health and raises children’s standard of living. The 1930 Lambeth Conference approved it."},{"x":64,"nm":"Humanist & atheist","sb":"A clear good","auth":"A clear good","claim":"Judging by consequences, contraception prevents unwanted children and suffering, improves women’s lives and prevents STDs — so it must be right. It “results in every child being a wanted child” (British Humanist Association)."},{"x":90,"nm":"What most agree on","sb":"Responsible parenthood","auth":"Responsible parenthood","claim":"Even the Catholic Church teaches “responsible parenthood” — deciding how many children to have and when. The divergence is over the METHOD (natural vs artificial), not the idea of planning a family itself; ~90% of UK couples of childbearing age use some form of contraception."}]},"t6":{"poles":["Catholic","Situation Ethics"],"punch":"Same Jesus, two texts — the disagreement isn’t about ignoring the Bible, it’s about which verse you weight.","discuss":"If Jesus allowed one exception to ‘no divorce’, why do Catholics still treat the rule as if it had none?","nodes":[{"x":10,"nm":"Catholic","sb":"No religious divorce","auth":"No religious divorce","claim":"Marriage is a sacrament and a covenant with God that only death can dissolve. Civil divorce and separation are allowed for the safety of the partner, but the couple remain married in God’s eyes — so there can be no remarriage (that would be adultery and bigamy). Only an annulment can free them. Jesus taught divorce is wrong (Mark 10)."},{"x":37,"nm":"Non-Catholic Christian","sb":"The lesser of two evils","auth":"The lesser of two evils","claim":"Divorce is wrong but allowed if a marriage has really broken down — staying together could be a greater evil. Jesus allowed divorce for adultery (Matthew 19:9). Because Christianity teaches forgiveness, a repentant couple may remarry and have a second chance to make it work."},{"x":64,"nm":"Humanist & atheist","sb":"A right if it fails","auth":"A right if it fails","claim":"Marriage is a purely human, legal institution. All couples should have the right to divorce if the marriage has failed, provided spouses are treated equally and children are well provided for; a divorced person is single again and free to remarry."},{"x":90,"nm":"Situation Ethics","sb":"The most loving choice","auth":"The most loving choice","claim":"Christians, Humanists and atheists may weigh each case: the pros of divorce (peace, fresh starts, ending damaging conflict for children) against the cons (cost, hurt to children, lost contact with relatives) — then choose the most loving outcome, which may be to divorce."}]},"t7":{"poles":["Evangelical Protestant","Humanist & atheist"],"punch":"There is no single “biblical view” — the real argument is over which of the three texts wins.","discuss":"When the Bible gives conflicting messages about men’s and women’s roles, who decides which one is authoritative?","nodes":[{"x":10,"nm":"Evangelical Protestant","sb":"Separate, God-given roles","auth":"Separate, God-given roles","claim":"Men and women have separate and different roles. Women bring up children and run a Christian home; men provide for the family and lead in religion. Based on Genesis 2 (Adam created first), the male disciples, and St Paul in Ephesians and 1 Corinthians 11 — women should even keep their heads covered."},{"x":37,"nm":"Catholic","sb":"Equal status and roles","auth":"Equal status and roles","claim":"Men and women have equal status in the sight of God (Genesis 1:27) and equal roles in life and the family. The new Catholic marriage service has the priest say the husband should “recognise that she is his equal”."},{"x":64,"nm":"Liberal Protestant","sb":"Fully equal","auth":"Fully equal","claim":"Men and women are completely equal and should have equal roles. Based on Genesis 1 (created equally), St Paul in Galatians (“neither male nor female”), and the Gospel evidence that Jesus treated women as his equals — so these Churches have women priests and ministers."},{"x":90,"nm":"Humanist & atheist","sb":"Complete equality","auth":"Complete equality","claim":"Non-religious people are “equalists”: men and women are equal and should have totally equal roles in the family. Attitudes have changed hugely — in 1965, 85% of men said a woman’s job is the home; by 2008 only 17% agreed. Many early feminists and suffragettes were Humanists."}]},"t8":{"poles":["Evangelical Protestant","Humanist & atheist"],"punch":"The debate isn’t abstract — it’s a real campaign that changed one Church while another still holds the line.","discuss":"Can refusing to ordain women as priests really be ‘vocation, not discrimination’, or is that just a comfortable label?","nodes":[{"x":10,"nm":"Evangelical Protestant","sb":"Different roles, not discrimination","auth":"Different roles, not discrimination","claim":"Men and women have separate roles, so women should not speak in church, teach or lead — only men can be Church leaders. This is not discrimination, they say, but what God ORDAINED in the New Testament: Adam was created first and Eve was led astray."},{"x":37,"nm":"Catholic","sb":"Equal — but male priests","auth":"Equal — but male priests","claim":"The Church is AGAINST gender prejudice and teaches equality (Genesis 1:27): women study, teach and serve as extraordinary ministers. Yet only men can be ordained priests, because the priest represents Jesus at the Mass and the apostles were all men — this, it argues, is vocation, not discrimination."},{"x":64,"nm":"Liberal Protestant","sb":"Fully equal, women priests","auth":"Fully equal, women priests","claim":"Men and women should have totally equal rights in life and in the Church — so these Churches (CofE, Methodist, URC, Baptist) have women ministers, priests and bishops. Based on Genesis 1, Galatians (“neither male nor female”), Jesus treating women as equals, and evidence of women priests in the early Church."},{"x":90,"nm":"Humanist & atheist","sb":"Discrimination must be illegal","auth":"Discrimination must be illegal","claim":"Non-religious people believe men and women are equal and it is wrong to discriminate — refusing to ordain women should be made illegal. Yet surveys show prejudice persists everywhere: 65% say sexism is still a workplace problem (YouGov 2014), and two women a week are killed by a partner."}]}};
+const LABELS = {"t1":"Marriage","t2":"Sexual relationships","t3":"Families","t4":"The parish","t5":"Family planning","t6":"Divorce","t7":"Equality","t8":"Gender prejudice"};
+const ticks=document.getElementById("ticks");
+const readout=document.getElementById("readout");
+const poleL=document.getElementById("poleL"), poleR=document.getElementById("poleR");
+const firstKey=Object.keys(DATA)[0];
+let topic=firstKey, active=0;
+function esc2(s){return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+function renderReadout(n){
+  const d=DATA[topic];
+  let html='<span class="badge">'+esc2(n.auth)+'</span><div class="body">'+
+    '<h4>'+esc2(n.nm)+' <span style="opacity:.6;font-style:italic;font-weight:400">· '+esc2(n.sb)+'</span></h4>'+
+    '<p>'+esc2(n.claim)+'</p>';
+  if(d.punch) html+='<div class="g9"><span class="k">The grade 9 move</span><br>'+esc2(d.punch)+'</div>';
+  if(d.discuss) html+='<div class="g9"><span class="k">Discuss · 7 min</span><br>'+esc2(d.discuss)+'</div>';
+  html+='</div>';
+  readout.innerHTML=html;
+}
+function renderTopic(){
+  const d=DATA[topic];
+  poleL.textContent=d.poles[0]; poleR.textContent=d.poles[1];
+  ticks.innerHTML="";
+  d.nodes.forEach(function(n,i){
+    const el=document.createElement("div");
+    el.className="node"; el.style.left=n.x+"%"; el.tabIndex=0;
+    el.setAttribute("role","button");
+    el.setAttribute("aria-label",n.nm+": "+n.sb);
+    el.dataset.active=(i===active);
+    el.innerHTML='<div class="dot"></div><div class="nm">'+esc2(n.nm)+'</div><div class="sb">'+esc2(n.sb)+'</div>';
+    const pick=function(){active=i;[].slice.call(ticks.children).forEach(function(c,j){c.dataset.active=(j===i)});renderReadout(n);};
+    el.addEventListener("click",pick);
+    el.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();pick();}});
+    ticks.appendChild(el);
+  });
+  active=Math.min(active,d.nodes.length-1);
+  [].slice.call(ticks.children).forEach(function(c,j){c.dataset.active=(j===active)});
+  renderReadout(d.nodes[active]);
+}
+document.querySelectorAll(".tab").forEach(function(t){
+  t.addEventListener("click",function(){
+    document.querySelectorAll(".tab").forEach(function(x){x.setAttribute("aria-selected","false")});
+    t.setAttribute("aria-selected","true");
+    topic=t.dataset.topic; active=0; renderTopic();
+  });
+});
+renderTopic();
+const FLASHCARDS = {"t1":{"terms":[{"term":"Sacred bond","def":"A joining together sanctified by God which cannot be broken by humans."},{"term":"Monogamy","def":"Marriage to only one person at a time."},{"term":"Cohabitation","def":"Living together in a sexual relationship without being married."},{"term":"Procreation","def":"Making a new life — having children."}],"views":[{"n":"Catholic & conservative Protestant","tag":"Marriage as sacred","c":"Marriage was created by God as a lifelong, monogamous bond and the only acceptable place for sex. Sex before marriage is wrong; couples should refrain until they have had a Christian marriage. For Catholics it is a sacrament — a sign of God’s grace."},{"n":"Liberal Protestant","tag":"A step towards marriage","c":"Couples may live together before marriage, but should marry when starting a family. A sexual relationship is only accepted within a long-term commitment — cohabitation is “a step along the way to the fuller commitment of marriage” (Something to Celebrate, Church of England, 1997)."},{"n":"Humanist & atheist","tag":"A personal choice","c":"Sex and marriage are matters for individuals: couples may cohabit or marry in a civil ceremony. Relationships should be exclusive and built on respect and trust. Many still value marriage for raising a family — but as a good choice, not a religious duty."},{"n":"What the surveys show","tag":"Common ground","c":"Most cohabiting couples still want to marry eventually, because marriage gives legal and financial security, social acceptance, a stable home and a public celebration of love. Even Prof. Woodhead found 80% of British Catholics accept premarital sex and 90% accept cohabitation."}]},"t2":{"terms":[{"term":"Premarital sex","def":"Sexual activity before marriage."},{"term":"Extramarital sex","def":"Sex outside marriage — usually referred to as adultery."},{"term":"Homosexuality","def":"Sexual attraction to someone of the same sex."},{"term":"Homophobia","def":"Hatred or fear of homosexuals."}],"views":[{"n":"Catholic","tag":"Orientation ok, acts sinful","c":"Being homosexual is not a sin, but homosexual acts are — sex should be “creative” (open to children), which same-sex couples cannot be. Homosexuals are asked to live without sexual activity. The Church rejects same-sex marriage but is less opposed to civil partnerships, and says it is sinful to harass homosexuals."},{"n":"Evangelical Protestant","tag":"A sin to be changed","c":"Homosexuality is a sin because the Bible is the direct Word of God and condemns it. Some hold prayer meetings to give homosexuals the power to change their orientation — yet the Evangelical Alliance now “utterly repudiates homophobia”."},{"n":"Liberal Protestant","tag":"Welcomed and accepted","c":"Lifelong homosexual relationships are acceptable and homosexuals are welcomed into the Church. The anti-gay Bible texts reflect Jewish culture of the time and need reinterpreting; love and acceptance mean gay people must be accepted. Quakers celebrate same-sex weddings."},{"n":"Humanist & atheist","tag":"Nobody else’s business","c":"Humanists and most atheists see no problem with same-sex relationships — a person’s sexuality is their own concern unless it harms others’ human rights. The Christian objections are religious, so with no religion the reasons for disapproving disappear."}]},"t3":{"terms":[{"term":"Nuclear family","def":"A married couple (or cohabiting couple) living together with their children."},{"term":"Extended family","def":"Three generations living together, or living close and relying on each other."},{"term":"Blended family","def":"Two separate families joined together when parents marry or cohabit (a step-family)."},{"term":"Moral values","def":"The standards of good and evil which influence behaviour and choices."}],"views":[{"n":"Traditional Christian view","tag":"A place to raise Christians","c":"The family was created by God as the basic unit of society and the ONLY place children should be brought up. Its purpose is to bring children up safely, meet their physical and material needs, instil moral values, and introduce them to the faith so they come to love God and follow Jesus."},{"n":"Other Christian views","tag":"Freedom to choose","c":"Some Christians say the purpose is love, security and education — but it is NOT the family’s role to make children Christians; a Christian family should encourage children to develop their own ideas and make up their own minds about religion when they are old enough."},{"n":"Non-religious (Humanist)","tag":"Safety, values, support","c":"The family exists to bring up children safely (meeting physical and material needs), to pass on moral values so they become responsible citizens, and to give emotional and financial support throughout life — the “selfish gene” drive to see our genes continue."},{"n":"What all agree","tag":"Common ground","c":"Whether religious or not, all see the family as vital: a place of safety, nurture and moral formation. 80% of parents expect to help their adult children (General Lifestyle Survey 2011), and non-religious families gather at times like Christmas just as religious families do."}]},"t4":{"terms":[{"term":"Parish","def":"The area around a local church."},{"term":"Diocese","def":"A Church area under the direction of a bishop."},{"term":"Clergy","def":"Those ordained by the Church."},{"term":"First Communion","def":"The first time a person receives the sacrament of the Eucharist."}],"views":[{"n":"Catholic & Anglican","tag":"Support is essential","c":"Parishes have a DUTY to help families they have baptised. Raising children as Christians means taking them to church, teaching them the faith (Church schools, Sunday schools) and preparing them for the sacraments — which needs the expertise and support of the clergy. Without the parish, “Christianity will not grow and the Church will have failed.”"},{"n":"Free Churches","tag":"Same help, no parish","c":"Baptist, Methodist and Pentecostal churches are not based on the parish system, yet do similar things — family worship, youth groups, counselling and Messy Church — showing the SUPPORT matters more than the parish structure that delivers it."},{"n":"Non-religious view","tag":"Parents can manage alone","c":"From a non-religious standpoint, a family does not need a church at all to raise children safely, pass on moral values and give emotional and financial support. Church schools, Sunday schools and the sacraments only matter if you are trying to raise children AS Christians."}]},"t5":{"terms":[{"term":"Contraception","def":"Something that allows a couple to have sex without conception occurring."},{"term":"Unitive purpose","def":"Sexual activity as a source of joy and pleasure that unites a married couple."},{"term":"Creative purpose","def":"Sex as a means of creating a family."},{"term":"Abortifacient","def":"A substance that brings about a very early abortion (e.g. the IUD or morning-after pill)."}],"views":[{"n":"Catholic","tag":"Natural methods only","c":"Sex has a unitive AND a creative purpose; artificial contraception separates the two and so goes against God’s intentions. Humanae Vitae allows only natural methods (NFP). Some contraceptives are abortifacient, and the Church links contraception to promiscuity, broken families, divorce and STDs."},{"n":"Non-Catholic Christian","tag":"All methods allowed","c":"All forms are permissible if used to limit — not refuse — a family. There is nothing in the Bible that forbids contraception; God made sex to cement marriage as well as to make children; it improves maternal health and raises children’s standard of living. The 1930 Lambeth Conference approved it."},{"n":"Humanist & atheist","tag":"A clear good","c":"Judging by consequences, contraception prevents unwanted children and suffering, improves women’s lives and prevents STDs — so it must be right. It “results in every child being a wanted child” (British Humanist Association)."},{"n":"What most agree on","tag":"Responsible parenthood","c":"Even the Catholic Church teaches “responsible parenthood” — deciding how many children to have and when. The divergence is over the METHOD (natural vs artificial), not the idea of planning a family itself; ~90% of UK couples of childbearing age use some form of contraception."}]},"t6":{"terms":[{"term":"Annulment","def":"A declaration by the Church that a marriage was never a true marriage, so the partners are free to marry."},{"term":"Civil divorce","def":"A divorce according to the law of the country but not the Church."},{"term":"Covenant","def":"A religious agreement made between God and a religious group."},{"term":"Situation Ethics","def":"Deciding the most loving thing to do in each situation, rather than always following fixed rules (Joseph Fletcher)."}],"views":[{"n":"Catholic","tag":"No religious divorce","c":"Marriage is a sacrament and a covenant with God that only death can dissolve. Civil divorce and separation are allowed for the safety of the partner, but the couple remain married in God’s eyes — so there can be no remarriage (that would be adultery and bigamy). Only an annulment can free them. Jesus taught divorce is wrong (Mark 10)."},{"n":"Non-Catholic Christian","tag":"The lesser of two evils","c":"Divorce is wrong but allowed if a marriage has really broken down — staying together could be a greater evil. Jesus allowed divorce for adultery (Matthew 19:9). Because Christianity teaches forgiveness, a repentant couple may remarry and have a second chance to make it work."},{"n":"Humanist & atheist","tag":"A right if it fails","c":"Marriage is a purely human, legal institution. All couples should have the right to divorce if the marriage has failed, provided spouses are treated equally and children are well provided for; a divorced person is single again and free to remarry."},{"n":"Situation Ethics","tag":"The most loving choice","c":"Christians, Humanists and atheists may weigh each case: the pros of divorce (peace, fresh starts, ending damaging conflict for children) against the cons (cost, hurt to children, lost contact with relatives) — then choose the most loving outcome, which may be to divorce."}]},"t7":{"terms":[{"term":"Subordinate","def":"Of inferior importance or rank."},{"term":"Dominant role","def":"The major, most influential part."},{"term":"Sex discrimination","def":"Treating people differently on the ground of their gender."},{"term":"Suffragette","def":"A woman seeking the right to vote through protest."}],"views":[{"n":"Evangelical Protestant","tag":"Separate, God-given roles","c":"Men and women have separate and different roles. Women bring up children and run a Christian home; men provide for the family and lead in religion. Based on Genesis 2 (Adam created first), the male disciples, and St Paul in Ephesians and 1 Corinthians 11 — women should even keep their heads covered."},{"n":"Catholic","tag":"Equal status and roles","c":"Men and women have equal status in the sight of God (Genesis 1:27) and equal roles in life and the family. The new Catholic marriage service has the priest say the husband should “recognise that she is his equal”."},{"n":"Liberal Protestant","tag":"Fully equal","c":"Men and women are completely equal and should have equal roles. Based on Genesis 1 (created equally), St Paul in Galatians (“neither male nor female”), and the Gospel evidence that Jesus treated women as his equals — so these Churches have women priests and ministers."},{"n":"Humanist & atheist","tag":"Complete equality","c":"Non-religious people are “equalists”: men and women are equal and should have totally equal roles in the family. Attitudes have changed hugely — in 1965, 85% of men said a woman’s job is the home; by 2008 only 17% agreed. Many early feminists and suffragettes were Humanists."}]},"t8":{"terms":[{"term":"Gender prejudice","def":"Believing that one sex is superior to another based on feelings rather than evidence."},{"term":"Gender discrimination","def":"Putting the prejudice into practice and treating people differently because of their sex."},{"term":"Ordination","def":"The act of conferring holy orders — making a priest."},{"term":"Extraordinary minister","def":"A non-ordained man or woman who assists the work of priests."}],"views":[{"n":"Evangelical Protestant","tag":"Different roles, not discrimination","c":"Men and women have separate roles, so women should not speak in church, teach or lead — only men can be Church leaders. This is not discrimination, they say, but what God ORDAINED in the New Testament: Adam was created first and Eve was led astray."},{"n":"Catholic","tag":"Equal — but male priests","c":"The Church is AGAINST gender prejudice and teaches equality (Genesis 1:27): women study, teach and serve as extraordinary ministers. Yet only men can be ordained priests, because the priest represents Jesus at the Mass and the apostles were all men — this, it argues, is vocation, not discrimination."},{"n":"Liberal Protestant","tag":"Fully equal, women priests","c":"Men and women should have totally equal rights in life and in the Church — so these Churches (CofE, Methodist, URC, Baptist) have women ministers, priests and bishops. Based on Genesis 1, Galatians (“neither male nor female”), Jesus treating women as equals, and evidence of women priests in the early Church."},{"n":"Humanist & atheist","tag":"Discrimination must be illegal","c":"Non-religious people believe men and women are equal and it is wrong to discriminate — refusing to ordain women should be made illegal. Yet surveys show prejudice persists everywhere: 65% say sexism is still a workplace problem (YouGov 2014), and two women a week are killed by a partner."}]}};
+(function(){
+  let fcTopic="all", fcType="terms";
+  const grid=document.getElementById("fcGrid"), count=document.getElementById("fcCount");
+  function build(){
+    const all=Object.keys(FLASHCARDS);
+    const topics = fcTopic==="all" ? all : [fcTopic];
+    let cards=[];
+    topics.forEach(function(tp){
+      const d=FLASHCARDS[tp]; if(!d) return;
+      if(fcType==="terms"){ d.terms.forEach(function(t){cards.push({tp:tp,front:t.term,tag:LABELS[tp],back:'<div class="fc-def">'+esc2(t.def)+'</div>'})}); }
+      else { d.views.forEach(function(v){cards.push({tp:tp,front:v.n,tag:LABELS[tp]+(v.tag?' · '+v.tag:''),back:'<div class="fc-def">'+esc2(v.c)+'</div>'})}); }
+    });
+    grid.innerHTML=cards.map(function(c){return '<button class="fc-card '+c.tp+'" data-flipped="false" aria-label="Flashcard: '+esc2(c.front)+'. Tap to reveal.">'+
+      '<div class="fc-inner">'+
+      '<div class="fc-face fc-front"><div class="fc-tag">'+esc2(c.tag)+'</div><div class="fc-term">'+esc2(c.front)+'</div><div class="fc-flip">tap to flip ↺</div></div>'+
+      '<div class="fc-face fc-back"><div class="fc-tag">'+esc2(c.tag)+'</div>'+c.back+'</div>'+
+      '</div></button>';}).join("");
+    count.textContent = cards.length + " cards";
+    grid.querySelectorAll(".fc-card").forEach(function(el){
+      el.addEventListener("click",function(){el.dataset.flipped = el.dataset.flipped==="true" ? "false":"true";});
+    });
+  }
+  document.querySelectorAll('#flashcards .fc-tabs .fc-btn').forEach(function(b){b.addEventListener("click",function(){
+    document.querySelectorAll('#flashcards .fc-tabs .fc-btn').forEach(function(x){x.setAttribute("aria-selected","false")});
+    b.setAttribute("aria-selected","true"); fcTopic=b.dataset.topic; build();
+  })});
+  document.querySelectorAll('#flashcards .fc-type .fc-btn').forEach(function(b){b.addEventListener("click",function(){
+    document.querySelectorAll('#flashcards .fc-type .fc-btn').forEach(function(x){x.setAttribute("aria-selected","false")});
+    b.setAttribute("aria-selected","true"); fcType=b.dataset.type; build();
+  })});
+  build();
+})();
+/* =====================================================================
+   TEACHER: paste your YouTube link between the quotes below.
+   Any format works — youtube.com/watch?v=..., youtu.be/..., or an embed URL.
+   Leave it empty ("") and the page shows a "Video not set" placeholder.
+   ===================================================================== */
+const VIDEO_URL = "";
+(function wireVideo(){
+  const url=(VIDEO_URL||"").trim();
+  if(!url) return;
+  let id="";
+  const m = url.match(/(?:youtu\.be\/|v=|\/embed\/|\/shorts\/)([A-Za-z0-9_-]{11})/);
+  if(m) id=m[1];
+  else if(/^[A-Za-z0-9_-]{11}$/.test(url)) id=url;
+  const frame=document.getElementById("videoFrame");
+  if(id && frame){
+    frame.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+id+'?rel=0" title="Unit review" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>';
+  } else if(frame){
+    frame.innerHTML='<div class="video-placeholder"><a class="res-btn big" style="background:#fff" href="'+url+'" target="_blank" rel="noopener"><span class="ic">▶</span><span><b>Watch the full unit review</b></span><span class="go">↗</span></a></div>';
+  }
+})();
+/* =====================================================================
+   TEACHER: paste your SharePoint share links between the quotes below.
+   Leave a link empty ("") and its button will show "Link not set".
+   Tip: in SharePoint, open the file's ... menu -> Copy link -> paste here.
+   ===================================================================== */
+const LINKS = {
+  t1_lesson: "",
+  t1_booklet: "",
+  t1_podcast: "",
+  t2_lesson: "",
+  t2_booklet: "",
+  t2_podcast: "",
+  t3_lesson: "",
+  t3_booklet: "",
+  t3_podcast: "",
+  t4_lesson: "",
+  t4_booklet: "",
+  t4_podcast: "",
+  t5_lesson: "",
+  t5_booklet: "",
+  t5_podcast: "",
+  t6_lesson: "",
+  t6_booklet: "",
+  t6_podcast: "",
+  t7_lesson: "",
+  t7_booklet: "",
+  t7_podcast: "",
+  t8_lesson: "",
+  t8_booklet: "",
+  t8_podcast: "",
+  booklet: "",
+  booklet_keyidea: "",
+  sow: "",
+  guide: ""
+};
+(function wireResources(){
+  let anySet=false;
+  document.querySelectorAll(".res-btn").forEach(function(btn){
+    const url=(LINKS[btn.dataset.key]||"").trim();
+    if(url){ btn.href=url; btn.target="_blank"; btn.rel="noopener"; anySet=true; }
+    else{ btn.classList.add("unset"); btn.removeAttribute("href"); btn.setAttribute("aria-disabled","true"); }
+  });
+  if(anySet){ const n=document.getElementById("resNote"); if(n) n.classList.add("hide"); }
+})();
+</script>
+</body>
+</html>

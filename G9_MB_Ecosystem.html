@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Muslim Beliefs — Grade 9 Summit · Unit at a Glance</title>
+<style>
+  :root{
+    --ink:#0B3D36;       /* unit family colour */
+    --ink-2:#062A25;
+    --mint:#E9F4EE;
+    --mint-2:#DCEBE2;
+    --amber:#F2B705;      /* summit amber */
+    --amber-soft:#FFD95C;
+    --rubric:#B01C2E;
+    --teal:#0E8A7B;
+    --blue:#1565C0;
+    --green:#2E7D32;
+    --paper:#F5FAF7;
+    --line:rgba(11,61,54,.16);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--paper);color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;line-height:1.5;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1060px;margin:0 auto;padding:0 24px}
+  .eyebrow{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;font-weight:700}
+  .hero{background:
+      radial-gradient(1200px 400px at 80% -10%, rgba(242,183,5,.16), transparent 60%),
+      linear-gradient(180deg,var(--ink) 0%, var(--ink-2) 100%);
+    color:var(--mint);padding:64px 0 72px;position:relative;overflow:hidden;border-bottom:3px solid var(--amber)}
+  .hero::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.06;
+    background:repeating-linear-gradient(180deg,transparent 0 38px,#fff 38px 39px)}
+  .hero .wrap{position:relative;z-index:2}
+  .crest{display:flex;align-items:center;gap:16px;margin-bottom:34px}
+  .crest svg{width:54px;height:54px;flex:none}
+  .crest .who{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;color:var(--amber-soft)}
+  .crest .who b{color:var(--mint);display:block;letter-spacing:.14em;font-size:.86rem;margin-top:3px}
+  h1{font-size:clamp(2.2rem,5.6vw,3.8rem);line-height:1.04;font-weight:700;letter-spacing:-.01em}
+  h1 .amp{color:var(--amber);font-style:italic}
+  .sub{margin-top:20px;max-width:58ch;font-size:1.12rem;color:#D7E8DD}
+  .bigq{margin-top:30px;display:inline-flex;gap:14px;align-items:flex-start;border-left:3px solid var(--amber);padding:8px 0 8px 18px;max-width:62ch}
+  .bigq .q{font-family:"Trebuchet MS",sans-serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--amber-soft);padding-top:5px}
+  .bigq p{font-size:1.22rem;font-style:italic;color:#fff}
+  section{padding:64px 0}
+  .sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:8px}
+  .sec-head .num{font-family:"Trebuchet MS",sans-serif;color:var(--amber);font-weight:700;font-size:.9rem;letter-spacing:.15em}
+  .sec-head h2{font-size:clamp(1.6rem,3.4vw,2.3rem);letter-spacing:-.01em}
+  .sec-lead{color:#41504a;max-width:66ch;margin-bottom:34px;font-size:1.05rem}
+  .spectrum-card{background:linear-gradient(180deg,#fff, var(--paper));border:1px solid var(--line);border-radius:14px;
+    box-shadow:0 18px 40px -28px rgba(11,61,54,.5);padding:28px 26px 34px}
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:26px}
+  .tab{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.8rem;letter-spacing:.03em;
+    border:1px solid var(--line);background:#fff;color:var(--ink);padding:8px 14px;border-radius:999px;cursor:pointer;transition:.18s}
+  .tab[aria-selected="true"]{background:var(--ink);color:var(--mint);border-color:var(--ink)}
+  .tab:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+  .axis{position:relative;margin:8px 4px 0}
+  .axis-labels{display:flex;justify-content:space-between;font-family:"Trebuchet MS",sans-serif;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:#5f6f68;margin-bottom:10px}
+  .axis-labels .l{color:var(--rubric);font-weight:700}
+  .axis-labels .r{color:var(--blue);font-weight:700}
+  .bar{height:10px;border-radius:999px;background:linear-gradient(90deg,var(--rubric),#b06a1e 40%,#5a7d3a 66%,var(--blue));position:relative}
+  .ticks{position:relative;height:118px;margin-top:0}
+  .node{position:absolute;top:0;transform:translateX(-50%);width:150px;text-align:center;cursor:pointer}
+  .node .dot{width:20px;height:20px;border-radius:50%;background:#fff;border:3px solid var(--ink);margin:0 auto;position:relative;top:-15px;transition:.18s}
+  .node .nm{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.8rem;margin-top:-6px;line-height:1.2}
+  .node .sb{font-size:.74rem;color:#5f6f68;font-style:italic;margin-top:2px;line-height:1.25}
+  .node:hover .dot,.node[data-active="true"] .dot{transform:scale(1.25);border-color:var(--amber);box-shadow:0 0 0 5px rgba(242,183,5,.22)}
+  .node:focus-visible{outline:none}
+  .node:focus-visible .dot{outline:3px solid var(--amber);outline-offset:3px}
+  .readout{margin-top:14px;background:var(--ink);color:var(--mint);border-radius:12px;padding:20px 22px;min-height:112px;display:flex;gap:18px;align-items:flex-start}
+  .readout .badge{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;
+    background:var(--amber);color:var(--ink-2);padding:6px 10px;border-radius:6px;white-space:nowrap;margin-top:2px}
+  .readout .body h4{font-size:1.12rem;margin-bottom:4px}
+  .readout .body p{color:#D7E8DD;font-size:.98rem}
+  .readout .body .g9{margin-top:10px;font-size:.88rem}
+  .readout .body .g9 .k{font-family:"Trebuchet MS",sans-serif;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--amber-soft)}
+  .hint{font-family:"Trebuchet MS",sans-serif;font-size:.76rem;color:#7c8a84;margin-top:14px;text-align:center}
+  .thread{background:var(--ink);color:var(--mint);border-radius:14px;padding:34px 30px;position:relative;overflow:hidden}
+  .thread::before{content:"";position:absolute;inset:0;opacity:.07;background:repeating-linear-gradient(180deg,transparent 0 30px,#fff 30px 31px)}
+  .thread .wrap2{position:relative;z-index:2}
+  .thread h2{color:#fff;font-size:clamp(1.5rem,3vw,2.1rem);margin-bottom:8px}
+  .thread .lead{color:#D7E8DD;max-width:64ch;margin-bottom:24px}
+  .threads{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .tcard{border:1px solid rgba(255,217,92,.32);border-radius:10px;padding:16px 16px 18px;background:rgba(255,255,255,.03)}
+  .tcard .t{font-family:"Trebuchet MS",sans-serif;color:var(--amber);font-weight:700;font-size:.82rem;letter-spacing:.05em;margin-bottom:6px}
+  .tcard p{font-size:.9rem;color:#D7E8DD}
+  .triptych{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
+  .panel{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;display:flex;flex-direction:column}
+  .panel .cap{padding:16px 18px;color:#fff;position:relative}
+  .panel .cap .n{font-family:"Trebuchet MS",sans-serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;opacity:.85}
+  .panel .cap h3{font-size:1.22rem;margin-top:3px}
+  .panel .cap .ask{font-style:italic;font-size:.88rem;margin-top:8px;opacity:.95}
+  .panel .body{padding:16px 18px;font-size:.92rem}
+  .panel .body .row{display:flex;gap:9px;padding:7px 0;border-bottom:1px dashed var(--line)}
+  .panel .body .row:last-child{border-bottom:0}
+  .panel .body .row .v{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.74rem;white-space:normal;color:var(--ink);min-width:118px;max-width:118px}
+  .panel .body .row .d{color:#41504a}
+  .revise{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:start}
+  .steps{counter-reset:s;display:flex;flex-direction:column;gap:14px}
+  .step{display:flex;gap:16px;align-items:flex-start;border-left:2px solid var(--line);padding:2px 0 2px 18px;position:relative}
+  .step::before{counter-increment:s;content:counter(s);position:absolute;left:-15px;top:-2px;width:28px;height:28px;border-radius:50%;
+    background:var(--amber);color:var(--ink-2);font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.9rem;display:grid;place-items:center}
+  .step h4{font-size:1.02rem}
+  .step p{font-size:.9rem;color:#41504a;margin-top:2px}
+  .ao{border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .ao .h{padding:12px 16px;font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.82rem;letter-spacing:.06em;color:#fff}
+  .ao .h.ao1{background:var(--ink)}
+  .ao .h.ao2{background:var(--rubric)}
+  .ao .c{padding:14px 16px;font-size:.9rem;border-bottom:1px solid var(--line)}
+  .ao .c:last-child{border-bottom:0}
+  .ao .c b{font-family:"Trebuchet MS",sans-serif;font-size:.78rem;letter-spacing:.04em}
+  .video-frame{position:relative;width:100%;aspect-ratio:16/9;border-radius:14px;overflow:hidden;
+    border:1px solid var(--line);box-shadow:0 20px 44px -30px rgba(11,61,54,.5);background:var(--ink)}
+  .video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .video-placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:14px;text-align:center;padding:30px;color:#BFD4C8;
+    background:radial-gradient(700px 300px at 50% 30%,rgba(242,183,5,.14),transparent 60%),linear-gradient(180deg,var(--ink),var(--ink-2))}
+  .video-placeholder .vp-badge{font-family:"Trebuchet MS",Verdana,sans-serif;font-weight:700;font-size:.72rem;letter-spacing:.14em;
+    text-transform:uppercase;background:var(--amber);color:var(--ink-2);padding:6px 12px;border-radius:6px}
+  .video-placeholder p{max-width:52ch;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.92rem;line-height:1.55}
+  .video-placeholder code{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:4px;padding:1px 6px}
+  .fc-controls{display:flex;gap:18px;flex-wrap:wrap;align-items:center;margin-bottom:24px}
+  .fc-tabs,.fc-type{display:flex;gap:8px;flex-wrap:wrap}
+  .fc-btn{font-family:"Trebuchet MS",Verdana,sans-serif;font-weight:700;font-size:.78rem;border:1px solid var(--line);
+    background:#fff;color:var(--ink);padding:8px 13px;border-radius:999px;cursor:pointer;transition:.18s}
+  .fc-btn[aria-selected="true"]{background:var(--ink);color:var(--mint);border-color:var(--ink)}
+  .fc-btn:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+  .fc-hint{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.78rem;color:#7c8a84;margin-left:auto}
+  .fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+  .fc-card{perspective:1200px;height:190px;cursor:pointer;background:none;border:0;padding:0;font-family:inherit;text-align:left}
+  .fc-inner{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+  .fc-card[data-flipped="true"] .fc-inner{transform:rotateY(180deg)}
+  .fc-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+    border-radius:12px;padding:18px;display:flex;flex-direction:column;border:1px solid var(--line);overflow:auto}
+  .fc-front{background:linear-gradient(180deg,#fff,var(--paper))}
+  .fc-back{transform:rotateY(180deg);color:var(--mint)}
+  .fc-tag{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--amber);font-weight:700;margin-bottom:8px}
+  .fc-front .fc-tag{color:#94741a}
+  .fc-term{font-size:1.18rem;font-weight:700;line-height:1.16}
+  .fc-front .fc-flip{margin-top:auto;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.72rem;color:#7c8a84}
+  .fc-def{font-size:.9rem;line-height:1.4}
+  .res-note{background:#FCF3D6;border:1px solid var(--amber);border-left:4px solid var(--amber);
+    border-radius:8px;padding:12px 16px;margin-bottom:22px;font-size:.9rem;color:#5a4a10;
+    font-family:"Trebuchet MS",Verdana,sans-serif}
+  .res-note code{background:#fff;border:1px solid var(--line);border-radius:4px;padding:1px 6px;font-size:.85em}
+  .res-note.hide{display:none}
+  .res-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;margin-bottom:16px}
+  .res-col{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff}
+  .rc-head{padding:14px 16px;color:#fff}
+  .rc-head .rc-n{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;opacity:.85}
+  .rc-head h3{font-size:1.12rem;margin-top:2px}
+  .res-btn{display:flex;align-items:center;gap:12px;padding:13px 16px;border-top:1px solid var(--line);
+    font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.92rem;color:var(--ink);text-decoration:none;cursor:pointer;transition:background .15s}
+  .res-col .res-btn:first-of-type{border-top:0}
+  .res-btn:hover{background:var(--mint)}
+  .res-btn .ic{width:26px;height:26px;flex:none;display:grid;place-items:center;border-radius:6px;background:var(--ink);color:var(--amber);font-size:.9rem}
+  .res-btn .go{margin-left:auto;color:var(--amber);font-weight:700;opacity:0;transition:.15s}
+  .res-btn:hover .go{opacity:1}
+  .res-btn:focus-visible{outline:3px solid var(--amber);outline-offset:-3px}
+  .res-btn.unset{opacity:.5;cursor:not-allowed}
+  .res-btn.unset::after{content:"Link not set";margin-left:auto;font-size:.74rem;color:#94741a;
+    background:#FCF3D6;border:1px solid var(--amber-soft);border-radius:5px;padding:2px 7px}
+  .res-wide{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:2px}
+  .res-btn.big{border:1px solid var(--line);border-radius:12px;background:#fff;padding:16px 18px}
+  .res-btn.big:hover{background:var(--mint)}
+  .res-btn.big .ic{width:34px;height:34px;font-size:1.1rem}
+  footer{background:var(--ink-2);color:#BFD4C8;padding:26px 0;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.8rem}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+  footer .amber{color:var(--amber)}
+  @media(max-width:820px){
+    .threads{grid-template-columns:1fr}
+    .revise{grid-template-columns:1fr}
+    .node{width:104px}
+    .node .sb{display:none}
+    .res-wide{grid-template-columns:1fr}
+    .fc-grid{grid-template-columns:1fr 1fr}
+    .fc-hint{width:100%;margin-left:0}
+  }
+  @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+.panel.a1 .cap{background:linear-gradient(135deg,#1F4E79,#12294D)}
+.rc1 .rc-head{background:linear-gradient(135deg,#1F4E79,#12294D)}
+.fc-card.t1 .fc-back{background:linear-gradient(160deg,#1F4E79,#12294D)}
+.panel.a2 .cap{background:linear-gradient(135deg,#1565C0,#12447A)}
+.rc2 .rc-head{background:linear-gradient(135deg,#1565C0,#12447A)}
+.fc-card.t2 .fc-back{background:linear-gradient(160deg,#1565C0,#12447A)}
+.panel.a3 .cap{background:linear-gradient(135deg,#8E24AA,#6A1B9A)}
+.rc3 .rc-head{background:linear-gradient(135deg,#8E24AA,#6A1B9A)}
+.fc-card.t3 .fc-back{background:linear-gradient(160deg,#8E24AA,#6A1B9A)}
+.panel.a4 .cap{background:linear-gradient(135deg,#00897B,#00695C)}
+.rc4 .rc-head{background:linear-gradient(135deg,#00897B,#00695C)}
+.fc-card.t4 .fc-back{background:linear-gradient(160deg,#00897B,#00695C)}
+.panel.a5 .cap{background:linear-gradient(135deg,#B8860B,#8A6D1B)}
+.rc5 .rc-head{background:linear-gradient(135deg,#B8860B,#8A6D1B)}
+.fc-card.t5 .fc-back{background:linear-gradient(160deg,#B8860B,#8A6D1B)}
+.panel.a6 .cap{background:linear-gradient(135deg,#D33648,#B01C2E)}
+.rc6 .rc-head{background:linear-gradient(135deg,#D33648,#B01C2E)}
+.fc-card.t6 .fc-back{background:linear-gradient(160deg,#D33648,#B01C2E)}
+.panel.a7 .cap{background:linear-gradient(135deg,#43A047,#2E7D32)}
+.rc7 .rc-head{background:linear-gradient(135deg,#43A047,#2E7D32)}
+.fc-card.t7 .fc-back{background:linear-gradient(160deg,#43A047,#2E7D32)}
+.panel.a8 .cap{background:linear-gradient(135deg,#E8425F,#B71C3A)}
+.rc8 .rc-head{background:linear-gradient(135deg,#E8425F,#B71C3A)}
+.fc-card.t8 .fc-back{background:linear-gradient(160deg,#E8425F,#B71C3A)}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <div class="crest">
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <rect x="2" y="2" width="60" height="60" rx="13" fill="#062A25" stroke="#F2B705" stroke-width="1.5"/>
+        <g fill="none" stroke="#E9F4EE" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M32 12 L14 46 h36 z"/>
+          <path d="M25 33 l7-8 7 8"/>
+        </g>
+        <circle cx="32" cy="20" r="3" fill="#F2B705"/>
+      </svg>
+      <div class="who">Edexcel GCSE (9–1) Religious Studies B · Paper 2, Question 1 · Islam
+        <b>Harlington School · Grade 9 Summit</b></div>
+    </div>
+    <h1>Muslim Beliefs</h1>
+    <p class="sub">Eight topics, one summit. The divergent views set side by side, the key ideas connected, and the (d) evaluated the Level-4 way — everything for the top of the mark scheme, in one place.</p>
+    <div class="bigq">
+      <span class="q">The<br>big<br>question</span>
+      <p>What do Muslims believe about Allah, prophethood and the Last Day — and where exactly do Sunni and Shi’a part?</p>
+    </div>
+  </div>
+</header>
+<section id="spectrum">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">01</span><h2>The divergent views explorer</h2></div>
+    <p class="sec-lead">Every (d) in this unit turns on the <b>divergent views</b> — set side by side, exactly as the examiner wants. Pick a topic, then tap a position to see what it claims. The Grade 9 move and the 7-minute discussion question travel with each topic.</p>
+    <div class="spectrum-card">
+      <div class="tabs" role="tablist" aria-label="Choose a topic">
+<button class="tab" role="tab" aria-selected="true" data-topic="t1">Six beliefs</button>
+<button class="tab" role="tab" aria-selected="false" data-topic="t2">Five roots</button>
+<button class="tab" role="tab" aria-selected="false" data-topic="t3">Nature of Allah</button>
+<button class="tab" role="tab" aria-selected="false" data-topic="t4">Risalah</button>
+<button class="tab" role="tab" aria-selected="false" data-topic="t5">Holy books</button>
+<button class="tab" role="tab" aria-selected="false" data-topic="t6">Malaikah</button>
+<button class="tab" role="tab" aria-selected="false" data-topic="t7">Al-Qadr</button>
+<button class="tab" role="tab" aria-selected="false" data-topic="t8">Akhirah</button>
+      </div>
+      <div class="axis">
+        <div class="axis-labels"><span class="l" id="poleL"></span><span class="r" id="poleR"></span></div>
+        <div class="bar"></div>
+        <div class="ticks" id="ticks"></div>
+      </div>
+      <div class="readout" id="readout" aria-live="polite"></div>
+      <p class="hint">Tap a circle — or use Tab and Enter — to explore each position.</p>
+    </div>
+  </div>
+</section>
+<section>
+  <div class="wrap">
+    <div class="thread">
+      <div class="wrap2">
+        <h2>The thread that ties it together</h2>
+        <p class="lead">Grade 9 is not more content — it is three habits applied to every topic. Spot them and every (d) in this unit opens the same way.</p>
+        <div class="threads">
+          <div class="tcard"><div class="t">Divergent views, side by side</div><p>Never one view at a time. Set them against each other — where they agree, and the exact point they part. That comparison IS the analysis.</p></div>
+          <div class="tcard"><div class="t">The (d) regulation</div><p>Chain each point (claim → because → this means → therefore), steelman the other side, weigh BOTH arguments — a strength AND a limit — then justify the conclusion.</p></div>
+          <div class="tcard"><div class="t">Textbook-first accuracy</div><p>A correctly named source beats a vague paraphrase. One learned line from each source, placed precisely, is worth more than a paragraph of drift.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="topics">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">02</span><h2>Eight topics, one summit</h2></div>
+    <p class="sec-lead">Each panel is a topic’s <b>key idea</b> — the connective explanation that links the key words into one argument. Learn the chain, not the list.</p>
+    <div class="triptych">
+<div class="panel a1"><div class="cap"><div class="n">Topic 1 · I01</div><h3>Six beliefs</h3><div class="ask">What must a Muslim believe, and why do Sunnis and Shi’as express it differently?</div></div><div class="body"><div class="row"><span class="v">TAWHID</span><span class="d">Belief in Allah, the one God everything else depends on — deny it (shirk) and Islam itself collapses.</span></div><div class="row"><span class="v">RISALAH</span><span class="d">One box, three beliefs: angels carry Allah’s message, holy books record it, messengers deliver it to people.</span></div><div class="row"><span class="v">AKIRAH</span><span class="d">The last things: the Last Day and life after death — the point every other belief is building towards.</span></div><div class="row"><span class="v">THE LOGIC</span><span class="d">God, then how God’s word reaches humanity, then where humanity ends: six beliefs form one continuous arc.</span></div></div></div>
+<div class="panel a2"><div class="cap"><div class="n">Topic 2 · I02</div><h3>Five roots</h3><div class="ask">What are the five roots of Shi’a faith, and where do they part from the Sunnis?</div></div><div class="body"><div class="row"><span class="v">THE SPLIT</span><span class="d">Muhammad died with no successor named; some backed Ali (his cousin/son-in-law), others elected caliphs — Islam’s first split.</span></div><div class="row"><span class="v">KARBALA</span><span class="d">Ali’s son Husayn and his followers were massacred at Karbala — the wound Shi’as still mourn every year at Ashura.</span></div><div class="row"><span class="v">THE IMAMS</span><span class="d">Ali’s followers became Shi’a, holding that chosen descendants — the Imams — alone inherit authority to interpret the Qur’an.</span></div><div class="row"><span class="v">THE HIDDEN IMAM</span><span class="d">Most Shi’as (Twelvers) believe the twelfth Imam did not die but is hidden and will return to bring justice.</span></div></div></div>
+<div class="panel a3"><div class="cap"><div class="n">Topic 3 · I03</div><h3>Nature of Allah</h3><div class="ask">What is Allah like, and which characteristic sits at the centre?</div></div><div class="body"><div class="row"><span class="v">ONE</span><span class="d">If there is only one God, he alone made everything — so he is the Creator, and worship belongs to him alone.</span></div><div class="row"><span class="v">ALL-POWERFUL</span><span class="d">If he created everything, he must have complete power over it — omnipotence, and with it omniscience of all that happens.</span></div><div class="row"><span class="v">EVERYWHERE</span><span class="d">The one Creator is present throughout the universe he made (immanence) yet also beyond it (transcendence) — both at once.</span></div><div class="row"><span class="v">THE WORST SIN</span><span class="d">Because there is only one, associating anything else with him — shirk — is the gravest error a Muslim can commit.</span></div></div></div>
+<div class="panel a4"><div class="cap"><div class="n">Topic 4 · I04</div><h3>Risalah</h3><div class="ask">What is a prophet in Islam, and why did they keep coming?</div></div><div class="body"><div class="row"><span class="v">THE PATTERN</span><span class="d">Each prophet brought Islam in its perfect form — Adam, Ibrahim, Musa, Dawud, Isa — the same message, restarted.</span></div><div class="row"><span class="v">THE PROBLEM</span><span class="d">Every time, humans ignored, forgot or distorted the message, so Allah had to send another prophet to correct it.</span></div><div class="row"><span class="v">THE BREAK</span><span class="d">Muhammad received the Qur’an preserved word-for-word, incapable of distortion — so no more prophets are needed.</span></div><div class="row"><span class="v">THE SEAL</span><span class="d">That is why Muhammad is the “Seal of the prophets” (Surah 33:40) — he closes the line of prophecy for good.</span></div></div></div>
+<div class="panel a5"><div class="cap"><div class="n">Topic 5 · I05</div><h3>Holy books</h3><div class="ask">Why do Muslims honour the earlier books yet trust only the Qur’an completely?</div></div><div class="body"><div class="row"><span class="v">DICTATION</span><span class="d">Muhammad could not read or write, so the Qur’an came as dictation he learned by heart and recited (Surah 96:1).</span></div><div class="row"><span class="v">MEMORISED</span><span class="d">Followers memorised it and secretaries wrote each piece down at once, every part cross-checked against his recitation.</span></div><div class="row"><span class="v">ONE VERSION</span><span class="d">The caliph Uthman made a single authorised copy and destroyed all rival versions — 114 surahs, 77,639 words fixed for good.</span></div><div class="row"><span class="v">UNCHANGED</span><span class="d">Every copy printed since is identical to that one — “an earthly copy of a heavenly original”, unlike the earlier books.</span></div></div></div>
+<div class="panel a6"><div class="cap"><div class="n">Topic 6 · I06</div><h3>Malaikah</h3><div class="ask">What do angels do in Islam, and could there be Islam without them?</div></div><div class="body"><div class="row"><span class="v">MADE OF INTELLECT</span><span class="d">A hadith of Bukhari: angels are created from intellect without sensuality — no desires or urges to pull them off course.</span></div><div class="row"><span class="v">SO SINLESS</span><span class="d">With no free will they cannot disobey, so they are sinless and carry out Allah’s command exactly, every single time.</span></div><div class="row"><span class="v">SO RELIABLE</span><span class="d">That reliability is why Allah entrusts them to reveal the Qur’an and to record every human deed without any error.</span></div><div class="row"><span class="v">THE TWIST</span><span class="d">Humans have both intellect and sensuality — so one who masters his desires can rank even above the sinless angels.</span></div></div></div>
+<div class="panel a7"><div class="cap"><div class="n">Topic 7 · I07</div><h3>Al-Qadr</h3><div class="ask">Can predestination (al-Qadr) and human free will both be true?</div></div><div class="body"><div class="row"><span class="v">PREDESTINATION</span><span class="d">Al-Qadr: Allah has a master plan and nothing happens without his will (Surah 33:38; 13:42) — history unfolds as decreed.</span></div><div class="row"><span class="v">JUDGEMENT</span><span class="d">Yet on the Last Day Allah judges every person and rewards or punishes them for exactly what they chose to do.</span></div><div class="row"><span class="v">THE CLASH</span><span class="d">You can only justly punish a free choice — but if everything is predestined, was that choice ever really free?</span></div><div class="row"><span class="v">THE ANSWERS</span><span class="d">Sunnis (al’Ashari): foreknowledge isn’t force. Shi’as (Mu’tazilites): Allah gave free will. Both stay responsible.</span></div></div></div>
+<div class="panel a8"><div class="cap"><div class="n">Topic 8 · I08</div><h3>Akhirah</h3><div class="ask">What do Muslims believe happens after death — and where do they differ?</div></div><div class="body"><div class="row"><span class="v">DEATH → BARZAKH</span><span class="d">The body stays in the grave and the soul waits in Barzakh, the period between death and the Last Day, until it is time.</span></div><div class="row"><span class="v">THE TRUMPET</span><span class="d">Isa returns, the angel Israfil sounds the trumpet, and the dead are raised bodily, not just in spirit, to face judgement.</span></div><div class="row"><span class="v">ARAFAT</span><span class="d">All are gathered on the plain of Arafat near Makkah and judged on a mixture of faith and action, not faith alone.</span></div><div class="row"><span class="v">AL’JANNAH OR JAHANNAM</span><span class="d">The righteous enter paradise (the Garden); those who rejected faith are sent to hell (the fire) — a real, permanent parting.</span></div></div></div>
+    </div>
+  </div>
+</section>
+<section id="resources">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">03</span><h2>Your resources</h2></div>
+    <p class="sec-lead">Everything for the unit, in one place: each topic’s lesson, booklet pages and podcast episode — plus the unit-wide booklet editions, schemes of work and the guide.</p>
+    <div class="res-note" id="resNote">
+      <b>Teacher setup:</b> links aren't set yet. Open this file, find the <code>LINKS</code> list near the bottom, and paste each SharePoint share link once. Buttons with no link show as "Link not set".
+    </div>
+    <div class="res-grid">
+<div class="res-col rc1"><div class="rc-head"><span class="rc-n">Topic 1 · I01</span><h3>Six beliefs</h3></div><a class="res-btn" data-key="t1_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a><a class="res-btn" data-key="t1_booklet"><span class="ic">✎</span><span>Booklet pages</span><span class="go">↗</span></a><a class="res-btn" data-key="t1_podcast"><span class="ic">♪</span><span>Podcast · I01</span><span class="go">↗</span></a></div>
+<div class="res-col rc2"><div class="rc-head"><span class="rc-n">Topic 2 · I02</span><h3>Five roots</h3></div><a class="res-btn" data-key="t2_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a><a class="res-btn" data-key="t2_booklet"><span class="ic">✎</span><span>Booklet pages</span><span class="go">↗</span></a><a class="res-btn" data-key="t2_podcast"><span class="ic">♪</span><span>Podcast · I02</span><span class="go">↗</span></a></div>
+<div class="res-col rc3"><div class="rc-head"><span class="rc-n">Topic 3 · I03</span><h3>Nature of Allah</h3></div><a class="res-btn" data-key="t3_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a><a class="res-btn" data-key="t3_booklet"><span class="ic">✎</span><span>Booklet pages</span><span class="go">↗</span></a><a class="res-btn" data-key="t3_podcast"><span class="ic">♪</span><span>Podcast · I03</span><span class="go">↗</span></a></div>
+<div class="res-col rc4"><div class="rc-head"><span class="rc-n">Topic 4 · I04</span><h3>Risalah</h3></div><a class="res-btn" data-key="t4_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a><a class="res-btn" data-key="t4_booklet"><span class="ic">✎</span><span>Booklet pages</span><span class="go">↗</span></a><a class="res-btn" data-key="t4_podcast"><span class="ic">♪</span><span>Podcast · I04</span><span class="go">↗</span></a></div>
+<div class="res-col rc5"><div class="rc-head"><span class="rc-n">Topic 5 · I05</span><h3>Holy books</h3></div><a class="res-btn" data-key="t5_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a><a class="res-btn" data-key="t5_booklet"><span class="ic">✎</span><span>Booklet pages</span><span class="go">↗</span></a><a class="res-btn" data-key="t5_podcast"><span class="ic">♪</span><span>Podcast · I05</span><span class="go">↗</span></a></div>
+<div class="res-col rc6"><div class="rc-head"><span class="rc-n">Topic 6 · I06</span><h3>Malaikah</h3></div><a class="res-btn" data-key="t6_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a><a class="res-btn" data-key="t6_booklet"><span class="ic">✎</span><span>Booklet pages</span><span class="go">↗</span></a><a class="res-btn" data-key="t6_podcast"><span class="ic">♪</span><span>Podcast · I06</span><span class="go">↗</span></a></div>
+<div class="res-col rc7"><div class="rc-head"><span class="rc-n">Topic 7 · I07</span><h3>Al-Qadr</h3></div><a class="res-btn" data-key="t7_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a><a class="res-btn" data-key="t7_booklet"><span class="ic">✎</span><span>Booklet pages</span><span class="go">↗</span></a><a class="res-btn" data-key="t7_podcast"><span class="ic">♪</span><span>Podcast · I07</span><span class="go">↗</span></a></div>
+<div class="res-col rc8"><div class="rc-head"><span class="rc-n">Topic 8 · I08</span><h3>Akhirah</h3></div><a class="res-btn" data-key="t8_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a><a class="res-btn" data-key="t8_booklet"><span class="ic">✎</span><span>Booklet pages</span><span class="go">↗</span></a><a class="res-btn" data-key="t8_podcast"><span class="ic">♪</span><span>Podcast · I08</span><span class="go">↗</span></a></div>
+    </div>
+    <div class="res-wide">
+      <a class="res-btn big" data-key="booklet"><span class="ic">✎</span><span><b>Unit booklet</b> — the close-reading companion, four pages per topic</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="booklet_keyidea"><span class="ic">◈</span><span><b>Key Idea edition</b> — the booklet with the key-idea panels and 7-minute discussions</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="sow"><span class="ic">▤</span><span><b>Schemes of work</b> — one planning document per lesson</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="guide"><span class="ic">🏔</span><span><b>How to use the lessons</b> — the Grade 9 Summit teacher guide</span><span class="go">↗</span></a>
+    </div>
+  </div>
+</section>
+<section id="revise">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">04</span><h2>How to revise this unit</h2></div>
+    <p class="sec-lead">Use the resources in this order — the same loop as the lessons, so revision feels like coming home.</p>
+    <div class="revise">
+      <div class="steps">
+        <div class="step"><div><h4>Bell work first — retrieve before you re-read</h4><p>Five recall questions from memory, self-scored /5. Then the come-back tracker: the same five at +1 week and +1 month.</p></div></div>
+        <div class="step"><div><h4>Listen along to the episode</h4><p>One six-minute podcast per topic. Capture the six mind-map branches as it plays — the episode does the exposition so you can do the thinking.</p></div></div>
+        <div class="step"><div><h4>Work the booklet pages</h4><p>Four pages per topic: the key idea, two scripture quotes, the divergent views side by side, and the full (d). The Key Idea edition adds the 7-minute discussion.</p></div></div>
+        <div class="step"><div><h4>Write the (d) the Level-4 way</h4><p>Chain · steelman · weigh both (strength AND limit) · justify. Check yourself against the Level 3-vs-Level 4 models on lessons 3 and 6.</p></div></div>
+      </div>
+      <div class="ao">
+        <div class="h ao1">The marks map · (a) (b) (c) — 12 marks</div>
+        <div class="c"><b>(a) 3 marks —</b> outline three. Three crisp sentences, no development needed.</div>
+        <div class="c"><b>(b) 4 marks —</b> explain two. Each point + one development.</div>
+        <div class="c"><b>(c) 5 marks —</b> explain two WITH a named source — one learned line, placed exactly.</div>
+        <div class="h ao2">The (d) · 12 marks — half the question</div>
+        <div class="c"><b>What it is —</b> a full evaluation: agree and disagree developed, the non-religious voice engaged where the question invites it.</div>
+        <div class="c"><b>The grade 9 gap —</b> Level 3 asserts its judgement; Level 4 chains, weighs both sides, and justifies a conclusion that survives the strongest counter.</div>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="watch">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">05</span><h2>Watch: the whole unit in one go</h2></div>
+    <p class="sec-lead">A full review of <b>Muslim Beliefs</b> — all eight topics as one argument. Best watched before you revise, then again to check recall.</p>
+    <div class="video-frame" id="videoFrame">
+      <div class="video-placeholder" id="videoPlaceholder">
+        <div class="vp-badge">Video not set</div>
+        <p><b>Teacher:</b> paste the YouTube link in the <code>VIDEO_URL</code> line near the bottom of this file. The player then appears here automatically.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="flashcards">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">06</span><h2>Flashcards — test yourself</h2></div>
+    <p class="sec-lead">Flip a card to check yourself. Switch between <b>key terms</b> (term → meaning) and <b>divergent views</b> (view → what it claims), and filter by topic.</p>
+    <div class="fc-controls">
+      <div class="fc-tabs" role="tablist" aria-label="Topic">
+<button class="fc-btn" role="tab" aria-selected="true" data-topic="all">All</button>
+<button class="fc-btn" role="tab" aria-selected="false" data-topic="t1">Six beliefs</button>
+<button class="fc-btn" role="tab" aria-selected="false" data-topic="t2">Five roots</button>
+<button class="fc-btn" role="tab" aria-selected="false" data-topic="t3">Nature of Allah</button>
+<button class="fc-btn" role="tab" aria-selected="false" data-topic="t4">Risalah</button>
+<button class="fc-btn" role="tab" aria-selected="false" data-topic="t5">Holy books</button>
+<button class="fc-btn" role="tab" aria-selected="false" data-topic="t6">Malaikah</button>
+<button class="fc-btn" role="tab" aria-selected="false" data-topic="t7">Al-Qadr</button>
+<button class="fc-btn" role="tab" aria-selected="false" data-topic="t8">Akhirah</button>
+      </div>
+      <div class="fc-type" role="tablist" aria-label="Card type">
+        <button class="fc-btn" role="tab" aria-selected="true"  data-type="terms">Key terms</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-type="views">Divergent views</button>
+      </div>
+      <span class="fc-hint">Tap any card to flip · <span id="fcCount"></span></span>
+    </div>
+    <div class="fc-grid" id="fcGrid"></div>
+  </div>
+</section>
+<footer>
+  <div class="wrap">
+    <span>Muslim Beliefs · Grade 9 Summit · unit at a glance</span>
+    <span class="amber">Harlington School · Edexcel GCSE (9–1) RS Spec B</span>
+  </div>
+</footer>
+<script>
+const DATA = {"t1":{"poles":["Sunni Muslims","The shared belief"],"punch":"Learn the three categories and the six come free — Risalah alone bundles three of them.","discuss":"Can someone reject one of the six beliefs, e.g. angels, and still be a true Muslim?","nodes":[{"x":12,"nm":"Sunni Muslims","sb":"The six beliefs","auth":"The six beliefs","claim":"Six principal beliefs, the articles of faith: belief in Allah, His angels, His holy books, His messengers, the Last Day and life after death. Sunnis group them as Tawhid, Risalah and Akirah, based on the Qur’an and a hadith of Sahih Muslim."},{"x":50,"nm":"Shi’a Muslims","sb":"The five roots (Usul ad-Din)","auth":"The five roots (Usul ad-Din)","claim":"The same faith expressed as five roots: the oneness of Allah, Allah’s justice (Adalat), the prophets (Nubuwwah), the successors of Muhammad (imamah) and the Day of Judgement. The extra root — imamah — is the point of divergence."},{"x":88,"nm":"The shared belief","sb":"What both hold","auth":"What both hold","claim":"Both hold the oneness of Allah, His prophets, His holy books and a final judgement. Both teach all people are equal before Allah except in piety, that there is no priesthood, and that there is no original sin."}]},"t2":{"poles":["Shi’a Muslims","The shared belief"],"punch":"Root 4 (imamah) is where a 7th-century argument over WHO leads Islam hardened into a permanent belief.","discuss":"Is a 7th-century leadership dispute a good enough reason to split a religion for 1,400 years?","nodes":[{"x":12,"nm":"Shi’a Muslims","sb":"Five roots (Usul ad-Din)","auth":"Five roots (Usul ad-Din)","claim":"All five roots are essential: the oneness of Allah, Allah’s justice (Adalat), the prophets (Nubuwwah), the successors of Muhammad (imamah), and the Day of Judgement. Chosen descendants of Muhammad — the Imams — were given special powers by Allah to interpret the Qur’an and the law."},{"x":50,"nm":"Sunni Muslims","sb":"The six beliefs","auth":"The six beliefs","claim":"Sunnis accept four of the five roots, since these are already contained in the six beliefs, and treat Allah’s justice as part of His oneness. But they reject imamah: Muhammad was the Seal of the prophets, so there can be no messengers with God’s special authority after him."},{"x":88,"nm":"The shared belief","sb":"Common ground","auth":"Common ground","claim":"Both agree on Tawhid, the prophets from Adam to Muhammad, and a final Day of Judgement. Root 4 (imamah) is the one genuine collision — “the basis of conflicts between Shi’as and Sunnis”."}]},"t3":{"poles":["Sunni Muslims","The shared belief"],"punch":"The textbook’s own conclusion: “everything comes from Allah’s oneness” — Tawhid is the root, not one item on the list.","discuss":"If Allah is omnipotent, could he create a universe he could not control?","nodes":[{"x":12,"nm":"Sunni Muslims","sb":"Justice within oneness","auth":"Justice within oneness","claim":"Allah’s justice is part of His oneness. For Sunni theologians every characteristic — omnipotence, mercy, transcendence, immanence, justice — flows from Tawhid, so justice is not counted as a separate belief but as one expression of the one God."},{"x":50,"nm":"Shi’a Muslims","sb":"Adalat as a distinct root","auth":"Adalat as a distinct root","claim":"Shi’as hold Allah’s justice (Adalat) as a separate root of faith alongside Tawhid, stressing Allah as “the All-just” who created a fair and just universe that works by laws He established."},{"x":88,"nm":"The shared belief","sb":"Common ground","auth":"Common ground","claim":"Both agree Allah’s nature is revealed in the Qur’an’s 99 names and that, for Muslim theologians, everything comes from Allah’s oneness. The divergence is over whether justice is named separately or folded into Tawhid."}]},"t4":{"poles":["Muslim view","The shared belief"],"punch":"The chain runs revelation → distortion → new prophet, until an indestructible book finally ends it.","discuss":"If God’s message kept getting distorted by earlier believers, what stops the same happening to the Qur’an over time?","nodes":[{"x":12,"nm":"Muslim view","sb":"Isa is a prophet","auth":"Isa is a prophet","claim":"Isa was an ordinary human prophet, born of the virgin Maryam and given the Injil. He was not the Son of God and was not crucified — Allah took him to heaven so he never died (Surah 4:157). Prophets are never divine; it is wrong to treat them as Christians treat Jesus."},{"x":50,"nm":"Christian view","sb":"Jesus is God incarnate","auth":"Jesus is God incarnate","claim":"For Christians Jesus is the Son of God, divine as well as human, who died on the cross and rose again. This is exactly what the Qur’an rejects: “Say not Trinity” (Surah 4:171). This is why Christians disagree with what the Qur’an says about Isa."},{"x":88,"nm":"The shared belief","sb":"Common ground","auth":"Common ground","claim":"Both revere Isa/Jesus: a miraculous virgin birth, a sinless life, real miracles (healing the sick, raising the dead), and a message from God. The divergence is over his status — prophet, or God incarnate."}]},"t5":{"poles":["Some Muslims","The shared belief"],"punch":"The earlier books were written down late and drifted; the Qur’an was locked word-for-word from the start.","discuss":"If a holy book can be corrupted by human copying, can any religion ever be sure its scripture is God’s exact word?","nodes":[{"x":12,"nm":"Some Muslims","sb":"The earlier books are lost","auth":"The earlier books are lost","claim":"The books before the Qur’an were once God’s word and show that God always made sure people knew how to live. But they have been distorted, so they are no longer important. For most of these Muslims the Jewish Tenakh and the Christian Bible are not holy books."},{"x":50,"nm":"Other Muslims","sb":"The earlier books still count","auth":"The earlier books still count","claim":"Because the Qur’an itself calls Tawrat, Zabur and Injil holy books, parts of them must still show what God revealed. So they remain holy, and where their teaching fits the Qur’an it should be followed."},{"x":88,"nm":"The shared belief","sb":"Common ground","auth":"Common ground","claim":"All Muslims agree the Qur’an is God’s final, undistorted word — “an earthly copy of a heavenly original”, the most important book, sent to Muhammad in a form that could never be changed."}]},"t6":{"poles":["Angels are essential","The shared belief"],"punch":"Angels are perfect messengers precisely because they have no choice — their nature IS their job description.","discuss":"Is obedience without any choice (like an angel’s) morally admirable, or does real goodness require free will?","nodes":[{"x":12,"nm":"Angels are essential","sb":"The channel of revelation","auth":"The channel of revelation","claim":"Allah is too holy to speak to humans directly, so he uses sinless angels as go-betweens. Jibril revealed the whole Qur’an to Muhammad, angels called the prophets, and angels record every deed for the Day of Judgement — without them Muslims would have no message and no perfect example."},{"x":50,"nm":"Allah alone is the source","sb":"Angels only obey","auth":"Angels only obey","claim":"Angels have no free will and do nothing except obey Allah’s commands. They are messengers, not authors. The real foundation of Islam is Allah and his oneness (Tawhid); to make angels the source would drift towards shirk."},{"x":88,"nm":"The shared belief","sb":"Common ground","auth":"Common ground","claim":"All Muslims agree Allah is the ultimate source of Islam AND that he chose to reveal the Qur’an through Jibril and to record deeds through angels. Belief in angels is itself one of the six beliefs."}]},"t7":{"poles":["Shi’a Muslims","The shared belief"],"punch":"Hold predestination AND just judgement together and the tension is unavoidable — the two schools are rival ways out.","discuss":"If Allah already knows every choice you’ll make, in what sense could you ever have chosen otherwise?","nodes":[{"x":12,"nm":"Shi’a Muslims","sb":"Mu’tazilite explanation","auth":"Mu’tazilite explanation","claim":"Many Shi’as follow the eighth-century Mu’tazilites: Allah created humans with free will and made them his vicegerents. It is up to humans what they do, and they are responsible if misusing free will leads to disobeying God — which is why they can be justly judged on the Last Day."},{"x":50,"nm":"Sunni Muslims","sb":"Al’Ashari explanation","auth":"Al’Ashari explanation","claim":"Sunnis tend to follow al’Ashari: Allah has foreknowledge — he knows what people will do before they do it — yet they still do it of their own free will. “This freedom of action does not conflict with the foreknowledge of Allah.”"},{"x":88,"nm":"The shared belief","sb":"Common ground","auth":"Common ground","claim":"Both agree Allah is the Absolute Controller with a master plan (omnipotent and omniscient) and that nothing happens without his permission — yet humans remain responsible for their choices and are judged accordingly."}]},"t8":{"poles":["Only good Muslims pass","The shared belief"],"punch":"Because the raising is BODILY, the body must be kept whole — hence burial within days, and no cremation.","discuss":"Is it fair for judgement to weigh both faith and action, or should good deeds alone be enough to earn paradise?","nodes":[{"x":12,"nm":"Only good Muslims pass","sb":"The general view","auth":"The general view","claim":"The final judgement is based on a mixture of faith and action, and the most common belief is that only good Muslims will pass the test. On this view hell (Jahannam) is eternal — people stay there forever."},{"x":50,"nm":"God’s mercy intercedes","sb":"Some Muslims","auth":"Some Muslims","claim":"Many Muslims think God will intercede for Muslims who tried their best but sinned, because he is “the Merciful” and “the Compassionate”; a hadith teaches Muhammad will intercede too. Some hold that bad Muslims, or even good people of other faiths, stay in hell only a short time — “as long as God wills” (Surah 6)."},{"x":88,"nm":"The shared belief","sb":"Common ground","auth":"Common ground","claim":"All Muslims agree Isa returns, Israfil sounds the trumpet, the dead are raised on the Last Day and judged on the plain of Arafat, and are sent to Al’Jannah (paradise) or Jahannam (hell)."}]}};
+const LABELS = {"t1":"Six beliefs","t2":"Five roots","t3":"Nature of Allah","t4":"Risalah","t5":"Holy books","t6":"Malaikah","t7":"Al-Qadr","t8":"Akhirah"};
+const ticks=document.getElementById("ticks");
+const readout=document.getElementById("readout");
+const poleL=document.getElementById("poleL"), poleR=document.getElementById("poleR");
+const firstKey=Object.keys(DATA)[0];
+let topic=firstKey, active=0;
+function esc2(s){return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+function renderReadout(n){
+  const d=DATA[topic];
+  let html='<span class="badge">'+esc2(n.auth)+'</span><div class="body">'+
+    '<h4>'+esc2(n.nm)+' <span style="opacity:.6;font-style:italic;font-weight:400">· '+esc2(n.sb)+'</span></h4>'+
+    '<p>'+esc2(n.claim)+'</p>';
+  if(d.punch) html+='<div class="g9"><span class="k">The grade 9 move</span><br>'+esc2(d.punch)+'</div>';
+  if(d.discuss) html+='<div class="g9"><span class="k">Discuss · 7 min</span><br>'+esc2(d.discuss)+'</div>';
+  html+='</div>';
+  readout.innerHTML=html;
+}
+function renderTopic(){
+  const d=DATA[topic];
+  poleL.textContent=d.poles[0]; poleR.textContent=d.poles[1];
+  ticks.innerHTML="";
+  d.nodes.forEach(function(n,i){
+    const el=document.createElement("div");
+    el.className="node"; el.style.left=n.x+"%"; el.tabIndex=0;
+    el.setAttribute("role","button");
+    el.setAttribute("aria-label",n.nm+": "+n.sb);
+    el.dataset.active=(i===active);
+    el.innerHTML='<div class="dot"></div><div class="nm">'+esc2(n.nm)+'</div><div class="sb">'+esc2(n.sb)+'</div>';
+    const pick=function(){active=i;[].slice.call(ticks.children).forEach(function(c,j){c.dataset.active=(j===i)});renderReadout(n);};
+    el.addEventListener("click",pick);
+    el.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();pick();}});
+    ticks.appendChild(el);
+  });
+  active=Math.min(active,d.nodes.length-1);
+  [].slice.call(ticks.children).forEach(function(c,j){c.dataset.active=(j===active)});
+  renderReadout(d.nodes[active]);
+}
+document.querySelectorAll(".tab").forEach(function(t){
+  t.addEventListener("click",function(){
+    document.querySelectorAll(".tab").forEach(function(x){x.setAttribute("aria-selected","false")});
+    t.setAttribute("aria-selected","true");
+    topic=t.dataset.topic; active=0; renderTopic();
+  });
+});
+renderTopic();
+const FLASHCARDS = {"t1":{"terms":[{"term":"Iman","def":"Faith — belief in the six articles of faith."},{"term":"Hadith","def":"Sayings of the Prophet Muhammad; second in authority to the Qur’an for Sunnis."},{"term":"Tawhid","def":"The oneness of Allah — belief in Allah."},{"term":"Akirah","def":"The last things — belief in the Last Day and life after death."}],"views":[{"n":"Sunni Muslims","tag":"The six beliefs","c":"Six principal beliefs, the articles of faith: belief in Allah, His angels, His holy books, His messengers, the Last Day and life after death. Sunnis group them as Tawhid, Risalah and Akirah, based on the Qur’an and a hadith of Sahih Muslim."},{"n":"Shi’a Muslims","tag":"The five roots (Usul ad-Din)","c":"The same faith expressed as five roots: the oneness of Allah, Allah’s justice (Adalat), the prophets (Nubuwwah), the successors of Muhammad (imamah) and the Day of Judgement. The extra root — imamah — is the point of divergence."},{"n":"The shared belief","tag":"What both hold","c":"Both hold the oneness of Allah, His prophets, His holy books and a final judgement. Both teach all people are equal before Allah except in piety, that there is no priesthood, and that there is no original sin."}]},"t2":{"terms":[{"term":"Usul ad-Din","def":"The five roots of faith in Shi’a Islam."},{"term":"Adalat","def":"Allah’s justice — held by Shi’as as a distinct root."},{"term":"Nubuwwah","def":"Belief in Allah’s prophets, from Adam to Muhammad."},{"term":"Imamah","def":"Belief in the successors (Imams) of the Prophet Muhammad."}],"views":[{"n":"Shi’a Muslims","tag":"Five roots (Usul ad-Din)","c":"All five roots are essential: the oneness of Allah, Allah’s justice (Adalat), the prophets (Nubuwwah), the successors of Muhammad (imamah), and the Day of Judgement. Chosen descendants of Muhammad — the Imams — were given special powers by Allah to interpret the Qur’an and the law."},{"n":"Sunni Muslims","tag":"The six beliefs","c":"Sunnis accept four of the five roots, since these are already contained in the six beliefs, and treat Allah’s justice as part of His oneness. But they reject imamah: Muhammad was the Seal of the prophets, so there can be no messengers with God’s special authority after him."},{"n":"The shared belief","tag":"Common ground","c":"Both agree on Tawhid, the prophets from Adam to Muhammad, and a final Day of Judgement. Root 4 (imamah) is the one genuine collision — “the basis of conflicts between Shi’as and Sunnis”."}]},"t3":{"terms":[{"term":"Tawhid","def":"The oneness of Allah — the absolute basis of Islam."},{"term":"Omnipotence","def":"Allah has complete, unlimited power."},{"term":"Shirk","def":"The sin of associating others with Allah — the worst sin."},{"term":"Adalat","def":"Allah’s justice — fairness and the maintenance of what is right."}],"views":[{"n":"Sunni Muslims","tag":"Justice within oneness","c":"Allah’s justice is part of His oneness. For Sunni theologians every characteristic — omnipotence, mercy, transcendence, immanence, justice — flows from Tawhid, so justice is not counted as a separate belief but as one expression of the one God."},{"n":"Shi’a Muslims","tag":"Adalat as a distinct root","c":"Shi’as hold Allah’s justice (Adalat) as a separate root of faith alongside Tawhid, stressing Allah as “the All-just” who created a fair and just universe that works by laws He established."},{"n":"The shared belief","tag":"Common ground","c":"Both agree Allah’s nature is revealed in the Qur’an’s 99 names and that, for Muslim theologians, everything comes from Allah’s oneness. The divergence is over whether justice is named separately or folded into Tawhid."}]},"t4":{"terms":[{"term":"Risalah","def":"Prophethood — the messengers of Allah."},{"term":"Prophet","def":"An ordinary human chosen by Allah to receive and pass on his message."},{"term":"Khalifah","def":"A steward or vicegerent — a human appointed to look after the earth for Allah."},{"term":"Seal of the prophets","def":"Muhammad, the final prophet, after whom there are no more."}],"views":[{"n":"Muslim view","tag":"Isa is a prophet","c":"Isa was an ordinary human prophet, born of the virgin Maryam and given the Injil. He was not the Son of God and was not crucified — Allah took him to heaven so he never died (Surah 4:157). Prophets are never divine; it is wrong to treat them as Christians treat Jesus."},{"n":"Christian view","tag":"Jesus is God incarnate","c":"For Christians Jesus is the Son of God, divine as well as human, who died on the cross and rose again. This is exactly what the Qur’an rejects: “Say not Trinity” (Surah 4:171). This is why Christians disagree with what the Qur’an says about Isa."},{"n":"The shared belief","tag":"Common ground","c":"Both revere Isa/Jesus: a miraculous virgin birth, a sinless life, real miracles (healing the sick, raising the dead), and a message from God. The divergence is over his status — prophet, or God incarnate."}]},"t5":{"terms":[{"term":"Kitub","def":"The holy books (singular kitab)."},{"term":"Tawrat","def":"The holy book (Torah) given to Musa."},{"term":"Zabur","def":"The holy book (Psalms) given to Dawud."},{"term":"Injil","def":"The holy book (Gospel) given to Isa."}],"views":[{"n":"Some Muslims","tag":"The earlier books are lost","c":"The books before the Qur’an were once God’s word and show that God always made sure people knew how to live. But they have been distorted, so they are no longer important. For most of these Muslims the Jewish Tenakh and the Christian Bible are not holy books."},{"n":"Other Muslims","tag":"The earlier books still count","c":"Because the Qur’an itself calls Tawrat, Zabur and Injil holy books, parts of them must still show what God revealed. So they remain holy, and where their teaching fits the Qur’an it should be followed."},{"n":"The shared belief","tag":"Common ground","c":"All Muslims agree the Qur’an is God’s final, undistorted word — “an earthly copy of a heavenly original”, the most important book, sent to Muhammad in a form that could never be changed."}]},"t6":{"terms":[{"term":"Malaikah","def":"Angels — immortal beings created by Allah without free will."},{"term":"Jibril","def":"The angel Gabriel, chief of the angels, who revealed the Qur’an."},{"term":"Mika’il","def":"The angel Michael, guardian of heaven who sends rain."},{"term":"Izra’il","def":"The angel of death, who takes the soul at Allah’s command."}],"views":[{"n":"Angels are essential","tag":"The channel of revelation","c":"Allah is too holy to speak to humans directly, so he uses sinless angels as go-betweens. Jibril revealed the whole Qur’an to Muhammad, angels called the prophets, and angels record every deed for the Day of Judgement — without them Muslims would have no message and no perfect example."},{"n":"Allah alone is the source","tag":"Angels only obey","c":"Angels have no free will and do nothing except obey Allah’s commands. They are messengers, not authors. The real foundation of Islam is Allah and his oneness (Tawhid); to make angels the source would drift towards shirk."},{"n":"The shared belief","tag":"Common ground","c":"All Muslims agree Allah is the ultimate source of Islam AND that he chose to reveal the Qur’an through Jibril and to record deeds through angels. Belief in angels is itself one of the six beliefs."}]},"t7":{"terms":[{"term":"Al-Qadr","def":"Predestination — Allah’s plan and control of everything."},{"term":"Predestination","def":"The belief that everything that happens has already been decided."},{"term":"Foreknowledge","def":"Allah knowing what will happen long before it does."},{"term":"Insh Allah","def":"“If Allah wills” — said before speaking of the future."}],"views":[{"n":"Shi’a Muslims","tag":"Mu’tazilite explanation","c":"Many Shi’as follow the eighth-century Mu’tazilites: Allah created humans with free will and made them his vicegerents. It is up to humans what they do, and they are responsible if misusing free will leads to disobeying God — which is why they can be justly judged on the Last Day."},{"n":"Sunni Muslims","tag":"Al’Ashari explanation","c":"Sunnis tend to follow al’Ashari: Allah has foreknowledge — he knows what people will do before they do it — yet they still do it of their own free will. “This freedom of action does not conflict with the foreknowledge of Allah.”"},{"n":"The shared belief","tag":"Common ground","c":"Both agree Allah is the Absolute Controller with a master plan (omnipotent and omniscient) and that nothing happens without his permission — yet humans remain responsible for their choices and are judged accordingly."}]},"t8":{"terms":[{"term":"Akirah","def":"Life after death — belief in the Last Day and the hereafter."},{"term":"Al’Jannah","def":"Paradise — heaven, described as the Garden."},{"term":"Jahannam","def":"Hell — portrayed as a place of fire."},{"term":"Barzakh","def":"The period between death and the Last Day."}],"views":[{"n":"Only good Muslims pass","tag":"The general view","c":"The final judgement is based on a mixture of faith and action, and the most common belief is that only good Muslims will pass the test. On this view hell (Jahannam) is eternal — people stay there forever."},{"n":"God’s mercy intercedes","tag":"Some Muslims","c":"Many Muslims think God will intercede for Muslims who tried their best but sinned, because he is “the Merciful” and “the Compassionate”; a hadith teaches Muhammad will intercede too. Some hold that bad Muslims, or even good people of other faiths, stay in hell only a short time — “as long as God wills” (Surah 6)."},{"n":"The shared belief","tag":"Common ground","c":"All Muslims agree Isa returns, Israfil sounds the trumpet, the dead are raised on the Last Day and judged on the plain of Arafat, and are sent to Al’Jannah (paradise) or Jahannam (hell)."}]}};
+(function(){
+  let fcTopic="all", fcType="terms";
+  const grid=document.getElementById("fcGrid"), count=document.getElementById("fcCount");
+  function build(){
+    const all=Object.keys(FLASHCARDS);
+    const topics = fcTopic==="all" ? all : [fcTopic];
+    let cards=[];
+    topics.forEach(function(tp){
+      const d=FLASHCARDS[tp]; if(!d) return;
+      if(fcType==="terms"){ d.terms.forEach(function(t){cards.push({tp:tp,front:t.term,tag:LABELS[tp],back:'<div class="fc-def">'+esc2(t.def)+'</div>'})}); }
+      else { d.views.forEach(function(v){cards.push({tp:tp,front:v.n,tag:LABELS[tp]+(v.tag?' · '+v.tag:''),back:'<div class="fc-def">'+esc2(v.c)+'</div>'})}); }
+    });
+    grid.innerHTML=cards.map(function(c){return '<button class="fc-card '+c.tp+'" data-flipped="false" aria-label="Flashcard: '+esc2(c.front)+'. Tap to reveal.">'+
+      '<div class="fc-inner">'+
+      '<div class="fc-face fc-front"><div class="fc-tag">'+esc2(c.tag)+'</div><div class="fc-term">'+esc2(c.front)+'</div><div class="fc-flip">tap to flip ↺</div></div>'+
+      '<div class="fc-face fc-back"><div class="fc-tag">'+esc2(c.tag)+'</div>'+c.back+'</div>'+
+      '</div></button>';}).join("");
+    count.textContent = cards.length + " cards";
+    grid.querySelectorAll(".fc-card").forEach(function(el){
+      el.addEventListener("click",function(){el.dataset.flipped = el.dataset.flipped==="true" ? "false":"true";});
+    });
+  }
+  document.querySelectorAll('#flashcards .fc-tabs .fc-btn').forEach(function(b){b.addEventListener("click",function(){
+    document.querySelectorAll('#flashcards .fc-tabs .fc-btn').forEach(function(x){x.setAttribute("aria-selected","false")});
+    b.setAttribute("aria-selected","true"); fcTopic=b.dataset.topic; build();
+  })});
+  document.querySelectorAll('#flashcards .fc-type .fc-btn').forEach(function(b){b.addEventListener("click",function(){
+    document.querySelectorAll('#flashcards .fc-type .fc-btn').forEach(function(x){x.setAttribute("aria-selected","false")});
+    b.setAttribute("aria-selected","true"); fcType=b.dataset.type; build();
+  })});
+  build();
+})();
+/* =====================================================================
+   TEACHER: paste your YouTube link between the quotes below.
+   Any format works — youtube.com/watch?v=..., youtu.be/..., or an embed URL.
+   Leave it empty ("") and the page shows a "Video not set" placeholder.
+   ===================================================================== */
+const VIDEO_URL = "";
+(function wireVideo(){
+  const url=(VIDEO_URL||"").trim();
+  if(!url) return;
+  let id="";
+  const m = url.match(/(?:youtu\.be\/|v=|\/embed\/|\/shorts\/)([A-Za-z0-9_-]{11})/);
+  if(m) id=m[1];
+  else if(/^[A-Za-z0-9_-]{11}$/.test(url)) id=url;
+  const frame=document.getElementById("videoFrame");
+  if(id && frame){
+    frame.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+id+'?rel=0" title="Unit review" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>';
+  } else if(frame){
+    frame.innerHTML='<div class="video-placeholder"><a class="res-btn big" style="background:#fff" href="'+url+'" target="_blank" rel="noopener"><span class="ic">▶</span><span><b>Watch the full unit review</b></span><span class="go">↗</span></a></div>';
+  }
+})();
+/* =====================================================================
+   TEACHER: paste your SharePoint share links between the quotes below.
+   Leave a link empty ("") and its button will show "Link not set".
+   Tip: in SharePoint, open the file's ... menu -> Copy link -> paste here.
+   ===================================================================== */
+const LINKS = {
+  t1_lesson: "",
+  t1_booklet: "",
+  t1_podcast: "",
+  t2_lesson: "",
+  t2_booklet: "",
+  t2_podcast: "",
+  t3_lesson: "",
+  t3_booklet: "",
+  t3_podcast: "",
+  t4_lesson: "",
+  t4_booklet: "",
+  t4_podcast: "",
+  t5_lesson: "",
+  t5_booklet: "",
+  t5_podcast: "",
+  t6_lesson: "",
+  t6_booklet: "",
+  t6_podcast: "",
+  t7_lesson: "",
+  t7_booklet: "",
+  t7_podcast: "",
+  t8_lesson: "",
+  t8_booklet: "",
+  t8_podcast: "",
+  booklet: "",
+  booklet_keyidea: "",
+  sow: "",
+  guide: ""
+};
+(function wireResources(){
+  let anySet=false;
+  document.querySelectorAll(".res-btn").forEach(function(btn){
+    const url=(LINKS[btn.dataset.key]||"").trim();
+    if(url){ btn.href=url; btn.target="_blank"; btn.rel="noopener"; anySet=true; }
+    else{ btn.classList.add("unset"); btn.removeAttribute("href"); btn.setAttribute("aria-disabled","true"); }
+  });
+  if(anySet){ const n=document.getElementById("resNote"); if(n) n.classList.add("hide"); }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Peace and Conflict — Grade 9 Summit · Unit at a Glance</title>
+<style>
+  :root{
+    --ink:#0B3D36;       /* unit family colour */
+    --ink-2:#062A25;
+    --mint:#E9F4EE;
+    --mint-2:#DCEBE2;
+    --amber:#F2B705;      /* summit amber */
+    --amber-soft:#FFD95C;
+    --rubric:#B01C2E;
+    --teal:#0E8A7B;
+    --blue:#1565C0;
+    --green:#2E7D32;
+    --paper:#F5FAF7;
+    --line:rgba(11,61,54,.16);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--paper);color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;line-height:1.5;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1060px;margin:0 auto;padding:0 24px}
+  .eyebrow{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;font-weight:700}
+  .hero{background:
+      radial-gradient(1200px 400px at 80% -10%, rgba(242,183,5,.16), transparent 60%),
+      linear-gradient(180deg,var(--ink) 0%, var(--ink-2) 100%);
+    color:var(--mint);padding:64px 0 72px;position:relative;overflow:hidden;border-bottom:3px solid var(--amber)}
+  .hero::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.06;
+    background:repeating-linear-gradient(180deg,transparent 0 38px,#fff 38px 39px)}
+  .hero .wrap{position:relative;z-index:2}
+  .crest{display:flex;align-items:center;gap:16px;margin-bottom:34px}
+  .crest svg{width:54px;height:54px;flex:none}
+  .crest .who{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;color:var(--amber-soft)}
+  .crest .who b{color:var(--mint);display:block;letter-spacing:.14em;font-size:.86rem;margin-top:3px}
+  h1{font-size:clamp(2.2rem,5.6vw,3.8rem);line-height:1.04;font-weight:700;letter-spacing:-.01em}
+  h1 .amp{color:var(--amber);font-style:italic}
+  .sub{margin-top:20px;max-width:58ch;font-size:1.12rem;color:#D7E8DD}
+  .bigq{margin-top:30px;display:inline-flex;gap:14px;align-items:flex-start;border-left:3px solid var(--amber);padding:8px 0 8px 18px;max-width:62ch}
+  .bigq .q{font-family:"Trebuchet MS",sans-serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--amber-soft);padding-top:5px}
+  .bigq p{font-size:1.22rem;font-style:italic;color:#fff}
+  section{padding:64px 0}
+  .sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:8px}
+  .sec-head .num{font-family:"Trebuchet MS",sans-serif;color:var(--amber);font-weight:700;font-size:.9rem;letter-spacing:.15em}
+  .sec-head h2{font-size:clamp(1.6rem,3.4vw,2.3rem);letter-spacing:-.01em}
+  .sec-lead{color:#41504a;max-width:66ch;margin-bottom:34px;font-size:1.05rem}
+  .spectrum-card{background:linear-gradient(180deg,#fff, var(--paper));border:1px solid var(--line);border-radius:14px;
+    box-shadow:0 18px 40px -28px rgba(11,61,54,.5);padding:28px 26px 34px}
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:26px}
+  .tab{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.8rem;letter-spacing:.03em;
+    border:1px solid var(--line);background:#fff;color:var(--ink);padding:8px 14px;border-radius:999px;cursor:pointer;transition:.18s}
+  .tab[aria-selected="true"]{background:var(--ink);color:var(--mint);border-color:var(--ink)}
+  .tab:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+  .axis{position:relative;margin:8px 4px 0}
+  .axis-labels{display:flex;justify-content:space-between;font-family:"Trebuchet MS",sans-serif;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:#5f6f68;margin-bottom:10px}
+  .axis-labels .l{color:var(--rubric);font-weight:700}
+  .axis-labels .r{color:var(--blue);font-weight:700}
+  .bar{height:10px;border-radius:999px;background:linear-gradient(90deg,var(--rubric),#b06a1e 40%,#5a7d3a 66%,var(--blue));position:relative}
+  .ticks{position:relative;height:118px;margin-top:0}
+  .node{position:absolute;top:0;transform:translateX(-50%);width:150px;text-align:center;cursor:pointer}
+  .node .dot{width:20px;height:20px;border-radius:50%;background:#fff;border:3px solid var(--ink);margin:0 auto;position:relative;top:-15px;transition:.18s}
+  .node .nm{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.8rem;margin-top:-6px;line-height:1.2}
+  .node .sb{font-size:.74rem;color:#5f6f68;font-style:italic;margin-top:2px;line-height:1.25}
+  .node:hover .dot,.node[data-active="true"] .dot{transform:scale(1.25);border-color:var(--amber);box-shadow:0 0 0 5px rgba(242,183,5,.22)}
+  .node:focus-visible{outline:none}
+  .node:focus-visible .dot{outline:3px solid var(--amber);outline-offset:3px}
+  .readout{margin-top:14px;background:var(--ink);color:var(--mint);border-radius:12px;padding:20px 22px;min-height:112px;display:flex;gap:18px;align-items:flex-start}
+  .readout .badge{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;
+    background:var(--amber);color:var(--ink-2);padding:6px 10px;border-radius:6px;white-space:nowrap;margin-top:2px}
+  .readout .body h4{font-size:1.12rem;margin-bottom:4px}
+  .readout .body p{color:#D7E8DD;font-size:.98rem}
+  .readout .body .g9{margin-top:10px;font-size:.88rem}
+  .readout .body .g9 .k{font-family:"Trebuchet MS",sans-serif;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--amber-soft)}
+  .hint{font-family:"Trebuchet MS",sans-serif;font-size:.76rem;color:#7c8a84;margin-top:14px;text-align:center}
+  .thread{background:var(--ink);color:var(--mint);border-radius:14px;padding:34px 30px;position:relative;overflow:hidden}
+  .thread::before{content:"";position:absolute;inset:0;opacity:.07;background:repeating-linear-gradient(180deg,transparent 0 30px,#fff 30px 31px)}
+  .thread .wrap2{position:relative;z-index:2}
+  .thread h2{color:#fff;font-size:clamp(1.5rem,3vw,2.1rem);margin-bottom:8px}
+  .thread .lead{color:#D7E8DD;max-width:64ch;margin-bottom:24px}
+  .threads{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .tcard{border:1px solid rgba(255,217,92,.32);border-radius:10px;padding:16px 16px 18px;background:rgba(255,255,255,.03)}
+  .tcard .t{font-family:"Trebuchet MS",sans-serif;color:var(--amber);font-weight:700;font-size:.82rem;letter-spacing:.05em;margin-bottom:6px}
+  .tcard p{font-size:.9rem;color:#D7E8DD}
+  .triptych{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
+  .panel{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;display:flex;flex-direction:column}
+  .panel .cap{padding:16px 18px;color:#fff;position:relative}
+  .panel .cap .n{font-family:"Trebuchet MS",sans-serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;opacity:.85}
+  .panel .cap h3{font-size:1.22rem;margin-top:3px}
+  .panel .cap .ask{font-style:italic;font-size:.88rem;margin-top:8px;opacity:.95}
+  .panel .body{padding:16px 18px;font-size:.92rem}
+  .panel .body .row{display:flex;gap:9px;padding:7px 0;border-bottom:1px dashed var(--line)}
+  .panel .body .row:last-child{border-bottom:0}
+  .panel .body .row .v{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.74rem;white-space:normal;color:var(--ink);min-width:118px;max-width:118px}
+  .panel .body .row .d{color:#41504a}
+  .revise{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:start}
+  .steps{counter-reset:s;display:flex;flex-direction:column;gap:14px}
+  .step{display:flex;gap:16px;align-items:flex-start;border-left:2px solid var(--line);padding:2px 0 2px 18px;position:relative}
+  .step::before{counter-increment:s;content:counter(s);position:absolute;left:-15px;top:-2px;width:28px;height:28px;border-radius:50%;
+    background:var(--amber);color:var(--ink-2);font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.9rem;display:grid;place-items:center}
+  .step h4{font-size:1.02rem}
+  .step p{font-size:.9rem;color:#41504a;margin-top:2px}
+  .ao{border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .ao .h{padding:12px 16px;font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.82rem;letter-spacing:.06em;color:#fff}
+  .ao .h.ao1{background:var(--ink)}
+  .ao .h.ao2{background:var(--rubric)}
+  .ao .c{padding:14px 16px;font-size:.9rem;border-bottom:1px solid var(--line)}
+  .ao .c:last-child{border-bottom:0}
+  .ao .c b{font-family:"Trebuchet MS",sans-serif;font-size:.78rem;letter-spacing:.04em}
+  .video-frame{position:relative;width:100%;aspect-ratio:16/9;border-radius:14px;overflow:hidden;
+    border:1px solid var(--line);box-shadow:0 20px 44px -30px rgba(11,61,54,.5);background:var(--ink)}
+  .video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .video-placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:14px;text-align:center;padding:30px;color:#BFD4C8;
+    background:radial-gradient(700px 300px at 50% 30%,rgba(242,183,5,.14),transparent 60%),linear-gradient(180deg,var(--ink),var(--ink-2))}
+  .video-placeholder .vp-badge{font-family:"Trebuchet MS",Verdana,sans-serif;font-weight:700;font-size:.72rem;letter-spacing:.14em;
+    text-transform:uppercase;background:var(--amber);color:var(--ink-2);padding:6px 12px;border-radius:6px}
+  .video-placeholder p{max-width:52ch;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.92rem;line-height:1.55}
+  .video-placeholder code{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:4px;padding:1px 6px}
+  .fc-controls{display:flex;gap:18px;flex-wrap:wrap;align-items:center;margin-bottom:24px}
+  .fc-tabs,.fc-type{display:flex;gap:8px;flex-wrap:wrap}
+  .fc-btn{font-family:"Trebuchet MS",Verdana,sans-serif;font-weight:700;font-size:.78rem;border:1px solid var(--line);
+    background:#fff;color:var(--ink);padding:8px 13px;border-radius:999px;cursor:pointer;transition:.18s}
+  .fc-btn[aria-selected="true"]{background:var(--ink);color:var(--mint);border-color:var(--ink)}
+  .fc-btn:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+  .fc-hint{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.78rem;color:#7c8a84;margin-left:auto}
+  .fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+  .fc-card{perspective:1200px;height:190px;cursor:pointer;background:none;border:0;padding:0;font-family:inherit;text-align:left}
+  .fc-inner{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+  .fc-card[data-flipped="true"] .fc-inner{transform:rotateY(180deg)}
+  .fc-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+    border-radius:12px;padding:18px;display:flex;flex-direction:column;border:1px solid var(--line);overflow:auto}
+  .fc-front{background:linear-gradient(180deg,#fff,var(--paper))}
+  .fc-back{transform:rotateY(180deg);color:var(--mint)}
+  .fc-tag{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--amber);font-weight:700;margin-bottom:8px}
+  .fc-front .fc-tag{color:#94741a}
+  .fc-term{font-size:1.18rem;font-weight:700;line-height:1.16}
+  .fc-front .fc-flip{margin-top:auto;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.72rem;color:#7c8a84}
+  .fc-def{font-size:.9rem;line-height:1.4}
+  .res-note{background:#FCF3D6;border:1px solid var(--amber);border-left:4px solid var(--amber);
+    border-radius:8px;padding:12px 16px;margin-bottom:22px;font-size:.9rem;color:#5a4a10;
+    font-family:"Trebuchet MS",Verdana,sans-serif}
+  .res-note code{background:#fff;border:1px solid var(--line);border-radius:4px;padding:1px 6px;font-size:.85em}
+  .res-note.hide{display:none}
+  .res-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;margin-bottom:16px}
+  .res-col{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff}
+  .rc-head{padding:14px 16px;color:#fff}
+  .rc-head .rc-n{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;opacity:.85}
+  .rc-head h3{font-size:1.12rem;margin-top:2px}
+  .res-btn{display:flex;align-items:center;gap:12px;padding:13px 16px;border-top:1px solid var(--line);
+    font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.92rem;color:var(--ink);text-decoration:none;cursor:pointer;transition:background .15s}
+  .res-col .res-btn:first-of-type{border-top:0}
+  .res-btn:hover{background:var(--mint)}
+  .res-btn .ic{width:26px;height:26px;flex:none;display:grid;place-items:center;border-radius:6px;background:var(--ink);color:var(--amber);font-size:.9rem}
+  .res-btn .go{margin-left:auto;color:var(--amber);font-weight:700;opacity:0;transition:.15s}
+  .res-btn:hover .go{opacity:1}
+  .res-btn:focus-visible{outline:3px solid var(--amber);outline-offset:-3px}
+  .res-btn.unset{opacity:.5;cursor:not-allowed}
+  .res-btn.unset::after{content:"Link not set";margin-left:auto;font-size:.74rem;color:#94741a;
+    background:#FCF3D6;border:1px solid var(--amber-soft);border-radius:5px;padding:2px 7px}
+  .res-wide{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:2px}
+  .res-btn.big{border:1px solid var(--line);border-radius:12px;background:#fff;padding:16px 18px}
+  .res-btn.big:hover{background:var(--mint)}
+  .res-btn.big .ic{width:34px;height:34px;font-size:1.1rem}
+  footer{background:var(--ink-2);color:#BFD4C8;padding:26px 0;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.8rem}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+  footer .amber{color:var(--amber)}
+  @media(max-width:820px){
+    .threads{grid-template-columns:1fr}
+    .revise{grid-template-columns:1fr}
+    .node{width:104px}
+    .node .sb{display:none}
+    .res-wide{grid-template-columns:1fr}
+    .fc-grid{grid-template-columns:1fr 1fr}
+    .fc-hint{width:100%;margin-left:0}
+  }
+  @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+.panel.a1 .cap{background:linear-gradient(135deg,#1F4E79,#12294D)}
+.rc1 .rc-head{background:linear-gradient(135deg,#1F4E79,#12294D)}
+.fc-card.t1 .fc-back{background:linear-gradient(160deg,#1F4E79,#12294D)}
+.panel.a2 .cap{background:linear-gradient(135deg,#1565C0,#12447A)}
+.rc2 .rc-head{background:linear-gradient(135deg,#1565C0,#12447A)}
+.fc-card.t2 .fc-back{background:linear-gradient(160deg,#1565C0,#12447A)}
+.panel.a3 .cap{background:linear-gradient(135deg,#8E24AA,#6A1B9A)}
+.rc3 .rc-head{background:linear-gradient(135deg,#8E24AA,#6A1B9A)}
+.fc-card.t3 .fc-back{background:linear-gradient(160deg,#8E24AA,#6A1B9A)}
+.panel.a4 .cap{background:linear-gradient(135deg,#00897B,#00695C)}
+.rc4 .rc-head{background:linear-gradient(135deg,#00897B,#00695C)}
+.fc-card.t4 .fc-back{background:linear-gradient(160deg,#00897B,#00695C)}
+.panel.a5 .cap{background:linear-gradient(135deg,#B8860B,#8A6D1B)}
+.rc5 .rc-head{background:linear-gradient(135deg,#B8860B,#8A6D1B)}
+.fc-card.t5 .fc-back{background:linear-gradient(160deg,#B8860B,#8A6D1B)}
+.panel.a6 .cap{background:linear-gradient(135deg,#D33648,#B01C2E)}
+.rc6 .rc-head{background:linear-gradient(135deg,#D33648,#B01C2E)}
+.fc-card.t6 .fc-back{background:linear-gradient(160deg,#D33648,#B01C2E)}
+.panel.a7 .cap{background:linear-gradient(135deg,#43A047,#2E7D32)}
+.rc7 .rc-head{background:linear-gradient(135deg,#43A047,#2E7D32)}
+.fc-card.t7 .fc-back{background:linear-gradient(160deg,#43A047,#2E7D32)}
+.panel.a8 .cap{background:linear-gradient(135deg,#E8425F,#B71C3A)}
+.rc8 .rc-head{background:linear-gradient(135deg,#E8425F,#B71C3A)}
+.fc-card.t8 .fc-back{background:linear-gradient(160deg,#E8425F,#B71C3A)}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <div class="crest">
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <rect x="2" y="2" width="60" height="60" rx="13" fill="#062A25" stroke="#F2B705" stroke-width="1.5"/>
+        <g fill="none" stroke="#E9F4EE" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M32 12 L14 46 h36 z"/>
+          <path d="M25 33 l7-8 7 8"/>
+        </g>
+        <circle cx="32" cy="20" r="3" fill="#F2B705"/>
+      </svg>
+      <div class="who">Edexcel GCSE (9–1) Religious Studies B · Paper 2, Question 4 · Islam
+        <b>Harlington School · Grade 9 Summit</b></div>
+    </div>
+    <h1>Peace <span class="amp">and</span> Conflict</h1>
+    <p class="sub">Eight topics, one summit. The divergent views set side by side, the key ideas connected, and the (d) evaluated the Level-4 way — everything for the top of the mark scheme, in one place.</p>
+    <div class="bigq">
+      <span class="q">The<br>big<br>question</span>
+      <p>Can religion bring peace to a world at war — and when, if ever, is a war just?</p>
+    </div>
+  </div>
+</header>
+<section id="spectrum">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">01</span><h2>The divergent views explorer</h2></div>
+    <p class="sec-lead">Every (d) in this unit turns on the <b>divergent views</b> — set side by side, exactly as the examiner wants. Pick a topic, then tap a position to see what it claims. The Grade 9 move and the 7-minute discussion question travel with each topic.</p>
+    <div class="spectrum-card">
+      <div class="tabs" role="tablist" aria-label="Choose a topic">
+<button class="tab" role="tab" aria-selected="true" data-topic="t1">Peace</button>
+<button class="tab" role="tab" aria-selected="false" data-topic="t2">Why wars occur</button>
+<button class="tab" role="tab" aria-selected="false" data-topic="t3">Just War</button>
+<button class="tab" role="tab" aria-selected="false" data-topic="t4">Holy War &amp; jihad</button>
+<button class="tab" role="tab" aria-selected="false" data-topic="t5">Pacifism</button>
+<button class="tab" role="tab" aria-selected="false" data-topic="t6">WMD</button>
+<button class="tab" role="tab" aria-selected="false" data-topic="t7">Victims of war</button>
+<button class="tab" role="tab" aria-selected="false" data-topic="t8">Forgiveness</button>
+      </div>
+      <div class="axis">
+        <div class="axis-labels"><span class="l" id="poleL"></span><span class="r" id="poleR"></span></div>
+        <div class="bar"></div>
+        <div class="ticks" id="ticks"></div>
+      </div>
+      <div class="readout" id="readout" aria-live="polite"></div>
+      <p class="hint">Tap a circle — or use Tab and Enter — to explore each position.</p>
+    </div>
+  </div>
+</section>
+<section>
+  <div class="wrap">
+    <div class="thread">
+      <div class="wrap2">
+        <h2>The thread that ties it together</h2>
+        <p class="lead">Grade 9 is not more content — it is three habits applied to every topic. Spot them and every (d) in this unit opens the same way.</p>
+        <div class="threads">
+          <div class="tcard"><div class="t">Divergent views, side by side</div><p>Never one view at a time. Set them against each other — where they agree, and the exact point they part. That comparison IS the analysis.</p></div>
+          <div class="tcard"><div class="t">The (d) regulation</div><p>Chain each point (claim → because → this means → therefore), steelman the other side, weigh BOTH arguments — a strength AND a limit — then justify the conclusion.</p></div>
+          <div class="tcard"><div class="t">Textbook-first accuracy</div><p>A correctly named source beats a vague paraphrase. One learned line from each source, placed precisely, is worth more than a paragraph of drift.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="topics">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">02</span><h2>Eight topics, one summit</h2></div>
+    <p class="sec-lead">Each panel is a topic’s <b>key idea</b> — the connective explanation that links the key words into one argument. Learn the chain, not the list.</p>
+    <div class="triptych">
+<div class="panel a1"><div class="cap"><div class="n">Topic 1 · I25</div><h3>Peace</h3><div class="ask">Why do Muslims call Islam the House of Peace — and does that make Islam a religion of peace?</div></div><div class="body"><div class="row"><span class="v">ASLAMA</span><span class="d">Islam comes from aslama — to surrender or submit to the will of God; submission comes first.</span></div><div class="row"><span class="v">S-L-M</span><span class="d">The same three consonants (s-l-m) spell salaam, peace — so submission IS peace, not two separate ideas.</span></div><div class="row"><span class="v">INNER</span><span class="d">Submitting to Allah brings peace inside a Muslim (Surah 6:127, the home of peace) — the aim of worship.</span></div><div class="row"><span class="v">OUTER</span><span class="d">That inner peace then flows out into peaceful, non-confrontational relationships and wider society.</span></div></div></div>
+<div class="panel a2"><div class="cap"><div class="n">Topic 2 · I26</div><h3>Why wars occur</h3><div class="ask">What causes wars, and how do Muslims and non-religious people respond to those causes?</div></div><div class="body"><div class="row"><span class="v">THREE CAUSES</span><span class="d">The chapter groups causes as religion, politics (nationalism/ethnicity) and resources — rarely just one.</span></div><div class="row"><span class="v">THE LABEL</span><span class="d">Religion is often the flag a war flies — Kashmir, Sudan and Syria look religious but hide other roots.</span></div><div class="row"><span class="v">THE ROOT</span><span class="d">Fitzgerald: religion is usually “an added factor”; the real roots are social or political, like land or power.</span></div><div class="row"><span class="v">MANUFACTURED</span><span class="d">Goering: leaders can “drag the people along” by calling peacemakers unpatriotic, making war feel unavoidable.</span></div></div></div>
+<div class="panel a3"><div class="cap"><div class="n">Topic 3 · I27</div><h3>Just War</h3><div class="ask">What makes a war just, and must a Muslim fight in one?</div></div><div class="body"><div class="row"><span class="v">ALL THE CONDITIONS</span><span class="d">Just cause, proper authority, last resort, chance of success, proportional methods, civilians spared — six tests.</span></div><div class="row"><span class="v">CUMULATIVE</span><span class="d">Fail a single condition and the whole war is unjust — they chain together, so no war passes on cause alone.</span></div><div class="row"><span class="v">WHY + HOW</span><span class="d">Some conditions test the reason for going to war, others how it is fought — pass both, or the war fails entirely.</span></div><div class="row"><span class="v">THE MODERN TRAP</span><span class="d">A just cause still fails the test if modern weapons cannot spare civilians — some Muslims say none can today.</span></div></div></div>
+<div class="panel a4"><div class="cap"><div class="n">Topic 4 · I28</div><h3>Holy War &amp; jihad</h3><div class="ask">What is a Holy War in Islam, and how does it relate to the greater and lesser jihad?</div></div><div class="body"><div class="row"><span class="v">JIHAD</span><span class="d">The Arabic for “struggle” — the whole idea, not fighting on its own; most jihad involves no violence at all.</span></div><div class="row"><span class="v">GREATER</span><span class="d">The inner struggle to become a perfect Muslim — the greatest jihad, and it involves no fighting whatsoever.</span></div><div class="row"><span class="v">LESSER</span><span class="d">The outer struggle to remove evil from society — only this can involve force, and even then under strict rules.</span></div><div class="row"><span class="v">HOLY WAR</span><span class="d">Harb al-Muqadis is just one part of the lesser jihad, tightly limited by hadith that spare women and children.</span></div></div></div>
+<div class="panel a5"><div class="cap"><div class="n">Topic 5 · I29</div><h3>Pacifism</h3><div class="ask">What is pacifism, and can it sit alongside the teachings of Islam?</div></div><div class="body"><div class="row"><span class="v">PACIFISM</span><span class="d">Refusing ALL violence, even turning the other cheek — the Qur’an has no such idea, so most Muslims reject it.</span></div><div class="row"><span class="v">PASSIVE RESISTANCE</span><span class="d">Non-violent OPPOSITION to authority — it still resists, just without weapons, as in the Arab Spring.</span></div><div class="row"><span class="v">THE EVIDENCE</span><span class="d">Surah 5:28 (Moses’ brothers withdraw); the Arab Spring toppled Mubarak non-violently in Tahrir Square.</span></div><div class="row"><span class="v">KHAN</span><span class="d">Khan Abdul Ghaffar Khan built a non-violent Muslim movement alongside Gandhi against British rule.</span></div></div></div>
+<div class="panel a6"><div class="cap"><div class="n">Topic 6 · I30</div><h3>WMD</h3><div class="ask">Can possessing weapons that could destroy millions ever be right?</div></div><div class="body"><div class="row"><span class="v">6 AUG 1945</span><span class="d">The atomic bomb on Hiroshima killed 84,000 — yet Japan still would not surrender three days later.</span></div><div class="row"><span class="v">9 AUG 1945</span><span class="d">A second bomb on Nagasaki killed 40,000 and finally brought the Second World War to an end.</span></div><div class="row"><span class="v">MAD</span><span class="d">Since both sides would be destroyed, no nuclear power dares strike — “no world war since 1945”, MAD claims.</span></div><div class="row"><span class="v">THE FLAW</span><span class="d">Deterrence holds only while every leader stays rational; one failure risks worldwide nuclear extinction.</span></div></div></div>
+<div class="panel a7"><div class="cap"><div class="n">Topic 7 · I31</div><h3>Victims of war</h3><div class="ask">What does war cost its victims, and how do Muslim organisations work for peace?</div></div><div class="body"><div class="row"><span class="v">THE COSTS</span><span class="d">Casualties, displacement (refugees) and expense — over 60 million died in WW2, most of them civilians.</span></div><div class="row"><span class="v">RELIEF</span><span class="d">One task is helping the victims — the refugees, the displaced and the injured left by every conflict.</span></div><div class="row"><span class="v">PREVENTION</span><span class="d">The other is removing causes — the Ahmadiyya forum tackled the funding of terrorism as far back as 2014.</span></div><div class="row"><span class="v">PROPHETIC JIHAD</span><span class="d">The Muslim Peace Fellowship’s non-violent struggle links straight back to the greater jihad’s ideal.</span></div></div></div>
+<div class="panel a8"><div class="cap"><div class="n">Topic 8 · I32</div><h3>Forgiveness</h3><div class="ask">Does lasting peace need justice, forgiveness, reconciliation — or all three?</div></div><div class="body"><div class="row"><span class="v">JUSTICE</span><span class="d">First remove the cause: unjust laws breed rebellion, as in Syria against the Assad regime since 2011.</span></div><div class="row"><span class="v">FORGIVENESS</span><span class="d">Then heal the resentment — God is merciful, so a Muslim must forgive others to be forgiven by Him.</span></div><div class="row"><span class="v">RECONCILIATION</span><span class="d">Then bring the enemies together — “make peace… between your contending brothers” (Surah 49:9–10).</span></div><div class="row"><span class="v">LASTING PEACE</span><span class="d">Repel evil with good until an enemy becomes “a friend and intimate” (Surah 41:34–35), ending hatred.</span></div></div></div>
+    </div>
+  </div>
+</section>
+<section id="resources">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">03</span><h2>Your resources</h2></div>
+    <p class="sec-lead">Everything for the unit, in one place: each topic’s lesson, booklet pages and podcast episode — plus the unit-wide booklet editions, schemes of work and the guide.</p>
+    <div class="res-note" id="resNote">
+      <b>Teacher setup:</b> links aren't set yet. Open this file, find the <code>LINKS</code> list near the bottom, and paste each SharePoint share link once. Buttons with no link show as "Link not set".
+    </div>
+    <div class="res-grid">
+<div class="res-col rc1"><div class="rc-head"><span class="rc-n">Topic 1 · I25</span><h3>Peace</h3></div><a class="res-btn" data-key="t1_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a><a class="res-btn" data-key="t1_booklet"><span class="ic">✎</span><span>Booklet pages</span><span class="go">↗</span></a><a class="res-btn" data-key="t1_podcast"><span class="ic">♪</span><span>Podcast · I25</span><span class="go">↗</span></a></div>
+<div class="res-col rc2"><div class="rc-head"><span class="rc-n">Topic 2 · I26</span><h3>Why wars occur</h3></div><a class="res-btn" data-key="t2_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a><a class="res-btn" data-key="t2_booklet"><span class="ic">✎</span><span>Booklet pages</span><span class="go">↗</span></a><a class="res-btn" data-key="t2_podcast"><span class="ic">♪</span><span>Podcast · I26</span><span class="go">↗</span></a></div>
+<div class="res-col rc3"><div class="rc-head"><span class="rc-n">Topic 3 · I27</span><h3>Just War</h3></div><a class="res-btn" data-key="t3_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a><a class="res-btn" data-key="t3_booklet"><span class="ic">✎</span><span>Booklet pages</span><span class="go">↗</span></a><a class="res-btn" data-key="t3_podcast"><span class="ic">♪</span><span>Podcast · I27</span><span class="go">↗</span></a></div>
+<div class="res-col rc4"><div class="rc-head"><span class="rc-n">Topic 4 · I28</span><h3>Holy War &amp; jihad</h3></div><a class="res-btn" data-key="t4_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a><a class="res-btn" data-key="t4_booklet"><span class="ic">✎</span><span>Booklet pages</span><span class="go">↗</span></a><a class="res-btn" data-key="t4_podcast"><span class="ic">♪</span><span>Podcast · I28</span><span class="go">↗</span></a></div>
+<div class="res-col rc5"><div class="rc-head"><span class="rc-n">Topic 5 · I29</span><h3>Pacifism</h3></div><a class="res-btn" data-key="t5_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a><a class="res-btn" data-key="t5_booklet"><span class="ic">✎</span><span>Booklet pages</span><span class="go">↗</span></a><a class="res-btn" data-key="t5_podcast"><span class="ic">♪</span><span>Podcast · I29</span><span class="go">↗</span></a></div>
+<div class="res-col rc6"><div class="rc-head"><span class="rc-n">Topic 6 · I30</span><h3>WMD</h3></div><a class="res-btn" data-key="t6_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a><a class="res-btn" data-key="t6_booklet"><span class="ic">✎</span><span>Booklet pages</span><span class="go">↗</span></a><a class="res-btn" data-key="t6_podcast"><span class="ic">♪</span><span>Podcast · I30</span><span class="go">↗</span></a></div>
+<div class="res-col rc7"><div class="rc-head"><span class="rc-n">Topic 7 · I31</span><h3>Victims of war</h3></div><a class="res-btn" data-key="t7_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a><a class="res-btn" data-key="t7_booklet"><span class="ic">✎</span><span>Booklet pages</span><span class="go">↗</span></a><a class="res-btn" data-key="t7_podcast"><span class="ic">♪</span><span>Podcast · I31</span><span class="go">↗</span></a></div>
+<div class="res-col rc8"><div class="rc-head"><span class="rc-n">Topic 8 · I32</span><h3>Forgiveness</h3></div><a class="res-btn" data-key="t8_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a><a class="res-btn" data-key="t8_booklet"><span class="ic">✎</span><span>Booklet pages</span><span class="go">↗</span></a><a class="res-btn" data-key="t8_podcast"><span class="ic">♪</span><span>Podcast · I32</span><span class="go">↗</span></a></div>
+    </div>
+    <div class="res-wide">
+      <a class="res-btn big" data-key="booklet"><span class="ic">✎</span><span><b>Unit booklet</b> — the close-reading companion, four pages per topic</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="booklet_keyidea"><span class="ic">◈</span><span><b>Key Idea edition</b> — the booklet with the key-idea panels and 7-minute discussions</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="sow"><span class="ic">▤</span><span><b>Schemes of work</b> — one planning document per lesson</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="guide"><span class="ic">🏔</span><span><b>How to use the lessons</b> — the Grade 9 Summit teacher guide</span><span class="go">↗</span></a>
+    </div>
+  </div>
+</section>
+<section id="revise">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">04</span><h2>How to revise this unit</h2></div>
+    <p class="sec-lead">Use the resources in this order — the same loop as the lessons, so revision feels like coming home.</p>
+    <div class="revise">
+      <div class="steps">
+        <div class="step"><div><h4>Bell work first — retrieve before you re-read</h4><p>Five recall questions from memory, self-scored /5. Then the come-back tracker: the same five at +1 week and +1 month.</p></div></div>
+        <div class="step"><div><h4>Listen along to the episode</h4><p>One six-minute podcast per topic. Capture the six mind-map branches as it plays — the episode does the exposition so you can do the thinking.</p></div></div>
+        <div class="step"><div><h4>Work the booklet pages</h4><p>Four pages per topic: the key idea, two scripture quotes, the divergent views side by side, and the full (d). The Key Idea edition adds the 7-minute discussion.</p></div></div>
+        <div class="step"><div><h4>Write the (d) the Level-4 way</h4><p>Chain · steelman · weigh both (strength AND limit) · justify. Check yourself against the Level 3-vs-Level 4 models on lessons 3 and 6.</p></div></div>
+      </div>
+      <div class="ao">
+        <div class="h ao1">The marks map · (a) (b) (c) — 12 marks</div>
+        <div class="c"><b>(a) 3 marks —</b> outline three. Three crisp sentences, no development needed.</div>
+        <div class="c"><b>(b) 4 marks —</b> explain two. Each point + one development.</div>
+        <div class="c"><b>(c) 5 marks —</b> explain two WITH a named source — one learned line, placed exactly.</div>
+        <div class="h ao2">The (d) · 12 marks — half the question</div>
+        <div class="c"><b>What it is —</b> a full evaluation: agree and disagree developed, the non-religious voice engaged where the question invites it.</div>
+        <div class="c"><b>The grade 9 gap —</b> Level 3 asserts its judgement; Level 4 chains, weighs both sides, and justifies a conclusion that survives the strongest counter.</div>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="watch">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">05</span><h2>Watch: the whole unit in one go</h2></div>
+    <p class="sec-lead">A full review of <b>Peace and Conflict</b> — all eight topics as one argument. Best watched before you revise, then again to check recall.</p>
+    <div class="video-frame" id="videoFrame">
+      <div class="video-placeholder" id="videoPlaceholder">
+        <div class="vp-badge">Video not set</div>
+        <p><b>Teacher:</b> paste the YouTube link in the <code>VIDEO_URL</code> line near the bottom of this file. The player then appears here automatically.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="flashcards">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">06</span><h2>Flashcards — test yourself</h2></div>
+    <p class="sec-lead">Flip a card to check yourself. Switch between <b>key terms</b> (term → meaning) and <b>divergent views</b> (view → what it claims), and filter by topic.</p>
+    <div class="fc-controls">
+      <div class="fc-tabs" role="tablist" aria-label="Topic">
+<button class="fc-btn" role="tab" aria-selected="true" data-topic="all">All</button>
+<button class="fc-btn" role="tab" aria-selected="false" data-topic="t1">Peace</button>
+<button class="fc-btn" role="tab" aria-selected="false" data-topic="t2">Why wars occur</button>
+<button class="fc-btn" role="tab" aria-selected="false" data-topic="t3">Just War</button>
+<button class="fc-btn" role="tab" aria-selected="false" data-topic="t4">Holy War &amp; jihad</button>
+<button class="fc-btn" role="tab" aria-selected="false" data-topic="t5">Pacifism</button>
+<button class="fc-btn" role="tab" aria-selected="false" data-topic="t6">WMD</button>
+<button class="fc-btn" role="tab" aria-selected="false" data-topic="t7">Victims of war</button>
+<button class="fc-btn" role="tab" aria-selected="false" data-topic="t8">Forgiveness</button>
+      </div>
+      <div class="fc-type" role="tablist" aria-label="Card type">
+        <button class="fc-btn" role="tab" aria-selected="true"  data-type="terms">Key terms</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-type="views">Divergent views</button>
+      </div>
+      <span class="fc-hint">Tap any card to flip · <span id="fcCount"></span></span>
+    </div>
+    <div class="fc-grid" id="fcGrid"></div>
+  </div>
+</section>
+<footer>
+  <div class="wrap">
+    <span>Peace and Conflict · Grade 9 Summit · unit at a glance</span>
+    <span class="amber">Harlington School · Edexcel GCSE (9–1) RS Spec B</span>
+  </div>
+</footer>
+<script>
+const DATA = {"t1":{"poles":["Islam is the House of Peace","Why it matters"],"punch":"Peace isn’t a rule Islam adds — it is what the word Islam means.","discuss":"Can someone who chooses confrontation instead of peace still be called a true Muslim? Why, or why not?","nodes":[{"x":12,"nm":"Islam is the House of Peace","sb":"Mainstream Muslim","auth":"Mainstream Muslim","claim":"The word Islam is linked to salaam (peace); Muslims greet with “salaam alaykum”. The Qur’an calls Islam Dar as Salaam, the House of Peace. True peace, within and between people, comes from accepting Islam and living its ways — so a Muslim should be non-confrontational and always look for an amicable solution."},{"x":50,"nm":"Muslims who choose confrontation","sb":"The debate in Islam","auth":"The debate in Islam","claim":"Some Muslims ignore the teachings about the importance of peace and choose the way of confrontation and conflict. There is debate in Islam about whether those who choose confrontation can really be called true Muslims."},{"x":88,"nm":"Why it matters","sb":"Shared ground","auth":"Shared ground","claim":"The Qur’an makes plain that Islam is a religion of peace (Surah 2:208; 25:63), and peace should take a central place in a Muslim’s life — even those who defend just fighting agree that peace is the goal."}]},"t2":{"poles":["Muslim response","“An added factor”"],"punch":"Judge the underlying cause, not the banner — that is how you weigh “religion causes wars”.","discuss":"Is it fair to blame religion for wars when the real causes are often political or economic, not spiritual?","nodes":[{"x":12,"nm":"Muslim response","sb":"Fight only a just war","auth":"Fight only a just war","claim":"If a war is just — self-defence, or ending an injustice — a Muslim must fight, because the Qur’an says so and Muhammad fought in self-defence. But a Muslim could never fight a war of aggression: to take resources, to force conversion, or to change another country’s leadership or culture."},{"x":50,"nm":"Humanist & atheist response","sb":"Non-religious","auth":"Non-religious","claim":"Most Humanists say the best way to end wars is to get rid of religion, which they see as false, and to make the United Nations stronger with a peacekeeping force. Many are pacifists; but some atheists would, like Muslims, fight in a Just War."},{"x":88,"nm":"“An added factor”","sb":"Shared / Situation Ethics","auth":"Shared / Situation Ethics","claim":"Archbishop Fitzgerald argues religion “isn’t usually the cause” of conflict but “an added factor”, the real roots being social and political. Muslims, Jews and Humanists alike may use Situation Ethics — judging each war by the most loving outcome."}]},"t3":{"poles":["Muslims who accept Just War","Judging the case"],"punch":"A war passes only if it ticks every box — one miss and it is not a Just War.","discuss":"Can a war fought with modern weapons ever truly protect civilians enough to still count as a Just War?","nodes":[{"x":10,"nm":"Muslims who accept Just War","sb":"Must fight if just","auth":"Must fight if just","claim":"If a war meets the strict conditions — just cause, proper Muslim authority, last resort, minimum suffering, civilians protected — then a Muslim must fight in it, because the Qur’an commands the defence of the oppressed and Muhammad fought in just wars."},{"x":37,"nm":"Muslims who reject modern war","sb":"No just war today","auth":"No just war today","claim":"Some Muslims feel the nature of modern weapons means no war can truly be a Just War, because civilians cannot be protected, and so they oppose all modern wars."},{"x":64,"nm":"Humanist & atheist view","sb":"Non-religious","auth":"Non-religious","claim":"Most Humanists and atheists accept the Just War theory because it is based on reason and moral values, not religious authority; some would fight in a Just War, though many are pacifists."},{"x":90,"nm":"Judging the case","sb":"Shared / Situation Ethics","auth":"Shared / Situation Ethics","claim":"All three tend to use something like Situation Ethics: they ask whether NOT fighting would be more unjust than fighting, weighing just cause, last resort, chance of success and the protection of civilians."}]},"t4":{"poles":["Classical Holy War","Greater jihad"],"punch":"Every Holy War is jihad, but almost no jihad is Holy War — the greatest struggle is peaceful.","discuss":"If the greater jihad is entirely peaceful, is it fair for the West to translate “jihad” simply as “Holy War”?","nodes":[{"x":10,"nm":"Classical Holy War","sb":"Harb al-Muqadis","auth":"Harb al-Muqadis","claim":"A Holy War (Harb al-Muqadis) may be fought to defend Islam, strengthen Islam, protect Muslims’ freedom to practise their faith, protect Muslims from attack, or put right a wrong. It counts as part of the lesser jihad — the struggle to protect Islam and make the world the abode of peace."},{"x":37,"nm":"Islamic lawyers today","sb":"Strictly limited","auth":"Strictly limited","claim":"Today Islamic lawyers say a Holy War can only be called against an aggressor that threatens Islam, and even then it must be a last resort, properly authorised, have a prospect of success, cause minimum suffering, protect women, children and the elderly, and end as soon as the enemy stops."},{"x":64,"nm":"Atheist & Humanist view","sb":"Non-religious","auth":"Non-religious","claim":"Both atheists and Humanists regard the concept of a Holy War as indefensible: there is no God, so truth is found in reason and science, and to fight a war based on religious ideas or in response to a religious leader seems ridiculous — though they would accept a Just War."},{"x":90,"nm":"Greater jihad","sb":"Shared ground","auth":"Shared ground","claim":"The greatest struggle is the greater jihad — the inner struggle to become a perfectly good Muslim, which involves no fighting at all. Even a Holy War is only the lesser jihad, and the hadith keep it tightly limited."}]},"t5":{"poles":["Christian pacifism","Few pacifists, but real"],"punch":"A Muslim may resist injustice without a sword — that is resistance, not surrender.","discuss":"Is passive resistance a genuine form of jihad, or is it really just pacifism wearing a different name?","nodes":[{"x":10,"nm":"Christian pacifism","sb":"Sermon on the Mount","auth":"Sermon on the Mount","claim":"Jesus taught in the Sermon on the Mount that Christians should not resist evil, should turn the other cheek and love their enemies. For the first 300 years Christians refused to fight; peace Churches such as the Quakers, Amish and Mennonites keep this tradition alive."},{"x":37,"nm":"Muslim view","sb":"Mostly reject pacifism","auth":"Mostly reject pacifism","claim":"Most Muslims reject passive resistance: jihad means struggle, and if Muslims are attacked they are expected to fight back — there is no turning the other cheek in Islam. Yet a tradition of passive resistance exists (Surah 5:28; the Arab Spring; Khan Abdul Ghaffar Khan)."},{"x":64,"nm":"Humanist pacifism","sb":"Non-religious","auth":"Non-religious","claim":"Pacifism also grew among Humanists — from Erasmus to Rousseau, Kant and Bentham, who argued war is a waste of resources — and Tolstoy. Many became conscientious objectors and founded groups like CND; life is seen as more valuable if there is no afterlife."},{"x":90,"nm":"Few pacifists, but real","sb":"Shared ground","auth":"Shared ground","claim":"Both Islam and Judaism have few pacifists because their holy books are full of wars — yet pacifist individuals and groups exist in both, so pacifism is a minority tradition rather than an absent one."}]},"t6":{"poles":["Muslim view","MAD — why it matters"],"punch":"WMD may have bought peace since 1945 — but it lasts only until someone is wrong.","discuss":"Can a peace that depends on threatening to kill millions of civilians ever really be called moral?","nodes":[{"x":10,"nm":"Muslim view","sb":"Against use","auth":"Against use","claim":"The Just War rules make WMD unusable by a good Muslim, because they deliberately target the innocent civilians Islam forbids harming. Ayatollah Khamenei condemned WMD outright; still, Pakistan keeps nuclear weapons as a deterrent, though it has never given an Islamic justification for having them."},{"x":37,"nm":"Jewish view","sb":"Against use, maybe possess","auth":"Against use, maybe possess","claim":"The Talmud forbids a war whose casualties exceed a sixth of the population, so Lord Jakobovits argued a defensive nuclear attack “can never be justified”. Yet Jewish law may allow THREATENING to use a banned weapon — a bluff — to save many, many lives."},{"x":64,"nm":"Humanist & atheist view","sb":"Non-religious","auth":"Non-religious","claim":"No Humanist supports using WMD, but some accept possessing them as a deterrent. Atheists are split: some are totally against, because this life is all we have; others accept possession for self-defence, and a utilitarian may say MAD brings the greatest happiness of the greatest number."},{"x":90,"nm":"MAD — why it matters","sb":"Shared ground","auth":"Shared ground","claim":"Many on all sides point to mutually assured destruction: because both sides would be destroyed, no nuclear power attacks, and there has been no world war since 1945. The real question is whether a peace built on threatening millions of innocents can ever be right."}]},"t7":{"poles":["The victims","Common ground"],"punch":"Real peace work does both — bandage the wounded and drain the swamp that wounded them.","discuss":"Do peace organisations achieve more by relieving war’s victims, or by tackling the causes of conflict?","nodes":[{"x":10,"nm":"The victims","sb":"Why it matters","auth":"Why it matters","claim":"War causes casualties (death and injury, especially of civilians), displacement (over 60 million killed in the Second World War; millions of refugees and internally displaced people today) and expense (economic collapse). These costs are why peacemakers act."},{"x":37,"nm":"Muslim organisations","sb":"Religious response","auth":"Religious response","claim":"The Ahmadiyya (“Love for all, hatred for none”) hold peace forums and speak out against terrorism; the Muslim Peace Fellowship practises a non-violent “prophetic jihad” for a wise, just and compassionate society; the Muslim Council of Britain condemns terror and works with the police."},{"x":64,"nm":"Humanist response","sb":"Non-religious","auth":"Non-religious","claim":"Humanists helped set up the United Nations and want to strengthen it with a peacekeeping force to end wars and help refugees; the Humanist movement launched the World March for Peace and Nonviolence."},{"x":90,"nm":"Common ground","sb":"Shared ground","auth":"Shared ground","claim":"Archbishop Fitzgerald argues that finding common ground between faiths is “crucial for world peace”, so religious and non-religious groups increasingly co-operate through inter-religious dialogue to help the victims of war."}]},"t8":{"poles":["Justice first","Real peace needs both"],"punch":"Justice without mercy is cold, mercy without justice is blind — lasting peace needs the whole chain.","discuss":"Can real reconciliation ever happen before justice is done, or must the wrongs be righted first?","nodes":[{"x":12,"nm":"Justice first","sb":"No peace without justice","auth":"No peace without justice","claim":"Muslims believe justice is essential to peacemaking: where laws are unjust, people rebel and civil war can follow (as in Syria against the Assad regime). Without justice a society will not last, so the Qur’an says, “Fear God and keep straight the relations between yourselves” (Surah 8:1)."},{"x":50,"nm":"Forgiveness & reconciliation","sb":"No peace without mercy","auth":"No peace without mercy","claim":"God is compassionate and merciful, so Muslims must forgive those who offend them — and how can they ask God’s forgiveness on the Day of Judgement if they will not forgive others? Muslims should follow the Prophet’s example and, as Surah 49:9–10 says, “make peace and reconciliation” between contending brothers."},{"x":88,"nm":"Real peace needs both","sb":"Shared ground","auth":"Shared ground","claim":"Genuine peacemaking needs justice to remove the cause of conflict AND forgiveness and reconciliation to heal the relationship. The Qur’an calls Muslims to “repel evil with what is better” so that an enemy becomes a friend (Surah 41:34–35)."}]}};
+const LABELS = {"t1":"Peace","t2":"Why wars occur","t3":"Just War","t4":"Holy War & jihad","t5":"Pacifism","t6":"WMD","t7":"Victims of war","t8":"Forgiveness"};
+const ticks=document.getElementById("ticks");
+const readout=document.getElementById("readout");
+const poleL=document.getElementById("poleL"), poleR=document.getElementById("poleR");
+const firstKey=Object.keys(DATA)[0];
+let topic=firstKey, active=0;
+function esc2(s){return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+function renderReadout(n){
+  const d=DATA[topic];
+  let html='<span class="badge">'+esc2(n.auth)+'</span><div class="body">'+
+    '<h4>'+esc2(n.nm)+' <span style="opacity:.6;font-style:italic;font-weight:400">· '+esc2(n.sb)+'</span></h4>'+
+    '<p>'+esc2(n.claim)+'</p>';
+  if(d.punch) html+='<div class="g9"><span class="k">The grade 9 move</span><br>'+esc2(d.punch)+'</div>';
+  if(d.discuss) html+='<div class="g9"><span class="k">Discuss · 7 min</span><br>'+esc2(d.discuss)+'</div>';
+  html+='</div>';
+  readout.innerHTML=html;
+}
+function renderTopic(){
+  const d=DATA[topic];
+  poleL.textContent=d.poles[0]; poleR.textContent=d.poles[1];
+  ticks.innerHTML="";
+  d.nodes.forEach(function(n,i){
+    const el=document.createElement("div");
+    el.className="node"; el.style.left=n.x+"%"; el.tabIndex=0;
+    el.setAttribute("role","button");
+    el.setAttribute("aria-label",n.nm+": "+n.sb);
+    el.dataset.active=(i===active);
+    el.innerHTML='<div class="dot"></div><div class="nm">'+esc2(n.nm)+'</div><div class="sb">'+esc2(n.sb)+'</div>';
+    const pick=function(){active=i;[].slice.call(ticks.children).forEach(function(c,j){c.dataset.active=(j===i)});renderReadout(n);};
+    el.addEventListener("click",pick);
+    el.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();pick();}});
+    ticks.appendChild(el);
+  });
+  active=Math.min(active,d.nodes.length-1);
+  [].slice.call(ticks.children).forEach(function(c,j){c.dataset.active=(j===active)});
+  renderReadout(d.nodes[active]);
+}
+document.querySelectorAll(".tab").forEach(function(t){
+  t.addEventListener("click",function(){
+    document.querySelectorAll(".tab").forEach(function(x){x.setAttribute("aria-selected","false")});
+    t.setAttribute("aria-selected","true");
+    topic=t.dataset.topic; active=0; renderTopic();
+  });
+});
+renderTopic();
+const FLASHCARDS = {"t1":{"terms":[{"term":"Salaam","def":"Peace — the word from which Islam and the greeting salaam alaykum come."},{"term":"Dar as Salaam","def":"The House of Peace — a name the Qur’an gives to Islam."},{"term":"Non-confrontational","def":"Dealing with situations calmly and diplomatically rather than aggressively."},{"term":"Justice","def":"The allocation of due reward and punishment; a Muslim way of making peace."}],"views":[{"n":"Islam is the House of Peace","tag":"Mainstream Muslim","c":"The word Islam is linked to salaam (peace); Muslims greet with “salaam alaykum”. The Qur’an calls Islam Dar as Salaam, the House of Peace. True peace, within and between people, comes from accepting Islam and living its ways — so a Muslim should be non-confrontational and always look for an amicable solution."},{"n":"Muslims who choose confrontation","tag":"The debate in Islam","c":"Some Muslims ignore the teachings about the importance of peace and choose the way of confrontation and conflict. There is debate in Islam about whether those who choose confrontation can really be called true Muslims."},{"n":"Why it matters","tag":"Shared ground","c":"The Qur’an makes plain that Islam is a religion of peace (Surah 2:208; 25:63), and peace should take a central place in a Muslim’s life — even those who defend just fighting agree that peace is the goal."}]},"t2":{"terms":[{"term":"Nationalism","def":"A strong feeling of belief in the rightness of one’s native country."},{"term":"Ethnicity","def":"The characteristics of a certain race or culture."},{"term":"Aggressor","def":"Someone who attacks without being provoked."},{"term":"Situation Ethics","def":"Judging each war by what will produce the most loving outcome."}],"views":[{"n":"Muslim response","tag":"Fight only a just war","c":"If a war is just — self-defence, or ending an injustice — a Muslim must fight, because the Qur’an says so and Muhammad fought in self-defence. But a Muslim could never fight a war of aggression: to take resources, to force conversion, or to change another country’s leadership or culture."},{"n":"Humanist & atheist response","tag":"Non-religious","c":"Most Humanists say the best way to end wars is to get rid of religion, which they see as false, and to make the United Nations stronger with a peacekeeping force. Many are pacifists; but some atheists would, like Muslims, fight in a Just War."},{"n":"“An added factor”","tag":"Shared / Situation Ethics","c":"Archbishop Fitzgerald argues religion “isn’t usually the cause” of conflict but “an added factor”, the real roots being social and political. Muslims, Jews and Humanists alike may use Situation Ethics — judging each war by the most loving outcome."}]},"t3":{"terms":[{"term":"Just War","def":"A war fought for the right reasons and in the right way."},{"term":"Last resort","def":"Fighting only after all non-violent methods have been tried and failed."},{"term":"Proportional methods","def":"Using weapons of the same force as those used against you."},{"term":"Aggressor","def":"Someone who attacks without being provoked — a war a Muslim may not fight."}],"views":[{"n":"Muslims who accept Just War","tag":"Must fight if just","c":"If a war meets the strict conditions — just cause, proper Muslim authority, last resort, minimum suffering, civilians protected — then a Muslim must fight in it, because the Qur’an commands the defence of the oppressed and Muhammad fought in just wars."},{"n":"Muslims who reject modern war","tag":"No just war today","c":"Some Muslims feel the nature of modern weapons means no war can truly be a Just War, because civilians cannot be protected, and so they oppose all modern wars."},{"n":"Humanist & atheist view","tag":"Non-religious","c":"Most Humanists and atheists accept the Just War theory because it is based on reason and moral values, not religious authority; some would fight in a Just War, though many are pacifists."},{"n":"Judging the case","tag":"Shared / Situation Ethics","c":"All three tend to use something like Situation Ethics: they ask whether NOT fighting would be more unjust than fighting, weighing just cause, last resort, chance of success and the protection of civilians."}]},"t4":{"terms":[{"term":"Harb al-Muqadis","def":"Muslim Holy War."},{"term":"Greater jihad","def":"The struggle to make oneself perfectly Muslim — not fighting."},{"term":"Lesser jihad","def":"The struggle with forces outside oneself to remove evil from society."},{"term":"Crusade","def":"A war fought for a religious or moral purpose."}],"views":[{"n":"Classical Holy War","tag":"Harb al-Muqadis","c":"A Holy War (Harb al-Muqadis) may be fought to defend Islam, strengthen Islam, protect Muslims’ freedom to practise their faith, protect Muslims from attack, or put right a wrong. It counts as part of the lesser jihad — the struggle to protect Islam and make the world the abode of peace."},{"n":"Islamic lawyers today","tag":"Strictly limited","c":"Today Islamic lawyers say a Holy War can only be called against an aggressor that threatens Islam, and even then it must be a last resort, properly authorised, have a prospect of success, cause minimum suffering, protect women, children and the elderly, and end as soon as the enemy stops."},{"n":"Atheist & Humanist view","tag":"Non-religious","c":"Both atheists and Humanists regard the concept of a Holy War as indefensible: there is no God, so truth is found in reason and science, and to fight a war based on religious ideas or in response to a religious leader seems ridiculous — though they would accept a Just War."},{"n":"Greater jihad","tag":"Shared ground","c":"The greatest struggle is the greater jihad — the inner struggle to become a perfectly good Muslim, which involves no fighting at all. Even a Holy War is only the lesser jihad, and the hadith keep it tightly limited."}]},"t5":{"terms":[{"term":"Pacifism","def":"Opposition to war, militarism or violence."},{"term":"Passive resistance","def":"Non-violent opposition to authority."},{"term":"Militarism","def":"The belief that a country should have strong armed forces and be prepared to use them aggressively."},{"term":"Conscientious objector","def":"A person who for reasons of conscience refuses to serve in the armed forces."}],"views":[{"n":"Christian pacifism","tag":"Sermon on the Mount","c":"Jesus taught in the Sermon on the Mount that Christians should not resist evil, should turn the other cheek and love their enemies. For the first 300 years Christians refused to fight; peace Churches such as the Quakers, Amish and Mennonites keep this tradition alive."},{"n":"Muslim view","tag":"Mostly reject pacifism","c":"Most Muslims reject passive resistance: jihad means struggle, and if Muslims are attacked they are expected to fight back — there is no turning the other cheek in Islam. Yet a tradition of passive resistance exists (Surah 5:28; the Arab Spring; Khan Abdul Ghaffar Khan)."},{"n":"Humanist pacifism","tag":"Non-religious","c":"Pacifism also grew among Humanists — from Erasmus to Rousseau, Kant and Bentham, who argued war is a waste of resources — and Tolstoy. Many became conscientious objectors and founded groups like CND; life is seen as more valuable if there is no afterlife."},{"n":"Few pacifists, but real","tag":"Shared ground","c":"Both Islam and Judaism have few pacifists because their holy books are full of wars — yet pacifist individuals and groups exist in both, so pacifism is a minority tradition rather than an absent one."}]},"t6":{"terms":[{"term":"Weapons of mass destruction","def":"Weapons — nuclear, chemical or biological — which can destroy large areas and/or large numbers of people."},{"term":"Mutually assured destruction (MAD)","def":"A strategy of stockpiling nuclear weapons to deter opposing sides from beginning nuclear strikes."},{"term":"Nuclear weapons","def":"Devices that explode through a nuclear reaction, releasing a huge amount of energy."},{"term":"Deterrent","def":"A weapon held to frighten enemies and prevent them attacking, even if it is never used."}],"views":[{"n":"Muslim view","tag":"Against use","c":"The Just War rules make WMD unusable by a good Muslim, because they deliberately target the innocent civilians Islam forbids harming. Ayatollah Khamenei condemned WMD outright; still, Pakistan keeps nuclear weapons as a deterrent, though it has never given an Islamic justification for having them."},{"n":"Jewish view","tag":"Against use, maybe possess","c":"The Talmud forbids a war whose casualties exceed a sixth of the population, so Lord Jakobovits argued a defensive nuclear attack “can never be justified”. Yet Jewish law may allow THREATENING to use a banned weapon — a bluff — to save many, many lives."},{"n":"Humanist & atheist view","tag":"Non-religious","c":"No Humanist supports using WMD, but some accept possessing them as a deterrent. Atheists are split: some are totally against, because this life is all we have; others accept possession for self-defence, and a utilitarian may say MAD brings the greatest happiness of the greatest number."},{"n":"MAD — why it matters","tag":"Shared ground","c":"Many on all sides point to mutually assured destruction: because both sides would be destroyed, no nuclear power attacks, and there has been no world war since 1945. The real question is whether a peace built on threatening millions of innocents can ever be right."}]},"t7":{"terms":[{"term":"Internally displaced","def":"Being forced to move your home because of conflict, but staying in the same country."},{"term":"Repatriate","def":"To return refugees to their place of origin."},{"term":"Ahmadiyya","def":"A Muslim sect, founded in Pakistan, that is against war (“Love for all, hatred for none”)."},{"term":"Inter-religious dialogue","def":"Discussions between different religions to find common ground for peace."}],"views":[{"n":"The victims","tag":"Why it matters","c":"War causes casualties (death and injury, especially of civilians), displacement (over 60 million killed in the Second World War; millions of refugees and internally displaced people today) and expense (economic collapse). These costs are why peacemakers act."},{"n":"Muslim organisations","tag":"Religious response","c":"The Ahmadiyya (“Love for all, hatred for none”) hold peace forums and speak out against terrorism; the Muslim Peace Fellowship practises a non-violent “prophetic jihad” for a wise, just and compassionate society; the Muslim Council of Britain condemns terror and works with the police."},{"n":"Humanist response","tag":"Non-religious","c":"Humanists helped set up the United Nations and want to strengthen it with a peacekeeping force to end wars and help refugees; the Humanist movement launched the World March for Peace and Nonviolence."},{"n":"Common ground","tag":"Shared ground","c":"Archbishop Fitzgerald argues that finding common ground between faiths is “crucial for world peace”, so religious and non-religious groups increasingly co-operate through inter-religious dialogue to help the victims of war."}]},"t8":{"terms":[{"term":"Reconciliation","def":"Bringing together people who were opposed to each other."},{"term":"Forgiveness","def":"Ceasing to feel angry or resentful towards someone for an offence."},{"term":"Justice","def":"The allocation of due reward and punishment."},{"term":"Peacemaking","def":"Working to end conflict and build peace between people."}],"views":[{"n":"Justice first","tag":"No peace without justice","c":"Muslims believe justice is essential to peacemaking: where laws are unjust, people rebel and civil war can follow (as in Syria against the Assad regime). Without justice a society will not last, so the Qur’an says, “Fear God and keep straight the relations between yourselves” (Surah 8:1)."},{"n":"Forgiveness & reconciliation","tag":"No peace without mercy","c":"God is compassionate and merciful, so Muslims must forgive those who offend them — and how can they ask God’s forgiveness on the Day of Judgement if they will not forgive others? Muslims should follow the Prophet’s example and, as Surah 49:9–10 says, “make peace and reconciliation” between contending brothers."},{"n":"Real peace needs both","tag":"Shared ground","c":"Genuine peacemaking needs justice to remove the cause of conflict AND forgiveness and reconciliation to heal the relationship. The Qur’an calls Muslims to “repel evil with what is better” so that an enemy becomes a friend (Surah 41:34–35)."}]}};
+(function(){
+  let fcTopic="all", fcType="terms";
+  const grid=document.getElementById("fcGrid"), count=document.getElementById("fcCount");
+  function build(){
+    const all=Object.keys(FLASHCARDS);
+    const topics = fcTopic==="all" ? all : [fcTopic];
+    let cards=[];
+    topics.forEach(function(tp){
+      const d=FLASHCARDS[tp]; if(!d) return;
+      if(fcType==="terms"){ d.terms.forEach(function(t){cards.push({tp:tp,front:t.term,tag:LABELS[tp],back:'<div class="fc-def">'+esc2(t.def)+'</div>'})}); }
+      else { d.views.forEach(function(v){cards.push({tp:tp,front:v.n,tag:LABELS[tp]+(v.tag?' · '+v.tag:''),back:'<div class="fc-def">'+esc2(v.c)+'</div>'})}); }
+    });
+    grid.innerHTML=cards.map(function(c){return '<button class="fc-card '+c.tp+'" data-flipped="false" aria-label="Flashcard: '+esc2(c.front)+'. Tap to reveal.">'+
+      '<div class="fc-inner">'+
+      '<div class="fc-face fc-front"><div class="fc-tag">'+esc2(c.tag)+'</div><div class="fc-term">'+esc2(c.front)+'</div><div class="fc-flip">tap to flip ↺</div></div>'+
+      '<div class="fc-face fc-back"><div class="fc-tag">'+esc2(c.tag)+'</div>'+c.back+'</div>'+
+      '</div></button>';}).join("");
+    count.textContent = cards.length + " cards";
+    grid.querySelectorAll(".fc-card").forEach(function(el){
+      el.addEventListener("click",function(){el.dataset.flipped = el.dataset.flipped==="true" ? "false":"true";});
+    });
+  }
+  document.querySelectorAll('#flashcards .fc-tabs .fc-btn').forEach(function(b){b.addEventListener("click",function(){
+    document.querySelectorAll('#flashcards .fc-tabs .fc-btn').forEach(function(x){x.setAttribute("aria-selected","false")});
+    b.setAttribute("aria-selected","true"); fcTopic=b.dataset.topic; build();
+  })});
+  document.querySelectorAll('#flashcards .fc-type .fc-btn').forEach(function(b){b.addEventListener("click",function(){
+    document.querySelectorAll('#flashcards .fc-type .fc-btn').forEach(function(x){x.setAttribute("aria-selected","false")});
+    b.setAttribute("aria-selected","true"); fcType=b.dataset.type; build();
+  })});
+  build();
+})();
+/* =====================================================================
+   TEACHER: paste your YouTube link between the quotes below.
+   Any format works — youtube.com/watch?v=..., youtu.be/..., or an embed URL.
+   Leave it empty ("") and the page shows a "Video not set" placeholder.
+   ===================================================================== */
+const VIDEO_URL = "";
+(function wireVideo(){
+  const url=(VIDEO_URL||"").trim();
+  if(!url) return;
+  let id="";
+  const m = url.match(/(?:youtu\.be\/|v=|\/embed\/|\/shorts\/)([A-Za-z0-9_-]{11})/);
+  if(m) id=m[1];
+  else if(/^[A-Za-z0-9_-]{11}$/.test(url)) id=url;
+  const frame=document.getElementById("videoFrame");
+  if(id && frame){
+    frame.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+id+'?rel=0" title="Unit review" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>';
+  } else if(frame){
+    frame.innerHTML='<div class="video-placeholder"><a class="res-btn big" style="background:#fff" href="'+url+'" target="_blank" rel="noopener"><span class="ic">▶</span><span><b>Watch the full unit review</b></span><span class="go">↗</span></a></div>';
+  }
+})();
+/* =====================================================================
+   TEACHER: paste your SharePoint share links between the quotes below.
+   Leave a link empty ("") and its button will show "Link not set".
+   Tip: in SharePoint, open the file's ... menu -> Copy link -> paste here.
+   ===================================================================== */
+const LINKS = {
+  t1_lesson: "",
+  t1_booklet: "",
+  t1_podcast: "",
+  t2_lesson: "",
+  t2_booklet: "",
+  t2_podcast: "",
+  t3_lesson: "",
+  t3_booklet: "",
+  t3_podcast: "",
+  t4_lesson: "",
+  t4_booklet: "",
+  t4_podcast: "",
+  t5_lesson: "",
+  t5_booklet: "",
+  t5_podcast: "",
+  t6_lesson: "",
+  t6_booklet: "",
+  t6_podcast: "",
+  t7_lesson: "",
+  t7_booklet: "",
+  t7_podcast: "",
+  t8_lesson: "",
+  t8_booklet: "",
+  t8_podcast: "",
+  booklet: "",
+  booklet_keyidea: "",
+  sow: "",
+  guide: ""
+};
+(function wireResources(){
+  let anySet=false;
+  document.querySelectorAll(".res-btn").forEach(function(btn){
+    const url=(LINKS[btn.dataset.key]||"").trim();
+    if(url){ btn.href=url; btn.target="_blank"; btn.rel="noopener"; anySet=true; }
+    else{ btn.classList.add("unset"); btn.removeAttribute("href"); btn.setAttribute("aria-disabled","true"); }
+  });
+  if(anySet){ const n=document.getElementById("resNote"); if(n) n.classList.add("hide"); }
+})();
+</script>
+</body>
+</html>
