@@ -32,10 +32,6 @@ and every lesson deck, scheme of work, booklet and podcast episode.
 | 7 · Living the Muslim Life | [open](https://vmcssse-ui.github.io/summit/G9_LML_Ecosystem.html) |
 | 8 · Peace & Conflict | [open](https://vmcssse-ui.github.io/summit/G9_PC_Ecosystem.html) |
 
-## KS5 · A-level
-
-- [Philosophy and Ethics, Christianity — course master page](https://vmcssse-ui.github.io/summit/ks5-site/alevel.html)
-
 ## Year 11 · GCSE — staff preview
 
 The week-by-week class pages. **Not yet uploaded** — the card for these is
