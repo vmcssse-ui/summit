@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aristotle's Virtue Ethics — Unit at a Glance</title>
+<style>
+  :root{
+    --ink:#12294D; --ink-2:#0C1B33;
+    --parch:#F3ECDD; --parch-2:#EAE0C9;
+    --gold:#C9A227; --gold-soft:#E4CE86;
+    --rubric:#B01C2E; --teal:#00695C; --violet:#6A1B9A; --blue:#1565C0; --green:#2E7D32;
+    --paper:#FBF7EE; --line:rgba(18,41,77,.16);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--paper);color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;line-height:1.5;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1060px;margin:0 auto;padding:0 24px}
+
+  /* ---------- HERO ---------- */
+  .hero{background:
+      radial-gradient(1200px 400px at 80% -10%, rgba(201,162,39,.18), transparent 60%),
+      linear-gradient(180deg,var(--ink) 0%, var(--ink-2) 100%);
+    color:var(--parch);padding:64px 0 72px;position:relative;overflow:hidden;border-bottom:3px solid var(--gold)}
+  .hero::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.06;
+    background:repeating-linear-gradient(180deg,transparent 0 38px,#fff 38px 39px)}
+  .hero .wrap{position:relative;z-index:2}
+  .crest{display:flex;align-items:center;gap:16px;margin-bottom:34px}
+  .crest svg{width:54px;height:54px;flex:none}
+  .crest .who{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-soft)}
+  .crest .who b{color:var(--parch);display:block;letter-spacing:.14em;font-size:.86rem;margin-top:3px}
+  h1{font-size:clamp(2.4rem,6vw,4.1rem);line-height:1.02;font-weight:700;letter-spacing:-.01em}
+  h1 .amp{color:var(--gold);font-style:italic}
+  .sub{margin-top:20px;max-width:58ch;font-size:1.12rem;color:#E7DFCB}
+  .bigq{margin-top:30px;display:inline-flex;gap:14px;align-items:flex-start;border-left:3px solid var(--gold);padding:8px 0 8px 18px;max-width:60ch}
+  .bigq .q{font-family:"Trebuchet MS",sans-serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-soft);padding-top:5px}
+  .bigq p{font-size:1.24rem;font-style:italic;color:#fff}
+  .exam-flag{margin-top:26px;display:inline-block;background:rgba(201,162,39,.14);border:1px solid var(--gold);
+    border-radius:8px;padding:10px 16px;font-family:"Trebuchet MS",sans-serif;font-size:.86rem;color:var(--parch)}
+  .exam-flag b{color:var(--gold)}
+
+  /* ---------- SECTION SHELL ---------- */
+  section{padding:64px 0}
+  .sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:8px}
+  .sec-head .num{font-family:"Trebuchet MS",sans-serif;color:var(--gold);font-weight:700;font-size:.9rem;letter-spacing:.15em}
+  .sec-head h2{font-size:clamp(1.6rem,3.4vw,2.3rem);letter-spacing:-.01em}
+  .sec-lead{color:#4a4a52;max-width:66ch;margin-bottom:34px;font-size:1.05rem}
+
+  /* ---------- SIGNATURE SPECTRUM ---------- */
+  .spectrum-card{background:linear-gradient(180deg,#fff, var(--paper));border:1px solid var(--line);border-radius:14px;
+    box-shadow:0 18px 40px -28px rgba(18,41,77,.5);padding:28px 26px 34px}
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:26px}
+  .tab{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.82rem;letter-spacing:.04em;
+    border:1px solid var(--line);background:#fff;color:var(--ink);padding:9px 16px;border-radius:999px;cursor:pointer;transition:.18s}
+  .tab[aria-selected="true"]{background:var(--ink);color:var(--parch);border-color:var(--ink)}
+  .tab:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+  .axis{position:relative;margin:8px 4px 0}
+  .axis-labels{display:flex;justify-content:space-between;font-family:"Trebuchet MS",sans-serif;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:#6a6a72;margin-bottom:10px}
+  .axis-labels .l{color:var(--rubric);font-weight:700}
+  .axis-labels .r{color:var(--blue);font-weight:700}
+  .bar{height:10px;border-radius:999px;background:linear-gradient(90deg,var(--rubric),#b06a1e 40%,#5a7d3a 66%,var(--blue));position:relative}
+  .ticks{position:relative;height:112px}
+  .node{position:absolute;top:0;transform:translateX(-50%);width:136px;text-align:center;cursor:pointer}
+  .node .dot{width:20px;height:20px;border-radius:50%;background:#fff;border:3px solid var(--ink);margin:0 auto;position:relative;top:-15px;transition:.18s}
+  .node .nm{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.8rem;margin-top:-6px;line-height:1.2}
+  .node .sb{font-size:.74rem;color:#6a6a72;font-style:italic;margin-top:2px;line-height:1.25}
+  .node:hover .dot,.node[data-active="true"] .dot{transform:scale(1.25);border-color:var(--gold);box-shadow:0 0 0 5px rgba(201,162,39,.2)}
+  .node:focus-visible{outline:none}
+  .node:focus-visible .dot{outline:3px solid var(--gold);outline-offset:3px}
+  .readout{margin-top:14px;background:var(--ink);color:var(--parch);border-radius:12px;padding:20px 22px;min-height:104px;display:flex;gap:18px;align-items:flex-start}
+  .readout .badge{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;
+    background:var(--gold);color:var(--ink-2);padding:6px 10px;border-radius:6px;white-space:nowrap;margin-top:2px}
+  .readout .body h4{font-size:1.12rem;margin-bottom:4px}
+  .readout .body p{color:#E7DFCB;font-size:.98rem}
+  .readout .body .sw{display:flex;gap:22px;margin-top:10px;flex-wrap:wrap}
+  .readout .body .sw div{font-size:.9rem;flex:1;min-width:220px}
+  .readout .body .sw .k{font-family:"Trebuchet MS",sans-serif;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase}
+  .readout .body .sw .up .k{color:#8BD08F}
+  .readout .body .sw .dn .k{color:#F2A0A0}
+  .hint{font-family:"Trebuchet MS",sans-serif;font-size:.76rem;color:#8a8a92;margin-top:14px;text-align:center}
+
+  /* ---------- THREAD ---------- */
+  .thread{background:var(--ink);color:var(--parch);border-radius:14px;padding:34px 30px;position:relative;overflow:hidden}
+  .thread::before{content:"";position:absolute;inset:0;opacity:.07;background:repeating-linear-gradient(180deg,transparent 0 30px,#fff 30px 31px)}
+  .thread .wrap2{position:relative;z-index:2}
+  .thread h2{color:#fff;font-size:clamp(1.5rem,3vw,2.1rem);margin-bottom:8px}
+  .thread .lead{color:#E7DFCB;max-width:64ch;margin-bottom:24px}
+  .threads{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .tcard{border:1px solid rgba(228,206,134,.3);border-radius:10px;padding:16px 16px 18px;background:rgba(255,255,255,.03)}
+  .tcard .t{font-family:"Trebuchet MS",sans-serif;color:var(--gold);font-weight:700;font-size:.82rem;letter-spacing:.05em;margin-bottom:6px}
+  .tcard p{font-size:.9rem;color:#E7DFCB}
+
+  /* ---------- THREE PANELS ---------- */
+  .triptych{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .panel{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;display:flex;flex-direction:column}
+  .panel .cap{padding:16px 18px;color:#fff}
+  .panel.b1 .cap{background:linear-gradient(135deg,#1F4E79,#12294D)}
+  .panel.b2 .cap{background:linear-gradient(135deg,#00695C,#0C3B34)}
+  .panel.b3 .cap{background:linear-gradient(135deg,#6A1B9A,#3B0E56)}
+  .panel .cap .n{font-family:"Trebuchet MS",sans-serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;opacity:.85}
+  .panel .cap h3{font-size:1.2rem;margin-top:3px;line-height:1.2}
+  .panel .cap .ask{font-style:italic;font-size:.9rem;margin-top:8px;opacity:.95}
+  .panel .body{padding:16px 18px;font-size:.92rem}
+  .panel .body .row{display:flex;gap:9px;padding:7px 0;border-bottom:1px dashed var(--line)}
+  .panel .body .row:last-child{border-bottom:0}
+  .panel .body .row .v{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.78rem;white-space:nowrap;color:var(--ink)}
+  .panel .body .row .d{color:#55555c}
+
+  /* ---------- REVISE ---------- */
+  .revise{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:start}
+  .steps{counter-reset:s;display:flex;flex-direction:column;gap:14px}
+  .step{display:flex;gap:16px;align-items:flex-start;border-left:2px solid var(--line);padding:2px 0 2px 18px;position:relative}
+  .step::before{counter-increment:s;content:counter(s);position:absolute;left:-15px;top:-2px;width:28px;height:28px;border-radius:50%;
+    background:var(--gold);color:var(--ink-2);font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.9rem;display:grid;place-items:center}
+  .step h4{font-size:1.02rem}
+  .step p{font-size:.9rem;color:#55555c;margin-top:2px}
+  .ao{border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .ao .h{padding:12px 16px;font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.82rem;letter-spacing:.06em;color:#fff}
+  .ao .h.ao1{background:var(--ink)}
+  .ao .h.ao2{background:var(--green)}
+  .ao .h.ao3{background:var(--teal)}
+  .ao .c{padding:14px 16px;font-size:.9rem;border-bottom:1px solid var(--line)}
+  .ao .c:last-child{border-bottom:0}
+  .ao .c b{font-family:"Trebuchet MS",sans-serif;font-size:.78rem;letter-spacing:.04em}
+
+  /* ---------- VIDEO ---------- */
+  .video-frame{position:relative;width:100%;aspect-ratio:16/9;border-radius:14px;overflow:hidden;
+    border:1px solid var(--line);box-shadow:0 20px 44px -30px rgba(18,41,77,.55);background:var(--ink)}
+  .video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .video-placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:14px;text-align:center;padding:30px;color:#C9C4B6;
+    background:radial-gradient(700px 300px at 50% 30%,rgba(201,162,39,.14),transparent 60%),linear-gradient(180deg,var(--ink),var(--ink-2))}
+  .video-placeholder .vp-badge{font-family:"Trebuchet MS",Verdana,sans-serif;font-weight:700;font-size:.72rem;letter-spacing:.14em;
+    text-transform:uppercase;background:var(--gold);color:var(--ink-2);padding:6px 12px;border-radius:6px}
+  .video-placeholder p{max-width:52ch;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.92rem;line-height:1.55}
+  .video-placeholder code{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:4px;padding:1px 6px}
+
+  /* ---------- FLASHCARDS ---------- */
+  .fc-controls{display:flex;gap:18px;flex-wrap:wrap;align-items:center;margin-bottom:24px}
+  .fc-tabs,.fc-type{display:flex;gap:8px;flex-wrap:wrap}
+  .fc-btn{font-family:"Trebuchet MS",Verdana,sans-serif;font-weight:700;font-size:.8rem;border:1px solid var(--line);
+    background:#fff;color:var(--ink);padding:8px 15px;border-radius:999px;cursor:pointer;transition:.18s}
+  .fc-btn[aria-selected="true"]{background:var(--ink);color:var(--parch);border-color:var(--ink)}
+  .fc-btn:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+  .fc-hint{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.78rem;color:#8a8a92;margin-left:auto}
+  .fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+  .fc-card{perspective:1200px;height:190px;cursor:pointer;background:none;border:0;padding:0;font-family:inherit;text-align:left}
+  .fc-inner{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+  .fc-card[data-flipped="true"] .fc-inner{transform:rotateY(180deg)}
+  .fc-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+    border-radius:12px;padding:18px;display:flex;flex-direction:column;border:1px solid var(--line);overflow:auto}
+  .fc-front{background:linear-gradient(180deg,#fff,var(--paper))}
+  .fc-back{transform:rotateY(180deg);color:var(--parch)}
+  .fc-card.eudaimonia .fc-back{background:linear-gradient(160deg,#1F4E79,#12294D)}
+  .fc-card.mean .fc-back{background:linear-gradient(160deg,#00695C,#0C3B34)}
+  .fc-card.theoria .fc-back{background:linear-gradient(160deg,#6A1B9A,#3B0E56)}
+  .fc-tag{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--gold);font-weight:700;margin-bottom:8px}
+  .fc-front .fc-tag{color:#9a8028}
+  .fc-term{font-size:1.2rem;font-weight:700;line-height:1.15}
+  .fc-front .fc-flip{margin-top:auto;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.72rem;color:#9a9a9a}
+  .fc-def{font-size:.9rem;line-height:1.4}
+  .fc-back .fc-sw{margin-top:8px;font-size:.8rem}
+  .fc-back .fc-sw .k{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.62rem;letter-spacing:.08em;text-transform:uppercase}
+  .fc-back .up .k{color:#8BD08F}.fc-back .dn .k{color:#F2A0A0}
+  @media(max-width:820px){.fc-grid{grid-template-columns:1fr 1fr}.fc-hint{width:100%;margin-left:0}}
+
+  /* ---------- RESOURCES ---------- */
+  .res-note{background:#FBF0D6;border:1px solid var(--gold);border-left:4px solid var(--gold);
+    border-radius:8px;padding:12px 16px;margin-bottom:22px;font-size:.9rem;color:#5a4a1c;font-family:"Trebuchet MS",Verdana,sans-serif}
+  .res-note code{background:#fff;border:1px solid var(--line);border-radius:4px;padding:1px 6px;font-size:.85em}
+  .res-note.hide{display:none}
+  .res-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:16px}
+  .res-col{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff}
+  .rc-head{padding:14px 16px;color:#fff}
+  .rc1 .rc-head{background:linear-gradient(135deg,#1F4E79,#12294D)}
+  .rc2 .rc-head{background:linear-gradient(135deg,#00695C,#0C3B34)}
+  .rc3 .rc-head{background:linear-gradient(135deg,#6A1B9A,#3B0E56)}
+  .rc-head .rc-n{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;opacity:.85}
+  .rc-head h3{font-size:1.1rem;margin-top:2px;line-height:1.2}
+  .res-btn{display:flex;align-items:center;gap:12px;padding:13px 16px;border-top:1px solid var(--line);
+    font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.92rem;color:var(--ink);text-decoration:none;cursor:pointer;transition:background .15s}
+  .res-col .res-btn:first-of-type{border-top:0}
+  .res-btn:hover{background:var(--parch)}
+  .res-btn .ic{width:26px;height:26px;flex:none;display:grid;place-items:center;border-radius:6px;background:var(--ink);color:var(--gold);font-size:.9rem}
+  .res-btn .go{margin-left:auto;color:var(--gold);font-weight:700;opacity:0;transition:.15s}
+  .res-btn:hover .go{opacity:1}
+  .res-btn:focus-visible{outline:3px solid var(--gold);outline-offset:-3px}
+  .res-btn.unset{opacity:.5;cursor:not-allowed}
+  .res-btn.unset .go{opacity:0}
+  .res-btn.unset::after{content:"Link not set";margin-left:auto;font-size:.74rem;color:#9a7d2c;
+    background:#FBF0D6;border:1px solid var(--gold-soft);border-radius:5px;padding:2px 7px}
+  .res-wide{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:2px}
+  .res-btn.big{border:1px solid var(--line);border-radius:12px;background:#fff;padding:16px 18px}
+  .res-btn.big:hover{background:var(--parch)}
+  .res-btn.big .ic{width:34px;height:34px;font-size:1.1rem;background:var(--ink)}
+  @media(max-width:820px){.res-grid{grid-template-columns:1fr}.res-wide{grid-template-columns:1fr}}
+
+  footer{background:var(--ink-2);color:#C9C4B6;padding:26px 0;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.8rem}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+  footer .gold{color:var(--gold)}
+
+  @media(max-width:820px){
+    .triptych{grid-template-columns:1fr}
+    .threads{grid-template-columns:1fr}
+    .revise{grid-template-columns:1fr}
+    .node{width:96px}
+    .node .sb{display:none}
+  }
+  @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<!--BACKPILL--><a href="../alevel.html" style="position:fixed;left:14px;bottom:14px;z-index:99999;background:#12294D;color:#F6F1E4;font:600 14px/1 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;padding:10px 15px;border-radius:999px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.28);border:1px solid #C9A227">&#8592; All units</a>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap">
+    <div class="crest">
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <rect x="2" y="2" width="60" height="60" rx="13" fill="#0C1B33" stroke="#C9A227" stroke-width="1.5"/>
+        <g fill="none" stroke="#F3ECDD" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M23 21C21 17 21 14 22 12c2 2 3 5 3 8"/><path d="M41 21c2-4 2-7 1-9-2 2-3 5-3 8"/>
+          <path d="M32 17C21 17 18 26 18 33c0 12 6 19 14 19s14-7 14-19c0-7-3-16-14-16z"/>
+          <path d="M32 21c-3 4-5 6-7 7M32 21c3 4 5 6 7 7"/>
+        </g>
+        <circle cx="27" cy="31" r="5" fill="none" stroke="#F3ECDD" stroke-width="2.4"/>
+        <circle cx="37" cy="31" r="5" fill="none" stroke="#F3ECDD" stroke-width="2.4"/>
+        <circle cx="27" cy="31" r="1.9" fill="#F3ECDD"/><circle cx="37" cy="31" r="1.9" fill="#F3ECDD"/>
+        <path d="M32 34l-2.2 4.2h4.4z" fill="#C9A227"/>
+      </svg>
+      <div class="who">A-Level Religious Studies · AQA Paper 1
+        <b>Harlington School · Philosophy &amp; Ethics</b></div>
+    </div>
+    <h1>Aristotle's Virtue <span class="amp">&amp;</span> Ethics</h1>
+    <p class="sub">Every other ethical theory you study asks <em>what should I do?</em> This one asks something different: <em>what sort of person should I be?</em> Everything that follows — and every objection to it — comes from that single change of question.</p>
+    <div class="bigq">
+      <span class="q">The<br>big<br>question</span>
+      <p>Can an ethics built on character, rather than rules, actually tell anyone how to live?</p>
+    </div>
+    <div class="exam-flag"><b>9 questions</b> in our past-paper bank are directly about virtue ethics — across 2018, 2019, 2020, 2021, 2022, 2023, 2024. This is not an optional topic.</div>
+  </div>
+</header>
+
+<!-- 01 SIGNATURE: SPECTRUM -->
+<section id="spectrum">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">01</span><h2>The virtue spectrum</h2></div>
+    <p class="sec-lead">Each sub-topic lines its positions up on an axis. Pick a sub-topic, then tap a position to see what it claims and where it is strong or weak. If you can order them, you understand them.</p>
+
+    <div class="spectrum-card">
+      <div class="tabs" role="tablist" aria-label="Choose a sub-topic">
+        <button class="tab" role="tab" aria-selected="true"  data-topic="eudaimonia">1 · Eudaimonia &amp; the Function Argument</button>
+        <button class="tab" role="tab" aria-selected="false" data-topic="mean">2 · The Virtues &amp; the Mean</button>
+        <button class="tab" role="tab" aria-selected="false" data-topic="theoria">3 · Theoria &amp; Evaluation</button>
+      </div>
+
+      <div class="axis">
+        <div class="axis-labels"><span class="l" id="poleL"></span><span class="r" id="poleR"></span></div>
+        <div class="bar"></div>
+        <div class="ticks" id="ticks"></div>
+      </div>
+
+      <div class="readout" id="readout" aria-live="polite"></div>
+      <p class="hint">Tap a circle — or use Tab and Enter — to explore each position.</p>
+    </div>
+  </div>
+</section>
+
+<!-- THE THREAD -->
+<section>
+  <div class="wrap">
+    <div class="thread">
+      <div class="wrap2">
+        <h2>The thread that ties it together</h2>
+        <p class="lead">Top answers do not treat the three lessons separately. Three ideas run through all of them — spot the thread and you are writing at the top of the mark scheme.</p>
+        <div class="threads">
+          <div class="tcard"><div class="t">Agent, not act</div><p>Virtue ethics asks what you should BE, not what you should DO. Every strength and every weakness follows from that one move.</p></div>
+          <div class="tcard"><div class="t">Function drives everything</div><p>The Function Argument gives the goal, the goal shapes the virtues, the virtues need the mean. Break the first link and the rest wobbles.</p></div>
+          <div class="tcard"><div class="t">No rules — problem or point?</div><p>Both sides agree virtue ethics issues no rules. Whether that is fatal or the whole point IS the evaluation.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 THREE QUESTIONS -->
+<section id="debates">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">02</span><h2>One theory, three questions</h2></div>
+    <p class="sec-lead">The unit splits into three lessons. Each answers a different question — and each one has to work for the theory to stand.</p>
+    <div class="triptych">
+      <div class="panel b1">
+        <div class="cap"><div class="n">Sub-topic 1</div><h3>Eudaimonia &amp; the Function Argument</h3><div class="ask">What is the <b>goal</b>?</div></div>
+        <div class="body">
+          <div class="row"><span class="v">Pleasure</span><span class="d">Rejected — even cattle experience it.</span></div>
+          <div class="row"><span class="v">Wealth</span><span class="d">Rejected — a means, never an end.</span></div>
+          <div class="row"><span class="v">Honour</span><span class="d">Rejected — given by others, easily lost.</span></div>
+          <div class="row"><span class="v">Eudaimonia</span><span class="d">The soul's activity in accord with virtue.</span></div>
+        </div>
+      </div>
+      <div class="panel b2">
+        <div class="cap"><div class="n">Sub-topic 2</div><h3>The Virtues &amp; the Doctrine of the Mean</h3><div class="ask">How do we <b>get there</b>?</div></div>
+        <div class="body">
+          <div class="row"><span class="v">Moral virtue</span><span class="d">Built by habit, learned by imitating role models.</span></div>
+          <div class="row"><span class="v">Intellectual virtue</span><span class="d">Governed by practical wisdom (the phronimos).</span></div>
+          <div class="row"><span class="v">The mean</span><span class="d">Between excess and deficiency, relative to us.</span></div>
+          <div class="row"><span class="v">Voluntary</span><span class="d">Know it and choose it — no virtue by accident.</span></div>
+        </div>
+      </div>
+      <div class="panel b3">
+        <div class="cap"><div class="n">Sub-topic 3</div><h3>Theoria &amp; Evaluating Virtue Ethics</h3><div class="ask">Does it <b>work</b>?</div></div>
+        <div class="body">
+          <div class="row"><span class="v">Theoria</span><span class="d">Aristotle's surprise ending: contemplation.</span></div>
+          <div class="row"><span class="v">The defence</span><span class="d">Anscombe 1958; Schwartz on practical wisdom.</span></div>
+          <div class="row"><span class="v">Relativism</span><span class="d">Athens · Victorians · Europe · China.</span></div>
+          <div class="row"><span class="v">Structural</span><span class="d">Circular · fallacy of composition · anthropocentric.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 RESOURCES -->
+<section id="resources">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">03</span><h2>Your resources</h2></div>
+    <p class="sec-lead">Everything for the unit, in one place. Open a sub-topic's lesson, booklet and podcast, and use the <b>Philosopher Companion</b> across all three.</p>
+
+    <div class="res-note" id="resNote">
+      <b>Teacher setup:</b> links aren't set yet. Open this file, find the <code>LINKS</code> list near the bottom, and paste each SharePoint share link once. Buttons with no link show as "Link not set".
+    </div>
+
+    <div class="res-grid">
+      <div class="res-col rc1">
+        <div class="rc-head"><span class="rc-n">Sub-topic 1</span><h3>Eudaimonia</h3></div>
+        <a class="res-btn" data-key="eudaimonia_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="eudaimonia_booklet"><span class="ic">✎</span><span>Completion booklet</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="eudaimonia_podcast"><span class="ic">♪</span><span>Lesson podcast</span><span class="go">↗</span></a>
+      </div>
+      <div class="res-col rc2">
+        <div class="rc-head"><span class="rc-n">Sub-topic 2</span><h3>The Mean</h3></div>
+        <a class="res-btn" data-key="mean_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="mean_booklet"><span class="ic">✎</span><span>Completion booklet</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="mean_podcast"><span class="ic">♪</span><span>Lesson podcast</span><span class="go">↗</span></a>
+      </div>
+      <div class="res-col rc3">
+        <div class="rc-head"><span class="rc-n">Sub-topic 3</span><h3>Theoria &amp; Evaluation</h3></div>
+        <a class="res-btn" data-key="theoria_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="theoria_booklet"><span class="ic">✎</span><span>Completion booklet</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="theoria_podcast"><span class="ic">♪</span><span>Lesson podcast</span><span class="go">↗</span></a>
+      </div>
+    </div>
+
+    <div class="res-wide">
+      <a class="res-btn big" data-key="companion"><span class="ic">🦉</span><span><b>Philosopher Companion</b> — checklist, key terms, review workbook &amp; exam planning</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="review"><span class="ic">↻</span><span><b>Review lessons</b> — consolidation decks for all three sub-topics</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="overview_podcast"><span class="ic">♪</span><span><b>Overview podcast</b> — the whole unit as one argument (team teach)</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="flashcards_pdf"><span class="ic">▤</span><span><b>Printable flashcards</b> — 30 fold-over cards to cut out</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="exam_questions"><span class="ic">▦</span><span><b>Exam questions</b> — every AQA question 2018–2024, with the 9 virtue ethics ones flagged</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="textbook"><span class="ic">▥</span><span><b>Textbook chapter</b> — the reading this unit is built on</span><span class="go">↗</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- 04 HOW TO REVISE -->
+<section id="revise">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">04</span><h2>How to revise this unit</h2></div>
+    <p class="sec-lead">Use your resources in this order. The <b>Philosopher Companion</b> is where you learn to <em>plan</em> all three question types.</p>
+    <div class="revise">
+      <div class="steps">
+        <div class="step"><div><h4>Watch the lesson &amp; listen to the podcast</h4><p>One podcast per sub-topic — a teacher and student talk each position through to a judgement. Annotate as you listen.</p></div></div>
+        <div class="step"><div><h4>Complete the greyscale booklet</h4><p>Read the given text, write the key claims in your own words, then decide the strength and weakness YOU would give each position.</p></div></div>
+        <div class="step"><div><h4>Match &amp; apply the key terms</h4><p>In the Companion: match each term to its meaning, then use it in a sentence of your own. RAG-rate the mastery checklist with the three faces.</p></div></div>
+        <div class="step"><div><h4>Plan AO1, then build AO2 on top</h4><p>Use the Companion frameworks and the guidance-left / your-turn-right scaffolds. Never evaluate what you have not first explained.</p></div></div>
+        <div class="step"><div><h4>Write one timed answer from a plan only</h4><p>Fifteen minutes, no notes beyond your plan. Then check it against the worked example in Part 4.</p></div></div>
+      </div>
+      <div class="ao">
+        <div class="h ao1">AO1 · Examine… (10 marks)</div>
+        <div class="c"><b>What it is —</b> a factual chain of reasoning. Define the key term, set out the position in order, and make each link make the next necessary.</div>
+        <div class="c"><b>Watch for —</b> if the question names an issue (e.g. lying), applying the theory to it is compulsory. No evaluation: there are no marks for it here.</div>
+        <div class="h ao2">AO2 · Evaluate this claim. (15 marks)</div>
+        <div class="c"><b>What it is —</b> a three-paragraph dialectic. Thesis → strongest case for → strongest case against, weighing BOTH → the decisive consideration.</div>
+        <div class="c"><b>Aim —</b> a judgement that answers the claim directly. "It has strengths and weaknesses" is not a judgement.</div>
+        <div class="h ao3">AO3 · Critically examine… (25 marks)</div>
+        <div class="c"><b>What it is —</b> Paper 2B Section C dialogue. Virtue ethics meets Christian ethics — both traditions must be genuinely present, not just named.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 WATCH -->
+<section id="watch">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">05</span><h2>Watch: the whole unit in one go</h2></div>
+    <p class="sec-lead">A full review of <b>Aristotle's virtue ethics</b> — eudaimonia, the mean, theoria and the evaluation. Best watched before you start revising, then again to check your recall.</p>
+    <div class="video-frame" id="videoFrame">
+      <div class="video-placeholder" id="videoPlaceholder">
+        <div class="vp-badge">Video not set</div>
+        <p><b>Teacher:</b> paste the YouTube link in the <code>VIDEO_URL</code> line near the bottom of this file. The player then appears here automatically.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 FLASHCARDS -->
+<section id="flashcards">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">06</span><h2>Flashcards — test yourself</h2></div>
+    <p class="sec-lead">Flip a card to check yourself. Switch between <b>key terms</b> (term → meaning) and <b>positions</b> (position → claim, strength &amp; weakness), and filter by sub-topic.</p>
+    <div class="fc-controls">
+      <div class="fc-tabs" role="tablist" aria-label="Sub-topic">
+        <button class="fc-btn" role="tab" aria-selected="true"  data-topic="all">All</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-topic="eudaimonia">Eudaimonia</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-topic="mean">The Mean</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-topic="theoria">Theoria &amp; Eval</button>
+      </div>
+      <div class="fc-type" role="tablist" aria-label="Card type">
+        <button class="fc-btn" role="tab" aria-selected="true"  data-type="terms">Key terms</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-type="views">Positions</button>
+      </div>
+      <span class="fc-hint">Tap any card to flip · <span id="fcCount"></span></span>
+    </div>
+    <div class="fc-grid" id="fcGrid"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Aristotle's Virtue Ethics · Unit at a glance · AQA Paper 1 (7062/1)</span>
+    <span class="gold">Harlington School · Philosophy &amp; Ethics</span>
+  </div>
+</footer>
+
+<script>
+const DATA = {"eudaimonia":{"poles":["LEAST self-sufficient · shared or given","MOST self-sufficient · distinctively ours"],"nodes":[{"x":8,"nm":"Eudaimonia is pleasure","sb":"shared with cattle","auth":"REJECTED","claim":"The good life is the life of enjoyment. The most obvious candidate, and the one most people reach for first.","s":"It genuinely passes the 'sought for its own sake' test, and it explains why people actually behave as they do — no elaborate theory is needed to see why pleasure attracts us.","w":"It cannot be the HUMAN good, because it is not peculiar to humans. Aristotle's method demands an end that belongs to us as the kind of creature we are, and pleasure is shared with every sentient animal."},{"x":36,"nm":"Eudaimonia is wealth","sb":"a means, not an end","auth":"REJECTED","claim":"The good life is material security and plenty. A candidate with obvious appeal: wealth removes want, buys leisure, and appears to underwrite every other good.","s":"It correctly identifies that material conditions matter: severe poverty really does obstruct flourishing, and Aristotle himself assumes a certain level of external provision.","w":"It confuses a precondition with a goal. Because wealth is wanted only for what it buys, it can never terminate the chain of means — and a good that can be taken from you overnight cannot be a COMPLETE life."},{"x":64,"nm":"Eudaimonia is honour","sb":"given by others","auth":"REJECTED","claim":"The good life is public recognition and esteem. In a Greek city state this was a serious contender.","s":"It is the most serious of the three rejected candidates, because honour genuinely does track something real — people are honoured FOR their virtue, so it points beyond itself in the right direction.","w":"It locates the good outside the agent. If your flourishing depends on other people's judgement, it can be destroyed by their change of mind — so it fails the requirement that the final end be self-sufficient and secure."},{"x":92,"nm":"Aristotle's own answer","sb":"the soul reasoning well","auth":"ACCEPTED","claim":"The good life is the life in which we exercise REASON well. Having cleared the field, Aristotle argues positively — via the Function Argument.","s":"It survives every objection that killed the others: it is distinctively human, self-sufficient, an activity rather than a possession, and assessed over a complete life rather than a good day.","w":"The whole argument rests on humans having a function at all. Critics call this a fallacy of composition — body PARTS having functions does not show the whole PERSON does — and modern biology denies that evolution is goal-directed."}]},"mean":{"poles":["What you ARE · trained character","What you CHOSE · deliberate reason"],"nodes":[{"x":8,"nm":"Moral virtue (habit)","sb":"built by habit","auth":"CHARACTER","claim":"We become just by doing just acts. The non-rational soul — the part concerned with emotions and appetites — has the moral virtues, the virtues of character: courage, patience, modesty, temperance.","s":"It matches how moral development really happens: children learn honesty and courage by copying the adults around them long before they can follow a rule, and psychology broadly supports habituation.","w":"If virtue is instilled by imitation, we inherit whichever virtues our society happens to prize — so habituation transmits cultural values as easily as genuine excellence, with no built-in way to correct them."},{"x":36,"nm":"The doctrine of the mean","sb":"the right amount","auth":"PROPORTION","claim":"Virtue lies between an excess and a deficiency — relative to us. Specific virtues lie between two extremes, better called the excess and the deficiency than 'vices'.","s":"It is genuinely flexible: soldiers in a war zone need a different degree of courage from someone combating a disease, and the doctrine accommodates that without abandoning the idea of getting it right.","w":"It is close to unusable as guidance. Telling someone the right amount is 'what the prudent person would choose' does not tell them what to do — and Aristotle concedes justice has no mean at all, so the doctrine does not even cover every virtue."},{"x":64,"nm":"Intellectual virtue","sb":"practical wisdom","auth":"REASON","claim":"The virtues that contribute most to the good life, because reason controls them. The rational soul has the intellectual virtues.","s":"It stops virtue ethics collapsing into mere conditioning: practical wisdom supplies the judgement that decides when a rule should be ignored, how to improvise, and what this particular situation requires.","w":"It is circular in practice — the phronimos is the person who judges well, and good judgement is what the phronimos has. Identifying one from outside their own community turns out to be very hard."},{"x":92,"nm":"Voluntary action","sb":"knowledge & choice","auth":"INTENTION","claim":"Nobody can be virtuous by accident. Being virtuous involves your will.","s":"It captures a real moral intuition: we do not credit someone who saves a life by accident, or who does the right thing purely for applause. Character is revealed in what is chosen, not in outcomes.","w":"It makes virtue unverifiable from the outside. Aristotle admits only the agent knows their own motive — so a theory that grounds morality in character gives us no reliable way of identifying who actually has it."}]},"theoria":{"poles":["A COMPLETE ethical theory","NOT really a theory at all"],"nodes":[{"x":8,"nm":"The agent-centred defence","sb":"Anscombe & Schwartz","auth":"FAVOURABLE","claim":"It equips people to deal with moral problems, rather than pretending to solve them. Since 1958, when Elizabeth Anscombe (1919–2001) published her essay calling for a return to an Aristotelian approach, virtue ethics has revived — particularly in medical ethics — because rule-based systems so often seem unfair..","s":"It answers the deepest problem with rule-based ethics: rules conflict, can be unjust, and cannot anticipate every case. Schwartz's janitors show that moral skill is real, observable and teachable — and that character often does the work rules cannot.","w":"Equipping judgement is not the same as guiding action. When a decision has to be made today — on embryo research, or cloning — 'develop your character over a lifetime' does not tell the committee what to do."},{"x":36,"nm":"Theoria — contemplation","sb":"coherent but narrow","auth":"ARISTOTLE'S VERDICT","claim":"The good life for humans is contemplation. Almost as an afterthought, Aristotle decides in favour of the intellectual virtue of theoria over the moral virtues he has spent the book explaining.","s":"It is internally consistent: theoria genuinely is self-sufficient, chosen for its own sake, distinctively rational and available at will — it passes every test that sank pleasure, wealth and honour.","w":"Aristotle was the world's first real scientist, so he may simply be describing his own preferences. And if the intellect has theoretical AND practical wisdom, why must one be 'higher'? A holistic view would say both are indispensable, and that bodily pleasures are necessary even to the greatest minds."},{"x":64,"nm":"The relativist objection","sb":"whose virtues?","auth":"HOSTILE","claim":"Whose virtues, from which century? Perhaps the greatest weakness.","s":"The historical evidence is real and hard to dismiss: the lists genuinely do differ, and Aristotle's own list sits very comfortably inside the assumptions of his time and social class.","w":"It may prove too much. Courage, honesty and justice recur across almost every list, which suggests a common core rather than pure convention — and the objection applies to any ethical theory formulated by people inside a culture, including its rivals."},{"x":92,"nm":"The structural objections","sb":"circular & silent","auth":"HOSTILE","claim":"Circular, anthropocentric, and silent when it matters. A family of objections aimed not at Aristotle's culture but at the machinery of the theory: how its central terms are defined, what its foundational argument assumes, and what it can actually do when a decision is needed..","s":"These objections target the theory itself rather than Aristotle's society, so they survive every attempt to modernise the list of virtues — and the circularity charge in particular is very hard to answer without appealing to the phronimos, which is circular again.","w":"It may demand more of ethics than any theory delivers: deontology and consequentialism also fail in hard cases, and the 'circle' may simply describe how moral learning actually works — you become honest by practising honesty, which is not obviously vicious."}]}};
+
+const ticks=document.getElementById("ticks");
+const readout=document.getElementById("readout");
+const poleL=document.getElementById("poleL"), poleR=document.getElementById("poleR");
+let topic="eudaimonia", active=0;
+
+function renderReadout(n){
+  readout.innerHTML=
+    '<span class="badge">'+n.auth+'</span>'+
+    '<div class="body">'+
+      '<h4>'+n.nm+' <span style="opacity:.6;font-style:italic;font-weight:400">· '+n.sb+'</span></h4>'+
+      '<p>'+n.claim+'</p>'+
+      '<div class="sw">'+
+        '<div class="up"><span class="k">Strength</span><br>'+n.s+'</div>'+
+        '<div class="dn"><span class="k">Weakness</span><br>'+n.w+'</div>'+
+      '</div>'+
+    '</div>';
+}
+function renderTopic(){
+  const d=DATA[topic];
+  poleL.textContent=d.poles[0]; poleR.textContent=d.poles[1];
+  ticks.innerHTML="";
+  active=Math.min(active,d.nodes.length-1);
+  d.nodes.forEach((n,i)=>{
+    const el=document.createElement("div");
+    el.className="node"; el.style.left=n.x+"%"; el.tabIndex=0;
+    el.setAttribute("role","button");
+    el.setAttribute("aria-label",n.nm+": "+n.sb);
+    el.dataset.active=(i===active);
+    el.innerHTML='<div class="dot"></div><div class="nm">'+n.nm+'</div><div class="sb">'+n.sb+'</div>';
+    const pick=()=>{active=i;[...ticks.children].forEach((c,j)=>c.dataset.active=(j===i));renderReadout(n);};
+    el.addEventListener("click",pick);
+    el.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();pick();}});
+    ticks.appendChild(el);
+  });
+  renderReadout(d.nodes[active]);
+}
+document.querySelectorAll(".tab").forEach(t=>{
+  t.addEventListener("click",()=>{
+    document.querySelectorAll(".tab").forEach(x=>x.setAttribute("aria-selected","false"));
+    t.setAttribute("aria-selected","true");
+    topic=t.dataset.topic; active=0; renderTopic();
+  });
+});
+renderTopic();
+
+const FLASHCARDS = {"eudaimonia":{"terms":[{"term":"Telos","def":"the end, goal or purpose at which something aims.","note":"Aristotle opens by claiming every activity and choice aims at some good."},{"term":"Eudaimonia","def":"the good for humans — variously rendered as happiness, flourishing or complete well-being.","note":"Not a feeling. Aristotle finally defines it as the intellectual virtue of theoria (contemplation)."},{"term":"Function (ergon)","def":"'work' or 'accomplishment'. Something is 'good' if it fulfils its function.","note":"A good knife cuts well; a good tiger hunts well. So what is a good HUMAN?"},{"term":"Soul","def":"for Aristotle, the form or blueprint of the body — not a non-physical add-on.","note":"Plants, animals and humans all have souls; the levels are 'nested'."},{"term":"Hierarchy","def":"a system in which the parts are ranked by status: vegetative, then sensitive, then rational.","note":"Each level keeps everything below it and adds one thing of its own."},{"term":"Teleological","def":"explaining something by the end or purpose it is directed towards.","note":"The Function Argument is teleological — which is exactly where modern critics attack it."}],"views":[{"n":"Eudaimonia is pleasure","c":"The good life is the life of enjoyment.","s":"It genuinely passes the 'sought for its own sake' test, and it explains why people actually behave as they do — no elaborate theory is needed to see why pleasure attracts us.","w":"It cannot be the HUMAN good, because it is not peculiar to humans. Aristotle's method demands an end that belongs to us as the kind of creature we are, and pleasure is shared with every sentient animal."},{"n":"Eudaimonia is wealth","c":"The good life is material security and plenty.","s":"It correctly identifies that material conditions matter: severe poverty really does obstruct flourishing, and Aristotle himself assumes a certain level of external provision.","w":"It confuses a precondition with a goal. Because wealth is wanted only for what it buys, it can never terminate the chain of means — and a good that can be taken from you overnight cannot be a COMPLETE life."},{"n":"Eudaimonia is honour","c":"The good life is public recognition and esteem.","s":"It is the most serious of the three rejected candidates, because honour genuinely does track something real — people are honoured FOR their virtue, so it points beyond itself in the right direction.","w":"It locates the good outside the agent. If your flourishing depends on other people's judgement, it can be destroyed by their change of mind — so it fails the requirement that the final end be self-sufficient and secure."},{"n":"Aristotle's own answer","c":"The good life is the life in which we exercise REASON well.","s":"It survives every objection that killed the others: it is distinctively human, self-sufficient, an activity rather than a possession, and assessed over a complete life rather than a good day.","w":"The whole argument rests on humans having a function at all. Critics call this a fallacy of composition — body PARTS having functions does not show the whole PERSON does — and modern biology denies that evolution is goal-directed."}]},"mean":{"terms":[{"term":"Virtue (arete)","def":"a disposition — a character trait — which is to be valued: courage, truthfulness, self-control, generosity, justice.","note":"Not a one-off act. Virtue is the goal of a whole life."},{"term":"Dispositions","def":"settled character traits. Virtue is a disposition in relation to a mean.","note":"A disposition is what you reliably DO, not what you occasionally manage."},{"term":"The mean","def":"the median: specific virtues lie between two extremes — the excess and the deficiency.","note":"Relative to the disposition of each individual, NOT a fixed universal quantity."},{"term":"Phronimos","def":"the person of practical wisdom, best qualified to define virtuous behaviour in any situation.","note":"Their practical wisdom comes from constant practice and habit — it is earned, not innate."},{"term":"Temperance","def":"the virtue of self-control, exercised in the field of bodily pleasure and pain.","note":"Excess = licentiousness; deficiency = insensibility. Aristotle notes we usually err towards excess."},{"term":"Voluntary action","def":"action brought about by the will — done knowingly and by choice.","note":"Only voluntary actions can be virtuous: nobody is virtuous by accident."}],"views":[{"n":"Moral virtue (habit)","c":"We become just by doing just acts.","s":"It matches how moral development really happens: children learn honesty and courage by copying the adults around them long before they can follow a rule, and psychology broadly supports habituation.","w":"If virtue is instilled by imitation, we inherit whichever virtues our society happens to prize — so habituation transmits cultural values as easily as genuine excellence, with no built-in way to correct them."},{"n":"Intellectual virtue","c":"The virtues that contribute most to the good life, because reason controls them.","s":"It stops virtue ethics collapsing into mere conditioning: practical wisdom supplies the judgement that decides when a rule should be ignored, how to improvise, and what this particular situation requires.","w":"It is circular in practice — the phronimos is the person who judges well, and good judgement is what the phronimos has. Identifying one from outside their own community turns out to be very hard."},{"n":"The doctrine of the mean","c":"Virtue lies between an excess and a deficiency — relative to us.","s":"It is genuinely flexible: soldiers in a war zone need a different degree of courage from someone combating a disease, and the doctrine accommodates that without abandoning the idea of getting it right.","w":"It is close to unusable as guidance. Telling someone the right amount is 'what the prudent person would choose' does not tell them what to do — and Aristotle concedes justice has no mean at all, so the doctrine does not even cover every virtue."},{"n":"Voluntary action","c":"Nobody can be virtuous by accident.","s":"It captures a real moral intuition: we do not credit someone who saves a life by accident, or who does the right thing purely for applause. Character is revealed in what is chosen, not in outcomes.","w":"It makes virtue unverifiable from the outside. Aristotle admits only the agent knows their own motive — so a theory that grounds morality in character gives us no reliable way of identifying who actually has it."}]},"theoria":{"terms":[{"term":"Theoria","def":"the intellectual virtue of contemplation, which Aristotle finally decides constitutes the good life for humans.","note":"Pure reasoning, done for its own sake — and in effect contemplation of the divine."},{"term":"Anthropocentric","def":"human-centred: applying human values to everything, so animals do not figure as objects of moral concern.","note":"A major modern criticism, with environmental consequences."},{"term":"Altruism","def":"love of others, as opposed to egoism (love of self).","note":"In perfect friendship Aristotle thinks altruism and egoism rationally coincide."},{"term":"Cultural relativism","def":"the view that moral values, including which traits count as virtues, vary between societies.","note":"The sharpest objection: Athens, Victorian England and modern China prize different traits."},{"term":"Moral exemplar","def":"a person held up as a model of virtue, whose behaviour others copy.","note":"Schwartz calls for 're-moralising work' by celebrating moral heroes."},{"term":"Fallacy of composition","def":"wrongly inferring that what is true of the parts must be true of the whole.","note":"The charge against the Function Argument — and against Aquinas' Cosmological Argument."}],"views":[{"n":"Theoria — contemplation","c":"The good life for humans is contemplation.","s":"It is internally consistent: theoria genuinely is self-sufficient, chosen for its own sake, distinctively rational and available at will — it passes every test that sank pleasure, wealth and honour.","w":"Aristotle was the world's first real scientist, so he may simply be describing his own preferences. And if the intellect has theoretical AND practical wisdom, why must one be 'higher'? A holistic view would say both are indispensable, and that bodily pleasures are necessary even to the greatest minds."},{"n":"The agent-centred defence","c":"It equips people to deal with moral problems, rather than pretending to solve them.","s":"It answers the deepest problem with rule-based ethics: rules conflict, can be unjust, and cannot anticipate every case. Schwartz's janitors show that moral skill is real, observable and teachable — and that character often does the work rules cannot.","w":"Equipping judgement is not the same as guiding action. When a decision has to be made today — on embryo research, or cloning — 'develop your character over a lifetime' does not tell the committee what to do."},{"n":"The relativist objection","c":"Whose virtues, from which century?","s":"The historical evidence is real and hard to dismiss: the lists genuinely do differ, and Aristotle's own list sits very comfortably inside the assumptions of his time and social class.","w":"It may prove too much. Courage, honesty and justice recur across almost every list, which suggests a common core rather than pure convention — and the objection applies to any ethical theory formulated by people inside a culture, including its rivals."},{"n":"The structural objections","c":"Circular, anthropocentric, and silent when it matters.","s":"These objections target the theory itself rather than Aristotle's society, so they survive every attempt to modernise the list of virtues — and the circularity charge in particular is very hard to answer without appealing to the phronimos, which is circular again.","w":"It may demand more of ethics than any theory delivers: deontology and consequentialism also fail in hard cases, and the 'circle' may simply describe how moral learning actually works — you become honest by practising honesty, which is not obviously vicious."}]}};
+const FC_LABEL = {"eudaimonia":"Eudaimonia","mean":"The Mean","theoria":"Theoria & Evaluation"};
+(function(){
+  let fcTopic="all", fcType="terms";
+  const grid=document.getElementById("fcGrid"), count=document.getElementById("fcCount");
+  function esc(s){return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+  function build(){
+    const topics = fcTopic==="all" ? ["eudaimonia","mean","theoria"] : [fcTopic];
+    let cards=[];
+    topics.forEach(tp=>{
+      const d=FLASHCARDS[tp]; if(!d) return;
+      if(fcType==="terms"){
+        d.terms.forEach(t=>cards.push({tp,front:t.term,tag:FC_LABEL[tp],
+          back:"<div class='fc-def'>"+esc(t.def)+"</div>"}));
+      } else {
+        d.views.forEach(v=>cards.push({tp,front:v.n,tag:FC_LABEL[tp],
+          back:"<div class='fc-def'>"+esc(v.c)+"</div><div class='fc-sw'><div class='up'><span class='k'>Strength</span><br>"+esc(v.s)+"</div><div class='dn' style='margin-top:6px'><span class='k'>Weakness</span><br>"+esc(v.w)+"</div></div>"}));
+      }
+    });
+    grid.innerHTML=cards.map(c=>
+      '<button class="fc-card '+c.tp+'" data-flipped="false" aria-label="Flashcard: '+esc(c.front)+'. Tap to reveal.">'+
+        '<div class="fc-inner">'+
+          '<div class="fc-face fc-front"><div class="fc-tag">'+c.tag+'</div><div class="fc-term">'+esc(c.front)+'</div><div class="fc-flip">tap to flip ↺</div></div>'+
+          '<div class="fc-face fc-back"><div class="fc-tag">'+c.tag+'</div>'+c.back+'</div>'+
+        '</div>'+
+      '</button>').join("");
+    count.textContent = cards.length + " cards";
+    grid.querySelectorAll(".fc-card").forEach(el=>{
+      el.addEventListener("click",()=>{el.dataset.flipped = el.dataset.flipped==="true" ? "false":"true";});
+    });
+  }
+  document.querySelectorAll('#flashcards .fc-tabs .fc-btn').forEach(b=>b.addEventListener("click",()=>{
+    document.querySelectorAll('#flashcards .fc-tabs .fc-btn').forEach(x=>x.setAttribute("aria-selected","false"));
+    b.setAttribute("aria-selected","true"); fcTopic=b.dataset.topic; build();
+  }));
+  document.querySelectorAll('#flashcards .fc-type .fc-btn').forEach(b=>b.addEventListener("click",()=>{
+    document.querySelectorAll('#flashcards .fc-type .fc-btn').forEach(x=>x.setAttribute("aria-selected","false"));
+    b.setAttribute("aria-selected","true"); fcType=b.dataset.type; build();
+  }));
+  build();
+})();
+
+/* =====================================================================
+   TEACHER: paste your YouTube link between the quotes below.
+   Any format works — youtube.com/watch?v=…, youtu.be/…, or an embed URL.
+   Leave it empty ("") and the page shows a "Video not set" placeholder.
+   ===================================================================== */
+const VIDEO_URL = "";
+
+(function wireVideo(){
+  const url=(VIDEO_URL||"").trim();
+  if(!url) return;
+  let id="";
+  const m = url.match(/(?:youtu\.be\/|v=|\/embed\/|\/shorts\/)([A-Za-z0-9_-]{11})/);
+  if(m) id=m[1];
+  else if(/^[A-Za-z0-9_-]{11}$/.test(url)) id=url;
+  const frame=document.getElementById("videoFrame");
+  if(id && frame){
+    frame.innerHTML =
+      '<iframe src="https://www.youtube-nocookie.com/embed/'+id+'?rel=0" '+
+      'title="Aristotle\'s Virtue Ethics — full unit review" '+
+      'allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" '+
+      'allowfullscreen loading="lazy"></iframe>';
+  } else if(frame){
+    frame.innerHTML =
+      '<div class="video-placeholder"><a class="res-btn big" style="background:#fff" href="'+url+'" target="_blank" rel="noopener"><span class="ic">▶</span><span><b>Watch the full unit review</b></span><span class="go">↗</span></a></div>';
+  }
+})();
+
+/* =====================================================================
+   TEACHER: paste your SharePoint share links between the quotes below.
+   Leave a link empty ("") and its button will show "Link not set".
+   Tip: in SharePoint, open the file's ... menu -> Copy link -> paste here.
+   ===================================================================== */
+const LINKS = {
+  eudaimonia_lesson:  "",
+  eudaimonia_booklet: "",
+  eudaimonia_podcast: "",
+  mean_lesson:        "",
+  mean_booklet:       "",
+  mean_podcast:       "",
+  theoria_lesson:     "",
+  theoria_booklet:    "",
+  theoria_podcast:    "",
+  companion:          "",
+  review:             "",
+  overview_podcast:   "",
+  flashcards_pdf:     "",
+  exam_questions:     "",
+  textbook:           ""
+};
+
+(function wireResources(){
+  let anySet=false;
+  document.querySelectorAll(".res-btn").forEach(btn=>{
+    const url=(LINKS[btn.dataset.key]||"").trim();
+    if(url){ btn.href=url; btn.target="_blank"; btn.rel="noopener"; anySet=true; }
+    else{ btn.classList.add("unset"); btn.removeAttribute("href"); btn.setAttribute("aria-disabled","true"); }
+  });
+  if(anySet){ const n=document.getElementById("resNote"); if(n) n.classList.add("hide"); }
+})();
+</script>
+</body>
+</html>

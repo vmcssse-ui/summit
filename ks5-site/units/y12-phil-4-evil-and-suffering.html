@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Evil &amp; Suffering — Unit Hub</title>
+<style>
+  :root{
+    --ink:#12294D;        /* deep manuscript navy */
+    --ink-2:#0C1B33;
+    --parch:#F3ECDD;      /* aged parchment */
+    --parch-2:#EAE0C9;
+    --gold:#C9A227;       /* gold leaf */
+    --gold-soft:#E4CE86;
+    --rubric:#B01C2E;     /* rubrication red */
+    --teal:#00695C;
+    --violet:#6A1B9A;
+    --blue:#1565C0;
+    --green:#2E7D32;
+    --paper:#FBF7EE;
+    --line:rgba(18,41,77,.16);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1060px;margin:0 auto;padding:0 24px}
+  .eyebrow{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;font-weight:700}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    background:
+      radial-gradient(1200px 400px at 80% -10%, rgba(201,162,39,.18), transparent 60%),
+      linear-gradient(180deg,var(--ink) 0%, var(--ink-2) 100%);
+    color:var(--parch);
+    padding:64px 0 72px;
+    position:relative;
+    overflow:hidden;
+    border-bottom:3px solid var(--gold);
+  }
+  .hero::after{ /* faint ruled manuscript lines */
+    content:"";position:absolute;inset:0;pointer-events:none;opacity:.06;
+    background:repeating-linear-gradient(180deg,transparent 0 38px,#fff 38px 39px);
+  }
+  .hero .wrap{position:relative;z-index:2}
+  .crest{display:flex;align-items:center;gap:16px;margin-bottom:34px}
+  .crest svg{width:54px;height:54px;flex:none}
+  .crest .who{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-soft)}
+  .crest .who b{color:var(--parch);display:block;letter-spacing:.14em;font-size:.86rem;margin-top:3px}
+  h1{font-size:clamp(2.4rem,6vw,4.1rem);line-height:1.02;font-weight:700;letter-spacing:-.01em}
+  h1 .amp{color:var(--gold);font-style:italic}
+  .sub{margin-top:20px;max-width:56ch;font-size:1.12rem;color:#E7DFCB}
+  .bigq{
+    margin-top:30px;display:inline-flex;gap:14px;align-items:flex-start;
+    border-left:3px solid var(--gold);padding:8px 0 8px 18px;max-width:60ch;
+  }
+  .bigq .q{font-family:"Trebuchet MS",sans-serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-soft);padding-top:5px}
+  .bigq p{font-size:1.24rem;font-style:italic;color:#fff}
+
+  /* ---------- SECTION SHELL ---------- */
+  section{padding:64px 0}
+  .sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:8px}
+  .sec-head .num{font-family:"Trebuchet MS",sans-serif;color:var(--gold);font-weight:700;font-size:.9rem;letter-spacing:.15em}
+  .sec-head h2{font-size:clamp(1.6rem,3.4vw,2.3rem);letter-spacing:-.01em}
+  .sec-lead{color:#4a4a52;max-width:64ch;margin-bottom:34px;font-size:1.05rem}
+
+  /* ---------- SIGNATURE: authority spectrum ---------- */
+  .spectrum-card{
+    background:linear-gradient(180deg,#fff, var(--paper));
+    border:1px solid var(--line);border-radius:14px;
+    box-shadow:0 18px 40px -28px rgba(18,41,77,.5);
+    padding:28px 26px 34px;
+  }
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:26px}
+  .tab{
+    font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.82rem;letter-spacing:.04em;
+    border:1px solid var(--line);background:#fff;color:var(--ink);
+    padding:9px 16px;border-radius:999px;cursor:pointer;transition:.18s;
+  }
+  .tab[aria-selected="true"]{background:var(--ink);color:var(--parch);border-color:var(--ink)}
+  .tab:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+
+  .axis{position:relative;margin:8px 4px 0}
+  .axis-labels{display:flex;justify-content:space-between;font-family:"Trebuchet MS",sans-serif;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:#6a6a72;margin-bottom:10px}
+  .axis-labels .l{color:var(--rubric);font-weight:700}
+  .axis-labels .r{color:var(--blue);font-weight:700}
+  .bar{height:10px;border-radius:999px;background:linear-gradient(90deg,var(--rubric),#b06a1e 40%,#5a7d3a 66%,var(--blue));position:relative}
+  .ticks{position:relative;height:112px;margin-top:0}
+  .node{position:absolute;top:0;transform:translateX(-50%);width:132px;text-align:center;cursor:pointer}
+  .node .dot{width:20px;height:20px;border-radius:50%;background:#fff;border:3px solid var(--ink);margin:0 auto;position:relative;top:-15px;transition:.18s}
+  .node .nm{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.82rem;margin-top:-6px}
+  .node .sb{font-size:.76rem;color:#6a6a72;font-style:italic;margin-top:2px;line-height:1.25}
+  .node:hover .dot,.node[data-active="true"] .dot{transform:scale(1.25);border-color:var(--gold);box-shadow:0 0 0 5px rgba(201,162,39,.2)}
+  .node:focus-visible{outline:none}
+  .node:focus-visible .dot{outline:3px solid var(--gold);outline-offset:3px}
+
+  .readout{
+    margin-top:14px;background:var(--ink);color:var(--parch);border-radius:12px;padding:20px 22px;
+    min-height:104px;display:flex;gap:18px;align-items:flex-start;
+  }
+  .readout .badge{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;
+    background:var(--gold);color:var(--ink-2);padding:6px 10px;border-radius:6px;white-space:nowrap;margin-top:2px}
+  .readout .body h4{font-size:1.12rem;margin-bottom:4px}
+  .readout .body .auth{color:var(--gold-soft);font-family:"Trebuchet MS",sans-serif;font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+  .readout .body p{color:#E7DFCB;font-size:.98rem}
+  .readout .body .sw{display:flex;gap:22px;margin-top:10px;flex-wrap:wrap}
+  .readout .body .sw div{font-size:.9rem}
+  .readout .body .sw .k{font-family:"Trebuchet MS",sans-serif;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase}
+  .readout .body .sw .up .k{color:#8BD08F}
+  .readout .body .sw .dn .k{color:#F2A0A0}
+  .hint{font-family:"Trebuchet MS",sans-serif;font-size:.76rem;color:#8a8a92;margin-top:14px;text-align:center}
+
+  /* ---------- THREE DEBATES ---------- */
+  .triptych{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+  .panel{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;display:flex;flex-direction:column}
+  .panel .cap{padding:16px 18px;color:#fff;position:relative}
+  .panel.b1 .cap{background:linear-gradient(135deg,#B01C2E,#6E0F1B)}
+  .panel.b2 .cap{background:linear-gradient(135deg,#1F4E79,#12294D)}
+  .panel.b3 .cap{background:linear-gradient(135deg,#00695C,#0C3B34)}
+  .panel.b4 .cap{background:linear-gradient(135deg,#6A1B9A,#3B0E56)}
+  .panel .cap .n{font-family:"Trebuchet MS",sans-serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;opacity:.85}
+  .panel .cap h3{font-size:1.24rem;margin-top:3px}
+  .panel .cap .ask{font-style:italic;font-size:.9rem;margin-top:8px;opacity:.95}
+  .panel .body{padding:16px 18px;font-size:.92rem}
+  .panel .body .row{display:flex;gap:9px;padding:7px 0;border-bottom:1px dashed var(--line)}
+  .panel .body .row:last-child{border-bottom:0}
+  .panel .body .row .v{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.8rem;white-space:nowrap;color:var(--ink)}
+  .panel .body .row .d{color:#55555c}
+
+  /* ---------- THREAD ---------- */
+  .thread{background:var(--ink);color:var(--parch);border-radius:14px;padding:34px 30px;position:relative;overflow:hidden}
+  .thread::before{content:"";position:absolute;inset:0;opacity:.07;background:repeating-linear-gradient(180deg,transparent 0 30px,#fff 30px 31px)}
+  .thread .wrap2{position:relative;z-index:2}
+  .thread h2{color:#fff;font-size:clamp(1.5rem,3vw,2.1rem);margin-bottom:8px}
+  .thread .lead{color:#E7DFCB;max-width:62ch;margin-bottom:24px}
+  .threads{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .tcard{border:1px solid rgba(228,206,134,.3);border-radius:10px;padding:16px 16px 18px;background:rgba(255,255,255,.03)}
+  .tcard .t{font-family:"Trebuchet MS",sans-serif;color:var(--gold);font-weight:700;font-size:.82rem;letter-spacing:.05em;margin-bottom:6px}
+  .tcard p{font-size:.9rem;color:#E7DFCB}
+
+  /* ---------- REVISE ---------- */
+  .revise{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:start}
+  .steps{counter-reset:s;display:flex;flex-direction:column;gap:14px}
+  .step{display:flex;gap:16px;align-items:flex-start;border-left:2px solid var(--line);padding:2px 0 2px 18px;position:relative}
+  .step::before{counter-increment:s;content:counter(s);position:absolute;left:-15px;top:-2px;width:28px;height:28px;border-radius:50%;
+    background:var(--gold);color:var(--ink-2);font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.9rem;display:grid;place-items:center}
+  .step h4{font-size:1.02rem}
+  .step p{font-size:.9rem;color:#55555c;margin-top:2px}
+  .ao{border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .ao .h{padding:12px 16px;font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.82rem;letter-spacing:.06em;color:#fff}
+  .ao .ao1 .h,.ao .h.ao1{background:var(--ink)}
+  .ao .h.ao2{background:var(--green)}
+  .ao .c{padding:14px 16px;font-size:.9rem;border-bottom:1px solid var(--line)}
+  .ao .c:last-child{border-bottom:0}
+  .ao .c b{font-family:"Trebuchet MS",sans-serif;font-size:.78rem;letter-spacing:.04em}
+
+  /* ---------- VIDEO ---------- */
+  .video-frame{position:relative;width:100%;aspect-ratio:16/9;border-radius:14px;overflow:hidden;
+    border:1px solid var(--line);box-shadow:0 20px 44px -30px rgba(18,41,77,.55);background:var(--ink)}
+  .video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .video-placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:14px;text-align:center;padding:30px;color:#C9C4B6;
+    background:radial-gradient(700px 300px at 50% 30%,rgba(201,162,39,.14),transparent 60%),linear-gradient(180deg,var(--ink),var(--ink-2))}
+  .video-placeholder .vp-badge{font-family:"Trebuchet MS",Verdana,sans-serif;font-weight:700;font-size:.72rem;letter-spacing:.14em;
+    text-transform:uppercase;background:var(--gold);color:var(--ink-2);padding:6px 12px;border-radius:6px}
+  .video-placeholder p{max-width:52ch;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.92rem;line-height:1.55}
+  .video-placeholder code{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:4px;padding:1px 6px}
+
+
+  /* ---------- FLASHCARDS ---------- */
+  .fc-controls{display:flex;gap:18px;flex-wrap:wrap;align-items:center;margin-bottom:24px}
+  .fc-tabs,.fc-type{display:flex;gap:8px;flex-wrap:wrap}
+  .fc-btn{font-family:"Trebuchet MS",Verdana,sans-serif;font-weight:700;font-size:.8rem;border:1px solid var(--line);
+    background:#fff;color:var(--ink);padding:8px 15px;border-radius:999px;cursor:pointer;transition:.18s}
+  .fc-btn[aria-selected="true"]{background:var(--ink);color:var(--parch);border-color:var(--ink)}
+  .fc-btn:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+  .fc-hint{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.78rem;color:#8a8a92;margin-left:auto}
+  .fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+  .fc-card{perspective:1200px;height:180px;cursor:pointer;background:none;border:0;padding:0;font-family:inherit;text-align:left}
+  .fc-inner{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+  .fc-card[data-flipped="true"] .fc-inner{transform:rotateY(180deg)}
+  .fc-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+    border-radius:12px;padding:18px;display:flex;flex-direction:column;border:1px solid var(--line);overflow:auto}
+  .fc-front{background:linear-gradient(180deg,#fff,var(--paper))}
+  .fc-back{transform:rotateY(180deg);color:var(--parch)}
+  .fc-card.problem .fc-back{background:linear-gradient(160deg,#B01C2E,#6E0F1B)}
+  .fc-card.freewill .fc-back{background:linear-gradient(160deg,#1F4E79,#12294D)}
+  .fc-card.hick .fc-back{background:linear-gradient(160deg,#00695C,#0C3B34)}
+  .fc-card.process .fc-back{background:linear-gradient(160deg,#6A1B9A,#3B0E56)}
+  .fc-tag{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--gold);font-weight:700;margin-bottom:8px}
+  .fc-front .fc-tag{color:#9a8028}
+  .fc-term{font-size:1.24rem;font-weight:700;line-height:1.15}
+  .fc-front .fc-flip{margin-top:auto;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.72rem;color:#9a9a9a}
+  .fc-def{font-size:.92rem;line-height:1.4}
+  .fc-back .fc-sw{margin-top:8px;font-size:.82rem}
+  .fc-back .fc-sw .k{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.62rem;letter-spacing:.08em;text-transform:uppercase}
+  .fc-back .up .k{color:#8BD08F}.fc-back .dn .k{color:#F2A0A0}
+  @media(max-width:820px){.fc-grid{grid-template-columns:1fr 1fr}.fc-hint{width:100%;margin-left:0}}
+
+  /* ---------- RESOURCES ---------- */
+  .res-note{background:#FBF0D6;border:1px solid var(--gold);border-left:4px solid var(--gold);
+    border-radius:8px;padding:12px 16px;margin-bottom:22px;font-size:.9rem;color:#5a4a1c;
+    font-family:"Trebuchet MS",Verdana,sans-serif}
+  .res-note code{background:#fff;border:1px solid var(--line);border-radius:4px;padding:1px 6px;font-size:.85em}
+  .res-note.hide{display:none}
+  .res-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-bottom:16px}
+  .res-col{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff}
+  .rc-head{padding:14px 16px;color:#fff}
+  .rc1 .rc-head{background:linear-gradient(135deg,#B01C2E,#6E0F1B)}
+  .rc2 .rc-head{background:linear-gradient(135deg,#1F4E79,#12294D)}
+  .rc3 .rc-head{background:linear-gradient(135deg,#00695C,#0C3B34)}
+  .rc4 .rc-head{background:linear-gradient(135deg,#6A1B9A,#3B0E56)}
+  .rc-head .rc-n{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;opacity:.85}
+  .rc-head h3{font-size:1.16rem;margin-top:2px}
+  .res-btn{display:flex;align-items:center;gap:12px;padding:13px 16px;border-top:1px solid var(--line);
+    font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.92rem;color:var(--ink);text-decoration:none;
+    cursor:pointer;transition:background .15s}
+  .res-col .res-btn:first-of-type{border-top:0}
+  .res-btn:hover{background:var(--parch)}
+  .res-btn .ic{width:26px;height:26px;flex:none;display:grid;place-items:center;border-radius:6px;
+    background:var(--ink);color:var(--gold);font-size:.9rem}
+  .res-btn .go{margin-left:auto;color:var(--gold);font-weight:700;opacity:0;transition:.15s}
+  .res-btn:hover .go{opacity:1}
+  .res-btn:focus-visible{outline:3px solid var(--gold);outline-offset:-3px}
+  .res-btn.unset{opacity:.5;cursor:not-allowed}
+  .res-btn.unset .go{content:"";opacity:0}
+  .res-btn.unset::after{content:"Link not set";margin-left:auto;font-size:.74rem;color:#9a7d2c;
+    background:#FBF0D6;border:1px solid var(--gold-soft);border-radius:5px;padding:2px 7px}
+  .res-wide{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:2px}
+  .res-btn.big{border:1px solid var(--line);border-radius:12px;background:#fff;padding:16px 18px}
+  .res-btn.big:hover{background:var(--parch)}
+  .res-btn.big .ic{width:34px;height:34px;font-size:1.1rem;background:var(--ink)}
+  @media(max-width:820px){.res-grid{grid-template-columns:1fr}.res-wide{grid-template-columns:1fr}}
+
+  footer{background:var(--ink-2);color:#C9C4B6;padding:26px 0;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.8rem}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+  footer .gold{color:var(--gold)}
+
+  @media(max-width:820px){
+    .triptych{grid-template-columns:1fr}
+    .threads{grid-template-columns:1fr}
+    .revise{grid-template-columns:1fr}
+    .node{width:96px}
+    .node .sb{display:none}
+  }
+  @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<!--BACKPILL--><a href="../alevel.html" style="position:fixed;left:14px;bottom:14px;z-index:99999;background:#12294D;color:#F6F1E4;font:600 14px/1 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;padding:10px 15px;border-radius:999px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.28);border:1px solid #C9A227">&#8592; All units</a>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap">
+    <div class="crest">
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <rect x="2" y="2" width="60" height="60" rx="13" fill="#0C1B33" stroke="#C9A227" stroke-width="1.5"/>
+        <g fill="none" stroke="#F3ECDD" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M23 21C21 17 21 14 22 12c2 2 3 5 3 8"/><path d="M41 21c2-4 2-7 1-9-2 2-3 5-3 8"/>
+          <path d="M32 17C21 17 18 26 18 33c0 12 6 19 14 19s14-7 14-19c0-7-3-16-14-16z"/>
+          <path d="M32 21c-3 4-5 6-7 7M32 21c3 4 5 6 7 7"/>
+        </g>
+        <circle cx="27" cy="31" r="5" fill="none" stroke="#F3ECDD" stroke-width="2.4"/>
+        <circle cx="37" cy="31" r="5" fill="none" stroke="#F3ECDD" stroke-width="2.4"/>
+        <circle cx="27" cy="31" r="1.9" fill="#F3ECDD"/><circle cx="37" cy="31" r="1.9" fill="#F3ECDD"/>
+        <path d="M32 34l-2.2 4.2h4.4z" fill="#C9A227"/>
+      </svg>
+      <div class="who">A-Level Religious Studies · AQA Paper 1: Philosophy of Religion
+        <b>Harlington School · Philosophy &amp; Ethics</b></div>
+    </div>
+    <h1>Evil <span class="amp">&amp;</span> Suffering</h1>
+    <p class="sub">One unit, one argument — asked four times. The problem stated at full strength, then three responses: the Free Will Defence, Hick's soul-making, and Griffin's Process Theodicy.</p>
+    <div class="bigq">
+      <span class="q">The<br>big<br>question</span>
+      <p>Can an all-powerful, all-loving God have a <b>sufficient reason</b> for allowing the evil we actually see?</p>
+    </div>
+  </div>
+</header>
+
+<!-- SIGNATURE: SPECTRUM -->
+<section id="spectrum">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">01</span><h2>The spectrum of the debate</h2></div>
+    <p class="sec-lead">Each lesson lines its positions up on one axis — how serious the problem is, and how much each response explains, justifies, or surrenders. Pick a sub-topic, then tap a position to see what it claims and where it's strong or weak.</p>
+
+    <div class="spectrum-card">
+      <div class="tabs" role="tablist" aria-label="Choose a sub-topic">
+        <button class="tab" role="tab" aria-selected="true"  data-topic="problem">The Problem</button>
+        <button class="tab" role="tab" aria-selected="false" data-topic="freewill">Free Will Defence</button>
+        <button class="tab" role="tab" aria-selected="false" data-topic="hick">Hick</button>
+        <button class="tab" role="tab" aria-selected="false" data-topic="process">Process (Griffin)</button>
+      </div>
+
+      <div class="axis">
+        <div class="axis-labels"><span class="l" id="poleL">Most authority</span><span class="r" id="poleR">Least authority</span></div>
+        <div class="bar"></div>
+        <div class="ticks" id="ticks"></div>
+      </div>
+
+      <div class="readout" id="readout" aria-live="polite"></div>
+      <p class="hint">Tap a circle — or use Tab and Enter — to explore each position.</p>
+    </div>
+  </div>
+</section>
+
+<!-- THE THREAD -->
+<section>
+  <div class="wrap">
+    <div class="thread">
+      <div class="wrap2">
+        <h2>The thread that ties it together</h2>
+        <p class="lead">Top answers don't treat the four lessons separately. Three ideas run through all of them — spot the thread and you're writing at the top of the mark scheme.</p>
+        <div class="threads">
+          <div class="tcard"><div class="t">The evidential problem outlives every answer</div><p>The triad can be answered; Ivan's returned ticket and Rowe's fawn cannot. Every response solves the logic better than the evidence.</p></div>
+          <div class="tcard"><div class="t">Greenberg's test</div><p>No statement should be made that would not be credible in the presence of burning children. Hold every theodicy to it.</p></div>
+          <div class="tcard"><div class="t">Every response sacrifices something</div><p>Plantinga gives up truth-claims, Hick gives up testability, Griffin gives up omnipotence. Name the sacrifice and the essay opens up.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THREE DEBATES -->
+<section id="debates">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">02</span><h2>The same question, four times</h2></div>
+    <p class="sec-lead">The unit splits into four lessons. They look different, but each is really asking whether God has a <em>sufficient reason</em> for evil.</p>
+    <div class="triptych">
+      <div class="panel b1">
+        <div class="cap"><div class="n">Sub-topic 1</div><h3>The Problem of Evil</h3><div class="ask">Is belief in God <b>still possible</b>?</div></div>
+        <div class="body">
+          <div class="row"><span class="v">The triad</span><span class="d">Omnipotent, all-loving — yet evil exists (Epicurus).</span></div>
+          <div class="row"><span class="v">Escape routes</span><span class="d">Deny power · deny love · deny evil (privatio boni).</span></div>
+          <div class="row"><span class="v">Overwhelming</span><span class="d">Ivan Karamazov returns the ticket.</span></div>
+          <div class="row"><span class="v">Pointless</span><span class="d">Rowe's fawn — and an omniscient creator saw it all.</span></div>
+        </div>
+      </div>
+      <div class="panel b2">
+        <div class="cap"><div class="n">Sub-topic 2</div><h3>The Free Will Defence</h3><div class="ask">Is freedom <b>worth the price</b>?</div></div>
+        <div class="body">
+          <div class="row"><span class="v">Mackie</span><span class="d">Ordered goods — then the free-saints attack.</span></div>
+          <div class="row"><span class="v">Plantinga</span><span class="d">PW3 is a round square; MSR 1 &amp; 2.</span></div>
+          <div class="row"><span class="v">Natural evil</span><span class="d">Nature must be free to follow its laws.</span></div>
+          <div class="row"><span class="v">The catch</span><span class="d">Coherence won — but only possibility, not truth.</span></div>
+        </div>
+      </div>
+      <div class="panel b3">
+        <div class="cap"><div class="n">Sub-topic 3</div><h3>Hick's Soul-Making</h3><div class="ask">Is the world a <b>vale of soul-making</b>?</div></div>
+        <div class="body">
+          <div class="row"><span class="v">Against Augustine</span><span class="d">'Utterly unacceptable' — scientifically, morally, logically.</span></div>
+          <div class="row"><span class="v">Bios → Zoe</span><span class="d">Created imperfect, grown towards God's likeness.</span></div>
+          <div class="row"><span class="v">Epistemic distance</span><span class="d">Certainty would compel; ambiguity frees.</span></div>
+          <div class="row"><span class="v">All saved</span><span class="d">Hell abolished — heaven justifies the journey.</span></div>
+        </div>
+      </div>
+      <div class="panel b4">
+        <div class="cap"><div class="n">Sub-topic 4</div><h3>Process Theodicy</h3><div class="ask">Is God <b>able</b> to stop evil at all?</div></div>
+        <div class="body">
+          <div class="row"><span class="v">From chaos</span><span class="d">Genesis retranslated — order imposed, not creation from nothing.</span></div>
+          <div class="row"><span class="v">Panentheism</span><span class="d">God is the soul of an eternal universe.</span></div>
+          <div class="row"><span class="v">Persuasion</span><span class="d">No miracles — only the long divine lure.</span></div>
+          <div class="row"><span class="v">Roth's protest</span><span class="d">'Griffin's God is too small' to worship.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- YOUR RESOURCES -->
+<section id="resources">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">03</span><h2>Your resources</h2></div>
+    <p class="sec-lead">Everything for the unit, in one place. Open a sub-topic's lesson, booklet and podcast, and use the <b>Philosopher Companion</b> across all four.</p>
+
+    <div class="res-note" id="resNote">
+      <b>Teacher setup:</b> links aren't set yet. Open this file, find the <code>LINKS</code> list near the bottom, and paste each SharePoint share link once. Buttons with no link show as “Link not set”.
+    </div>
+
+    <div class="res-grid">
+      <div class="res-col rc1">
+        <div class="rc-head"><span class="rc-n">Sub-topic 1</span><h3>The Problem of Evil</h3></div>
+        <a class="res-btn" data-key="problem_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="problem_booklet"><span class="ic">✎</span><span>Completion booklet</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="problem_podcast"><span class="ic">♪</span><span>Lesson podcast</span><span class="go">↗</span></a>
+      </div>
+      <div class="res-col rc2">
+        <div class="rc-head"><span class="rc-n">Sub-topic 2</span><h3>The Free Will Defence</h3></div>
+        <a class="res-btn" data-key="freewill_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="freewill_booklet"><span class="ic">✎</span><span>Completion booklet</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="freewill_podcast"><span class="ic">♪</span><span>Lesson podcast</span><span class="go">↗</span></a>
+      </div>
+      <div class="res-col rc3">
+        <div class="rc-head"><span class="rc-n">Sub-topic 3</span><h3>Hick's Soul-Making Theodicy</h3></div>
+        <a class="res-btn" data-key="hick_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="hick_booklet"><span class="ic">✎</span><span>Completion booklet</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="hick_podcast"><span class="ic">♪</span><span>Lesson podcast</span><span class="go">↗</span></a>
+      </div>
+      <div class="res-col rc4">
+        <div class="rc-head"><span class="rc-n">Sub-topic 4</span><h3>Process Theodicy (Griffin)</h3></div>
+        <a class="res-btn" data-key="process_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="process_booklet"><span class="ic">✎</span><span>Completion booklet</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="process_podcast"><span class="ic">♪</span><span>Lesson podcast</span><span class="go">↗</span></a>
+      </div>
+    </div>
+
+    <div class="res-wide">
+      <a class="res-btn big" data-key="companion"><span class="ic">🦉</span><span><b>Philosopher Companion</b> — checklist, AO1 &amp; AO2 planning, key terms &amp; review</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="review"><span class="ic">↻</span><span><b>Review lessons</b> — consolidation decks for all four sub-topics</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="overview_podcast"><span class="ic">♪</span><span><b>Overview podcast</b> — the whole unit as one argument (team teach)</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="flashcards_pdf"><span class="ic">▤</span><span><b>Printable flashcards</b> — fold-over key terms &amp; positions to cut out</span><span class="go">↗</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- HOW TO REVISE -->
+<section id="revise">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">04</span><h2>How to revise this unit</h2></div>
+    <p class="sec-lead">Use your resources in this order. The <b>Philosopher Companion</b> is where you learn to <em>plan</em> both question types.</p>
+    <div class="revise">
+      <div class="steps">
+        <div class="step"><div><h4>Watch the lesson &amp; listen to the podcast</h4><p>One podcast per sub-topic — a teacher and student talk each position through to a judgement. Annotate as you listen.</p></div></div>
+        <div class="step"><div><h4>Complete the greyscale booklet</h4><p>Read the given text, write the key claims in your own words, then decide the strength and weakness you'd give each position.</p></div></div>
+        <div class="step"><div><h4>Match &amp; apply the key terms</h4><p>In the Companion: match each term to its meaning, then use it in a sentence. RAG-rate the mastery checklist with the three faces.</p></div></div>
+        <div class="step"><div><h4>Plan AO1, then build AO2 on top</h4><p>Use the Companion frameworks and the guidance-left / your-turn-right scaffolds. Never evaluate what you haven't first explained.</p></div></div>
+      </div>
+      <div class="ao">
+        <div class="ao1"><div class="h ao1">AO1 · Examine the views (10)</div></div>
+        <div class="c"><b>What it is —</b> the factual chain: define the problem, then set out each position in order and apply the evidence (e.g. Rowe's fawn, the Holocaust).</div>
+        <div class="c"><b>Aim —</b> explain the whole range accurately and neutrally. No judging yet.</div>
+        <div class="h ao2">AO2 · Evaluate the claim (15)</div>
+        <div class="c"><b>What it is —</b> a three-paragraph dialectic: view, then evaluation → counter-evaluation → implication; mirror it; then judge.</div>
+        <div class="c"><b>Aim —</b> weigh the positions, use one as a lens on another, and reach a justified judgement that links back to your thesis.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WATCH: FULL UNIT REVIEW -->
+<section id="watch">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">05</span><h2>Watch: the whole unit in one go</h2></div>
+    <p class="sec-lead">A full review of <b>Evil &amp; Suffering</b> — the problem, the Free Will Defence, Hick and Griffin. Best watched before you start revising, then again to check your recall.</p>
+    <div class="video-frame" id="videoFrame">
+      <div class="video-placeholder" id="videoPlaceholder">
+        <div class="vp-badge">Video not set</div>
+        <p><b>Teacher:</b> paste the YouTube link in the <code>VIDEO_URL</code> line near the bottom of this file. The player then appears here automatically.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- FLASHCARDS -->
+<section id="flashcards">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">06</span><h2>Flashcards — test yourself</h2></div>
+    <p class="sec-lead">Flip a card to check yourself. Switch between <b>key terms</b> (term → meaning) and <b>positions</b> (position → claim, strength &amp; weakness), and filter by sub-topic.</p>
+    <div class="fc-controls">
+      <div class="fc-tabs" role="tablist" aria-label="Sub-topic">
+        <button class="fc-btn" role="tab" aria-selected="true"  data-topic="all">All</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-topic="problem">The Problem</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-topic="freewill">Free Will</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-topic="hick">Hick</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-topic="process">Process</button>
+      </div>
+      <div class="fc-type" role="tablist" aria-label="Card type">
+        <button class="fc-btn" role="tab" aria-selected="true"  data-type="terms">Key terms</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-type="views">Positions</button>
+      </div>
+      <span class="fc-hint">Tap any card to flip · <span id="fcCount"></span></span>
+    </div>
+    <div class="fc-grid" id="fcGrid"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Evil &amp; Suffering · Unit at a glance</span>
+    <span class="gold">Harlington School · Philosophy &amp; Ethics</span>
+  </div>
+</footer>
+
+<script>
+const DATA = {
+ "problem": {
+  "poles": [
+   "NO real problem",
+   "UNANSWERABLE problem"
+  ],
+  "nodes": [
+   {
+    "x": 8,
+    "nm": "The triad",
+    "sb": "Epicurus / Mackie",
+    "auth": "DEDUCTIVE attack",
+    "claim": "Omnipotent, omnibenevolent — yet evil exists. The three cannot all be true. The oldest form of the problem, pressed by the Greek philosopher Epicurus (341–270BCE) and sharpened in the modern era by John Mackie.",
+    "s": "Needs only ONE evil to exist; each escape route costs the believer something essential — power, love, or the reality of evil that everyone experiences..",
+    "w": "Not airtight: if God could have a morally sufficient reason for allowing evil (free will, soul-making), the three statements are compatible after all — which is why most philosophers think the purely logical problem is answerable.."
+   },
+   {
+    "x": 36,
+    "nm": "Overwhelming evil",
+    "sb": "Ivan Karamazov",
+    "auth": "INDUCTIVE attack from the FACTS",
+    "claim": "It is not that evil exists — it is HOW MUCH, and HOW BAD. The evidential problem argues from the observed facts: the sheer quantity and quality of evil count as evidence against God's existence.",
+    "s": "Immune to the reply that answers the logical problem: even IF evil has a purpose, the AMOUNT is unaccounted for.",
+    "w": "'Overwhelming' is a human judgement, not a measurement: how much evil is 'too much'? We are in no position to weigh the total goods and evils of a whole universe — the theist can reply that our sample is too small.."
+   },
+   {
+    "x": 64,
+    "nm": "Pointless evil",
+    "sb": "Rowe's fawn",
+    "auth": "PROBABILISTIC attack",
+    "claim": "Some evil serves no purpose at all — and an all-knowing God saw it all coming. The American philosopher William Rowe (1931–2015) sharpened the evidential problem with a single image: evil that achieves nothing.",
+    "s": "Targets exactly what the Free Will Defence and soul-making CANNOT reach: suffering with no witness and no beneficiary.",
+    "w": "'No point that WE can see' is not 'no point': a God's-eye view might connect the fawn to goods beyond our knowledge (the 'sceptical theist' reply) — though at the cost of admitting we can never assess God's reasons at all.."
+   },
+   {
+    "x": 92,
+    "nm": "Suffering as good?",
+    "sb": "the counter-current",
+    "auth": "MITIGATION, not solution",
+    "claim": "The injection hurts — and immunises. Suffering can also bring out the best in us. Before the theodicies arrive, the believer has a foothold: not all suffering is an unanswerable objection.",
+    "s": "Undeniably true of ordinary life: some pain IS worth it, and human goodness is real.",
+    "w": "Fails Greenberg's test at the extremes: no injection-logic covers burning children or a fawn no one ever helps."
+   }
+  ]
+ },
+ "freewill": {
+  "poles": [
+   "NOTHING — incoherent",
+   "EVERYTHING — evil fully justified"
+  ],
+  "nodes": [
+   {
+    "x": 8,
+    "nm": "Mackie's account",
+    "sb": "the steel-man",
+    "auth": "RECONSTRUCTION",
+    "claim": "The clearest map of the defence — built by an atheist, in order to knock it down. The Australian philosopher John Mackie (1917–1981) was an atheist: his book title The Miracle of Theism is a joke — belief in God would take a miracle.",
+    "s": "Explains precisely WHY a loving God might permit evil: the goods at each level require the level below, and freedom crowns the structure..",
+    "w": "Built by its own executioner: if Mackie can show God had a better option — free beings who never go wrong — the whole ordered tower collapses at the third floor.."
+   },
+   {
+    "x": 36,
+    "nm": "Free saints",
+    "sb": "the attack",
+    "auth": "LOGICAL demolition",
+    "claim": "If one person can freely choose good once, why not everyone, always? Having built the clearest version of the defence, Mackie demolishes his own construction with a single question about logical possibility — and concludes that the Free Will Defence fails, and with it, belief in God..",
+    "s": "Elegant and economical: it grants the theist everything — freedom, second-order goods — and still finds God negligent.",
+    "w": "Everything hangs on whether 'freely always chooses good' BY DESIGN is a coherent idea."
+   },
+   {
+    "x": 64,
+    "nm": "Plantinga",
+    "sb": "the reply",
+    "auth": "DEFENCE, not theodicy",
+    "claim": "'Make someone freely choose' is a logical nonsense — like a round square. The American philosopher Alvin Plantinga (b.",
+    "s": "Widely judged to have won: even an omnipotent God cannot do the logically impossible, so Mackie's charge of incoherence fails.",
+    "w": "Victory is thin: logical coherence is not truth."
+   },
+   {
+    "x": 92,
+    "nm": "Natural evil",
+    "sb": "the hard residue",
+    "auth": "PARTIAL",
+    "claim": "No human chose the earthquake. So why is the world built to break us? Natural evil is not caused by human free will: the Black Death killed a third of humanity, and its victims could not have avoided it.",
+    "s": "Turns the FWD's weakest flank into a coherent story: law-governed nature + non-intervention preserve both scientific order and human freedom..",
+    "w": "Was it really necessary for nature to be THIS destructive? The Black Death's victims developed no virtue by dying."
+   }
+  ]
+ },
+ "hick": {
+  "poles": [
+   "NOTHING justified",
+   "EVERYTHING justified"
+  ],
+  "nodes": [
+   {
+    "x": 8,
+    "nm": "Bios → Zoe",
+    "sb": "the engine",
+    "auth": "THE ENGINE of the theodicy",
+    "claim": "Parents make children twice: first biologically, then by growing their character. Hick reads Genesis 1:26 — image and likeness — as a two-step programme.",
+    "s": "Individuals and humanity genuinely cannot develop without challenge; suffering demonstrably develops character.",
+    "w": "The curriculum is savage: did the Black Death teach anyone anything? The analogy strains — no loving parent sets a lesson that kills a third of the class.."
+   },
+   {
+    "x": 36,
+    "nm": "Epistemic distance",
+    "sb": "the shield",
+    "auth": "THE SHIELD of the theodicy",
+    "claim": "If you KNEW God was watching, you could never freely choose him. The deepest move in Hick's theodicy: humans must exist at an 'epistemic distance' — a distance of knowledge — from God.",
+    "s": "Probably Hick's most powerful idea: it explains hiddenness, ambiguity, and why even inexplicable evils must exist (if we could explain ALL evil, the distance would close and freedom would be lost)..",
+    "w": "A shield this good defends too much: a theodicy that can justify ANYTHING can be tested by nothing — and Hick uses the distance to excuse precisely the evils he admits he cannot explain.."
+   },
+   {
+    "x": 64,
+    "nm": "All saved",
+    "sb": "the payoff",
+    "auth": "THE PAYOFF",
+    "claim": "The journey may take many lifetimes — but EVERYONE arrives. The eschatological capstone.",
+    "s": "Coherent and humane: removes the worst evil (hell) from the ledger, and gives suffering a destination.",
+    "w": "If everyone arrives regardless, what was the point of the journey — or of Jesus' crucifixion? At best Jesus becomes a role model; and universal salvation without consent still spends OUR suffering to buy it."
+   },
+   {
+    "x": 92,
+    "nm": "The objections",
+    "sb": "the stress test",
+    "auth": "THE VERDICT ZONE",
+    "claim": "Animal pain, pointless evil, the very worst evils: can the theodicy hold? Hick confronts the three hardest cases head-on.",
+    "s": "No rival theodicy even ATTEMPTS answers to all three objections; the degree argument (remove the worst, the next-worst becomes worst) is genuinely hard to escape..",
+    "w": "The answers form a circle: every gap is plugged by epistemic distance, which itself explains why gaps must exist."
+   }
+  ]
+ },
+ "process": {
+  "poles": [
+   "FULL classical omnipotence",
+   "PERSUASION only"
+  ],
+  "nodes": [
+   {
+    "x": 8,
+    "nm": "From chaos",
+    "sb": "the foundation",
+    "auth": "THE FOUNDATION",
+    "claim": "Retranslate one verse, and omnipotence falls with it. Griffin's foundation stone is a translation argument.",
+    "s": "Griffin is 'almost certainly right' about the Hebrew of Genesis 1:1–3, and the Babylonian parallels support him — a rare case of a theodicy resting on genuine scholarship..",
+    "w": "Whether ex nihilo is implied elsewhere in scripture is contested; and a translation point cannot by itself settle a metaphysical question — an eternal, self-powered universe is asserted more than argued.."
+   },
+   {
+    "x": 36,
+    "nm": "Panentheism",
+    "sb": "the mechanism",
+    "auth": "THE MECHANISM",
+    "claim": "Not God ABOVE the world but God AND the world — eternally, necessarily, together. What exists necessarily, for Griffin, is 'God-and-a-world': God and the universe exist together, eternally and panentheistically — the universe is IN God.",
+    "s": "Dissolves the triad honestly (omnipotence is simply denied) and dissolves the intervention puzzle: a God who CANNOT act is at least consistent, where a God who sometimes acts and usually doesn't looks arbitrary.",
+    "w": "A God who is the universe's soul yet cannot influence its 'body' strains the mind–body analogy (minds do move bodies); no miracles means no incarnation and no resurrection — the centre of Christianity is gone; and consolation without rescue may be no consolation at all.."
+   },
+   {
+    "x": 64,
+    "nm": "The Janus face",
+    "sb": "the explanation",
+    "auth": "THE EXPLANATION",
+    "claim": "Every step up in complexity raises the ceiling of joy — and the floor of pain. If God is not to blame, where does evil come from? Griffin's answer is structural: complexity itself is two-faced, like Janus, the Roman god of beginnings and endings who looks both ways at once.",
+    "s": "For once the ORIGIN of evil is explained rather than excused: the Janus structure fits evolution, fits experience, and honestly names the cost of complexity.",
+    "w": "A God who starts an uncontrollable process, foreseeing Auschwitz as a possible price and admitting the worst may be yet to come, looks reckless — Griffin answers Ivan's question with a shrug the Karamazov test was designed to expose.."
+   },
+   {
+    "x": 92,
+    "nm": "Roth's protest",
+    "sb": "the verdict zone",
+    "auth": "THE VERDICT ZONE",
+    "claim": "'Good though he may be, Griffin's God is too small.' Process Theodicy's frankness about God's limits is either its greatest realism or its fatal flaw.",
+    "s": "Quantum-era realism about what God can and cannot do; the only account on which God's non-intervention needs NO excuse; God as fellow sufferer genuinely answers the loneliness of suffering..",
+    "w": "Roth's three nails: too small to worship, reckless to begin, unable to promise victory."
+   }
+  ]
+ }
+};
+
+const ticks=document.getElementById("ticks");
+const readout=document.getElementById("readout");
+const poleL=document.getElementById("poleL"), poleR=document.getElementById("poleR");
+let topic="problem", active=0;
+
+function renderReadout(n){
+  readout.innerHTML=`
+    <span class="badge">${n.auth}</span>
+    <div class="body">
+      <h4>${n.nm} <span style="opacity:.6;font-style:italic;font-weight:400">· ${n.sb}</span></h4>
+      <p>${n.claim}</p>
+      <div class="sw">
+        <div class="up"><span class="k">Strength</span><br>${n.s}</div>
+        <div class="dn"><span class="k">Weakness</span><br>${n.w}</div>
+      </div>
+    </div>`;
+}
+function renderTopic(){
+  const d=DATA[topic];
+  poleL.textContent=d.poles[0]; poleR.textContent=d.poles[1];
+  ticks.innerHTML="";
+  d.nodes.forEach((n,i)=>{
+    const el=document.createElement("div");
+    el.className="node"; el.style.left=n.x+"%"; el.tabIndex=0;
+    el.setAttribute("role","button");
+    el.setAttribute("aria-label",`${n.nm}: ${n.sb}`);
+    el.dataset.active=(i===active);
+    el.innerHTML=`<div class="dot"></div><div class="nm">${n.nm}</div><div class="sb">${n.sb}</div>`;
+    const pick=()=>{active=i;[...ticks.children].forEach((c,j)=>c.dataset.active=(j===i));renderReadout(n);};
+    el.addEventListener("click",pick);
+    el.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();pick();}});
+    ticks.appendChild(el);
+  });
+  active=Math.min(active,d.nodes.length-1);
+  [...ticks.children].forEach((c,j)=>c.dataset.active=(j===active));
+  renderReadout(d.nodes[active]);
+}
+document.querySelectorAll(".tab").forEach(t=>{
+  t.addEventListener("click",()=>{
+    document.querySelectorAll(".tab").forEach(x=>x.setAttribute("aria-selected","false"));
+    t.setAttribute("aria-selected","true");
+    topic=t.dataset.topic; active=0; renderTopic();
+  });
+});
+renderTopic();
+
+const FLASHCARDS = {"problem":{"terms":[{"term":"Moral evil","def":"evil committed by human beings as moral agents — murder, theft, genocide — including evil done by INACTION.","note":"The 'agent' uses their will to bring about morally bad consequences; not helping someone in danger counts too."},{"term":"Natural evil","def":"what the world does to us: disease, starvation, storm, flood, earthquake, tsunami.","note":"Produced by the chance operation of the laws of nature — a flood does not 'intend' to drown you. The two can combine: building on known fault lines."},{"term":"Suffering","def":"the mental or physical pain, hardship and distress brought about by both moral and natural evil.","note":"Misery, heartache, terror, panic, hopelessness — the human cost that gives the problem its force."},{"term":"The inconsistent triad","def":"three statements that cannot all be true: God is omnipotent; God is omnibenevolent; evil exists.","note":"An omnipotent God COULD remove evil; an omnibenevolent God would WISH to; yet evil exists. First pressed by Epicurus."},{"term":"Privatio boni","def":"Augustine's claim that evil is a 'privation of good' — an absence, not a thing in its own right.","note":"As darkness is the absence of light. If evil is not real, there is no problem to solve — and no blame for God."},{"term":"Pointless evil","def":"evil that serves no useful purpose whatsoever — it preserves no free will and builds no character.","note":"Rowe's fawn: burned in a forest fire no human ever knows about, suffering for days before death. Linked to God's OMNISCIENCE: an all-knowing creator would have foreseen it all."}],"views":[{"n":"The inconsistent triad (Epicurus)","c":"Omnipotent, omnibenevolent — yet evil exists. The three cannot all be true.","s":"Needs only ONE evil to exist; each escape route costs the believer something essential — power, love, or the reality of evil that everyone experiences.","w":"Not airtight: if God could have a morally sufficient reason for allowing evil (free will, soul-making), the three statements are compatible after all — which is why most philosophers think the purely logical problem is answerable."},{"n":"Overwhelming evil (Dostoevsky's Ivan)","c":"It is not that evil exists — it is HOW MUCH, and HOW BAD.","s":"Immune to the reply that answers the logical problem: even IF evil has a purpose, the AMOUNT is unaccounted for. Emotionally and morally serious — it speaks from inside the suffering.","w":"'Overwhelming' is a human judgement, not a measurement: how much evil is 'too much'? We are in no position to weigh the total goods and evils of a whole universe — the theist can reply that our sample is too small."},{"n":"Pointless evil & omniscience (Rowe)","c":"Some evil serves no purpose at all — and an all-knowing God saw it all coming.","s":"Targets exactly what the Free Will Defence and soul-making CANNOT reach: suffering with no witness and no beneficiary. Animal suffering across evolutionary time makes the case vast.","w":"'No point that WE can see' is not 'no point': a God's-eye view might connect the fawn to goods beyond our knowledge (the 'sceptical theist' reply) — though at the cost of admitting we can never assess God's reasons at all."},{"n":"Can some suffering be good?","c":"The injection hurts — and immunises. Suffering can also bring out the best in us.","s":"Undeniably true of ordinary life: some pain IS worth it, and human goodness is real. Gives every later theodicy its raw material.","w":"Fails Greenberg's test at the extremes: no injection-logic covers burning children or a fawn no one ever helps. Good drawn FROM suffering does not show the suffering was NEEDED — could God not have found a kinder classroom?"}]},"freewill":{"terms":[{"term":"Free will","def":"the capacity to make genuinely free choices between good and evil, for which the agent is morally responsible.","note":"The FWD claims humans, not God, are responsible for moral evil — God merely ALLOWS it."},{"term":"First-order goods / evils","def":"in Mackie's matrix: pleasure and happiness (goods); pain, unhappiness, misery (evils).","note":"The pleasure of a good meal; the pain of toothache — the basic level of experience."},{"term":"Second-order goods / evils","def":"responses to first-order states: sympathy, courage, generosity (goods); spite, envy, selfishness (evils).","note":"Second-order goods exist to maximise first-order good — they are HIGHER goods than pleasure."},{"term":"Libertarianism","def":"the view that causal determinism is false: despite physics, biology and chemistry, humans make genuinely free choices.","note":"Plantinga's MSR 1 PRESUPPOSES it — necessary but unprovable, or the defence has no foundation."},{"term":"Causal determinism","def":"the view that every event is fixed by antecedent events, conditions and the laws of nature — so there is no free will.","note":"Compatibilism splits the difference: freedom and determinism are somehow compatible. No account is proven."},{"term":"Morally sufficient reason (MSR)","def":"a reason that would justify God in allowing evil — Plantinga needs only a logically POSSIBLE one, not the true one.","note":"MSR 1: morally significant free will (moral evil). MSR 2: natural evil as consequence of the Fall."}],"views":[{"n":"Mackie's account of the Free Will Defence","c":"The clearest map of the defence — built by an atheist, in order to knock it down.","s":"Explains precisely WHY a loving God might permit evil: the goods at each level require the level below, and freedom crowns the structure.","w":"Built by its own executioner: if Mackie can show God had a better option — free beings who never go wrong — the whole ordered tower collapses at the third floor."},{"n":"Mackie's rejection: the free saints","c":"If one person can freely choose good once, why not everyone, always?","s":"Elegant and economical: it grants the theist everything — freedom, second-order goods — and still finds God negligent. No appeal to quantities of evil needed.","w":"Everything hangs on whether 'freely always chooses good' BY DESIGN is a coherent idea. Plantinga argues it is a round square: made-to-choose is not choosing."},{"n":"Plantinga's defence: three possible worlds","c":"'Make someone freely choose' is a logical nonsense — like a round square.","s":"Widely judged to have won: even an omnipotent God cannot do the logically impossible, so Mackie's charge of incoherence fails. One good possible reason is enough to support faith.","w":"Victory is thin: logical coherence is not truth. MSR 2 elevates the Eden myth to a philosophical argument; and the defence says nothing to the EVIDENTIAL problem — the sheer extent of evil remains unexplained."},{"n":"Can the FWD account for natural evil?","c":"No human chose the earthquake. So why is the world built to break us?","s":"Turns the FWD's weakest flank into a coherent story: law-governed nature + non-intervention preserve both scientific order and human freedom.","w":"Was it really necessary for nature to be THIS destructive? The Black Death's victims developed no virtue by dying. The defence still has no convincing response to the evidential problem — freedom may simply not be worth its price-tag."}]},"hick":{"terms":[{"term":"Theodicy","def":"an attempt to justify God in the face of evil — to give God's actual reasons, not merely possible ones.","note":"Hick's task is harder than Plantinga's: a PLAUSIBLE explanation that is 'probably true'."},{"term":"Soul-making","def":"Hick's claim that the world exists to develop imperfect creatures into 'children of God' through free response to challenge.","note":"Against Augustine's soul-DECIDING world, where your eternal fate is settled by your choices."},{"term":"Irenaean tradition","def":"from St Irenaeus (2nd century CE): humans did not FALL from perfection but were created imperfect, with the capacity to grow.","note":"Hick's starting point once Augustine is cleared away."},{"term":"Bios / Zoe","def":"Hick's names for the two steps: Bios = biological life in God's IMAGE; Zoe = the perfected personal life in God's LIKENESS, seen in Jesus.","note":"From Genesis 1:26 — 'image' now, 'likeness' as the goal of the whole process."},{"term":"Epistemic distance","def":"a 'distance of knowledge': humans cannot KNOW for certain that God exists, or freedom would be lost.","note":"If you knew God was watching, you would do whatever you thought God wanted — compelled, not free."},{"term":"Universal salvation","def":"Hick's claim that eventually EVERYONE will freely respond to God and enter his Kingdom — hell is rejected as abhorrent.","note":"Because God is infinitely persuasive; for some the process may take many lifetimes, in different levels of existence."}],"views":[{"n":"The two-step process: Bios to Zoe","c":"Parents make children twice: first biologically, then by growing their character.","s":"Individuals and humanity genuinely cannot develop without challenge; suffering demonstrably develops character. Fits evolution. It would be unrealistic to expect great goodness without exposure to great evils.","w":"The curriculum is savage: did the Black Death teach anyone anything? The analogy strains — no loving parent sets a lesson that kills a third of the class."},{"n":"Epistemic distance & the freedom to love","c":"If you KNEW God was watching, you could never freely choose him.","s":"Probably Hick's most powerful idea: it explains hiddenness, ambiguity, and why even inexplicable evils must exist (if we could explain ALL evil, the distance would close and freedom would be lost).","w":"A shield this good defends too much: a theodicy that can justify ANYTHING can be tested by nothing — and Hick uses the distance to excuse precisely the evils he admits he cannot explain."},{"n":"Universal salvation: all shall be well","c":"The journey may take many lifetimes — but EVERYONE arrives.","s":"Coherent and humane: removes the worst evil (hell) from the ledger, and gives suffering a destination. The 'becoming worthy' picture of ascent is at least a coherent idea.","w":"If everyone arrives regardless, what was the point of the journey — or of Jesus' crucifixion? At best Jesus becomes a role model; and universal salvation without consent still spends OUR suffering to buy it. Many lifetimes looks like reincarnation smuggled into Christianity."},{"n":"Three objections — and Hick's answers","c":"Animal pain, pointless evil, the very worst evils: can the theodicy hold?","s":"No rival theodicy even ATTEMPTS answers to all three objections; the degree argument (remove the worst, the next-worst becomes worst) is genuinely hard to escape.","w":"The answers form a circle: every gap is plugged by epistemic distance, which itself explains why gaps must exist. Unfalsifiable comprehensiveness; and the animal answer in particular looks self-refuting."}]},"process":{"terms":[{"term":"Process theology","def":"theology built on A. N. Whitehead (1861–1947): reality is a constant dynamic of flux and change — and God grows and changes with it.","note":"Whitehead was fascinated by quantum mechanics; David Ray Griffin presents the theodicy AQA names."},{"term":"Creatio ex nihilo","def":"'creation out of nothing' — the traditional reading of Genesis 1:1–3, implying a God of truly unlimited power.","note":"Griffin insists this rests on a mistranslation — and everything else follows from rejecting it."},{"term":"Creation from chaos","def":"Griffin's alternative: 'the earth BEING without form and void' — God orders pre-existing chaotic matter rather than calling the universe into being.","note":"Chaotic materials have power of their own: they partially determine themselves and can RESIST God's will."},{"term":"Panentheism","def":"'all is IN God': God and the universe exist together necessarily and eternally; God is the SOUL of the universe.","note":"Not pantheism (God = universe): the universe is in God as a body's experiences are in a mind."},{"term":"Transcendent","def":"above and beyond space–time — the classical view of God that Griffin denies; his God is not outside the world and cannot break its laws.","note":"No transcendence → no intervention → no miracles → the evidential problem 'does not arise'."},{"term":"Divine persuasion","def":"the only power Griffin's God has: over long ages God LURES chaotic matter towards order and complexity — he can never compel.","note":"13.77 billion years of persuasion: stars, galaxies, cells, and eventually us."}],"views":[{"n":"Creation from chaos, not from nothing","c":"Retranslate one verse, and omnipotence falls with it.","s":"Griffin is 'almost certainly right' about the Hebrew of Genesis 1:1–3, and the Babylonian parallels support him — a rare case of a theodicy resting on genuine scholarship.","w":"Whether ex nihilo is implied elsewhere in scripture is contested; and a translation point cannot by itself settle a metaphysical question — an eternal, self-powered universe is asserted more than argued."},{"n":"Panentheism: God as the soul of the universe","c":"Not God ABOVE the world but God AND the world — eternally, necessarily, together.","s":"Dissolves the triad honestly (omnipotence is simply denied) and dissolves the intervention puzzle: a God who CANNOT act is at least consistent, where a God who sometimes acts and usually doesn't looks arbitrary. Real consolation: God understands suffering from inside.","w":"A God who is the universe's soul yet cannot influence its 'body' strains the mind–body analogy (minds do move bodies); no miracles means no incarnation and no resurrection — the centre of Christianity is gone; and consolation without rescue may be no consolation at all."},{"n":"The Janus face: where evil comes from","c":"Every step up in complexity raises the ceiling of joy — and the floor of pain.","s":"For once the ORIGIN of evil is explained rather than excused: the Janus structure fits evolution, fits experience, and honestly names the cost of complexity. Echoes of Mackie's matrix give it philosophical pedigree.","w":"A God who starts an uncontrollable process, foreseeing Auschwitz as a possible price and admitting the worst may be yet to come, looks reckless — Griffin answers Ivan's question with a shrug the Karamazov test was designed to expose."},{"n":"Roth's protest & the worship question","c":"'Good though he may be, Griffin's God is too small.'","s":"Quantum-era realism about what God can and cannot do; the only account on which God's non-intervention needs NO excuse; God as fellow sufferer genuinely answers the loneliness of suffering.","w":"Roth's three nails: too small to worship, reckless to begin, unable to promise victory. Add a hollow afterlife, and Process may have solved the problem of evil by dissolving the God the problem was about."}]}};
+(function(){
+  let fcTopic="all", fcType="terms";
+  const grid=document.getElementById("fcGrid"), count=document.getElementById("fcCount");
+  function esc(s){return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+  function build(){
+    const topics = fcTopic==="all" ? ["problem","freewill","hick","process"] : [fcTopic];
+    let cards=[];
+    topics.forEach(tp=>{
+      const d=FLASHCARDS[tp]; if(!d) return;
+      if(fcType==="terms"){ d.terms.forEach(t=>cards.push({tp,front:t.term,tag:label(tp),back:`<div class='fc-def'>${esc(t.def)}</div>`})); }
+      else { d.views.forEach(v=>cards.push({tp,front:v.n,tag:label(tp),back:`<div class='fc-def'>${esc(v.c)}</div><div class='fc-sw'><div class='up'><span class='k'>Strength</span><br>${esc(v.s)}</div><div class='dn' style='margin-top:6px'><span class='k'>Weakness</span><br>${esc(v.w)}</div></div>`})); }
+    });
+    grid.innerHTML=cards.map(c=>`
+      <button class="fc-card ${c.tp}" data-flipped="false" aria-label="Flashcard: ${esc(c.front)}. Tap to reveal.">
+        <div class="fc-inner">
+          <div class="fc-face fc-front"><div class="fc-tag">${c.tag}</div><div class="fc-term">${esc(c.front)}</div><div class="fc-flip">tap to flip ↺</div></div>
+          <div class="fc-face fc-back"><div class="fc-tag">${c.tag}</div>${c.back}</div>
+        </div>
+      </button>`).join("");
+    count.textContent = cards.length + " cards";
+    grid.querySelectorAll(".fc-card").forEach(el=>{
+      const flip=()=>el.dataset.flipped = el.dataset.flipped==="true" ? "false":"true";
+      el.addEventListener("click",flip);
+    });
+  }
+  function label(tp){return {problem:"The Problem of Evil",freewill:"Free Will Defence",hick:"Hick's Soul-Making",process:"Process (Griffin)"}[tp]||tp;}
+  document.querySelectorAll('#flashcards .fc-tabs .fc-btn').forEach(b=>b.addEventListener("click",()=>{
+    document.querySelectorAll('#flashcards .fc-tabs .fc-btn').forEach(x=>x.setAttribute("aria-selected","false"));
+    b.setAttribute("aria-selected","true"); fcTopic=b.dataset.topic; build();
+  }));
+  document.querySelectorAll('#flashcards .fc-type .fc-btn').forEach(b=>b.addEventListener("click",()=>{
+    document.querySelectorAll('#flashcards .fc-type .fc-btn').forEach(x=>x.setAttribute("aria-selected","false"));
+    b.setAttribute("aria-selected","true"); fcType=b.dataset.type; build();
+  }));
+  build();
+})();
+
+/* =====================================================================
+   TEACHER: paste your YouTube link between the quotes below.
+   Any format works — youtube.com/watch?v=…, youtu.be/…, or an embed URL.
+   Leave it empty ("") and the page shows a "Video not set" placeholder.
+   ===================================================================== */
+const VIDEO_URL = "";
+
+(function wireVideo(){
+  const url=(VIDEO_URL||"").trim();
+  if(!url) return; // keep placeholder
+  // extract the 11-char YouTube id from common URL shapes
+  let id="";
+  const m = url.match(/(?:youtu\.be\/|v=|\/embed\/|\/shorts\/)([A-Za-z0-9_-]{11})/);
+  if(m) id=m[1];
+  else if(/^[A-Za-z0-9_-]{11}$/.test(url)) id=url; // a bare id
+  const frame=document.getElementById("videoFrame");
+  if(id && frame){
+    frame.innerHTML =
+      '<iframe src="https://www.youtube-nocookie.com/embed/'+id+'?rel=0" '+
+      'title="Evil & Suffering — full unit review" '+
+      'allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" '+
+      'allowfullscreen loading="lazy"></iframe>';
+  } else if(frame){
+    // not a YouTube link — fall back to a button that opens it
+    frame.innerHTML =
+      '<div class="video-placeholder"><a class="res-btn big" style="background:#fff" href="'+url+'" target="_blank" rel="noopener"><span class="ic">▶</span><span><b>Watch the full unit review</b></span><span class="go">↗</span></a></div>';
+  }
+})();
+
+/* =====================================================================
+   TEACHER: paste your SharePoint share links between the quotes below.
+   Leave a link empty ("") and its button will show "Link not set".
+   Tip: in SharePoint, open the file's ... menu -> Copy link -> paste here.
+   ===================================================================== */
+const LINKS = {
+  problem_lesson:   "",
+  problem_booklet:  "",
+  problem_podcast:  "",
+  freewill_lesson:  "",
+  freewill_booklet: "",
+  freewill_podcast: "",
+  hick_lesson:      "",
+  hick_booklet:     "",
+  hick_podcast:     "",
+  process_lesson:   "",
+  process_booklet:  "",
+  process_podcast:  "",
+  companion:      "",
+  review:         "",
+  overview_podcast: "",
+  flashcards_pdf:   ""
+};
+
+(function wireResources(){
+  let anySet=false;
+  document.querySelectorAll(".res-btn").forEach(btn=>{
+    const url=(LINKS[btn.dataset.key]||"").trim();
+    if(url){
+      btn.href=url; btn.target="_blank"; btn.rel="noopener"; anySet=true;
+    }else{
+      btn.classList.add("unset"); btn.removeAttribute("href"); btn.setAttribute("aria-disabled","true");
+    }
+  });
+  if(anySet){ const n=document.getElementById("resNote"); if(n) n.classList.add("hide"); }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Religious Experience — Unit at a Glance</title>
+<style>
+  :root{
+    --ink:#12294D;        /* deep manuscript navy */
+    --ink-2:#0C1B33;
+    --parch:#F3ECDD;      /* aged parchment */
+    --parch-2:#EAE0C9;
+    --gold:#C9A227;       /* gold leaf */
+    --gold-soft:#E4CE86;
+    --rubric:#B01C2E;     /* rubrication red */
+    --teal:#00695C;
+    --violet:#6A1B9A;
+    --blue:#1565C0;
+    --green:#2E7D32;
+    --paper:#FBF7EE;
+    --line:rgba(18,41,77,.16);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1060px;margin:0 auto;padding:0 24px}
+  .eyebrow{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;font-weight:700}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    background:
+      radial-gradient(1200px 400px at 80% -10%, rgba(201,162,39,.18), transparent 60%),
+      linear-gradient(180deg,var(--ink) 0%, var(--ink-2) 100%);
+    color:var(--parch);
+    padding:64px 0 72px;
+    position:relative;
+    overflow:hidden;
+    border-bottom:3px solid var(--gold);
+  }
+  .hero::after{ /* faint ruled manuscript lines */
+    content:"";position:absolute;inset:0;pointer-events:none;opacity:.06;
+    background:repeating-linear-gradient(180deg,transparent 0 38px,#fff 38px 39px);
+  }
+  .hero .wrap{position:relative;z-index:2}
+  .crest{display:flex;align-items:center;gap:16px;margin-bottom:34px}
+  .crest svg{width:54px;height:54px;flex:none}
+  .crest .who{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-soft)}
+  .crest .who b{color:var(--parch);display:block;letter-spacing:.14em;font-size:.86rem;margin-top:3px}
+  h1{font-size:clamp(2.4rem,6vw,4.1rem);line-height:1.02;font-weight:700;letter-spacing:-.01em}
+  h1 .amp{color:var(--gold);font-style:italic}
+  .sub{margin-top:20px;max-width:56ch;font-size:1.12rem;color:#E7DFCB}
+  .bigq{
+    margin-top:30px;display:inline-flex;gap:14px;align-items:flex-start;
+    border-left:3px solid var(--gold);padding:8px 0 8px 18px;max-width:60ch;
+  }
+  .bigq .q{font-family:"Trebuchet MS",sans-serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-soft);padding-top:5px}
+  .bigq p{font-size:1.24rem;font-style:italic;color:#fff}
+
+  /* ---------- SECTION SHELL ---------- */
+  section{padding:64px 0}
+  .sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:8px}
+  .sec-head .num{font-family:"Trebuchet MS",sans-serif;color:var(--gold);font-weight:700;font-size:.9rem;letter-spacing:.15em}
+  .sec-head h2{font-size:clamp(1.6rem,3.4vw,2.3rem);letter-spacing:-.01em}
+  .sec-lead{color:#4a4a52;max-width:64ch;margin-bottom:34px;font-size:1.05rem}
+
+  /* ---------- SIGNATURE: experience spectrum ---------- */
+  .spectrum-card{
+    background:linear-gradient(180deg,#fff, var(--paper));
+    border:1px solid var(--line);border-radius:14px;
+    box-shadow:0 18px 40px -28px rgba(18,41,77,.5);
+    padding:28px 26px 34px;
+  }
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:26px}
+  .tab{
+    font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.82rem;letter-spacing:.04em;
+    border:1px solid var(--line);background:#fff;color:var(--ink);
+    padding:9px 16px;border-radius:999px;cursor:pointer;transition:.18s;
+  }
+  .tab[aria-selected="true"]{background:var(--ink);color:var(--parch);border-color:var(--ink)}
+  .tab:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+
+  .axis{position:relative;margin:8px 4px 0}
+  .axis-labels{display:flex;justify-content:space-between;font-family:"Trebuchet MS",sans-serif;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:#6a6a72;margin-bottom:10px}
+  .axis-labels .l{color:var(--rubric);font-weight:700}
+  .axis-labels .r{color:var(--blue);font-weight:700}
+  .bar{height:10px;border-radius:999px;background:linear-gradient(90deg,var(--rubric),#b06a1e 40%,#5a7d3a 66%,var(--blue));position:relative}
+  .ticks{position:relative;height:112px;margin-top:0}
+  .node{position:absolute;top:0;transform:translateX(-50%);width:132px;text-align:center;cursor:pointer}
+  .node .dot{width:20px;height:20px;border-radius:50%;background:#fff;border:3px solid var(--ink);margin:0 auto;position:relative;top:-15px;transition:.18s}
+  .node .nm{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.82rem;margin-top:-6px}
+  .node .sb{font-size:.76rem;color:#6a6a72;font-style:italic;margin-top:2px;line-height:1.25}
+  .node:hover .dot,.node[data-active="true"] .dot{transform:scale(1.25);border-color:var(--gold);box-shadow:0 0 0 5px rgba(201,162,39,.2)}
+  .node:focus-visible{outline:none}
+  .node:focus-visible .dot{outline:3px solid var(--gold);outline-offset:3px}
+
+  .readout{
+    margin-top:14px;background:var(--ink);color:var(--parch);border-radius:12px;padding:20px 22px;
+    min-height:104px;display:flex;gap:18px;align-items:flex-start;
+  }
+  .readout .badge{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;
+    background:var(--gold);color:var(--ink-2);padding:6px 10px;border-radius:6px;white-space:nowrap;margin-top:2px}
+  .readout .body h4{font-size:1.12rem;margin-bottom:4px}
+  .readout .body .auth{color:var(--gold-soft);font-family:"Trebuchet MS",sans-serif;font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+  .readout .body p{color:#E7DFCB;font-size:.98rem}
+  .readout .body .sw{display:flex;gap:22px;margin-top:10px;flex-wrap:wrap}
+  .readout .body .sw div{font-size:.9rem}
+  .readout .body .sw .k{font-family:"Trebuchet MS",sans-serif;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase}
+  .readout .body .sw .up .k{color:#8BD08F}
+  .readout .body .sw .dn .k{color:#F2A0A0}
+  .hint{font-family:"Trebuchet MS",sans-serif;font-size:.76rem;color:#8a8a92;margin-top:14px;text-align:center}
+
+  /* ---------- THREE DEBATES ---------- */
+  .triptych{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .panel{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;display:flex;flex-direction:column}
+  .panel .cap{padding:16px 18px;color:#fff;position:relative}
+  .panel.b1 .cap{background:linear-gradient(135deg,#6A1B9A,#3B0E56)}
+  .panel.b2 .cap{background:linear-gradient(135deg,#00695C,#0C3B34)}
+  .panel.b3 .cap{background:linear-gradient(135deg,#1F4E79,#12294D)}
+  .panel .cap .n{font-family:"Trebuchet MS",sans-serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;opacity:.85}
+  .panel .cap h3{font-size:1.24rem;margin-top:3px}
+  .panel .cap .ask{font-style:italic;font-size:.9rem;margin-top:8px;opacity:.95}
+  .panel .body{padding:16px 18px;font-size:.92rem}
+  .panel .body .row{display:flex;gap:9px;padding:7px 0;border-bottom:1px dashed var(--line)}
+  .panel .body .row:last-child{border-bottom:0}
+  .panel .body .row .v{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.8rem;white-space:nowrap;color:var(--ink)}
+  .panel .body .row .d{color:#55555c}
+
+  /* ---------- THREAD ---------- */
+  .thread{background:var(--ink);color:var(--parch);border-radius:14px;padding:34px 30px;position:relative;overflow:hidden}
+  .thread::before{content:"";position:absolute;inset:0;opacity:.07;background:repeating-linear-gradient(180deg,transparent 0 30px,#fff 30px 31px)}
+  .thread .wrap2{position:relative;z-index:2}
+  .thread h2{color:#fff;font-size:clamp(1.5rem,3vw,2.1rem);margin-bottom:8px}
+  .thread .lead{color:#E7DFCB;max-width:62ch;margin-bottom:24px}
+  .threads{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .tcard{border:1px solid rgba(228,206,134,.3);border-radius:10px;padding:16px 16px 18px;background:rgba(255,255,255,.03)}
+  .tcard .t{font-family:"Trebuchet MS",sans-serif;color:var(--gold);font-weight:700;font-size:.82rem;letter-spacing:.05em;margin-bottom:6px}
+  .tcard p{font-size:.9rem;color:#E7DFCB}
+
+  /* ---------- REVISE ---------- */
+  .revise{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:start}
+  .steps{counter-reset:s;display:flex;flex-direction:column;gap:14px}
+  .step{display:flex;gap:16px;align-items:flex-start;border-left:2px solid var(--line);padding:2px 0 2px 18px;position:relative}
+  .step::before{counter-increment:s;content:counter(s);position:absolute;left:-15px;top:-2px;width:28px;height:28px;border-radius:50%;
+    background:var(--gold);color:var(--ink-2);font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.9rem;display:grid;place-items:center}
+  .step h4{font-size:1.02rem}
+  .step p{font-size:.9rem;color:#55555c;margin-top:2px}
+  .ao{border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .ao .h{padding:12px 16px;font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.82rem;letter-spacing:.06em;color:#fff}
+  .ao .ao1 .h,.ao .h.ao1{background:var(--ink)}
+  .ao .h.ao2{background:var(--green)}
+  .ao .c{padding:14px 16px;font-size:.9rem;border-bottom:1px solid var(--line)}
+  .ao .c:last-child{border-bottom:0}
+  .ao .c b{font-family:"Trebuchet MS",sans-serif;font-size:.78rem;letter-spacing:.04em}
+
+  /* ---------- VIDEO ---------- */
+  .video-frame{position:relative;width:100%;aspect-ratio:16/9;border-radius:14px;overflow:hidden;
+    border:1px solid var(--line);box-shadow:0 20px 44px -30px rgba(18,41,77,.55);background:var(--ink)}
+  .video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .video-placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:14px;text-align:center;padding:30px;color:#C9C4B6;
+    background:radial-gradient(700px 300px at 50% 30%,rgba(201,162,39,.14),transparent 60%),linear-gradient(180deg,var(--ink),var(--ink-2))}
+  .video-placeholder .vp-badge{font-family:"Trebuchet MS",Verdana,sans-serif;font-weight:700;font-size:.72rem;letter-spacing:.14em;
+    text-transform:uppercase;background:var(--gold);color:var(--ink-2);padding:6px 12px;border-radius:6px}
+  .video-placeholder p{max-width:52ch;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.92rem;line-height:1.55}
+  .video-placeholder code{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:4px;padding:1px 6px}
+
+
+  /* ---------- FLASHCARDS ---------- */
+  .fc-controls{display:flex;gap:18px;flex-wrap:wrap;align-items:center;margin-bottom:24px}
+  .fc-tabs,.fc-type{display:flex;gap:8px;flex-wrap:wrap}
+  .fc-btn{font-family:"Trebuchet MS",Verdana,sans-serif;font-weight:700;font-size:.8rem;border:1px solid var(--line);
+    background:#fff;color:var(--ink);padding:8px 15px;border-radius:999px;cursor:pointer;transition:.18s}
+  .fc-btn[aria-selected="true"]{background:var(--ink);color:var(--parch);border-color:var(--ink)}
+  .fc-btn:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+  .fc-hint{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.78rem;color:#8a8a92;margin-left:auto}
+  .fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+  .fc-card{perspective:1200px;height:180px;cursor:pointer;background:none;border:0;padding:0;font-family:inherit;text-align:left}
+  .fc-inner{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+  .fc-card[data-flipped="true"] .fc-inner{transform:rotateY(180deg)}
+  .fc-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+    border-radius:12px;padding:18px;display:flex;flex-direction:column;border:1px solid var(--line);overflow:auto}
+  .fc-front{background:linear-gradient(180deg,#fff,var(--paper))}
+  .fc-back{transform:rotateY(180deg);color:var(--parch)}
+  .fc-card.nature .fc-back{background:linear-gradient(160deg,#6A1B9A,#3B0E56)}
+  .fc-card.challenges .fc-back{background:linear-gradient(160deg,#00695C,#0C3B34)}
+  .fc-card.swinburne .fc-back{background:linear-gradient(160deg,#1F4E79,#12294D)}
+  .fc-tag{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--gold);font-weight:700;margin-bottom:8px}
+  .fc-front .fc-tag{color:#9a8028}
+  .fc-term{font-size:1.24rem;font-weight:700;line-height:1.15}
+  .fc-front .fc-flip{margin-top:auto;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.72rem;color:#9a9a9a}
+  .fc-def{font-size:.92rem;line-height:1.4}
+  .fc-back .fc-sw{margin-top:8px;font-size:.82rem}
+  .fc-back .fc-sw .k{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.62rem;letter-spacing:.08em;text-transform:uppercase}
+  .fc-back .up .k{color:#8BD08F}.fc-back .dn .k{color:#F2A0A0}
+  @media(max-width:820px){.fc-grid{grid-template-columns:1fr 1fr}.fc-hint{width:100%;margin-left:0}}
+
+  /* ---------- RESOURCES ---------- */
+  .res-note{background:#FBF0D6;border:1px solid var(--gold);border-left:4px solid var(--gold);
+    border-radius:8px;padding:12px 16px;margin-bottom:22px;font-size:.9rem;color:#5a4a1c;
+    font-family:"Trebuchet MS",Verdana,sans-serif}
+  .res-note code{background:#fff;border:1px solid var(--line);border-radius:4px;padding:1px 6px;font-size:.85em}
+  .res-note.hide{display:none}
+  .res-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:16px}
+  .res-col{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff}
+  .rc-head{padding:14px 16px;color:#fff}
+  .rc1 .rc-head{background:linear-gradient(135deg,#6A1B9A,#3B0E56)}
+  .rc2 .rc-head{background:linear-gradient(135deg,#00695C,#0C3B34)}
+  .rc3 .rc-head{background:linear-gradient(135deg,#1F4E79,#12294D)}
+  .rc-head .rc-n{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;opacity:.85}
+  .rc-head h3{font-size:1.16rem;margin-top:2px}
+  .res-btn{display:flex;align-items:center;gap:12px;padding:13px 16px;border-top:1px solid var(--line);
+    font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.92rem;color:var(--ink);text-decoration:none;
+    cursor:pointer;transition:background .15s}
+  .res-col .res-btn:first-of-type{border-top:0}
+  .res-btn:hover{background:var(--parch)}
+  .res-btn .ic{width:26px;height:26px;flex:none;display:grid;place-items:center;border-radius:6px;
+    background:var(--ink);color:var(--gold);font-size:.9rem}
+  .res-btn .go{margin-left:auto;color:var(--gold);font-weight:700;opacity:0;transition:.15s}
+  .res-btn:hover .go{opacity:1}
+  .res-btn:focus-visible{outline:3px solid var(--gold);outline-offset:-3px}
+  .res-btn.unset{opacity:.5;cursor:not-allowed}
+  .res-btn.unset .go{content:"";opacity:0}
+  .res-btn.unset::after{content:"Link not set";margin-left:auto;font-size:.74rem;color:#9a7d2c;
+    background:#FBF0D6;border:1px solid var(--gold-soft);border-radius:5px;padding:2px 7px}
+  .res-wide{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:2px}
+  .res-btn.big{border:1px solid var(--line);border-radius:12px;background:#fff;padding:16px 18px}
+  .res-btn.big:hover{background:var(--parch)}
+  .res-btn.big .ic{width:34px;height:34px;font-size:1.1rem;background:var(--ink)}
+  @media(max-width:820px){.res-grid{grid-template-columns:1fr}.res-wide{grid-template-columns:1fr}}
+
+  footer{background:var(--ink-2);color:#C9C4B6;padding:26px 0;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.8rem}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+  footer .gold{color:var(--gold)}
+
+  @media(max-width:820px){
+    .triptych{grid-template-columns:1fr}
+    .threads{grid-template-columns:1fr}
+    .revise{grid-template-columns:1fr}
+    .node{width:96px}
+    .node .sb{display:none}
+  }
+  @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<!--BACKPILL--><a href="../alevel.html" style="position:fixed;left:14px;bottom:14px;z-index:99999;background:#12294D;color:#F6F1E4;font:600 14px/1 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;padding:10px 15px;border-radius:999px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.28);border:1px solid #C9A227">&#8592; All units</a>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap">
+    <div class="crest">
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <rect x="2" y="2" width="60" height="60" rx="13" fill="#0C1B33" stroke="#C9A227" stroke-width="1.5"/>
+        <g fill="none" stroke="#F3ECDD" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M23 21C21 17 21 14 22 12c2 2 3 5 3 8"/><path d="M41 21c2-4 2-7 1-9-2 2-3 5-3 8"/>
+          <path d="M32 17C21 17 18 26 18 33c0 12 6 19 14 19s14-7 14-19c0-7-3-16-14-16z"/>
+          <path d="M32 21c-3 4-5 6-7 7M32 21c3 4 5 6 7 7"/>
+        </g>
+        <circle cx="27" cy="31" r="5" fill="none" stroke="#F3ECDD" stroke-width="2.4"/>
+        <circle cx="37" cy="31" r="5" fill="none" stroke="#F3ECDD" stroke-width="2.4"/>
+        <circle cx="27" cy="31" r="1.9" fill="#F3ECDD"/><circle cx="37" cy="31" r="1.9" fill="#F3ECDD"/>
+        <path d="M32 34l-2.2 4.2h4.4z" fill="#C9A227"/>
+      </svg>
+      <div class="who">A-Level Religious Studies · AQA Paper 1
+        <b>Harlington School · Philosophy &amp; Ethics</b></div>
+    </div>
+    <h1>Religious <span class="amp">Experience</span></h1>
+    <p class="sub">One unit, one argument — told three times. What are religious experiences, are they real, and what — if anything — do they prove?</p>
+    <div class="bigq">
+      <span class="q">The<br>big<br>question</span>
+      <p>Can a private encounter with God ever carry public weight — as evidence for anyone else, or only as faith for the one who had it?</p>
+    </div>
+  </div>
+</header>
+
+<!-- SIGNATURE: SPECTRUM -->
+<section id="spectrum">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">01</span><h2>The experience spectrum</h2></div>
+    <p class="sec-lead">Each lesson's positions line up on one axis — and the poles change with the lesson: <b>encounter → union</b>, <b>brain → God</b>, <b>evidence → faith</b>. Pick a sub-topic, then tap a position to see what it claims and where it's strong or weak.</p>
+
+    <div class="spectrum-card">
+      <div class="tabs" role="tablist" aria-label="Choose a sub-topic">
+        <button class="tab" role="tab" aria-selected="true"  data-topic="nature">The Nature of Religious Experience</button>
+        <button class="tab" role="tab" aria-selected="false" data-topic="challenges">Verifying: the Challenges</button>
+        <button class="tab" role="tab" aria-selected="false" data-topic="swinburne">Swinburne &amp; Value</button>
+      </div>
+
+      <div class="axis">
+        <div class="axis-labels"><span class="l" id="poleL">Encounter</span><span class="r" id="poleR">Union</span></div>
+        <div class="bar"></div>
+        <div class="ticks" id="ticks"></div>
+      </div>
+
+      <div class="readout" id="readout" aria-live="polite"></div>
+      <p class="hint">Tap a circle — or use Tab and Enter — to explore each position.</p>
+    </div>
+  </div>
+</section>
+
+<!-- THE THREAD -->
+<section>
+  <div class="wrap">
+    <div class="thread">
+      <div class="wrap2">
+        <h2>The thread that ties it together</h2>
+        <p class="lead">Top answers don't treat the three lessons separately. Three ideas run through all of them — spot the thread and you're writing at the top of the mark scheme.</p>
+        <div class="threads">
+          <div class="tcard"><div class="t">The privacy problem</div><p>Bernadette's sister and friend saw nothing. That single fact drives the verification debate — and the strongest objection to Swinburne.</p></div>
+          <div class="tcard"><div class="t">William James</div><p>Four marks in lesson 1, "any route — judge by fruits" in lesson 2, public fruits as evidence in lesson 3. One scholar, all three lessons.</p></div>
+          <div class="tcard"><div class="t">Definition decides verdict</div><p>What you say an experience IS (encounter or union) sets what would verify it — and what it could ever prove.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THREE DEBATES -->
+<section id="debates">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">02</span><h2>The same question, three times</h2></div>
+    <p class="sec-lead">The unit splits into three debates. They look different, but each is really asking <em>what a private encounter is worth</em>.</p>
+    <div class="triptych">
+      <div class="panel b1">
+        <div class="cap"><div class="n">Sub-topic 1</div><h3>The Nature of Religious Experience</h3><div class="ask">What <b>are</b> they?</div></div>
+        <div class="body">
+          <div class="row"><span class="v">Visions</span><span class="d">Corporeal, imaginative, intellectual (Augustine).</span></div>
+          <div class="row"><span class="v">Otto</span><span class="d">The numinous — wholly other; mysterium tremendum et fascinans.</span></div>
+          <div class="row"><span class="v">James</span><span class="d">Four marks: ineffable, noetic, transient, passive.</span></div>
+          <div class="row"><span class="v">Stace</span><span class="d">Non-sensuous union — extrovertive &amp; introvertive.</span></div>
+        </div>
+      </div>
+      <div class="panel b2">
+        <div class="cap"><div class="n">Sub-topic 2</div><h3>Verifying: the Challenges</h3><div class="ask">Are they <b>real</b>?</div></div>
+        <div class="body">
+          <div class="row"><span class="v">Freud</span><span class="d">Wish-fulfilment — hallucinations of need.</span></div>
+          <div class="row"><span class="v">Science</span><span class="d">TLE · the God Helmet · entheogens (Pahnke).</span></div>
+          <div class="row"><span class="v">Response</span><span class="d">The brain is God's channel, not the author.</span></div>
+          <div class="row"><span class="v">Two models</span><span class="d">Downwards (God gives) &amp; interaction (we reach out).</span></div>
+        </div>
+      </div>
+      <div class="panel b3">
+        <div class="cap"><div class="n">Sub-topic 3</div><h3>Swinburne &amp; the Value of Experience</h3><div class="ask">What do they <b>prove</b>?</div></div>
+        <div class="body">
+          <div class="row"><span class="v">Credulity</span><span class="d">What one seems to perceive is probably so.</span></div>
+          <div class="row"><span class="v">Testimony</span><span class="d">Others' reports are probably as they say.</span></div>
+          <div class="row"><span class="v">Critics</span><span class="d">Private seemings can't carry the weight of God.</span></div>
+          <div class="row"><span class="v">Value</span><span class="d">Foundational · inspirational · life-changing — faith confirmed.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- YOUR RESOURCES -->
+<section id="resources">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">03</span><h2>Your resources</h2></div>
+    <p class="sec-lead">Everything for the unit, in one place. Open a sub-topic's lesson, booklet and podcast, and use the <b>Philosopher Companion</b> across all three.</p>
+
+    <div class="res-note" id="resNote">
+      <b>Teacher setup:</b> links aren't set yet. Open this file, find the <code>LINKS</code> list near the bottom, and paste each SharePoint share link once. Buttons with no link show as “Link not set”.
+    </div>
+
+    <div class="res-grid">
+      <div class="res-col rc1">
+        <div class="rc-head"><span class="rc-n">Sub-topic 1</span><h3>Nature of Religious Experience</h3></div>
+        <a class="res-btn" data-key="nature_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="nature_booklet"><span class="ic">✎</span><span>Completion booklet</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="nature_podcast"><span class="ic">♪</span><span>Lesson podcast</span><span class="go">↗</span></a>
+      </div>
+      <div class="res-col rc2">
+        <div class="rc-head"><span class="rc-n">Sub-topic 2</span><h3>Verifying: the Challenges</h3></div>
+        <a class="res-btn" data-key="challenges_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="challenges_booklet"><span class="ic">✎</span><span>Completion booklet</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="challenges_podcast"><span class="ic">♪</span><span>Lesson podcast</span><span class="go">↗</span></a>
+      </div>
+      <div class="res-col rc3">
+        <div class="rc-head"><span class="rc-n">Sub-topic 3</span><h3>Swinburne &amp; Value</h3></div>
+        <a class="res-btn" data-key="swinburne_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="swinburne_booklet"><span class="ic">✎</span><span>Completion booklet</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="swinburne_podcast"><span class="ic">♪</span><span>Lesson podcast</span><span class="go">↗</span></a>
+      </div>
+    </div>
+
+    <div class="res-wide">
+      <a class="res-btn big" data-key="companion"><span class="ic">🦉</span><span><b>Philosopher Companion</b> — checklist, AO1 &amp; AO2 planning, key terms &amp; review</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="review"><span class="ic">↻</span><span><b>Review lessons</b> — consolidation decks for all three sub-topics</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="overview_podcast"><span class="ic">♪</span><span><b>Overview podcast</b> — the whole unit as one argument (team teach)</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="flashcards_pdf"><span class="ic">▤</span><span><b>Printable flashcards</b> — fold-over key terms &amp; views to cut out</span><span class="go">↗</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- HOW TO REVISE -->
+<section id="revise">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">04</span><h2>How to revise this unit</h2></div>
+    <p class="sec-lead">Use your resources in this order. The <b>Philosopher Companion</b> is where you learn to <em>plan</em> both question types.</p>
+    <div class="revise">
+      <div class="steps">
+        <div class="step"><div><h4>Watch the lesson &amp; listen to the podcast</h4><p>One podcast per sub-topic — a teacher and student talk each view through to a judgement. Annotate as you listen.</p></div></div>
+        <div class="step"><div><h4>Complete the greyscale booklet</h4><p>Read the given text, write the key claims in your own words, then decide the strength and weakness you'd give each view.</p></div></div>
+        <div class="step"><div><h4>Match &amp; apply the key terms</h4><p>In the Companion: match each term to its meaning, then use it in a sentence. RAG-rate the mastery checklist with the three faces.</p></div></div>
+        <div class="step"><div><h4>Plan AO1, then build AO2 on top</h4><p>Use the Companion frameworks and the guidance-left / your-turn-right scaffolds. Never evaluate what you haven't first explained.</p></div></div>
+      </div>
+      <div class="ao">
+        <div class="ao1"><div class="h ao1">AO1 · Examine the views (10)</div></div>
+        <div class="c"><b>What it is —</b> the factual chain: define the experience type, then set out each account in order and apply a named case (Teresa, St Paul, the God Helmet).</div>
+        <div class="c"><b>Aim —</b> explain the whole range accurately and neutrally. No judging yet.</div>
+        <div class="h ao2">AO2 · Evaluate the claim (15)</div>
+        <div class="c"><b>What it is —</b> a three-paragraph dialectic: view, then evaluation → counter-evaluation → implication; mirror it; then judge.</div>
+        <div class="c"><b>Aim —</b> weigh the views, use one as a lens on another, and reach a justified judgement that links back to your thesis.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WATCH: FULL UNIT REVIEW -->
+<section id="watch">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">05</span><h2>Watch: the whole unit in one go</h2></div>
+    <p class="sec-lead">A full review of <b>Religious Experience</b> — the nature of the experiences, the challenges from science, and Swinburne's principles. Best watched before you start revising, then again to check your recall.</p>
+    <div class="video-frame" id="videoFrame">
+      <div class="video-placeholder" id="videoPlaceholder">
+        <div class="vp-badge">Video not set</div>
+        <p><b>Teacher:</b> paste the YouTube link in the <code>VIDEO_URL</code> line near the bottom of this file. The player then appears here automatically.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- FLASHCARDS -->
+<section id="flashcards">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">06</span><h2>Flashcards — test yourself</h2></div>
+    <p class="sec-lead">Flip a card to check yourself. Switch between <b>key terms</b> (term → meaning) and <b>views</b> (view → claim, strength &amp; weakness), and filter by sub-topic.</p>
+    <div class="fc-controls">
+      <div class="fc-tabs" role="tablist" aria-label="Sub-topic">
+        <button class="fc-btn" role="tab" aria-selected="true"  data-topic="all">All</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-topic="nature">Nature</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-topic="challenges">Challenges</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-topic="swinburne">Swinburne</button>
+      </div>
+      <div class="fc-type" role="tablist" aria-label="Card type">
+        <button class="fc-btn" role="tab" aria-selected="true"  data-type="terms">Key terms</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-type="views">Views</button>
+      </div>
+      <span class="fc-hint">Tap any card to flip · <span id="fcCount"></span></span>
+    </div>
+    <div class="fc-grid" id="fcGrid"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Religious Experience · Unit at a glance</span>
+    <span class="gold">Harlington School · Philosophy &amp; Ethics</span>
+  </div>
+</footer>
+
+<script>
+const DATA = {
+  nature:{
+    poles:["God WHOLLY OTHER · distance, dread, awe","God WITHIN · unity — the 'I' dissolves"],
+    nodes:[
+      {x:8, nm:"Otto", sb:"the numinous", auth:"Encounter",
+        claim:"Religious experience is an apprehension of the wholly other — a mysterium tremendum et fascinans that confronts the creature with dread AND fascination (Moses at the bush; Isaiah in the Temple).",
+        s:"Fits the great call narratives; numinous awe is sui generis.", w:"Excludes a God who is immanent — Bernadette's vision doesn't fit."},
+      {x:30, nm:"Visions", sb:"God met through sight", auth:"Contentful revelation",
+        claim:"Corporeal, imaginative or intellectual (Augustine): God communicates through what is seen — Bernadette at Lourdes, Pharaoh's dream, Teresa's imageless presence.",
+        s:"Rich, assessable case base with public fruits (Lourdes).", w:"Private — her companions saw nothing; Stace says not mystical at all."},
+      {x:52, nm:"James", sb:"mystical consciousness", auth:"Union · fruits",
+        claim:"Mystical experiences are ineffable, noetic, transient and passive — union with the divine, running from déjà vu to cosmic consciousness. 'God is real since he produces real effects.'",
+        s:"Empirical, inclusive, workable criteria.", w:"'Ineffable' yet described at length; God finite, maybe plural."},
+      {x:74, nm:"Stace · extrovertive", sb:"unity shines through", auth:"Half-way house",
+        claim:"Sense experience stays active, but objects are transfigured so the non-sensuous unity shines through them (Meister Eckhart; the American 'N.M.').",
+        s:"Bridges ordinary sight and full union.", w:"Still sensuous — so, for Stace, only a 'half-way house'."},
+      {x:94, nm:"Stace · introvertive", sb:"pure consciousness", auth:"Total union",
+        claim:"Sense experience totally suppressed; the conscious 'I' replaced by pure consciousness — the One, the Void (Koestler: 'the I had ceased to exist').",
+        s:"The sharpest definition of mysticism there is.", w:"If the 'I' ceases, WHO experiences and reports the union?"}
+    ]
+  },
+  challenges:{
+    poles:["BRAIN ONLY · self-generated","GOD · given & received"],
+    nodes:[
+      {x:8, nm:"Freud", sb:"wish-fulfilment", auth:"Symptom",
+        claim:"Religion is wish-fulfilment by the unconscious mind — visions and mystical experiences are hallucinations born of our need for control over fear of the unknown and of death.",
+        s:"Simple; explains the comfort and the personal fit.", w:"Untestable — and a wished-for God may still exist."},
+      {x:30, nm:"Neurotheology", sb:"brain states suffice", auth:"Brain state",
+        claim:"TLE produces religious visions (St Paul?); Persinger's God Helmet induces sensed presence; entheogens matched it in Pahnke's Good Friday Experiment. Stimulate the lobes — 'God' appears.",
+        s:"Replicable, converging, empirical.", w:"Duplication is not debunking — the brain may be the channel."},
+      {x:52, nm:"James", sb:"any route — judge by fruits", auth:"Agnostic on route",
+        claim:"It makes NO difference how the experience arises — TLE, drugs, any altered state. Judge experiences by their FRUITS: Paul's transformation is public evidence.",
+        s:"Neutral test both sides can accept.", w:"Fruits show something happened — not what caused it."},
+      {x:74, nm:"Interaction model", sb:"we reach out", auth:"Sought gift",
+        claim:"The experiencer — through prayer, nature or preparation — brings about the encounter: 'how much more will the Father give the Holy Spirit to those who ask him!' (Luke 11:13).",
+        s:"Explains sought and prepared experiences.", w:"Inherits the unfalsifiability worry."},
+      {x:94, nm:"Downwards model", sb:"God gives", auth:"Given gift",
+        claim:"God gives the experience; the experiencer processes it and derives meaning — Bernadette's visions, Saul on the Damascus road. The brain is the channel, never the author.",
+        s:"Absorbs ALL the neuroscience without loss.", w:"No evidence could ever count against it."}
+    ]
+  },
+  swinburne:{
+    poles:["EVIDENCE for God · probability raised","NO evidential value · faith only"],
+    nodes:[
+      {x:8, nm:"Swinburne", sb:"God probably exists", auth:"Probability >50/50",
+        claim:"Credulity: what one seems to perceive is probably so. Testimony: others' reports are probably true. Four defeaters raised and rejected — the onus is on the doubter. God probably exists.",
+        s:"Consistent with how we treat all perception & testimony.", w:"Private 'seemings' may not earn perception's default."},
+      {x:30, nm:"James", sb:"judge by fruits", auth:"Effects are real",
+        claim:"'God is real since he produces real effects' — the experiences change lives, whatever their route. Evidence, but of a pragmatic kind.",
+        s:"Grounds the case in public, observable change.", w:"Real effects don't prove a real external cause."},
+      {x:52, nm:"Value-only", sb:"confirms faith", auth:"Faith confirmed",
+        claim:"Experiences are foundational (Abraham, Paul), inspirational (Joan of Arc), at the heart of pilgrimage (Lourdes) and life-changing — they CONFIRM faith: 'belief in', not just 'belief that'.",
+        s:"The historical influence is enormous and undeniable.", w:"They confirm EVERY tradition equally — value is not proof."},
+      {x:74, nm:"The critics", sb:"about believers, not God", auth:"Sceptical verdict",
+        claim:"Sense claims are public and checkable; religious experiences are first-person private — and even total sincerity cannot show 'God' is the right explanation.",
+        s:"Uniform standards of evidence.", w:"We trust private reports (pain, dreams) every day."},
+      {x:94, nm:"Freud & the sceptics", sb:"brain states only", auth:"No evidence",
+        claim:"The experiences are real EVENTS — but as wish-fulfilment or brain states they are evidence about human psychology and physiology, not about God.",
+        s:"Parsimonious; backed by lesson 2's science.", w:"Must still explain the fruits — and 'simply' overreaches."}
+    ]
+  }
+};
+
+const ticks=document.getElementById("ticks");
+const readout=document.getElementById("readout");
+const poleL=document.getElementById("poleL"), poleR=document.getElementById("poleR");
+let topic="nature", active=0;
+
+function renderReadout(n){
+  readout.innerHTML=`
+    <span class="badge">${n.auth}</span>
+    <div class="body">
+      <h4>${n.nm} <span style="opacity:.6;font-style:italic;font-weight:400">· ${n.sb}</span></h4>
+      <p>${n.claim}</p>
+      <div class="sw">
+        <div class="up"><span class="k">Strength</span><br>${n.s}</div>
+        <div class="dn"><span class="k">Weakness</span><br>${n.w}</div>
+      </div>
+    </div>`;
+}
+function renderTopic(){
+  const d=DATA[topic];
+  poleL.textContent=d.poles[0]; poleR.textContent=d.poles[1];
+  ticks.innerHTML="";
+  d.nodes.forEach((n,i)=>{
+    const el=document.createElement("div");
+    el.className="node"; el.style.left=n.x+"%"; el.tabIndex=0;
+    el.setAttribute("role","button");
+    el.setAttribute("aria-label",`${n.nm}: ${n.sb}`);
+    el.dataset.active=(i===active);
+    el.innerHTML=`<div class="dot"></div><div class="nm">${n.nm}</div><div class="sb">${n.sb}</div>`;
+    const pick=()=>{active=i;[...ticks.children].forEach((c,j)=>c.dataset.active=(j===i));renderReadout(n);};
+    el.addEventListener("click",pick);
+    el.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();pick();}});
+    ticks.appendChild(el);
+  });
+  active=Math.min(active,d.nodes.length-1);
+  [...ticks.children].forEach((c,j)=>c.dataset.active=(j===active));
+  renderReadout(d.nodes[active]);
+}
+document.querySelectorAll(".tab").forEach(t=>{
+  t.addEventListener("click",()=>{
+    document.querySelectorAll(".tab").forEach(x=>x.setAttribute("aria-selected","false"));
+    t.setAttribute("aria-selected","true");
+    topic=t.dataset.topic; active=0; renderTopic();
+  });
+});
+renderTopic();
+
+const FLASHCARDS = {"nature":{"terms":[{"term":"Numinous","def":"relating to the power or presence of a deity (Latin numen)."},{"term":"Mysterium tremendum et fascinans","def":"'a tremendous and fascinating mystery' — Otto's summary of the numinous encounter."},{"term":"Ineffable","def":"not describable in words, so it cannot be imparted to others."},{"term":"Noetic","def":"giving rise to knowledge — states of insight in which truths are intuitively realised."},{"term":"Extrovertive","def":"Stace's 'half-way house': the senses still operate, but objects are transfigured so a non-sensuous unity 'shines through' them."},{"term":"Introvertive","def":"Stace's full mystical experience: sense experience is totally suppressed and the conscious 'I' is replaced by pure consciousness / the One / the Void."}],"views":[{"n":"Visions: corporeal, imaginative & intellectual","c":"God communicates through what is seen — with the eye, the mind's eye, or no image at all. God communicating through what is seen — bodily eye, mind's eye, or no image.","s":"Rich, assessable case base with public fruits.","w":"Private; mimicked by dreams; Stace excludes them."},{"n":"The Numinous: Rudolf Otto","c":"An apprehension of the wholly other — mysterium tremendum et fascinans. An apprehension of the wholly other — dread AND fascination.","s":"Fits the call narratives; sui generis awe.","w":"Excludes immanence; maybe just fear."},{"n":"Mystical consciousness: William James","c":"'God is real since he produces real effects' — four marks: ineffable, noetic, transient, passive. Mystical consciousness — union with God, judged by its fruits.","s":"Empirical, inclusive, workable criteria.","w":"'Ineffable' yet described; finite God; drug states."},{"n":"Union with the divine: Walter Stace","c":"Non-sensuous, non-intellectual union: the 'I' dissolves into pure consciousness. Non-sensuous, non-intellectual UNION — the 'I' dissolves.","s":"Sharpest criteria; cross-cultural core.","w":"Excludes visions; who reports it?; core disputed."}]},"challenges":{"terms":[{"term":"Wish-fulfilment","def":"Freud's claim that religion is produced by the unconscious mind to satisfy our wish for protection from fear of the unknown and of death."},{"term":"Temporal lobe epilepsy (TLE)","def":"a condition producing brain states in which sufferers are prone to strong religious visions and mystical experiences."},{"term":"Neuroscience","def":"the scientific study of the structure and function of the nervous system."},{"term":"Neurotheology","def":"the attempt to explain religious experience and behaviour in neuroscientific terms."},{"term":"Entheogen","def":"'generating / becoming the Divine from within' — drugs such as LSD, mescaline and psilocybin known to generate religious experiences."},{"term":"Hallucinogenic","def":"causing hallucinations, e.g. hallucinogenic drugs."}],"views":[{"n":"The philosophical challenge: 'just in the mind'","c":"Private, ineffable, contradictory — reports that cannot be checked cannot demand belief. Reports are private, ineffable and contradictory — unverifiable.","s":"Real asymmetry with ordinary perception.","w":"Unverifiable ≠ false; fruits are public."},{"n":"Freud: religion as wish-fulfilment","c":"The idea of God controls our fear — visions are hallucinations of the helpless. Religion is wish-fulfilment; visions are hallucinations of need.","s":"Simple; explains the comfort and the fit.","w":"Untestable; a wished-for God may still exist."},{"n":"Neuroscience: TLE, the God Helmet & entheogens","c":"Stimulate the temporal lobes — by illness, magnets or drugs — and 'God' appears. Experiences are brain states — TLE, magnets and drugs produce them.","s":"Replicable, converging, empirical.","w":"Duplication ≠ debunking; the brain may be the channel."},{"n":"The religious responses","c":"Of course they're brain states — the brain is our only way of processing ANYTHING. The brain is the channel: experiences can be given by God AND asked of God.","s":"Absorbs all the science without loss.","w":"Unfalsifiable; no way to pick between readings."}]},"swinburne":{"terms":[{"term":"Principle of Credulity","def":"in the absence of special considerations, if it seems to a subject that x is present, then probably x is present."},{"term":"Principle of Testimony","def":"in the absence of special considerations, the experiences of others are (probably) as they report them."},{"term":"Special considerations","def":"the defeaters that would licence doubt: unreliable claimant, implausible claim, no way to show God present, better rival explanations."},{"term":"Cumulative argument","def":"the arguments for God (design, cosmological, ontological) are stronger taken TOGETHER; religious experience strengthens them and is strengthened by them."},{"term":"Foundational","def":"religious experiences have been the direct cause of the founding of religions — the basis for faith and organised religion."},{"term":"'Belief in' vs 'belief that'","def":"'belief that' assents to a proposition; 'belief in' is personal trust and commitment."}],"views":[{"n":"The Principle of Credulity","c":"What one seems to perceive is probably so — the experiencer is innocent until proven guilty. What seems to be perceived probably is — by default, trust the experience.","s":"Consistent — sceptic's doubt is selective.","w":"Private 'seemings' may not earn perception's default."},{"n":"The Principle of Testimony","c":"The experiences of others are probably as they report them — belief is the default, doubt needs reasons. Others' reports are probably true; the sceptic must show otherwise.","s":"How courts and daily life already work.","w":"Sincerity ≠ correct explanation."},{"n":"The case against Swinburne","c":"Seeming is not showing: private seemings cannot carry the weight of God. The analogy fails: private seemings can't evidence God.","s":"Uniform standards of evidence.","w":"We trust private reports daily; the onus-shift stands."},{"n":"The influence & value of religious experience","c":"Foundational, inspirational, life-changing — whatever philosophers decide, experiences are the bedrock of lived faith. Experiences found, inspire and change — and confirm faith.","s":"Public, historically enormous effects.","w":"Confirms every tradition equally — value ≠ proof."}]}};
+(function(){
+  let fcTopic="all", fcType="terms";
+  const grid=document.getElementById("fcGrid"), count=document.getElementById("fcCount");
+  function esc(s){return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+  function build(){
+    const topics = fcTopic==="all" ? ["nature","challenges","swinburne"] : [fcTopic];
+    let cards=[];
+    topics.forEach(tp=>{
+      const d=FLASHCARDS[tp]; if(!d) return;
+      if(fcType==="terms"){ d.terms.forEach(t=>cards.push({tp,front:t.term,tag:label(tp),back:`<div class='fc-def'>${esc(t.def)}</div>`})); }
+      else { d.views.forEach(v=>cards.push({tp,front:v.n,tag:label(tp),back:`<div class='fc-def'>${esc(v.c)}</div><div class='fc-sw'><div class='up'><span class='k'>Strength</span><br>${esc(v.s)}</div><div class='dn' style='margin-top:6px'><span class='k'>Weakness</span><br>${esc(v.w)}</div></div>`})); }
+    });
+    grid.innerHTML=cards.map(c=>`
+      <button class="fc-card ${c.tp}" data-flipped="false" aria-label="Flashcard: ${esc(c.front)}. Tap to reveal.">
+        <div class="fc-inner">
+          <div class="fc-face fc-front"><div class="fc-tag">${c.tag}</div><div class="fc-term">${esc(c.front)}</div><div class="fc-flip">tap to flip ↺</div></div>
+          <div class="fc-face fc-back"><div class="fc-tag">${c.tag}</div>${c.back}</div>
+        </div>
+      </button>`).join("");
+    count.textContent = cards.length + " cards";
+    grid.querySelectorAll(".fc-card").forEach(el=>{
+      const flip=()=>el.dataset.flipped = el.dataset.flipped==="true" ? "false":"true";
+      el.addEventListener("click",flip);
+    });
+  }
+  function label(tp){return tp==="nature"?"Nature of Rel. Experience":tp==="challenges"?"Verifying: the Challenges":"Swinburne & Value";}
+  document.querySelectorAll('#flashcards .fc-tabs .fc-btn').forEach(b=>b.addEventListener("click",()=>{
+    document.querySelectorAll('#flashcards .fc-tabs .fc-btn').forEach(x=>x.setAttribute("aria-selected","false"));
+    b.setAttribute("aria-selected","true"); fcTopic=b.dataset.topic; build();
+  }));
+  document.querySelectorAll('#flashcards .fc-type .fc-btn').forEach(b=>b.addEventListener("click",()=>{
+    document.querySelectorAll('#flashcards .fc-type .fc-btn').forEach(x=>x.setAttribute("aria-selected","false"));
+    b.setAttribute("aria-selected","true"); fcType=b.dataset.type; build();
+  }));
+  build();
+})();
+
+/* =====================================================================
+   TEACHER: paste your YouTube link between the quotes below.
+   Any format works — youtube.com/watch?v=…, youtu.be/…, or an embed URL.
+   Leave it empty ("") and the page shows a "Video not set" placeholder.
+   ===================================================================== */
+const VIDEO_URL = "";
+
+(function wireVideo(){
+  const url=(VIDEO_URL||"").trim();
+  if(!url) return; // keep placeholder
+  // extract the 11-char YouTube id from common URL shapes
+  let id="";
+  const m = url.match(/(?:youtu\.be\/|v=|\/embed\/|\/shorts\/)([A-Za-z0-9_-]{11})/);
+  if(m) id=m[1];
+  else if(/^[A-Za-z0-9_-]{11}$/.test(url)) id=url; // a bare id
+  const frame=document.getElementById("videoFrame");
+  if(id && frame){
+    frame.innerHTML =
+      '<iframe src="https://www.youtube-nocookie.com/embed/'+id+'?rel=0" '+
+      'title="Religious Experience — full unit review" '+
+      'allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" '+
+      'allowfullscreen loading="lazy"></iframe>';
+  } else if(frame){
+    // not a YouTube link — fall back to a button that opens it
+    frame.innerHTML =
+      '<div class="video-placeholder"><a class="res-btn big" style="background:#fff" href="'+url+'" target="_blank" rel="noopener"><span class="ic">▶</span><span><b>Watch the full unit review</b></span><span class="go">↗</span></a></div>';
+  }
+})();
+
+/* =====================================================================
+   TEACHER: paste your SharePoint share links between the quotes below.
+   Leave a link empty ("") and its button will show "Link not set".
+   Tip: in SharePoint, open the file's ... menu -> Copy link -> paste here.
+   ===================================================================== */
+const LINKS = {
+  nature_lesson:      "",
+  nature_booklet:     "",
+  nature_podcast:     "",
+  challenges_lesson:  "",
+  challenges_booklet: "",
+  challenges_podcast: "",
+  swinburne_lesson:   "",
+  swinburne_booklet:  "",
+  swinburne_podcast:  "",
+  companion:          "",
+  review:             "",
+  overview_podcast:   "",
+  flashcards_pdf:     ""
+};
+
+(function wireResources(){
+  let anySet=false;
+  document.querySelectorAll(".res-btn").forEach(btn=>{
+    const url=(LINKS[btn.dataset.key]||"").trim();
+    if(url){
+      btn.href=url; btn.target="_blank"; btn.rel="noopener"; anySet=true;
+    }else{
+      btn.classList.add("unset"); btn.removeAttribute("href"); btn.setAttribute("aria-disabled","true");
+    }
+  });
+  if(anySet){ const n=document.getElementById("resNote"); if(n) n.classList.add("hide"); }
+})();
+</script>
+</body>
+</html>

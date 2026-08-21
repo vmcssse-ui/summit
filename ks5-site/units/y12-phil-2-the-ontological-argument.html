@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Ontological Argument — Unit at a Glance</title>
+<style>
+  :root{
+    --ink:#12294D;        /* deep manuscript navy */
+    --ink-2:#0C1B33;
+    --parch:#F3ECDD;      /* aged parchment */
+    --parch-2:#EAE0C9;
+    --gold:#C9A227;       /* gold leaf */
+    --gold-soft:#E4CE86;
+    --rubric:#B01C2E;     /* rubrication red */
+    --teal:#00695C;
+    --violet:#6A1B9A;
+    --blue:#1565C0;
+    --green:#2E7D32;
+    --paper:#FBF7EE;
+    --line:rgba(18,41,77,.16);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1060px;margin:0 auto;padding:0 24px}
+  .eyebrow{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;font-weight:700}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    background:
+      radial-gradient(1200px 400px at 80% -10%, rgba(201,162,39,.18), transparent 60%),
+      linear-gradient(180deg,var(--ink) 0%, var(--ink-2) 100%);
+    color:var(--parch);
+    padding:64px 0 72px;
+    position:relative;
+    overflow:hidden;
+    border-bottom:3px solid var(--gold);
+  }
+  .hero::after{ /* faint ruled manuscript lines */
+    content:"";position:absolute;inset:0;pointer-events:none;opacity:.06;
+    background:repeating-linear-gradient(180deg,transparent 0 38px,#fff 38px 39px);
+  }
+  .hero .wrap{position:relative;z-index:2}
+  .crest{display:flex;align-items:center;gap:16px;margin-bottom:34px}
+  .crest svg{width:54px;height:54px;flex:none}
+  .crest .who{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-soft)}
+  .crest .who b{color:var(--parch);display:block;letter-spacing:.14em;font-size:.86rem;margin-top:3px}
+  h1{font-size:clamp(2.4rem,6vw,4.1rem);line-height:1.02;font-weight:700;letter-spacing:-.01em}
+  h1 .amp{color:var(--gold);font-style:italic}
+  .sub{margin-top:20px;max-width:56ch;font-size:1.12rem;color:#E7DFCB}
+  .bigq{
+    margin-top:30px;display:inline-flex;gap:14px;align-items:flex-start;
+    border-left:3px solid var(--gold);padding:8px 0 8px 18px;max-width:60ch;
+  }
+  .bigq .q{font-family:"Trebuchet MS",sans-serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-soft);padding-top:5px}
+  .bigq p{font-size:1.24rem;font-style:italic;color:#fff}
+
+  /* ---------- SECTION SHELL ---------- */
+  section{padding:64px 0}
+  .sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:8px}
+  .sec-head .num{font-family:"Trebuchet MS",sans-serif;color:var(--gold);font-weight:700;font-size:.9rem;letter-spacing:.15em}
+  .sec-head h2{font-size:clamp(1.6rem,3.4vw,2.3rem);letter-spacing:-.01em}
+  .sec-lead{color:#4a4a52;max-width:64ch;margin-bottom:34px;font-size:1.05rem}
+
+  /* ---------- SIGNATURE: authority spectrum ---------- */
+  .spectrum-card{
+    background:linear-gradient(180deg,#fff, var(--paper));
+    border:1px solid var(--line);border-radius:14px;
+    box-shadow:0 18px 40px -28px rgba(18,41,77,.5);
+    padding:28px 26px 34px;
+  }
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:26px}
+  .tab{
+    font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.82rem;letter-spacing:.04em;
+    border:1px solid var(--line);background:#fff;color:var(--ink);
+    padding:9px 16px;border-radius:999px;cursor:pointer;transition:.18s;
+  }
+  .tab[aria-selected="true"]{background:var(--ink);color:var(--parch);border-color:var(--ink)}
+  .tab:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+
+  .axis{position:relative;margin:8px 4px 0}
+  .axis-labels{display:flex;justify-content:space-between;font-family:"Trebuchet MS",sans-serif;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:#6a6a72;margin-bottom:10px}
+  .axis-labels .l{color:var(--rubric);font-weight:700}
+  .axis-labels .r{color:var(--blue);font-weight:700}
+  .bar{height:10px;border-radius:999px;background:linear-gradient(90deg,var(--rubric),#b06a1e 40%,#5a7d3a 66%,var(--blue));position:relative}
+  .ticks{position:relative;height:112px;margin-top:0}
+  .node{position:absolute;top:0;transform:translateX(-50%);width:132px;text-align:center;cursor:pointer}
+  .node .dot{width:20px;height:20px;border-radius:50%;background:#fff;border:3px solid var(--ink);margin:0 auto;position:relative;top:-15px;transition:.18s}
+  .node .nm{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.82rem;margin-top:-6px}
+  .node .sb{font-size:.76rem;color:#6a6a72;font-style:italic;margin-top:2px;line-height:1.25}
+  .node:hover .dot,.node[data-active="true"] .dot{transform:scale(1.25);border-color:var(--gold);box-shadow:0 0 0 5px rgba(201,162,39,.2)}
+  .node:focus-visible{outline:none}
+  .node:focus-visible .dot{outline:3px solid var(--gold);outline-offset:3px}
+
+  .readout{
+    margin-top:14px;background:var(--ink);color:var(--parch);border-radius:12px;padding:20px 22px;
+    min-height:104px;display:flex;gap:18px;align-items:flex-start;
+  }
+  .readout .badge{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;
+    background:var(--gold);color:var(--ink-2);padding:6px 10px;border-radius:6px;white-space:nowrap;margin-top:2px}
+  .readout .body h4{font-size:1.12rem;margin-bottom:4px}
+  .readout .body .auth{color:var(--gold-soft);font-family:"Trebuchet MS",sans-serif;font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+  .readout .body p{color:#E7DFCB;font-size:.98rem}
+  .readout .body .sw{display:flex;gap:22px;margin-top:10px;flex-wrap:wrap}
+  .readout .body .sw div{font-size:.9rem}
+  .readout .body .sw .k{font-family:"Trebuchet MS",sans-serif;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase}
+  .readout .body .sw .up .k{color:#8BD08F}
+  .readout .body .sw .dn .k{color:#F2A0A0}
+  .hint{font-family:"Trebuchet MS",sans-serif;font-size:.76rem;color:#8a8a92;margin-top:14px;text-align:center}
+
+  /* ---------- THREE DEBATES ---------- */
+  .triptych{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .panel{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;display:flex;flex-direction:column}
+  .panel .cap{padding:16px 18px;color:#fff;position:relative}
+  .panel.b1 .cap{background:linear-gradient(135deg,#1F4E79,#12294D)}
+  .panel.b2 .cap{background:linear-gradient(135deg,#B01C2E,#5E0F18)}
+  .panel.b3 .cap{background:linear-gradient(135deg,#B45309,#5E2C05)}
+  .panel .cap .n{font-family:"Trebuchet MS",sans-serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;opacity:.85}
+  .panel .cap h3{font-size:1.24rem;margin-top:3px}
+  .panel .cap .ask{font-style:italic;font-size:.9rem;margin-top:8px;opacity:.95}
+  .panel .body{padding:16px 18px;font-size:.92rem}
+  .panel .body .row{display:flex;gap:9px;padding:7px 0;border-bottom:1px dashed var(--line)}
+  .panel .body .row:last-child{border-bottom:0}
+  .panel .body .row .v{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.8rem;white-space:nowrap;color:var(--ink)}
+  .panel .body .row .d{color:#55555c}
+
+  /* ---------- THREAD ---------- */
+  .thread{background:var(--ink);color:var(--parch);border-radius:14px;padding:34px 30px;position:relative;overflow:hidden}
+  .thread::before{content:"";position:absolute;inset:0;opacity:.07;background:repeating-linear-gradient(180deg,transparent 0 30px,#fff 30px 31px)}
+  .thread .wrap2{position:relative;z-index:2}
+  .thread h2{color:#fff;font-size:clamp(1.5rem,3vw,2.1rem);margin-bottom:8px}
+  .thread .lead{color:#E7DFCB;max-width:62ch;margin-bottom:24px}
+  .threads{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .tcard{border:1px solid rgba(228,206,134,.3);border-radius:10px;padding:16px 16px 18px;background:rgba(255,255,255,.03)}
+  .tcard .t{font-family:"Trebuchet MS",sans-serif;color:var(--gold);font-weight:700;font-size:.82rem;letter-spacing:.05em;margin-bottom:6px}
+  .tcard p{font-size:.9rem;color:#E7DFCB}
+
+  /* ---------- REVISE ---------- */
+  .revise{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:start}
+  .steps{counter-reset:s;display:flex;flex-direction:column;gap:14px}
+  .step{display:flex;gap:16px;align-items:flex-start;border-left:2px solid var(--line);padding:2px 0 2px 18px;position:relative}
+  .step::before{counter-increment:s;content:counter(s);position:absolute;left:-15px;top:-2px;width:28px;height:28px;border-radius:50%;
+    background:var(--gold);color:var(--ink-2);font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.9rem;display:grid;place-items:center}
+  .step h4{font-size:1.02rem}
+  .step p{font-size:.9rem;color:#55555c;margin-top:2px}
+  .ao{border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .ao .h{padding:12px 16px;font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.82rem;letter-spacing:.06em;color:#fff}
+  .ao .ao1 .h,.ao .h.ao1{background:var(--ink)}
+  .ao .h.ao2{background:var(--green)}
+  .ao .c{padding:14px 16px;font-size:.9rem;border-bottom:1px solid var(--line)}
+  .ao .c:last-child{border-bottom:0}
+  .ao .c b{font-family:"Trebuchet MS",sans-serif;font-size:.78rem;letter-spacing:.04em}
+
+  /* ---------- VIDEO ---------- */
+  .video-frame{position:relative;width:100%;aspect-ratio:16/9;border-radius:14px;overflow:hidden;
+    border:1px solid var(--line);box-shadow:0 20px 44px -30px rgba(18,41,77,.55);background:var(--ink)}
+  .video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .video-placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:14px;text-align:center;padding:30px;color:#C9C4B6;
+    background:radial-gradient(700px 300px at 50% 30%,rgba(201,162,39,.14),transparent 60%),linear-gradient(180deg,var(--ink),var(--ink-2))}
+  .video-placeholder .vp-badge{font-family:"Trebuchet MS",Verdana,sans-serif;font-weight:700;font-size:.72rem;letter-spacing:.14em;
+    text-transform:uppercase;background:var(--gold);color:var(--ink-2);padding:6px 12px;border-radius:6px}
+  .video-placeholder p{max-width:52ch;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.92rem;line-height:1.55}
+  .video-placeholder code{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:4px;padding:1px 6px}
+
+
+  /* ---------- FLASHCARDS ---------- */
+  .fc-controls{display:flex;gap:18px;flex-wrap:wrap;align-items:center;margin-bottom:24px}
+  .fc-tabs,.fc-type{display:flex;gap:8px;flex-wrap:wrap}
+  .fc-btn{font-family:"Trebuchet MS",Verdana,sans-serif;font-weight:700;font-size:.8rem;border:1px solid var(--line);
+    background:#fff;color:var(--ink);padding:8px 15px;border-radius:999px;cursor:pointer;transition:.18s}
+  .fc-btn[aria-selected="true"]{background:var(--ink);color:var(--parch);border-color:var(--ink)}
+  .fc-btn:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+  .fc-hint{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.78rem;color:#8a8a92;margin-left:auto}
+  .fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+  .fc-card{perspective:1200px;height:180px;cursor:pointer;background:none;border:0;padding:0;font-family:inherit;text-align:left}
+  .fc-inner{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+  .fc-card[data-flipped="true"] .fc-inner{transform:rotateY(180deg)}
+  .fc-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+    border-radius:12px;padding:18px;display:flex;flex-direction:column;border:1px solid var(--line);overflow:auto}
+  .fc-front{background:linear-gradient(180deg,#fff,var(--paper))}
+  .fc-back{transform:rotateY(180deg);color:var(--parch)}
+  .fc-card.anselm .fc-back{background:linear-gradient(160deg,#1F4E79,#12294D)}
+  .fc-card.kant .fc-back{background:linear-gradient(160deg,#B01C2E,#5E0F18)}
+  .fc-card.proof .fc-back{background:linear-gradient(160deg,#B45309,#5E2C05)}
+  .fc-tag{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--gold);font-weight:700;margin-bottom:8px}
+  .fc-front .fc-tag{color:#9a8028}
+  .fc-term{font-size:1.24rem;font-weight:700;line-height:1.15}
+  .fc-front .fc-flip{margin-top:auto;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.72rem;color:#9a9a9a}
+  .fc-def{font-size:.92rem;line-height:1.4}
+  .fc-back .fc-sw{margin-top:8px;font-size:.82rem}
+  .fc-back .fc-sw .k{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.62rem;letter-spacing:.08em;text-transform:uppercase}
+  .fc-back .up .k{color:#8BD08F}.fc-back .dn .k{color:#F2A0A0}
+  @media(max-width:820px){.fc-grid{grid-template-columns:1fr 1fr}.fc-hint{width:100%;margin-left:0}}
+
+  /* ---------- RESOURCES ---------- */
+  .res-note{background:#FBF0D6;border:1px solid var(--gold);border-left:4px solid var(--gold);
+    border-radius:8px;padding:12px 16px;margin-bottom:22px;font-size:.9rem;color:#5a4a1c;
+    font-family:"Trebuchet MS",Verdana,sans-serif}
+  .res-note code{background:#fff;border:1px solid var(--line);border-radius:4px;padding:1px 6px;font-size:.85em}
+  .res-note.hide{display:none}
+  .res-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:16px}
+  .res-col{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff}
+  .rc-head{padding:14px 16px;color:#fff}
+  .rc1 .rc-head{background:linear-gradient(135deg,#1F4E79,#12294D)}
+  .rc2 .rc-head{background:linear-gradient(135deg,#B01C2E,#5E0F18)}
+  .rc3 .rc-head{background:linear-gradient(135deg,#B45309,#5E2C05)}
+  .rc-head .rc-n{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;opacity:.85}
+  .rc-head h3{font-size:1.16rem;margin-top:2px}
+  .res-btn{display:flex;align-items:center;gap:12px;padding:13px 16px;border-top:1px solid var(--line);
+    font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.92rem;color:var(--ink);text-decoration:none;
+    cursor:pointer;transition:background .15s}
+  .res-col .res-btn:first-of-type{border-top:0}
+  .res-btn:hover{background:var(--parch)}
+  .res-btn .ic{width:26px;height:26px;flex:none;display:grid;place-items:center;border-radius:6px;
+    background:var(--ink);color:var(--gold);font-size:.9rem}
+  .res-btn .go{margin-left:auto;color:var(--gold);font-weight:700;opacity:0;transition:.15s}
+  .res-btn:hover .go{opacity:1}
+  .res-btn:focus-visible{outline:3px solid var(--gold);outline-offset:-3px}
+  .res-btn.unset{opacity:.5;cursor:not-allowed}
+  .res-btn.unset .go{content:"";opacity:0}
+  .res-btn.unset::after{content:"Link not set";margin-left:auto;font-size:.74rem;color:#9a7d2c;
+    background:#FBF0D6;border:1px solid var(--gold-soft);border-radius:5px;padding:2px 7px}
+  .res-wide{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:2px}
+  .res-btn.big{border:1px solid var(--line);border-radius:12px;background:#fff;padding:16px 18px}
+  .res-btn.big:hover{background:var(--parch)}
+  .res-btn.big .ic{width:34px;height:34px;font-size:1.1rem;background:var(--ink)}
+  @media(max-width:820px){.res-grid{grid-template-columns:1fr}.res-wide{grid-template-columns:1fr}}
+
+  footer{background:var(--ink-2);color:#C9C4B6;padding:26px 0;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.8rem}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+  footer .gold{color:var(--gold)}
+
+  @media(max-width:820px){
+    .triptych{grid-template-columns:1fr}
+    .threads{grid-template-columns:1fr}
+    .revise{grid-template-columns:1fr}
+    .node{width:96px}
+    .node .sb{display:none}
+  }
+  @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<!--BACKPILL--><a href="../alevel.html" style="position:fixed;left:14px;bottom:14px;z-index:99999;background:#12294D;color:#F6F1E4;font:600 14px/1 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;padding:10px 15px;border-radius:999px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.28);border:1px solid #C9A227">&#8592; All units</a>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap">
+    <div class="crest">
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <rect x="2" y="2" width="60" height="60" rx="13" fill="#0C1B33" stroke="#C9A227" stroke-width="1.5"/>
+        <g fill="none" stroke="#F3ECDD" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M23 21C21 17 21 14 22 12c2 2 3 5 3 8"/><path d="M41 21c2-4 2-7 1-9-2 2-3 5-3 8"/>
+          <path d="M32 17C21 17 18 26 18 33c0 12 6 19 14 19s14-7 14-19c0-7-3-16-14-16z"/>
+          <path d="M32 21c-3 4-5 6-7 7M32 21c3 4 5 6 7 7"/>
+        </g>
+        <circle cx="27" cy="31" r="5" fill="none" stroke="#F3ECDD" stroke-width="2.4"/>
+        <circle cx="37" cy="31" r="5" fill="none" stroke="#F3ECDD" stroke-width="2.4"/>
+        <circle cx="27" cy="31" r="1.9" fill="#F3ECDD"/><circle cx="37" cy="31" r="1.9" fill="#F3ECDD"/>
+        <path d="M32 34l-2.2 4.2h4.4z" fill="#C9A227"/>
+      </svg>
+      <div class="who">A-Level Religious Studies · AQA Paper 1
+        <b>Harlington School · Philosophy &amp; Ethics</b></div>
+    </div>
+    <h1>The Ontological <span class="amp">Argument</span></h1>
+    <p class="sub">One argument — and nine centuries of argument about it. Anselm claims that pure logic, with no evidence and no experience, can prove that God exists. Gaunilo, Kant and Barth answer.</p>
+    <div class="bigq">
+      <span class="q">The<br>big<br>question</span>
+      <p>Can God's existence be proved by definition alone — and if the proof fails, is the argument worthless?</p>
+    </div>
+  </div>
+</header>
+
+<!-- SIGNATURE: SPECTRUM -->
+<section id="spectrum">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">01</span><h2>From the mind to reality</h2></div>
+    <p class="sec-lead">Every debate in this unit lines up on the same axis — from an idea that exists <b>in the mind only</b> to a being that exists <b>in reality, necessarily</b>. The whole argument is an attempt to cross that line by logic alone. Pick a lesson, then tap a position to see what it claims and where it's strong or weak.</p>
+
+    <div class="spectrum-card">
+      <div class="tabs" role="tablist" aria-label="Choose a lesson">
+        <button class="tab" role="tab" aria-selected="true"  data-topic="anselm">Anselm &amp; Gaunilo</button>
+        <button class="tab" role="tab" aria-selected="false" data-topic="kant">Kant's Criticisms</button>
+        <button class="tab" role="tab" aria-selected="false" data-topic="proof">Proof &amp; Value</button>
+      </div>
+
+      <div class="axis">
+        <div class="axis-labels"><span class="l" id="poleL">Most authority</span><span class="r" id="poleR">Least authority</span></div>
+        <div class="bar"></div>
+        <div class="ticks" id="ticks"></div>
+      </div>
+
+      <div class="readout" id="readout" aria-live="polite"></div>
+      <p class="hint">Tap a circle — or use Tab and Enter — to explore each position.</p>
+    </div>
+  </div>
+</section>
+
+<!-- THE THREAD -->
+<section>
+  <div class="wrap">
+    <div class="thread">
+      <div class="wrap2">
+        <h2>The thread that ties it together</h2>
+        <p class="lead">Top answers don't treat the three lessons separately. Three ideas run through all of them — spot the thread and you're writing at the top of the mark scheme.</p>
+        <div class="threads">
+          <div class="tcard"><div class="t">The mind→reality gap</div><p>In intellectu vs in re. Anselm claims a definition can cross the gap; Gaunilo and Kant insist nothing crosses it but experience.</p></div>
+          <div class="tcard"><div class="t">The little word 'If'</div><p>Kant's whole verdict in two letters: IF there is a God, God exists necessarily. Every stage of the unit either hides that 'if' or points at it.</p></div>
+          <div class="tcard"><div class="t">Proof vs value</div><p>'Is it a proof?' and 'is it worth anything?' are different questions. Keep them apart — that is where Barth, fideism and Price live.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THREE DEBATES -->
+<section id="debates">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">02</span><h2>The same question, three times</h2></div>
+    <p class="sec-lead">The unit splits into three lessons. They look different, but each is really asking <em>whether logic alone can reach reality</em>.</p>
+    <div class="triptych">
+      <div class="panel b1">
+        <div class="cap"><div class="n">Lesson 1</div><h3>Anselm &amp; Gaunilo</h3><div class="ask">Can a <b>definition</b> deliver reality?</div></div>
+        <div class="body">
+          <div class="row"><span class="v">The fool</span><span class="d">Even 'there is no God' needs the idea of God (Psalm 14:1).</span></div>
+          <div class="row"><span class="v">Proslogium 2</span><span class="d">Greater to exist in reality — so the greatest conceivable being exists.</span></div>
+          <div class="row"><span class="v">Gaunilo</span><span class="d">Then a perfect lost island exists too. Reductio ad absurdum.</span></div>
+          <div class="row"><span class="v">Proslogium 3</span><span class="d">Islands are contingent; God alone exists necessarily.</span></div>
+        </div>
+      </div>
+      <div class="panel b2">
+        <div class="cap"><div class="n">Lesson 2</div><h3>Kant's Criticisms</h3><div class="ask">Is <b>'exists'</b> a predicate at all?</div></div>
+        <div class="body">
+          <div class="row"><span class="v">The target</span><span class="d">Descartes: existence is a perfection of God's essence.</span></div>
+          <div class="row"><span class="v">Objection 1</span><span class="d">100 Thalers — 'it exists' adds nothing to a concept.</span></div>
+          <div class="row"><span class="v">Objection 2</span><span class="d">Analytic truths stay hypothetical — unicorns are horses with horns.</span></div>
+          <div class="row"><span class="v">The verdict</span><span class="d">IF there is a God, God exists necessarily. Nothing more.</span></div>
+        </div>
+      </div>
+      <div class="panel b3">
+        <div class="cap"><div class="n">Lesson 3</div><h3>Proof &amp; Value</h3><div class="ask">If it fails as proof, is it <b>worthless</b>?</div></div>
+        <div class="body">
+          <div class="row"><span class="v">Defenders</span><span class="d">Deductive — the only candidate for PROOF (Plantinga still defends it).</span></div>
+          <div class="row"><span class="v">Critics</span><span class="d">Kant ×2 + Aquinas: we cannot even define God.</span></div>
+          <div class="row"><span class="v">Barth</span><span class="d">Never a proof — faith seeking understanding.</span></div>
+          <div class="row"><span class="v">Fideism &amp; Price</span><span class="d">Proof would cheapen faith; 'belief in' beats 'belief that'.</span></div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+</section>
+
+<!-- YOUR RESOURCES -->
+<section id="resources">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">03</span><h2>Your resources</h2></div>
+    <p class="sec-lead">Everything for the unit, in one place. Open a lesson's deck, booklet and podcast, and use the <b>Philosopher Companion</b> across all three.</p>
+
+    <div class="res-note" id="resNote">
+      <b>Teacher setup:</b> links aren't set yet. Open this file, find the <code>LINKS</code> list near the bottom, and paste each SharePoint share link once. Buttons with no link show as “Link not set”.
+    </div>
+
+    <div class="res-grid">
+      <div class="res-col rc1">
+        <div class="rc-head"><span class="rc-n">Lesson 1</span><h3>Anselm &amp; Gaunilo</h3></div>
+        <a class="res-btn" data-key="anselm_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="anselm_booklet"><span class="ic">✎</span><span>Completion booklet</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="anselm_podcast"><span class="ic">♪</span><span>Lesson podcast</span><span class="go">↗</span></a>
+      </div>
+      <div class="res-col rc2">
+        <div class="rc-head"><span class="rc-n">Lesson 2</span><h3>Kant's Criticisms</h3></div>
+        <a class="res-btn" data-key="kant_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="kant_booklet"><span class="ic">✎</span><span>Completion booklet</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="kant_podcast"><span class="ic">♪</span><span>Lesson podcast</span><span class="go">↗</span></a>
+      </div>
+      <div class="res-col rc3">
+        <div class="rc-head"><span class="rc-n">Lesson 3</span><h3>Proof &amp; Value</h3></div>
+        <a class="res-btn" data-key="proof_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="proof_booklet"><span class="ic">✎</span><span>Completion booklet</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="proof_podcast"><span class="ic">♪</span><span>Lesson podcast</span><span class="go">↗</span></a>
+      </div>
+    </div>
+
+    <div class="res-wide">
+      <a class="res-btn big" data-key="companion"><span class="ic">🦉</span><span><b>Philosopher Companion</b> — checklist, AO1 &amp; AO2 planning, key terms &amp; review</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="review"><span class="ic">↻</span><span><b>Review lessons</b> — consolidation decks for all three lessons</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="overview_podcast"><span class="ic">♪</span><span><b>Overview podcast</b> — the whole unit as one argument (team teach)</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="flashcards_pdf"><span class="ic">▤</span><span><b>Printable flashcards</b> — fold-over key terms &amp; views to cut out</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="exam_questions"><span class="ic">?</span><span><b>Exam questions by unit</b> — every AQA question 2018–2024, organised</span><span class="go">↗</span></a>
+    </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW TO REVISE -->
+<section id="revise">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">04</span><h2>How to revise this unit</h2></div>
+    <p class="sec-lead">Use your resources in this order. The <b>Philosopher Companion</b> is where you learn to <em>plan</em> both question types.</p>
+    <div class="revise">
+      <div class="steps">
+        <div class="step"><div><h4>Watch the lesson &amp; listen to the podcast</h4><p>One podcast per lesson — a teacher and student talk each move through to a judgement. Annotate as you listen.</p></div></div>
+        <div class="step"><div><h4>Complete the greyscale booklet</h4><p>Read the given text, write the key claims in your own words, then decide the strength and weakness you'd give each view.</p></div></div>
+        <div class="step"><div><h4>Match &amp; apply the key terms</h4><p>In the Companion: match each term to its meaning, then use it in a sentence. RAG-rate the mastery checklist with the three faces.</p></div></div>
+        <div class="step"><div><h4>Plan AO1, then build AO2 on top</h4><p>Use the Companion frameworks and the guidance-left / your-turn-right scaffolds. Never evaluate what you haven't first explained.</p></div></div>
+      </div>
+      <div class="ao">
+        <div class="ao1"><div class="h ao1">AO1 · Examine the views (10)</div></div>
+        <div class="c"><b>What it is —</b> the factual chain: define the technical terms, then set out each stage in order and apply the famous examples (the painter, the island, the Thalers, the unicorn).</div>
+        <div class="c"><b>Aim —</b> explain the whole range accurately and neutrally. No judging yet.</div>
+        <div class="h ao2">AO2 · Evaluate the claim (15)</div>
+        <div class="c"><b>What it is —</b> a three-paragraph dialectic: view, then evaluation → counter-evaluation → implication; mirror it; then judge.</div>
+        <div class="c"><b>Aim —</b> weigh the views, use one as a lens on another, and reach a justified judgement that links back to your thesis.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WATCH: FULL UNIT REVIEW -->
+<section id="watch">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">05</span><h2>Watch: the whole unit in one go</h2></div>
+    <p class="sec-lead">A full review of <b>The Ontological Argument</b> — Anselm and Gaunilo, Kant's two objections, and the proof-and-value debate. Best watched before you start revising, then again to check your recall.</p>
+    <div class="video-frame" id="videoFrame">
+      <div class="video-placeholder" id="videoPlaceholder">
+        <div class="vp-badge">Video not set</div>
+        <p><b>Teacher:</b> paste the YouTube link in the <code>VIDEO_URL</code> line near the bottom of this file. The player then appears here automatically.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- FLASHCARDS -->
+<section id="flashcards">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">06</span><h2>Flashcards — test yourself</h2></div>
+    <p class="sec-lead">Flip a card to check yourself. Switch between <b>key terms</b> (term → meaning) and <b>views</b> (position → claim, strength &amp; weakness), and filter by lesson.</p>
+    <div class="fc-controls">
+      <div class="fc-tabs" role="tablist" aria-label="Sub-topic">
+        <button class="fc-btn" role="tab" aria-selected="true"  data-topic="all">All</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-topic="anselm">Anselm &amp; Gaunilo</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-topic="kant">Kant</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-topic="proof">Proof &amp; Value</button>
+      </div>
+      <div class="fc-type" role="tablist" aria-label="Card type">
+        <button class="fc-btn" role="tab" aria-selected="true"  data-type="terms">Key terms</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-type="views">Views</button>
+      </div>
+      <span class="fc-hint">Tap any card to flip · <span id="fcCount"></span></span>
+    </div>
+    <div class="fc-grid" id="fcGrid"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>The Ontological Argument · Unit at a glance</span>
+    <span class="gold">Harlington School · Philosophy &amp; Ethics</span>
+  </div>
+</footer>
+
+<script>
+const DATA = {
+ "anselm": {
+  "poles": [
+   "In the mind only",
+   "In reality — necessarily"
+  ],
+  "nodes": [
+   {
+    "x": 8,
+    "nm": "The fool",
+    "sb": "has the idea, denies it",
+    "auth": "The starting point",
+    "claim": "'The fool says in his heart, there is no God' (Psalm 14:1). But to deny God, even the fool must hold the idea of God in his mind — which is all Anselm needs to begin.",
+    "s": "Locates the argument inside the atheist's own head.",
+    "w": "Having an idea is not yet admitting anything real."
+   },
+   {
+    "x": 36,
+    "nm": "Gaunilo",
+    "sb": "ideas never guarantee reality",
+    "auth": "Parity challenge",
+    "claim": "Run the same logic on a 'most perfect lost island' and it must exist too — absurd. A reductio ad absurdum: if the form proves God, it proves the island; it can't, so it proves neither.",
+    "s": "Attacks the FORM, from inside the faith.",
+    "w": "Islands are contingent — the parody may not transfer to a necessary being."
+   },
+   {
+    "x": 64,
+    "nm": "Anselm: Pros. 2",
+    "sb": "the greatest idea must be real",
+    "auth": "A priori proof",
+    "claim": "God is that than which nothing greater can be conceived; it is greater to exist in reality than in the mind alone (the painter's idea vs the painting); so God must exist in reality.",
+    "s": "Deductive — succeeds or fails by logic alone.",
+    "w": "Treats existence as a great-making quality — Kant's target."
+   },
+   {
+    "x": 92,
+    "nm": "Anselm: Pros. 3",
+    "sb": "cannot be thought not to be",
+    "auth": "Necessary existence",
+    "claim": "That which can be conceived not to exist is not God. Islands rot and decay — everything on a 'perfect' island is contingent. God, and God alone, possesses necessary existence.",
+    "s": "Cleanly rebuts the island — parodies about things never touch God.",
+    "w": "If 'exists necessarily' is just the definition, the little word 'If' still stands."
+   }
+  ]
+ },
+ "kant": {
+  "poles": [
+   "'Exists' adds everything",
+   "'Exists' adds nothing"
+  ],
+  "nodes": [
+   {
+    "x": 8,
+    "nm": "Descartes",
+    "sb": "existence is a perfection",
+    "auth": "The target",
+    "claim": "God is the supremely perfect being, and existence is a perfection — inseparable from God's essence as three angles from a triangle, or a valley from a mountain.",
+    "s": "Crisp, geometrical version of the argument.",
+    "w": "Assumes existence is a predicate God 'has'."
+   },
+   {
+    "x": 36,
+    "nm": "Anselm",
+    "sb": "greater to exist in reality",
+    "auth": "The parallel claim",
+    "claim": "The Proslogium runs on the same fuel: the greatest conceivable being must possess the perfection of existence, because it is greater to exist in reality than only in the mind.",
+    "s": "If existence is a perfection, the logic flows.",
+    "w": "Stands or falls with Descartes on Kant's test."
+   },
+   {
+    "x": 64,
+    "nm": "Kant: Objection 1",
+    "sb": "not a real predicate",
+    "auth": "Demolition",
+    "claim": "Real predicates add knowledge ('the cow is an Aberdeen Angus'); 'it exists' adds nothing. 100 Thalers: no difference between the concept of the coins and the concept of coins that exist. Only experience settles existence.",
+    "s": "Explains why definitions can never settle existence.",
+    "w": "Is NECESSARY existence different? Plantinga thinks so."
+   },
+   {
+    "x": 92,
+    "nm": "Kant: Objection 2",
+    "sb": "analytic truths stay hypothetical",
+    "auth": "Containment",
+    "claim": "Grant that 'God exists necessarily' is analytic — true by definition. So is 'a unicorn is a horse with a horn', and there are no unicorns. The argument omits one small word: IF there is a God, God exists necessarily.",
+    "s": "Grants Anselm everything and still blocks the conclusion.",
+    "w": "Blocks the proof — it does not disprove God."
+   }
+  ]
+ },
+ "proof": {
+  "poles": [
+   "A proof for anyone",
+   "A prayer for believers"
+  ],
+  "nodes": [
+   {
+    "x": 8,
+    "nm": "The defenders",
+    "sb": "a real proof — if sound",
+    "auth": "All-or-nothing",
+    "claim": "Deductive and a priori: unlike Design or Cosmological arguments it owes nothing to fallible observation. If the premises hold, God's existence is certain, not probable. Plantinga still defends it.",
+    "s": "The only candidate for PROOF among the arguments for God.",
+    "w": "One broken premise and it delivers nothing — Kant claims two."
+   },
+   {
+    "x": 38,
+    "nm": "Most scholars",
+    "sb": "a failed proof — only 'If'",
+    "auth": "Majority verdict",
+    "claim": "Kant's objections persuade most scholars, and Aquinas adds that we do not know God's definition at all. The proof test: nobody doubts 2 + 2 = 4, yet plenty doubt Anselm.",
+    "s": "Two independent attacks — logical and theological — converge.",
+    "w": "'Blocked as proof' is not 'disproved': God's existence stays open."
+   },
+   {
+    "x": 66,
+    "nm": "Fideists & Price",
+    "sb": "proof would cheapen faith",
+    "auth": "Value without proof",
+    "claim": "Fideism: faith does not depend on reason — a successful proof would empty faith of its value. H.H. Price: 'belief IN God' (trust) is the real thing; 'belief THAT' is just a proposition. The argument's value is for those who already love God.",
+    "s": "Explains nine centuries of devotional use by believers.",
+    "w": "Value only inside the faith may be circular."
+   },
+   {
+    "x": 92,
+    "nm": "Barth",
+    "sb": "never a proof — revelation",
+    "auth": "Reframe",
+    "claim": "Faith Seeking Understanding (1931): 'I believe in order to understand' (Pros. 1). The definition was revealed to Anselm in prayer; if logic could prove God, revelation would be unnecessary.",
+    "s": "Immune to Kant; explains the prayer form of the Proslogium.",
+    "w": "Then why does Gaunilo bother to object — and Anselm answer with logic?"
+   }
+  ]
+ }
+};
+
+const ticks=document.getElementById("ticks");
+const readout=document.getElementById("readout");
+const poleL=document.getElementById("poleL"), poleR=document.getElementById("poleR");
+let topic="anselm", active=0;
+
+function renderReadout(n){
+  readout.innerHTML=`
+    <span class="badge">${n.auth}</span>
+    <div class="body">
+      <h4>${n.nm} <span style="opacity:.6;font-style:italic;font-weight:400">· ${n.sb}</span></h4>
+      <p>${n.claim}</p>
+      <div class="sw">
+        <div class="up"><span class="k">Strength</span><br>${n.s}</div>
+        <div class="dn"><span class="k">Weakness</span><br>${n.w}</div>
+      </div>
+    </div>`;
+}
+function renderTopic(){
+  const d=DATA[topic];
+  poleL.textContent=d.poles[0]; poleR.textContent=d.poles[1];
+  ticks.innerHTML="";
+  d.nodes.forEach((n,i)=>{
+    const el=document.createElement("div");
+    el.className="node"; el.style.left=n.x+"%"; el.tabIndex=0;
+    el.setAttribute("role","button");
+    el.setAttribute("aria-label",`${n.nm}: ${n.sb}`);
+    el.dataset.active=(i===active);
+    el.innerHTML=`<div class="dot"></div><div class="nm">${n.nm}</div><div class="sb">${n.sb}</div>`;
+    const pick=()=>{active=i;[...ticks.children].forEach((c,j)=>c.dataset.active=(j===i));renderReadout(n);};
+    el.addEventListener("click",pick);
+    el.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();pick();}});
+    ticks.appendChild(el);
+  });
+  active=Math.min(active,d.nodes.length-1);
+  [...ticks.children].forEach((c,j)=>c.dataset.active=(j===active));
+  renderReadout(d.nodes[active]);
+}
+document.querySelectorAll(".tab").forEach(t=>{
+  t.addEventListener("click",()=>{
+    document.querySelectorAll(".tab").forEach(x=>x.setAttribute("aria-selected","false"));
+    t.setAttribute("aria-selected","true");
+    topic=t.dataset.topic; active=0; renderTopic();
+  });
+});
+renderTopic();
+
+const FLASHCARDS = {"anselm": {"terms": [{"term": "A priori", "def": "an argument resting on logical deduction alone, prior to / before any sense experience."}, {"term": "Deductive", "def": "an argument where, if the premises are true, the conclusion must be true."}, {"term": "Analytic", "def": "a statement true by the meaning of its words alone - true by definition."}, {"term": "Predicate", "def": "the part of a sentence giving information about the subject."}, {"term": "Necessary", "def": "a necessary truth cannot possibly be false; a necessary being cannot fail to exist."}, {"term": "Contingent", "def": "a contingent truth happens to be true but could have been otherwise; a contingent thing could have failed to exist."}], "views": [{"n": "Anselm part 1: Proslogium 2", "c": "God is that than which nothing greater can be conceived - so God must exist in reality. A PRIORI PROOF: no observation needed - if the premises hold, God's existence is logically GUARANTEED, not merely probable.", "s": "Deductive, so it succeeds or fails by logic alone: unlike Design or Cosmological arguments it leans on no fallible, ambiguous observation of the world.", "w": "The claim that existing in reality is 'greater' than existing in the mind treats existence as a great-making quality - the exact point Kant will later attack; it can look like defining God into existence."}, {"n": "Gaunilo: On Behalf of the Fool", "c": "By this logic a perfect lost island must exist - so the logic must be broken. PARITY CHALLENGE: if the form proves God, it equally proves the island; since it cannot prove the island, it proves neither.", "s": "Devastatingly intuitive; attacks the argument's FORM rather than religion (Gaunilo was a believing monk, so no anti-religious bias can be alleged).", "w": "Islands are contingent by nature - the parody may simply not transfer to a NECESSARY being; and 'the perfect island' may be incoherent, since it has no intrinsic maximum (how many palm trees make it perfect?)."}, {"n": "Anselm part 2: Proslogium 3 & the Responsio", "c": "God CANNOT be conceived not to exist - necessary existence belongs to God alone. UPGRADED PROOF: the claim rises from 'God exists' to 'God exists necessarily' - the strongest existence-claim possible.", "s": "Cleanly refutes the island: only the concept of God carries necessary existence, so parodies about contingent things never touch the argument.", "w": "It hands Kant his target: if 'exists necessarily' is just part of the DEFINITION of God, perhaps all Anselm has shown is that IF there is a God, then God exists necessarily - the little word 'if' still stands."}]}, "kant": {"terms": [{"term": "Real predicate", "def": "a predicate that gives us NEW knowledge about the subject."}, {"term": "Proposition", "def": "a statement that claims something is true, built from a subject and a predicate."}, {"term": "Analytic", "def": "a proposition true by the meaning of its words alone — true by definition."}, {"term": "Synthetic", "def": "a proposition whose truth or falsity is determined by sense experience."}, {"term": "Essence", "def": "what a thing IS by definition — the properties it cannot lack."}, {"term": "Perfection", "def": "a quality possessed to its highest possible degree."}], "views": [{"n": "Descartes' ontological argument", "c": "God is the supremely perfect being — and existence is a perfection. DEFINITIONAL PROOF: denying God's existence becomes a self-contradiction — as absurd as a triangle whose angles don't add up.", "s": "Makes explicit and formal what Anselm left implicit: a crisp, geometrical version of the argument — which is exactly why it drew the sharpest criticism.", "w": "Everything rests on counting existence as a perfection — a predicate God 'has'. That is precisely the assumption Kant dismantles."}, {"n": "Kant: existence is not a real predicate", "c": "'It exists' adds nothing to the concept of a thing. DEMOLITION: if existence is not a real predicate, then 'existence is a perfection' (Descartes) and 'greater to exist in reality' (Anselm) never get started.", "s": "Intuitively compelling, and explains WHY definitions can never settle existence; on this basis most scholars reject the Ontological Argument.", "w": "Defenders reply that NECESSARY existence (unlike bare existence) may be a real predicate after all — it does tell you what KIND of being God would be, which is why scholars such as Plantinga still defend the argument."}, {"n": "Kant: the analytic escape — the missing 'If'", "c": "Even if 'exists necessarily' is part of what we MEAN by 'God', it does not follow that God is real. CONTAINMENT: the argument proves at most what God WOULD be like — a conditional — never that God IS.", "s": "Grants Anselm everything he asked for (necessary existence in the definition) and STILL blocks the conclusion — a criticism that needs no hostility to religion at all.", "w": "It leaves a door open: if the argument fails as logical proof, perhaps proof was never the point — Barth will argue next lesson that Anselm was doing something else entirely."}]}, "proof": {"terms": [{"term": "Proof", "def": "an argument whose premises, if true, guarantee its conclusion — leaving no room for doubt."}, {"term": "Fideism", "def": "the view that faith does not depend on reason; if faith and reason point different ways, the believer may follow faith."}, {"term": "Revelation", "def": "God making himself known — the opposite of humans reasoning their way up to God."}, {"term": "'Belief in' / 'belief that'", "def": "H.H. Price's distinction: trusting commitment to God versus assent to the proposition that God exists."}, {"term": "Volitional", "def": "an act of the will."}, {"term": "Adequate concept", "def": "a concept grasped as the thing it really is, not just as words understood."}], "views": [{"n": "The case FOR the argument", "c": "Deductive, a priori — if it succeeds at all, it succeeds completely. ALL-OR-NOTHING: uniquely among the arguments for God, this one — if sound — delivers certainty, not probability.", "s": "Immune to every weakness of observation-based arguments: no ambiguous data, no fallible senses, no merely probable conclusion.", "w": "The all-or-nothing shape cuts both ways: one broken premise and it delivers nothing at all — and Kant claims to have broken two."}, {"n": "The case AGAINST: Kant and Aquinas", "c": "Most scholars reject it — and Aquinas rejects its very starting point. MAJORITY VERDICT: the argument establishes a conditional — what God would be — and nothing more.", "s": "Two independent lines of attack (Kant's logic, Aquinas' theology) converge on the same verdict — that convergence is hard to dismiss.", "w": "The Aquinas objection may prove too much: if God cannot be defined AT ALL, negative theology threatens every statement about God — including Aquinas' own."}, {"n": "Barth: Faith Seeking Understanding", "c": "Anselm never intended a proof — the argument is faith seeking understanding. REFRAME: the argument was never competing in Kant's arena — judged as devotion, it cannot fail as proof, because it never was one.", "s": "Rescues the argument from Kant entirely, and explains the prayer-form of the Proslogium that pure logicians have to ignore.", "w": "It must explain away Anselm's own stated search for a proof, the address to the fool, and the entire logical duel with Gaunilo — which reads like an argument about logic, not a testimony of faith."}, {"n": "Against Barth — and the value that remains", "c": "It was meant to convince the fool. So what is a failed proof worth? VALUE WITHOUT PROOF: the argument convinces almost no atheists — and yet deepens, trains and articulates the faith of those who already believe.", "s": "Historically honest (Anselm sought a proof) while explaining the argument's real, lasting effect: nine centuries of believers thinking harder about what 'God' means.", "w": "If the argument only works for those who already believe, its 'value' may be circular — Barth's critics and Barth may simply be describing the same closed loop from opposite ends."}]}};
+(function(){
+  let fcTopic="all", fcType="terms";
+  const grid=document.getElementById("fcGrid"), count=document.getElementById("fcCount");
+  function esc(s){return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+  function build(){
+    const topics = fcTopic==="all" ? ["anselm","kant","proof"] : [fcTopic];
+    let cards=[];
+    topics.forEach(tp=>{
+      const d=FLASHCARDS[tp]; if(!d) return;
+      if(fcType==="terms"){ d.terms.forEach(t=>cards.push({tp,front:t.term,tag:label(tp),back:`<div class='fc-def'>${esc(t.def)}</div>`})); }
+      else { d.views.forEach(v=>cards.push({tp,front:v.n,tag:label(tp),back:`<div class='fc-def'>${esc(v.c)}</div><div class='fc-sw'><div class='up'><span class='k'>Strength</span><br>${esc(v.s)}</div><div class='dn' style='margin-top:6px'><span class='k'>Weakness</span><br>${esc(v.w)}</div></div>`})); }
+    });
+    grid.innerHTML=cards.map(c=>`
+      <button class="fc-card ${c.tp}" data-flipped="false" aria-label="Flashcard: ${esc(c.front)}. Tap to reveal.">
+        <div class="fc-inner">
+          <div class="fc-face fc-front"><div class="fc-tag">${c.tag}</div><div class="fc-term">${esc(c.front)}</div><div class="fc-flip">tap to flip ↺</div></div>
+          <div class="fc-face fc-back"><div class="fc-tag">${c.tag}</div>${c.back}</div>
+        </div>
+      </button>`).join("");
+    count.textContent = cards.length + " cards";
+    grid.querySelectorAll(".fc-card").forEach(el=>{
+      const flip=()=>el.dataset.flipped = el.dataset.flipped==="true" ? "false":"true";
+      el.addEventListener("click",flip);
+    });
+  }
+  function label(tp){return tp==="anselm"?"Anselm & Gaunilo":tp==="kant"?"Kant's Criticisms":"Proof & Value";}
+  document.querySelectorAll('#flashcards .fc-tabs .fc-btn').forEach(b=>b.addEventListener("click",()=>{
+    document.querySelectorAll('#flashcards .fc-tabs .fc-btn').forEach(x=>x.setAttribute("aria-selected","false"));
+    b.setAttribute("aria-selected","true"); fcTopic=b.dataset.topic; build();
+  }));
+  document.querySelectorAll('#flashcards .fc-type .fc-btn').forEach(b=>b.addEventListener("click",()=>{
+    document.querySelectorAll('#flashcards .fc-type .fc-btn').forEach(x=>x.setAttribute("aria-selected","false"));
+    b.setAttribute("aria-selected","true"); fcType=b.dataset.type; build();
+  }));
+  build();
+})();
+
+/* =====================================================================
+   TEACHER: paste your YouTube link between the quotes below.
+   Any format works — youtube.com/watch?v=…, youtu.be/…, or an embed URL.
+   Leave it empty ("") and the page shows a "Video not set" placeholder.
+   ===================================================================== */
+const VIDEO_URL = "";
+
+(function wireVideo(){
+  const url=(VIDEO_URL||"").trim();
+  if(!url) return; // keep placeholder
+  // extract the 11-char YouTube id from common URL shapes
+  let id="";
+  const m = url.match(/(?:youtu\.be\/|v=|\/embed\/|\/shorts\/)([A-Za-z0-9_-]{11})/);
+  if(m) id=m[1];
+  else if(/^[A-Za-z0-9_-]{11}$/.test(url)) id=url; // a bare id
+  const frame=document.getElementById("videoFrame");
+  if(id && frame){
+    frame.innerHTML =
+      '<iframe src="https://www.youtube-nocookie.com/embed/'+id+'?rel=0" '+
+      'title="The Ontological Argument — full unit review" '+
+      'allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" '+
+      'allowfullscreen loading="lazy"></iframe>';
+  } else if(frame){
+    // not a YouTube link — fall back to a button that opens it
+    frame.innerHTML =
+      '<div class="video-placeholder"><a class="res-btn big" style="background:#fff" href="'+url+'" target="_blank" rel="noopener"><span class="ic">▶</span><span><b>Watch the full unit review</b></span><span class="go">↗</span></a></div>';
+  }
+})();
+
+/* =====================================================================
+   TEACHER: paste your SharePoint share links between the quotes below.
+   Leave a link empty ("") and its button will show "Link not set".
+   Tip: in SharePoint, open the file's ... menu -> Copy link -> paste here.
+   ===================================================================== */
+const LINKS = {
+  anselm_lesson:   "",
+  anselm_booklet:  "",
+  anselm_podcast:  "",
+  kant_lesson:     "",
+  kant_booklet:    "",
+  kant_podcast:    "",
+  proof_lesson:    "",
+  proof_booklet:   "",
+  proof_podcast:   "",
+  companion:       "",
+  review:          "",
+  overview_podcast: "",
+  flashcards_pdf:   "",
+  exam_questions:   ""
+};
+
+(function wireResources(){
+  let anySet=false;
+  document.querySelectorAll(".res-btn").forEach(btn=>{
+    const url=(LINKS[btn.dataset.key]||"").trim();
+    if(url){
+      btn.href=url; btn.target="_blank"; btn.rel="noopener"; anySet=true;
+    }else{
+      btn.classList.add("unset"); btn.removeAttribute("href"); btn.setAttribute("aria-disabled","true");
+    }
+  });
+  if(anySet){ const n=document.getElementById("resNote"); if(n) n.classList.add("hide"); }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bentham and Kant &mdash; Unit at a Glance</title>
+<style>
+:root{--navy:#12294D;--gold:#C9A227;--parch:#FBF7EE;--ink:#1A1A1A;--mut:#5B6472;--line:#E3DCCB;}
+*{box-sizing:border-box}
+body{margin:0;background:var(--parch);color:var(--ink);font-family:"Segoe UI",Calibri,system-ui,sans-serif;line-height:1.55}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+header{background:var(--navy);color:#fff;padding:38px 0 30px;border-bottom:5px solid var(--gold)}
+header .wrap{display:flex;gap:20px;align-items:center;flex-wrap:wrap}
+.crest{flex:0 0 74px;height:74px;border-radius:14px;background:#0C1B33;border:1px solid #24406b;display:flex;align-items:center;justify-content:center}
+.kicker{font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:700}
+h1{margin:.16em 0 .12em;font-family:Georgia,serif;font-size:2rem;line-height:1.15}
+.sub{color:#D7DEE9;font-size:.95rem;margin:0}
+.rules{margin-top:16px;border-top:1px solid #2b4straight}
+section{padding:34px 0;border-bottom:1px solid var(--line)}
+.sec-head{display:flex;align-items:baseline;gap:12px;margin-bottom:6px}
+.num{font-family:Georgia,serif;color:var(--gold);font-weight:700;font-size:1.5rem}
+h2{margin:0;font-family:Georgia,serif;font-size:1.42rem;color:var(--navy)}
+.sec-lead{color:var(--mut);margin:.35em 0 1.1em;max-width:78ch}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.tab{border:1px solid var(--line);background:#fff;padding:8px 14px;border-radius:999px;cursor:pointer;font-size:.9rem;font-weight:600;color:var(--mut)}
+.tab[data-on="true"]{color:#fff;border-color:transparent}
+.spec{background:#fff;border:1px solid var(--line);border-radius:12px;padding:20px}
+.spec h3{margin:0 0 4px;font-family:Georgia,serif;color:var(--navy);font-size:1.08rem}
+.axis-labels{display:flex;justify-content:space-between;font-size:.78rem;font-weight:700;margin:14px 0 6px;gap:14px}
+.axis-labels .r{text-align:right}
+.bar{height:12px;border-radius:99px;margin-bottom:2px}
+.ticks{display:flex;gap:6px}
+.tick{flex:1;text-align:center;cursor:pointer;padding:10px 4px;border-radius:9px;border:1px solid transparent}
+.tick:hover{background:#F6F2E7}
+.tick[data-active="true"]{background:#F3EEDF;border-color:var(--gold)}
+.dot{width:15px;height:15px;border-radius:50%;background:#fff;border:3px solid var(--navy);margin:0 auto 7px}
+.tick b{display:block;font-size:.85rem;line-height:1.25}
+.readout{margin-top:16px;border-left:4px solid var(--navy);background:#F8F5EC;padding:14px 16px;border-radius:0 9px 9px 0;min-height:96px}
+.readout .rn{font-weight:700;color:var(--navy);font-size:1rem}
+.readout .rc{font-style:italic;color:var(--mut);margin:3px 0 9px}
+.sw{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}
+.sw div{padding:9px 11px;border-radius:8px;font-size:.87rem}
+.sw .s{background:#E9F4EA;border-left:3px solid #2E7D32}
+.sw .w{background:#FBEBEA;border-left:3px solid #B01C2E}
+.thread{background:var(--navy);color:#fff;border-radius:12px;padding:22px 24px;margin-top:18px}
+.thread b{color:var(--gold)}
+.deb{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:14px}
+.panel{background:#fff;border:1px solid var(--line);border-top:5px solid;border-radius:11px;padding:16px}
+.panel h3{margin:0 0 4px;font-size:1rem;font-family:Georgia,serif}
+.panel .pq{color:var(--mut);font-size:.86rem;margin-bottom:12px}
+.side{font-size:.82rem;margin-bottom:9px}
+.side b{display:block;margin-bottom:3px}
+.side ul{margin:0;padding-left:17px}
+.side li{margin-bottom:2px}
+.res-note{background:#FFF7E4;border:1px solid var(--gold);border-radius:9px;padding:12px 15px;font-size:.87rem;margin-bottom:16px}
+.res-note.hide{display:none}
+.rg{margin-bottom:16px}
+.rg h3{margin:0 0 8px;font-size:.95rem;color:var(--navy)}
+.btns{display:flex;gap:9px;flex-wrap:wrap}
+.btn{display:inline-block;padding:9px 15px;border-radius:8px;background:#fff;border:1px solid var(--line);font-size:.88rem;font-weight:600;color:var(--navy);text-decoration:none}
+.btn:hover{background:#F6F2E7}
+.chip{display:inline-block;padding:9px 15px;border-radius:8px;background:#F0EDE4;border:1px dashed #C6BFAE;font-size:.88rem;color:#8A8371}
+.steps{counter-reset:s;padding:0;list-style:none;margin:0}
+.steps li{counter-increment:s;position:relative;padding:0 0 14px 42px}
+.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:27px;height:27px;border-radius:50%;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:700}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px}
+.card{background:#fff;border:1px solid var(--line);border-radius:11px;padding:16px}
+.card h3{margin:0 0 6px;font-size:.98rem;color:var(--navy);font-family:Georgia,serif}
+.video-frame{background:#fff;border:1px solid var(--line);border-radius:11px;overflow:hidden}
+.video-placeholder{padding:26px;text-align:center;color:var(--mut);font-size:.9rem}
+.ratio{position:relative;padding-top:56.25%}
+.ratio iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.fc-bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+.fc-hint{color:var(--mut);font-size:.83rem;margin-left:auto}
+.fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(228px,1fr));gap:12px}
+.fc{perspective:1000px;height:160px;cursor:pointer}
+.fc-in{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+.fc[data-flipped="true"] .fc-in{transform:rotateY(180deg)}
+.fc-f,.fc-b{position:absolute;inset:0;backface-visibility:hidden;border-radius:11px;border:1px solid var(--line);background:#fff;padding:13px;display:flex;flex-direction:column;overflow:hidden}
+.fc-b{transform:rotateY(180deg);background:#F8F5EC}
+.fc-tag{font-size:.62rem;letter-spacing:.11em;text-transform:uppercase;font-weight:700;margin-bottom:7px}
+.fc-t{font-weight:700;font-size:.98rem;margin:auto 0;line-height:1.3}
+.fc-d{font-size:.78rem;line-height:1.4;overflow:auto}
+.fc-d .sm{display:block;margin-top:6px;font-size:.74rem}
+footer{padding:26px 0 46px;color:var(--mut);font-size:.83rem}
+code{background:#EFEADD;padding:1px 5px;border-radius:4px;font-size:.85em}
+@media(max-width:640px){.two,.sw{grid-template-columns:1fr}h1{font-size:1.55rem}.ticks{flex-wrap:wrap}.tick{flex:1 1 44%}}
+</style></head><body>
+<!--BACKPILL--><a href="../alevel.html" style="position:fixed;left:14px;bottom:14px;z-index:99999;background:#12294D;color:#F6F1E4;font:600 14px/1 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;padding:10px 15px;border-radius:999px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.28);border:1px solid #C9A227">&#8592; All units</a>
+
+<header><div class="wrap">
+  <div class="crest"><svg width="52" height="52" viewBox="0 0 64 64" aria-hidden="true">
+    <g fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M23 21 C21 17 21 14 22 12 C24 14 25 17 25 20"/><path d="M41 21 C43 17 43 14 42 12 C40 14 39 17 39 20"/>
+      <path d="M32 17 C21 17 18 26 18 33 C18 45 24 52 32 52 C40 52 46 45 46 33 C46 26 43 17 32 17 Z"/>
+      <path d="M32 21 C29 25 27 27 25 28 M32 21 C35 25 37 27 39 28"/>
+      <path d="M20 34 C22 40 23 44 25 47"/><path d="M44 34 C42 40 41 44 39 47"/></g>
+    <circle cx="27" cy="31" r="5" fill="none" stroke="#fff" stroke-width="2.4"/><circle cx="37" cy="31" r="5" fill="none" stroke="#fff" stroke-width="2.4"/>
+    <circle cx="27" cy="31" r="1.9" fill="#fff"/><circle cx="37" cy="31" r="1.9" fill="#fff"/>
+    <path d="M32 34 l-2.2 4.2 h4.4 z" fill="#C9A227"/></svg></div>
+  <div style="flex:1;min-width:260px">
+    <div class="kicker">Philosophy &amp; Ethics &middot; AQA Paper 1 (7062/1)</div>
+    <h1>Bentham and Kant</h1>
+    <p class="sub">Three sub-topics, one question: <b>where does a moral fact actually live?</b></p>
+  </div>
+</div></header>
+
+<section id="spectrum"><div class="wrap">
+  <div class="sec-head"><span class="num">01</span><h2>The map of positions</h2></div>
+  <p class="sec-lead">Each sub-topic lines its positions up on a single axis. Pick a sub-topic, then tap a position to see what it claims, and where it is strong or weak. Those strengths and weaknesses are your AO2 raw material.</p>
+  <div class="tabs" id="tabs"></div>
+  <div class="spec">
+    <h3 id="specTitle"></h3>
+    <p class="sec-lead" style="margin:.2em 0 0" id="specBig"></p>
+    <div class="axis-labels"><span class="l" id="poleL"></span><span class="r" id="poleR"></span></div>
+    <div class="bar" id="bar"></div>
+    <div class="ticks" id="ticks"></div>
+    <div class="readout" id="readout" aria-live="polite"></div>
+  </div>
+  <div class="thread">
+    <b>The thread that ties it together.</b> Bentham puts a moral fact in <b>this world</b> &mdash; in the measurable facts of pleasure and pain. Kant puts it in the <b>noumenal realm</b>, known by pure practical reason. Every other difference &mdash; absolute rules or secondary principles, people as ends or as means, whether animals count &mdash; follows from that one disagreement. And both are answering the same problem: Hume&rsquo;s point that you cannot get an <i>ought</i> from an <i>is</i>. Show that in an essay and you are working at the top of the mark scheme.
+  </div>
+</div></section>
+
+<section id="debates"><div class="wrap">
+  <div class="sec-head"><span class="num">02</span><h2>The same case, two verdicts</h2></div>
+  <p class="sec-lead">Every sub-topic turns on one case that can be read two ways. Learning both readings is what turns an AO1 answer into an AO2 one.</p>
+  <div class="deb">
+    <div class="panel" style="border-top-color:#1F4E79">
+      <h3 style="color:#1F4E79">Bentham's Act Utilitarianism</h3>
+      <div class="pq">Can the rightness of an act be decided by measuring the happiness it produces?</div>
+      <div class="side"><b style="color:#B01C2E">The naive calculation (the critic's version)</b><ul><li>Count only the people in the room.</li><li>Seven units of pleasure against one unit of pain.</li><li>Balance of pleasure over pain → the act is 'right'.</li></ul></div>
+      <div class="side"><b style="color:#2E7D32">The full calculation (Bentham's own version)</b><ul><li>Criteria 5–7 — fecundity, purity and extent — require ALL concerned to be counted.</li><li>Extent: the terror would spread to every woman and to their families.</li><li>Purity: the act is saturated with attendant pain, not free of it.</li></ul></div>
+    </div>
+    <div class="panel" style="border-top-color:#00695C">
+      <h3 style="color:#00695C">Kant's Categorical Imperative</h3>
+      <div class="pq">Can reason alone tell us what we ought to do — whatever the consequences?</div>
+      <div class="side"><b style="color:#B01C2E">The strict Kantian — the duty holds</b><ul><li>Not lying is a PERFECT duty: universalising the lie destroys truth-telling itself.</li><li>Consequences cannot release you — morality does not depend on results.</li><li>An evasive answer is still untruth, so evasion is no escape.</li></ul></div>
+      <div class="side"><b style="color:#2E7D32">The amended Kantian — the duty yields</b><ul><li>W.D. Ross: we have prima facie duties, and where categorical imperatives conflict one can take priority.</li><li>Careful thinking reveals an intuitive truth: the victim's life matters more than the problem about lying.</li><li>So you would simply lie to the maniac — you have a prima facie duty to protect the innocent.</li></ul></div>
+    </div>
+    <div class="panel" style="border-top-color:#6A1B9A">
+      <h3 style="color:#6A1B9A">Comparing Bentham &amp; Kant</h3>
+      <div class="pq">Why do Bentham and Kant reach different decisions — and can either be squared with religious moral decision-making?</div>
+      <div class="side"><b style="color:#B01C2E">The claim is TRUE — both are inconsistent with religious ethics</b><ul><li>Bentham: formulated independently of God; he looked forward to religion becoming irrelevant.</li><li>Bentham: a properly utilitarian society must be secular, because religious belief perverts the principle of utility.</li><li>Bentham: no spiritual dimension, no room for the agent's mental state, less value given to rules.</li></ul></div>
+      <div class="side"><b style="color:#2E7D32">The claim is FALSE — both converge with religious ethics</b><ul><li>Bentham: Jesus judges by response to the needy — relief of need IS the greatest happiness in practice.</li><li>Bentham: like a utilitarian, Jesus acts situationally; Mill finds the whole spirit of utility in the golden rule.</li><li>Kant: the good will is compatible with Christian virtue; reason echoes Aquinas; the summum bonum parallels union with God.</li></ul></div>
+    </div>
+  </div>
+</div></section>
+
+<section id="resources"><div class="wrap">
+  <div class="sec-head"><span class="num">03</span><h2>Your resources</h2></div>
+  <p class="sec-lead">Everything for the unit in one place. Work through a sub-topic&rsquo;s lesson, booklet and podcast together, then use the <b>Philosopher Companion</b> across all three.</p>
+  <div class="res-note" id="resNote"><b>Teacher setup:</b> links aren&rsquo;t set yet. Open this file, find the <code>LINKS</code> list near the bottom, and paste each SharePoint share link once. Buttons with no link show as &ldquo;Link not set&rdquo;.</div>
+  <div class="rg"><h3 style="color:#1F4E79">1 · Bentham's Act Utilitarianism</h3><div class="btns">
+    <a class="btn reslink" data-key="lesson_bentham" href="#" style="border-left:4px solid #1F4E79">Lesson deck</a>
+    <a class="btn reslink" data-key="booklet_bentham" href="#" style="border-left:4px solid #1F4E79">Completion booklet</a>
+    <a class="btn reslink" data-key="podcast_bentham" href="#" style="border-left:4px solid #1F4E79">Lesson podcast</a>
+  </div></div>
+  <div class="rg"><h3 style="color:#00695C">2 · Kant's Categorical Imperative</h3><div class="btns">
+    <a class="btn reslink" data-key="lesson_kant" href="#" style="border-left:4px solid #00695C">Lesson deck</a>
+    <a class="btn reslink" data-key="booklet_kant" href="#" style="border-left:4px solid #00695C">Completion booklet</a>
+    <a class="btn reslink" data-key="podcast_kant" href="#" style="border-left:4px solid #00695C">Lesson podcast</a>
+  </div></div>
+  <div class="rg"><h3 style="color:#6A1B9A">3 · Comparing Bentham &amp; Kant</h3><div class="btns">
+    <a class="btn reslink" data-key="lesson_compare" href="#" style="border-left:4px solid #6A1B9A">Lesson deck</a>
+    <a class="btn reslink" data-key="booklet_compare" href="#" style="border-left:4px solid #6A1B9A">Completion booklet</a>
+    <a class="btn reslink" data-key="podcast_compare" href="#" style="border-left:4px solid #6A1B9A">Lesson podcast</a>
+  </div></div>
+  <div class="rg"><h3 style="color:#12294D">Across the whole unit</h3><div class="btns">
+    <a class="btn reslink" data-key="companion" href="#" style="border-left:4px solid #12294D">Philosopher Companion</a>
+    <a class="btn reslink" data-key="review" href="#" style="border-left:4px solid #12294D">Review lessons</a>
+    <a class="btn reslink" data-key="overview_podcast" href="#" style="border-left:4px solid #12294D">Overview podcast</a>
+    <a class="btn reslink" data-key="flashcards" href="#" style="border-left:4px solid #12294D">Printable flashcards</a>
+    <a class="btn reslink" data-key="exam_questions" href="#" style="border-left:4px solid #12294D">Exam questions organiser</a>
+    <a class="btn reslink" data-key="textbook" href="#" style="border-left:4px solid #12294D">Textbook chapter</a>
+  </div></div>
+</div></section>
+
+<section id="revise"><div class="wrap">
+  <div class="sec-head"><span class="num">04</span><h2>How to revise this unit</h2></div>
+  <p class="sec-lead">Use your resources in this order. The <b>Philosopher Companion</b> is where you learn to <em>plan</em> both question types.</p>
+  <ol class="steps">
+    <li><b>Watch and listen first.</b> The video below, then the lesson podcast for the sub-topic you are revising. Annotate your booklet as you go.</li>
+    <li><b>Rebuild the AO1 chain from memory.</b> Bentham has four steps; Kant runs from the good will to the postulates. If you cannot rebuild it, you cannot evaluate it.</li>
+    <li><b>Use the flashcards below</b> for key terms, then for positions &mdash; claim, strength, weakness.</li>
+    <li><b>Plan, don&rsquo;t write.</b> Part 4 of the Companion has eleven scaffolds: three AO1, four AO2 and all four dialogue questions.</li>
+    <li><b>Then write one full answer under time</b>, and mark it against the Level 5 descriptors.</li>
+  </ol>
+  <div class="two">
+    <div class="card"><h3>AO1 &mdash; &ldquo;Examine&hellip;&rdquo; (10 marks)</h3><p style="font-size:.89rem;margin:0">Descriptive analysis: a factual chain of reasoning. Critically describe the theory and show how it applies to a real case. You are <b>not</b> judging between positions yet &mdash; doing so wastes time you need elsewhere.</p></div>
+    <div class="card"><h3>AO2 &mdash; &ldquo;Evaluate this claim.&rdquo; (15 marks)</h3><p style="font-size:.89rem;margin:0">A three-paragraph dialectic: position, opposing position, then a justified judgement. Each paragraph runs evaluation &rarr; counter-evaluation &rarr; implication, and links back to one thesis.</p></div>
+  </div>
+  <div class="card" style="margin-top:14px;border-left:5px solid var(--gold)"><h3>Why this unit pays twice</h3><p style="font-size:.89rem;margin:0">Across 2018&ndash;2024 there are <b>9</b> questions directly on Bentham, Kant or Utilitarianism, in <b>6 of 7</b> sessions &mdash; and <b>4</b> of them are Paper 2B <b>25-mark dialogue</b> questions. Revising this unit prepares you for both papers.</p></div>
+</div></section>
+
+<section id="watch"><div class="wrap">
+  <div class="sec-head"><span class="num">05</span><h2>Watch: the whole unit in one go</h2></div>
+  <p class="sec-lead">A full review of Bentham and Kant. Best watched before you start revising, then again to check your recall.</p>
+  <div class="video-frame" id="videoFrame">
+    <div class="video-placeholder" id="videoPlaceholder"><p><b>Teacher:</b> paste the YouTube link in the <code>VIDEO_URL</code> line near the bottom of this file. The player then appears here automatically.</p></div>
+  </div>
+</div></section>
+
+<section id="flashcards"><div class="wrap">
+  <div class="sec-head"><span class="num">06</span><h2>Flashcards &mdash; test yourself</h2></div>
+  <p class="sec-lead">Tap a card to flip it. Switch between <b>key terms</b> and <b>positions</b>, and filter by sub-topic.</p>
+  <div class="fc-bar">
+    <button class="tab fcmode" data-mode="terms" data-on="true" style="background:#12294D">Key terms</button>
+    <button class="tab fcmode" data-mode="views">Positions</button>
+    <span style="width:14px"></span>
+    <button class="tab fctopic" data-topic="all" data-on="true" style="background:#12294D">All</button>
+    <button class="tab fctopic" data-topic="bentham">Bentham</button>
+    <button class="tab fctopic" data-topic="kant">Kant</button>
+    <button class="tab fctopic" data-topic="compare">Compare</button>
+    <span class="fc-hint" id="fcCount"></span>
+  </div>
+  <div class="fc-grid" id="fcGrid"></div>
+</div></section>
+
+<footer><div class="wrap">
+  Philosophy &amp; Ethics &middot; AQA A-level Religious Studies 7062/1 &middot; Bentham and Kant.
+  Content paraphrased from the department textbook chapter; question labels are our own wording, not AQA&rsquo;s.
+</div></footer>
+
+<script>
+const DATA = {"bentham":{"label":"Bentham's Act Utilitarianism","big":"Can the rightness of an act be decided by measuring the happiness it produces?","title":"The utility spectrum — how much can the calculus price?","poles":["Happiness is FULLY measurable — morality is a science","Happiness cannot be weighed — rules and rights come first"],"insight":"Each step to the right is one more thing the calculus cannot price. The essay is deciding at which step the theory stops working — not whether it works at all.","accent":"#1F4E79","positions":[{"n":"Pleasure & pain","c":"Whatever ideals you preach, people still pursue what benefits them.","a":"DESCRIPTIVE: at this stage it claims only to state a fact about people. It gives morality a real-world, observable foundation.","s":"Grounded in observation rather than assertion; it explains ordinary motivation better than appeals to duty, and it treats everyone's experience as equally real evidence.","w":"It looks unfalsifiable: any counter-example (self-sacrifice, martyrdom) is re-described as a hidden long-term pleasure. And even if the fact holds, no 'ought' follows from it — this is exactly where Moore's naturalistic fallacy strikes."},{"n":"Principle of Utility","c":"The greatest happiness of the greatest number is the measure of right and wrong.","a":"SUPREME but SINGLE: utility is the only primary authority. Every rule, law and tradition is answerable to it.","s":"Gives one clear, public, non-religious test that can settle any dispute, and it is democratic — it counts the interest of society as a whole rather than the interests of those in power.","w":"If rules are only secondary, nothing is ever safe: promises, prohibitions and rights can all be overridden by a calculation. Critics say people need the stability of moral rules and a duty to obey them."},{"n":"Hedonic Calculus","c":"Pleasure and pain can be measured — so morality can be evidential.","a":"OPERATIONAL: it converts the principle into a procedure. Once benefit is quantified it can be apportioned with evidence.","s":"Makes moral reasoning transparent and checkable: you can show your working. It also extends moral standing to animals and infants long before that was mainstream.","w":"It asks us to second-guess the future, which is easy to get wrong — the classic case is saving a child who grows up to be a mass-murderer. And measuring pleasure across different people looks impossible in practice."},{"n":"Act Utilitarianism","c":"Each unique situation is decided on its own, not by a general rule.","a":"SITUATIONAL: no act is ruled in or out in advance. Authority belongs to the calculation, made afresh each time.","s":"Maximally flexible and genuinely egalitarian: it can respond to the details of a real case, and it attacks privilege by refusing to let anyone count for more than one.","w":"Because the majority is not guaranteed to be morally right, it can be unjust to minorities; and it seems to ignore motives, rules and duties, which most people think are morally crucial."}]},"kant":{"label":"Kant's Categorical Imperative","big":"Can reason alone tell us what we ought to do — whatever the consequences?","title":"The duty spectrum — how absolute is Kant really?","poles":["Duty is ABSOLUTE — consequences irrelevant","Duties CONFLICT — something else must decide"],"insight":"Kant is less absolutist than the caricature. The real argument is how far you can bend the theory before it stops being Kant — and Ross is the point at which most say it does.","accent":"#00695C","positions":[{"n":"The good will","c":"Not the aim to be happy, but to be worthy of happiness.","a":"ABSOLUTE and INTERNAL: authority lies in the rational will itself — not in scripture, not in an institution, not in outcomes.","s":"Explains something Utilitarianism cannot: why we praise a person who does right for the right reason and fails, over one who does right by accident. It also secures moral seriousness and autonomy.","w":"Kant's insistence that potential enjoyment is irrelevant to the morality of an act strikes many as unrealistic — Hume argues it is impossible for humans to shut off emotion, and it is moral sentiment that actually motivates us."},{"n":"Duty & deontology","c":"Deontological — but NOT 'duty for duty's sake whatever the consequences'.","a":"DUTY-BASED: an unqualified obligation. It tells you what ought to be done quite apart from personal cost or likely result.","s":"Gives ethics a single, clear focus and rules out self-serving special pleading. It also picks out what many see as the major flaw in Bentham — that a bad act can be justified by good consequences.","w":"It is not clear what to do where duties CONFLICT: the axe-murderer dilemma pits the duty not to lie against the duty to preserve innocent life, and an evasive answer is still a form of untruth."},{"n":"Categorical Imperative","c":"One imperative, expressed in three linked formulations.","a":"UNIVERSAL: it binds every rational agent identically, because it does not depend on particular circumstances.","s":"Simple and effective: in its basic form even children grasp it — if you want to lie and steal, you must be happy for everyone to do it to you, whenever they feel like it.","w":"Critics say it is no more believable than Divine Command Theory — both amount to non-natural guesswork. There are no agreed universal moral rules in the world, so the CI looks like wishful thinking; and many humans are incapable of the intellectual effort of universalising maxims."},{"n":"Summum bonum","c":"'Ought implies can' — so God, freedom and immortality must be assumed.","a":"PRESUPPOSED: these are not proved but assumed, because without them the experience of moral obligation makes no sense.","s":"It faces honestly the gap between duty and reward, and explains why moral seriousness needs a horizon beyond this life. Freedom in particular is defended as a valid a priori assumption — without it morality collapses.","w":"Two of the three postulates are religious, which makes little sense for those who are not religious — and it sits awkwardly with Kant's own stress on autonomy. Kant is also accused of inventing an extra ontological realm, the noumenal, for which there is no evidence."}]},"compare":{"label":"Comparing Bentham & Kant","big":"Why do Bentham and Kant reach different decisions — and can either be squared with religious moral decision-making?","title":"How close is each theory to religious moral decision-making?","poles":["CLOSEST to religious ethics","FURTHEST from religious ethics"],"insight":"Kant sits nearer religion in CONTENT but insists on autonomy; Bentham sits far from religion in THEORY but close in PRACTICE. Notice that neither ordering survives if you change the question from 'what do they conclude?' to 'what grounds them?'","accent":"#6A1B9A","positions":[{"n":"Naturalist vs non-naturalist","c":"The whole argument turns on where a moral fact lives.","a":"META-ETHICAL: this is not a disagreement about cases but about what a moral fact IS. It decides every later dispute.","s":"Framing the comparison meta-ethically is what separates a top answer from a list of differences: it explains WHY they differ instead of merely noting THAT they do.","w":"Neither escapes cleanly. Bentham cannot derive the 'ought'; Kant escapes only by positing a realm no evidence can reach — so the gap is relocated rather than closed."},{"n":"Different decisions","c":"Kant starts from what is right; Bentham starts from what is good.","a":"PRACTICAL: this is where the abstract difference becomes a different answer in a real case.","s":"The contrasts are systematic rather than a list: each one can be traced back to the meta-ethical root, which is exactly what 'critically describe' asks for.","w":"The neat contrast can be overdrawn. Kant has teleological aspects; Bentham's motive is not absent. Both theories are more moderate than the caricature, and saying so earns credit."},{"n":"Bentham & religion","c":"For many the answer is 'not very' — but Mill saw the golden rule in it.","a":"CONTESTED: incompatible in foundation, strikingly close in practice. That tension is the whole essay.","s":"The 'for' case is stronger than students expect: situational judgement, relief of need and the golden rule are genuinely utilitarian in shape, and Mill says so explicitly.","w":"Shared conclusions are not shared foundations. Bentham envisaged a properly utilitarian society as a SECULAR one, and thought religious belief perverted the principle of utility — he himself saw little consistency."},{"n":"Kant & religion","c":"Compatible in content, but built on Enlightenment autonomy.","a":"DOUBLE-EDGED: closer to religious ethics in CONTENT than Bentham, and further from it in FOUNDATION.","s":"Kant gives religious ethics a rational structure it can use: intention, universal rules, human dignity, and a summum bonum that looks like the Christian end of moral activity.","w":"The autonomy that makes his ethics work is precisely what rules out divine command. The religious elements stand outside his approach — so Kant may support Christian CONCLUSIONS while denying Christian AUTHORITY."}]}};
+const FLASH = {"bentham":{"label":"Bentham's Act Utilitarianism","terms":[{"term":"Utility","def":"the property in any object by which it tends to produce benefit, advantage, pleasure, good or happiness — or to prevent mischief, pain, evil or unhappiness.","note":"Bentham's own definition. Note it works for an individual OR for the wider community."},{"term":"Act Utilitarianism","def":"Bentham's version: in any situation, choose the action that maximises utility.","note":"Judged case by case, NOT by applying a general moral rule."},{"term":"Hedonic Calculus","def":"Bentham's seven-criterion scheme for measuring the pleasure and pain an act produces.","note":"Also called the Felicific Calculus. It is the tool that makes morality 'scientific'."},{"term":"Consequentialism","def":"the view that an act's moral worth lies in its outcomes.","note":"The opposite of Kant's deontology, where duty decides regardless of results."},{"term":"Naturalism","def":"the meta-ethical view that moral values are factual — really 'in the world'.","note":"For Bentham the facts are facts about pleasure and pain. This is why Moore's naturalistic fallacy is aimed at him."},{"term":"Sinister influence","def":"Bentham's term for those in power protecting their own vested interests instead of society's.","note":"His diagnosis of why reform kept failing — the political root of the theory."}],"views":[{"n":"Pleasure & pain","c":"Whatever ideals you preach, people still pursue what benefits them.","s":"Grounded in observation rather than assertion; it explains ordinary motivation better than appeals to duty, and it treats everyone's experience as equally real evidence.","w":"It looks unfalsifiable: any counter-example (self-sacrifice, martyrdom) is re-described as a hidden long-term pleasure. And even if the fact holds, no 'ought' follows from it — this is exactly where Moore's naturalistic fallacy strikes."},{"n":"Principle of Utility","c":"The greatest happiness of the greatest number is the measure of right and wrong.","s":"Gives one clear, public, non-religious test that can settle any dispute, and it is democratic — it counts the interest of society as a whole rather than the interests of those in power.","w":"If rules are only secondary, nothing is ever safe: promises, prohibitions and rights can all be overridden by a calculation. Critics say people need the stability of moral rules and a duty to obey them."},{"n":"Hedonic Calculus","c":"Pleasure and pain can be measured — so morality can be evidential.","s":"Makes moral reasoning transparent and checkable: you can show your working. It also extends moral standing to animals and infants long before that was mainstream.","w":"It asks us to second-guess the future, which is easy to get wrong — the classic case is saving a child who grows up to be a mass-murderer. And measuring pleasure across different people looks impossible in practice."},{"n":"Act Utilitarianism","c":"Each unique situation is decided on its own, not by a general rule.","s":"Maximally flexible and genuinely egalitarian: it can respond to the details of a real case, and it attacks privilege by refusing to let anyone count for more than one.","w":"Because the majority is not guaranteed to be morally right, it can be unjust to minorities; and it seems to ignore motives, rules and duties, which most people think are morally crucial."}]},"kant":{"label":"Kant's Categorical Imperative","terms":[{"term":"Good will","def":"the only thing good without qualification; the will that chooses an action because it is right.","note":"Autonomous and chosen — Kant insists it is NOT a natural gift like being kind."},{"term":"Maxim","def":"a general guideline or principle of action.","note":"It is the MAXIM that gets universalised, not the action you happen to be planning."},{"term":"Categorical Imperative","def":"an absolute, unconditional moral command — 'Do A' — that needs no qualification.","note":"Contrast the hypothetical imperative, 'If A, then B'."},{"term":"Universalisability","def":"the main formulation: act only on that maxim which you can at the same time will to become a universal law.","note":"The test is whether universalising it would be SELF-CONTRADICTORY."},{"term":"Summum bonum","def":"the highest good — the culmination of Kant's ethics where virtue meets its proper reward of perfect happiness.","note":"Not an aim to pursue: you should strive to be WORTHY of happiness, not to be happy."},{"term":"Postulate","def":"a presupposition you must have accepted in order to make sense of your moral choices.","note":"Kant's three: God, freedom and immortality — note the wording, not 'immorality'."}],"views":[{"n":"The good will","c":"Not the aim to be happy, but to be worthy of happiness.","s":"Explains something Utilitarianism cannot: why we praise a person who does right for the right reason and fails, over one who does right by accident. It also secures moral seriousness and autonomy.","w":"Kant's insistence that potential enjoyment is irrelevant to the morality of an act strikes many as unrealistic — Hume argues it is impossible for humans to shut off emotion, and it is moral sentiment that actually motivates us."},{"n":"Duty & deontology","c":"Deontological — but NOT 'duty for duty's sake whatever the consequences'.","s":"Gives ethics a single, clear focus and rules out self-serving special pleading. It also picks out what many see as the major flaw in Bentham — that a bad act can be justified by good consequences.","w":"It is not clear what to do where duties CONFLICT: the axe-murderer dilemma pits the duty not to lie against the duty to preserve innocent life, and an evasive answer is still a form of untruth."},{"n":"Categorical Imperative","c":"One imperative, expressed in three linked formulations.","s":"Simple and effective: in its basic form even children grasp it — if you want to lie and steal, you must be happy for everyone to do it to you, whenever they feel like it.","w":"Critics say it is no more believable than Divine Command Theory — both amount to non-natural guesswork. There are no agreed universal moral rules in the world, so the CI looks like wishful thinking; and many humans are incapable of the intellectual effort of universalising maxims."},{"n":"Summum bonum","c":"'Ought implies can' — so God, freedom and immortality must be assumed.","s":"It faces honestly the gap between duty and reward, and explains why moral seriousness needs a horizon beyond this life. Freedom in particular is defended as a valid a priori assumption — without it morality collapses.","w":"Two of the three postulates are religious, which makes little sense for those who are not religious — and it sits awkwardly with Kant's own stress on autonomy. Kant is also accused of inventing an extra ontological realm, the noumenal, for which there is no evidence."}]},"compare":{"label":"Comparing Bentham & Kant","terms":[{"term":"Deontological","def":"duty-based: morality lies in obligation and rules, not in results.","note":"Kant's shape — though he still requires consequences to be worked through to test a maxim."},{"term":"Teleological","def":"end-based: morality lies in the outcome aimed at.","note":"Bentham's shape — but note the chapter insists Kant has teleological aspects too."},{"term":"Ontology","def":"the branch of metaphysics that deals with the nature of existence or being.","note":"Kant is accused of inventing an extra ontological realm — the noumenal — for which there is no evidence."},{"term":"Prima facie duties","def":"Ross's amendment to Kant: 'on the face of it' duties which can take priority over one another when they conflict.","note":"With the axe-murderer, the duty to save innocent life overrides the duty to tell the truth."},{"term":"Volition","def":"exercise of the will.","note":"Kant: the good will is self-evidently a matter of volition, so divine command is excluded."},{"term":"Autonomy","def":"the state of being self-governed, free from external control or influence.","note":"The single biggest obstacle to squaring Kant with religious authority."}],"views":[{"n":"Naturalist vs non-naturalist","c":"The whole argument turns on where a moral fact lives.","s":"Framing the comparison meta-ethically is what separates a top answer from a list of differences: it explains WHY they differ instead of merely noting THAT they do.","w":"Neither escapes cleanly. Bentham cannot derive the 'ought'; Kant escapes only by positing a realm no evidence can reach — so the gap is relocated rather than closed."},{"n":"Different decisions","c":"Kant starts from what is right; Bentham starts from what is good.","s":"The contrasts are systematic rather than a list: each one can be traced back to the meta-ethical root, which is exactly what 'critically describe' asks for.","w":"The neat contrast can be overdrawn. Kant has teleological aspects; Bentham's motive is not absent. Both theories are more moderate than the caricature, and saying so earns credit."},{"n":"Bentham & religion","c":"For many the answer is 'not very' — but Mill saw the golden rule in it.","s":"The 'for' case is stronger than students expect: situational judgement, relief of need and the golden rule are genuinely utilitarian in shape, and Mill says so explicitly.","w":"Shared conclusions are not shared foundations. Bentham envisaged a properly utilitarian society as a SECULAR one, and thought religious belief perverted the principle of utility — he himself saw little consistency."},{"n":"Kant & religion","c":"Compatible in content, but built on Enlightenment autonomy.","s":"Kant gives religious ethics a rational structure it can use: intention, universal rules, human dignity, and a summum bonum that looks like the Christian end of moral activity.","w":"The autonomy that makes his ethics work is precisely what rules out divine command. The religious elements stand outside his approach — so Kant may support Christian CONCLUSIONS while denying Christian AUTHORITY."}]}};
+const ORDER = ["bentham","kant","compare"];
+
+/* ---------- 01 spectrum ---------- */
+let topic = "bentham", active = 0;
+const tabs=document.getElementById("tabs"), ticks=document.getElementById("ticks"),
+      readout=document.getElementById("readout"), bar=document.getElementById("bar");
+
+ORDER.forEach(k=>{
+  const b=document.createElement("button");
+  b.className="tab"; b.textContent=DATA[k].label; b.dataset.k=k;
+  b.onclick=()=>{topic=k;active=0;render();};
+  tabs.appendChild(b);
+});
+
+function render(){
+  const d=DATA[topic];
+  [...tabs.children].forEach(b=>{
+    const on=b.dataset.k===topic;
+    b.dataset.on=on; b.style.background=on?DATA[b.dataset.k].accent:"#fff";
+  });
+  document.getElementById("specTitle").textContent=d.title;
+  document.getElementById("specBig").textContent=d.big;
+  document.getElementById("poleL").textContent=d.poles[0];
+  document.getElementById("poleR").textContent=d.poles[1];
+  document.getElementById("poleL").style.color=d.accent;
+  document.getElementById("poleR").style.color="#B01C2E";
+  bar.style.background="linear-gradient(90deg,"+d.accent+",#B01C2E)";
+  ticks.innerHTML="";
+  d.positions.forEach((p,i)=>{
+    const el=document.createElement("div");
+    el.className="tick"; el.dataset.active=(i===active);
+    el.innerHTML='<div class="dot" style="border-color:'+d.accent+'"></div><b>'+p.n+"</b>";
+    el.onclick=()=>{active=i;render();};
+    ticks.appendChild(el);
+  });
+  const p=d.positions[active];
+  readout.style.borderLeftColor=d.accent;
+  readout.innerHTML='<div class="rn" style="color:'+d.accent+'">'+p.n+'</div>'+
+    '<div class="rc">'+p.c+'</div>'+
+    '<div style="font-size:.86rem"><b>Authority claimed:</b> '+p.a+'</div>'+
+    '<div class="sw"><div class="s"><b>Strength</b><br>'+p.s+'</div><div class="w"><b>Weakness</b><br>'+p.w+'</div></div>'+
+    '<div style="margin-top:10px;font-size:.84rem;color:#5B6472"><b>Across the whole spectrum:</b> '+d.insight+'</div>';
+}
+render();
+
+/* ---------- 06 flashcards ---------- */
+let fcMode="terms", fcTopic="all";
+document.querySelectorAll(".fcmode").forEach(b=>b.onclick=()=>{
+  fcMode=b.dataset.mode;
+  document.querySelectorAll(".fcmode").forEach(x=>{const on=x===b;x.dataset.on=on;x.style.background=on?"#12294D":"#fff";x.style.color=on?"#fff":"";});
+  drawCards();
+});
+document.querySelectorAll(".fctopic").forEach(b=>b.onclick=()=>{
+  fcTopic=b.dataset.topic;
+  document.querySelectorAll(".fctopic").forEach(x=>{const on=x===b;x.dataset.on=on;x.style.background=on?"#12294D":"#fff";x.style.color=on?"#fff":"";});
+  drawCards();
+});
+function drawCards(){
+  const grid=document.getElementById("fcGrid"), count=document.getElementById("fcCount");
+  grid.innerHTML=""; let n=0;
+  const topics = fcTopic==="all" ? ORDER : [fcTopic];
+  topics.forEach(tp=>{
+    const d=FLASH[tp]; if(!d) return;
+    const acc=DATA[tp].accent;
+    (fcMode==="terms"?d.terms:d.views).forEach(item=>{
+      const front = fcMode==="terms" ? item.term : item.n;
+      const back  = fcMode==="terms"
+        ? item.def + (item.note?'<span class="sm" style="color:#5B6472"><i>'+item.note+'</i></span>':'')
+        : item.c + '<span class="sm"><b style="color:#2E7D32">&#10004; '+item.s+'</b></span><span class="sm"><b style="color:#B01C2E">&#10008; '+item.w+'</b></span>';
+      const el=document.createElement("div");
+      el.className="fc"; el.dataset.flipped="false";
+      el.innerHTML='<div class="fc-in">'+
+        '<div class="fc-f" style="border-top:4px solid '+acc+'"><div class="fc-tag" style="color:'+acc+'">'+d.label+'</div><div class="fc-t">'+front+'</div></div>'+
+        '<div class="fc-b" style="border-top:4px solid '+acc+'"><div class="fc-tag" style="color:'+acc+'">'+(fcMode==="terms"?"Meaning":"Claim / strength / weakness")+'</div><div class="fc-d">'+back+'</div></div></div>';
+      el.onclick=()=>{el.dataset.flipped = el.dataset.flipped==="true"?"false":"true";};
+      grid.appendChild(el); n++;
+    });
+  });
+  count.textContent=n+" card"+(n===1?"":"s");
+}
+drawCards();
+
+/* ================= TEACHER FILL-IN: paste your links below ================= */
+
+const VIDEO_URL = "";
+
+const LINKS = {
+  lesson_bentham: "",
+  booklet_bentham: "",
+  podcast_bentham: "",
+  lesson_kant: "",
+  booklet_kant: "",
+  podcast_kant: "",
+  lesson_compare: "",
+  booklet_compare: "",
+  podcast_compare: "",
+  companion: "",
+  review: "",
+  overview_podcast: "",
+  flashcards: "",
+  exam_questions: "",
+  textbook: "",
+};
+
+/* =========================================================================== */
+
+(function(){
+  const url=(VIDEO_URL||"").trim();
+  if(!url) return;
+  const m=url.match(/(?:youtu\.be\/|v=|\/embed\/|\/shorts\/)([A-Za-z0-9_-]{11})/);
+  const id=m?m[1]:"";
+  if(!id) return;
+  document.getElementById("videoFrame").innerHTML=
+    '<div class="ratio"><iframe src="https://www.youtube-nocookie.com/embed/'+id+'" title="Unit review" allow="accelerometer; clipboard-write; encrypted-media; picture-in-picture" allowfullscreen></iframe></div>';
+})();
+
+(function(){
+  let any=false;
+  document.querySelectorAll(".reslink").forEach(btn=>{
+    const url=(LINKS[btn.dataset.key]||"").trim();
+    if(url){ btn.href=url; btn.target="_blank"; btn.rel="noopener";
+             btn.textContent=btn.textContent+" \u2197"; any=true; }
+    else { const chip=document.createElement("span");
+           chip.className="chip"; chip.style.borderLeft=btn.style.borderLeft;
+           chip.textContent=btn.textContent+" \u2014 link not set";
+           btn.replaceWith(chip); }
+  });
+  if(any){ const n=document.getElementById("resNote"); if(n) n.classList.add("hide"); }
+})();
+</script></body></html>

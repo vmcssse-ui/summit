@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meta-ethics: the meaning of right and wrong — Unit at a Glance</title>
+<style>
+  :root{
+    --ink:#12294D;        /* deep manuscript navy */
+    --ink-2:#0C1B33;
+    --parch:#F3ECDD;      /* aged parchment */
+    --parch-2:#EAE0C9;
+    --gold:#C9A227;       /* gold leaf */
+    --gold-soft:#E4CE86;
+    --rubric:#B01C2E;     /* rubrication red */
+    --navy:#1F4E79;       /* sub-topic 1 — The Map */
+    --oxblood:#8E2430;    /* sub-topic 2 — DCT */
+    --forest:#2F6B4F;     /* sub-topic 3 — Naturalism */
+    --plum:#5B2A86;       /* sub-topic 4 — Non-naturalism */
+    --green:#2E7D32;
+    --paper:#FBF7EE;
+    --line:rgba(18,41,77,.16);
+    --serif:Georgia,"Iowan Old Style","Palatino Linotype",Palatino,"Times New Roman",serif;
+    --sans:"Trebuchet MS","Segoe UI",system-ui,-apple-system,Verdana,Arial,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--serif);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1060px;margin:0 auto;padding:0 24px}
+  .eyebrow{font-family:var(--sans);font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;font-weight:700}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    background:
+      radial-gradient(1200px 400px at 80% -10%, rgba(201,162,39,.18), transparent 60%),
+      linear-gradient(180deg,var(--ink) 0%, var(--ink-2) 100%);
+    color:var(--parch);
+    padding:64px 0 72px;
+    position:relative;
+    overflow:hidden;
+    border-bottom:3px solid var(--gold);
+  }
+  .hero::after{ /* faint ruled manuscript lines */
+    content:"";position:absolute;inset:0;pointer-events:none;opacity:.06;
+    background:repeating-linear-gradient(180deg,transparent 0 38px,#fff 38px 39px);
+  }
+  .hero .wrap{position:relative;z-index:2}
+  .crest{display:flex;align-items:center;gap:16px;margin-bottom:34px}
+  .crest svg{width:54px;height:54px;flex:none}
+  .crest .who{font-family:var(--sans);font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-soft)}
+  .crest .who b{color:var(--parch);display:block;letter-spacing:.14em;font-size:.86rem;margin-top:3px}
+  h1{font-size:clamp(2.1rem,5.4vw,3.7rem);line-height:1.04;font-weight:700;letter-spacing:-.01em}
+  h1 .amp{color:var(--gold);font-style:italic}
+  .sub{margin-top:20px;max-width:58ch;font-size:1.12rem;color:#E7DFCB}
+  .bigq{
+    margin-top:30px;display:inline-flex;gap:14px;align-items:flex-start;
+    border-left:3px solid var(--gold);padding:8px 0 8px 18px;max-width:62ch;
+  }
+  .bigq .q{font-family:var(--sans);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-soft);padding-top:5px}
+  .bigq p{font-size:1.24rem;font-style:italic;color:#fff}
+
+  /* ---------- SECTION SHELL ---------- */
+  section{padding:64px 0}
+  .sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:8px}
+  .sec-head .num{font-family:var(--sans);color:var(--gold);font-weight:700;font-size:.9rem;letter-spacing:.15em}
+  .sec-head h2{font-size:clamp(1.6rem,3.4vw,2.3rem);letter-spacing:-.01em}
+  .sec-lead{color:#4a4a52;max-width:66ch;margin-bottom:34px;font-size:1.05rem}
+
+  /* ---------- SIGNATURE: cognitivism spectrum ---------- */
+  .spectrum-card{
+    background:linear-gradient(180deg,#fff, var(--paper));
+    border:1px solid var(--line);border-radius:14px;
+    box-shadow:0 18px 40px -28px rgba(18,41,77,.5);
+    padding:28px 26px 34px;
+  }
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:26px}
+  .tab{
+    font-family:var(--sans);font-weight:700;font-size:.82rem;letter-spacing:.04em;
+    border:1px solid var(--line);background:#fff;color:var(--ink);
+    padding:9px 16px;border-radius:999px;cursor:pointer;transition:.18s;
+  }
+  .tab[aria-selected="true"]{background:var(--ink);color:var(--parch);border-color:var(--ink)}
+  .tab:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+
+  .axis{position:relative;margin:8px 4px 0}
+  .axis-labels{display:flex;justify-content:space-between;gap:20px;font-family:var(--sans);font-size:.72rem;
+    letter-spacing:.05em;text-transform:uppercase;color:#6a6a72;margin-bottom:10px}
+  .axis-labels .l{color:var(--forest);font-weight:700;max-width:36ch}
+  .axis-labels .r{color:var(--plum);font-weight:700;text-align:right;max-width:36ch}
+  .axis-sub{display:flex;justify-content:space-between;gap:20px;font-family:var(--sans);font-size:.68rem;
+    color:#8a8a92;font-style:italic;margin:-4px 0 10px}
+  .axis-sub .r{text-align:right}
+  .bar{height:10px;border-radius:999px;background:linear-gradient(90deg,#2F6B4F,#1F4E79 34%,#8E2430 62%,#5B2A86);position:relative}
+  .ticks{position:relative;height:96px;margin-top:0}
+  .node{position:absolute;top:0;transform:translateX(-50%);width:150px;text-align:center;cursor:pointer}
+  .node .dot{width:20px;height:20px;border-radius:50%;background:#fff;border:3px solid var(--ink);margin:0 auto;position:relative;top:-15px;transition:.18s}
+  .node .nm{font-family:var(--sans);font-weight:700;font-size:.82rem;margin-top:-6px}
+  .node .sb{font-size:.76rem;color:#6a6a72;font-style:italic;margin-top:2px;line-height:1.25}
+  .node:hover .dot,.node[data-active="true"] .dot{transform:scale(1.25);box-shadow:0 0 0 5px rgba(201,162,39,.22)}
+  .node:focus-visible{outline:none}
+  .node:focus-visible .dot{outline:3px solid var(--gold);outline-offset:3px}
+
+  .readout{
+    margin-top:14px;background:var(--ink);color:var(--parch);border-radius:12px;padding:20px 22px;
+    min-height:104px;display:flex;gap:18px;align-items:flex-start;
+  }
+  .readout .badge{font-family:var(--sans);font-weight:700;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;
+    background:var(--gold);color:var(--ink-2);padding:6px 10px;border-radius:6px;white-space:nowrap;margin-top:2px}
+  .readout .body h4{font-size:1.14rem;margin-bottom:4px}
+  .readout .body .auth{color:var(--gold-soft);font-family:var(--sans);font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+  .readout .body p{color:#E7DFCB;font-size:.98rem}
+  .readout .body .ins{margin-top:10px;border-left:2px solid var(--gold-soft);padding-left:12px;font-style:italic}
+  .readout .body .ins .k{display:block;font-family:var(--sans);font-style:normal;font-size:.64rem;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--gold-soft);margin-bottom:3px}
+  .hint{font-family:var(--sans);font-size:.76rem;color:#8a8a92;margin-top:14px;text-align:center}
+
+  /* ---------- THREAD ---------- */
+  .thread{background:var(--ink);color:var(--parch);border-radius:14px;padding:34px 30px;position:relative;overflow:hidden}
+  .thread::before{content:"";position:absolute;inset:0;opacity:.07;background:repeating-linear-gradient(180deg,transparent 0 30px,#fff 30px 31px)}
+  .thread .wrap2{position:relative;z-index:2}
+  .thread h2{color:#fff;font-size:clamp(1.5rem,3vw,2.1rem);margin-bottom:8px}
+  .thread .lead{color:#E7DFCB;max-width:66ch;margin-bottom:24px}
+  .threads{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .tcard{border:1px solid rgba(228,206,134,.3);border-radius:10px;padding:16px 16px 18px;background:rgba(255,255,255,.03)}
+  .tcard .t{font-family:var(--sans);color:var(--gold);font-weight:700;font-size:.82rem;letter-spacing:.05em;margin-bottom:6px}
+  .tcard p{font-size:.9rem;color:#E7DFCB}
+
+  /* ---------- FOUR DEBATES ---------- */
+  .quadtych{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+  .panel{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;display:flex;flex-direction:column}
+  .panel .cap{padding:16px 18px;color:#fff;position:relative}
+  .panel.b1 .cap{background:linear-gradient(135deg,#1F4E79,#12294D)}
+  .panel.b2 .cap{background:linear-gradient(135deg,#8E2430,#4E1219)}
+  .panel.b3 .cap{background:linear-gradient(135deg,#2F6B4F,#143026)}
+  .panel.b4 .cap{background:linear-gradient(135deg,#5B2A86,#2E1244)}
+  .panel .cap .n{font-family:var(--sans);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;opacity:.85}
+  .panel .cap h3{font-size:1.2rem;margin-top:3px;line-height:1.2}
+  .panel .cap .ask{font-style:italic;font-size:.9rem;margin-top:8px;opacity:.95}
+  @media(min-width:821px){.panel .cap{min-height:128px}}
+  .panel .versus{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:stretch;padding:16px 18px 4px}
+  .panel .side{border:1px solid var(--line);border-radius:9px;padding:11px 12px;background:var(--paper)}
+  .panel .side .k{font-family:var(--sans);font-weight:700;font-size:.64rem;letter-spacing:.12em;text-transform:uppercase;
+    display:block;margin-bottom:4px}
+  .panel.b1 .side .k{color:#1F4E79}.panel.b2 .side .k{color:#8E2430}
+  .panel.b3 .side .k{color:#2F6B4F}.panel.b4 .side .k{color:#5B2A86}
+  .panel .side p{font-size:.86rem;color:#3d3d45}
+  .panel .vs{align-self:center;font-family:var(--sans);font-weight:700;font-size:.7rem;letter-spacing:.1em;color:#9a9aa2}
+  .panel .body{padding:12px 18px 16px;font-size:.92rem}
+  .panel .body .row{display:flex;gap:9px;padding:7px 0;border-bottom:1px dashed var(--line)}
+  .panel .body .row:last-child{border-bottom:0}
+  .panel .body .row .v{font-family:var(--sans);font-weight:700;font-size:.78rem;color:var(--ink);flex:0 0 34%}
+  .panel .body .row .d{color:#55555c}
+
+  /* ---------- MISCONCEPTIONS ---------- */
+  .miscon{border:1px solid var(--rubric);border-left:5px solid var(--rubric);border-radius:12px;
+    background:linear-gradient(180deg,#FFF6F2,#fff);padding:24px 24px 26px}
+  .miscon h3{font-size:1.28rem;margin-bottom:4px}
+  .miscon .ml{font-family:var(--sans);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--rubric);font-weight:700}
+  .miscon .mlead{font-size:.95rem;color:#55555c;margin:6px 0 18px;max-width:64ch}
+  .mgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+  .mcard{border:1px solid var(--line);border-radius:10px;background:#fff;padding:14px 15px}
+  .mcard .say{font-style:italic;color:#6a6a72;font-size:.92rem}
+  .mcard .say::before{content:"“"}.mcard .say::after{content:"”"}
+  .mcard .fix{margin-top:8px;font-size:.9rem;display:flex;gap:9px;align-items:flex-start}
+  .mcard .tagno,.mcard .tagmaybe{font-family:var(--sans);font-weight:700;font-size:.62rem;letter-spacing:.1em;
+    padding:3px 7px;border-radius:5px;white-space:nowrap;margin-top:1px}
+  .mcard .tagno{background:var(--rubric);color:#fff}
+  .mcard .tagmaybe{background:var(--gold);color:var(--ink-2)}
+
+  /* ---------- REVISE ---------- */
+  .revise{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:start}
+  .steps{counter-reset:s;display:flex;flex-direction:column;gap:14px}
+  .step{display:flex;gap:16px;align-items:flex-start;border-left:2px solid var(--line);padding:2px 0 2px 18px;position:relative}
+  .step::before{counter-increment:s;content:counter(s);position:absolute;left:-15px;top:-2px;width:28px;height:28px;border-radius:50%;
+    background:var(--gold);color:var(--ink-2);font-family:var(--sans);font-weight:700;font-size:.9rem;display:grid;place-items:center}
+  .step h4{font-size:1.02rem}
+  .step p{font-size:.9rem;color:#55555c;margin-top:2px}
+  .ao{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff}
+  .ao .h{padding:12px 16px;font-family:var(--sans);font-weight:700;font-size:.82rem;letter-spacing:.06em;color:#fff}
+  .ao .h.ao1{background:var(--ink)}
+  .ao .h.ao2{background:var(--green)}
+  .ao .h.ao3{background:var(--oxblood)}
+  .ao .c{padding:14px 16px;font-size:.9rem;border-bottom:1px solid var(--line)}
+  .ao .c:last-child{border-bottom:0}
+  .ao .c b{font-family:var(--sans);font-size:.78rem;letter-spacing:.04em}
+
+  /* ---------- VIDEO ---------- */
+  .video-frame{position:relative;width:100%;aspect-ratio:16/9;border-radius:14px;overflow:hidden;
+    border:1px solid var(--line);box-shadow:0 20px 44px -30px rgba(18,41,77,.55);background:var(--ink)}
+  .video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .video-placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:14px;text-align:center;padding:30px;color:#C9C4B6;
+    background:radial-gradient(700px 300px at 50% 30%,rgba(201,162,39,.14),transparent 60%),linear-gradient(180deg,var(--ink),var(--ink-2))}
+  .video-placeholder .vp-badge{font-family:var(--sans);font-weight:700;font-size:.72rem;letter-spacing:.14em;
+    text-transform:uppercase;background:var(--gold);color:var(--ink-2);padding:6px 12px;border-radius:6px}
+  .video-placeholder p{max-width:52ch;font-family:var(--sans);font-size:.92rem;line-height:1.55}
+  .video-placeholder code{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:4px;padding:1px 6px}
+
+  /* ---------- FLASHCARDS ---------- */
+  .fc-controls{display:flex;gap:18px;flex-wrap:wrap;align-items:center;margin-bottom:24px}
+  .fc-tabs,.fc-type{display:flex;gap:8px;flex-wrap:wrap}
+  .fc-btn{font-family:var(--sans);font-weight:700;font-size:.8rem;border:1px solid var(--line);
+    background:#fff;color:var(--ink);padding:8px 15px;border-radius:999px;cursor:pointer;transition:.18s}
+  .fc-btn[aria-selected="true"]{background:var(--ink);color:var(--parch);border-color:var(--ink)}
+  .fc-btn:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+  .fc-hint{font-family:var(--sans);font-size:.78rem;color:#8a8a92;margin-left:auto}
+  .fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+  .fc-card{perspective:1200px;height:196px;cursor:pointer;background:none;border:0;padding:0;font-family:inherit;text-align:left}
+  .fc-grid.views .fc-card{height:352px}
+  .fc-grid.views .fc-def{font-size:.86rem}
+  .fc-grid.views .fc-back .fc-sw{font-size:.76rem;line-height:1.38}
+  .fc-inner{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+  .fc-card[data-flipped="true"] .fc-inner{transform:rotateY(180deg)}
+  .fc-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+    border-radius:12px;padding:18px;display:flex;flex-direction:column;border:1px solid var(--line);overflow:auto}
+  .fc-front{background:linear-gradient(180deg,#fff,var(--paper))}
+  .fc-back{transform:rotateY(180deg);color:var(--parch)}
+  .fc-card.map .fc-back{background:linear-gradient(160deg,#1F4E79,#12294D)}
+  .fc-card.dct .fc-back{background:linear-gradient(160deg,#8E2430,#4E1219)}
+  .fc-card.nat .fc-back{background:linear-gradient(160deg,#2F6B4F,#143026)}
+  .fc-card.nonnat .fc-back{background:linear-gradient(160deg,#5B2A86,#2E1244)}
+  .fc-tag{font-family:var(--sans);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--gold);font-weight:700;margin-bottom:8px}
+  .fc-front .fc-tag{color:#9a8028}
+  .fc-term{font-size:1.18rem;font-weight:700;line-height:1.18}
+  .fc-front .fc-flip{margin-top:auto;font-family:var(--sans);font-size:.72rem;color:#9a9a9a}
+  .fc-def{font-size:.9rem;line-height:1.4}
+  .fc-back .fc-sw{margin-top:8px;font-size:.8rem}
+  .fc-back .fc-sw .k{font-family:var(--sans);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase}
+  .fc-back .up .k{color:#8BD08F}.fc-back .dn .k{color:#F2A0A0}
+  @media(max-width:820px){
+    .fc-grid{grid-template-columns:1fr 1fr}
+    .fc-grid.views{grid-template-columns:1fr}
+    .fc-grid.views .fc-card{height:300px}
+    .fc-hint{width:100%;margin-left:0}
+  }
+
+  /* ---------- RESOURCES ---------- */
+  .res-note{background:#FBF0D6;border:1px solid var(--gold);border-left:4px solid var(--gold);
+    border-radius:8px;padding:12px 16px;margin-bottom:22px;font-size:.9rem;color:#5a4a1c;
+    font-family:var(--sans)}
+  .res-note code{background:#fff;border:1px solid var(--line);border-radius:4px;padding:1px 6px;font-size:.85em}
+  .res-note.hide{display:none}
+  .res-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:16px}
+  .res-col{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff}
+  .rc-head{padding:14px 16px;color:#fff;min-height:112px;display:flex;flex-direction:column}
+  .rc1 .rc-head{background:linear-gradient(135deg,#1F4E79,#12294D)}
+  .rc2 .rc-head{background:linear-gradient(135deg,#8E2430,#4E1219)}
+  .rc3 .rc-head{background:linear-gradient(135deg,#2F6B4F,#143026)}
+  .rc4 .rc-head{background:linear-gradient(135deg,#5B2A86,#2E1244)}
+  .rc-head .rc-n{font-family:var(--sans);font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;opacity:.85}
+  .rc-head h3{font-size:1.04rem;margin-top:2px;line-height:1.2}
+  .res-btn{display:flex;align-items:center;gap:10px;padding:12px 13px;border-top:1px solid var(--line);
+    font-family:var(--sans);font-size:.9rem;color:var(--ink);text-decoration:none;
+    cursor:pointer;transition:background .15s}
+  .res-btn>span{min-width:0}
+  .res-col .res-btn:first-of-type{border-top:0}
+  .res-btn:hover{background:var(--parch)}
+  .res-btn .ic{width:26px;height:26px;flex:none;display:grid;place-items:center;border-radius:6px;
+    background:var(--ink);color:var(--gold);font-size:.9rem}
+  .res-btn .go{margin-left:auto;color:var(--gold);font-weight:700;opacity:0;transition:.15s}
+  .res-btn:hover .go{opacity:1}
+  .res-btn:focus-visible{outline:3px solid var(--gold);outline-offset:-3px}
+  .res-btn.unset{opacity:.55;cursor:not-allowed}
+  .res-btn.unset .go{opacity:0}
+  .res-btn.unset::after{content:"Link not set";margin-left:auto;font-size:.68rem;color:#9a7d2c;
+    background:#FBF0D6;border:1px solid var(--gold-soft);border-radius:5px;padding:2px 6px;white-space:nowrap}
+  .res-wide{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:2px}
+  .res-wide>*,.res-grid>*{min-width:0}
+  .res-btn.big{border:1px solid var(--line);border-radius:12px;background:#fff;padding:16px 18px;gap:12px}
+  .res-btn.big:hover{background:var(--parch)}
+  .res-btn.big .ic{width:34px;height:34px;font-size:1.1rem;background:var(--ink)}
+  @media(max-width:1000px){.res-grid{grid-template-columns:1fr 1fr}}
+  @media(max-width:820px){.res-grid{grid-template-columns:1fr}.res-wide{grid-template-columns:1fr}}
+
+  footer{background:var(--ink-2);color:#C9C4B6;padding:26px 0;font-family:var(--sans);font-size:.8rem}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+  footer .gold{color:var(--gold)}
+
+  @media(max-width:820px){
+    .quadtych{grid-template-columns:1fr}
+    .mgrid{grid-template-columns:1fr}
+    .threads{grid-template-columns:1fr}
+    .revise{grid-template-columns:1fr}
+    .panel .versus{grid-template-columns:1fr;gap:8px}
+    .panel .vs{justify-self:center}
+    .node{width:96px}
+    .node .sb{display:none}
+  }
+  @media(max-width:600px){
+    /* keep the outermost nodes inside the card on narrow phones */
+    .spectrum-card{padding:22px 16px 28px}
+    .axis{padding:0 44px;margin:8px 0 0}
+    .node{width:88px}
+    .node .nm{font-size:.76rem}
+    .readout{flex-direction:column;gap:10px;padding:18px 16px}
+    .readout .badge{white-space:normal;align-self:flex-start}
+  }
+  @media(max-width:480px){
+    /* very narrow phones: the spectrum becomes a stacked list, in the same order */
+    .axis{padding:0}
+    .bar{margin-bottom:16px}
+    .ticks{position:static;height:auto;display:flex;flex-direction:column;gap:6px}
+    .node{position:static;transform:none;width:100%;text-align:left;display:flex;align-items:center;gap:10px;
+      border:1px solid var(--line);border-radius:9px;padding:9px 11px;background:#fff}
+    .node[data-active="true"]{border-color:var(--gold);background:#FFFBF0}
+    .node .dot{position:static;top:0;margin:0;width:14px;height:14px;flex:none}
+    .node .nm{margin-top:0}
+    .node .sb{display:block;margin:0 0 0 auto;text-align:right;max-width:52%}
+  }
+  @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<!--BACKPILL--><a href="../alevel.html" style="position:fixed;left:14px;bottom:14px;z-index:99999;background:#12294D;color:#F6F1E4;font:600 14px/1 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;padding:10px 15px;border-radius:999px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.28);border:1px solid #C9A227">&#8592; All units</a>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap">
+    <div class="crest">
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <rect x="2" y="2" width="60" height="60" rx="13" fill="#0C1B33" stroke="#C9A227" stroke-width="1.5"/>
+        <g fill="none" stroke="#F3ECDD" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M32 12v6M32 46v6"/>
+          <path d="M14 20h36"/>
+          <path d="M14 20l-7 15a7.5 7.5 0 0 0 14 0z"/>
+          <path d="M50 20l-7 15a7.5 7.5 0 0 0 14 0z"/>
+          <path d="M23 52h18"/>
+        </g>
+        <circle cx="32" cy="19" r="3.2" fill="#C9A227"/>
+      </svg>
+      <div class="who">A-Level Religious Studies · AQA Paper 1
+        <b>Harlington School · Philosophy &amp; Ethics</b></div>
+    </div>
+    <h1>Meta-ethics<span class="amp">:</span> the meaning of right <span class="amp">&amp;</span> wrong</h1>
+    <p class="sub">One unit, one argument — told four times. Meta-ethics does not tell you what to do. It asks a harder, prior question: what are you actually <em>saying</em> when you say something is good?</p>
+    <div class="bigq">
+      <span class="q">The<br>big<br>question</span>
+      <p>What do we MEAN when we call something good or right — and can a moral claim ever be a fact?</p>
+    </div>
+  </div>
+</header>
+
+<!-- 01 · SIGNATURE: THE COGNITIVISM SPECTRUM -->
+<section id="spectrum">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">01</span><h2>The cognitivism spectrum</h2></div>
+    <p class="sec-lead">Every theory in this unit lines up on one axis: how much <b>factual content</b> does a moral claim have? At the left, moral claims describe the world and can be true or false. At the right, they describe nothing at all. Pick a sub-topic, then tap a position to see what it claims — and the trade it is making.</p>
+
+    <div class="spectrum-card">
+      <div class="tabs" role="tablist" aria-label="Choose a sub-topic">
+        <button class="tab" role="tab" aria-selected="true"  data-topic="map">1 · The Meta-ethical Map</button>
+        <button class="tab" role="tab" aria-selected="false" data-topic="dct">2 · Divine Command Theory</button>
+        <button class="tab" role="tab" aria-selected="false" data-topic="nat">3 · Naturalism</button>
+        <button class="tab" role="tab" aria-selected="false" data-topic="nonnat">4 · Non-naturalism</button>
+      </div>
+
+      <div class="axis">
+        <div class="axis-labels">
+          <span class="l">MOST factual — moral claims describe the world</span>
+          <span class="r">LEAST factual — moral claims describe nothing</span>
+        </div>
+        <div class="axis-sub">
+          <span class="l" id="poleL"></span><span class="r" id="poleR"></span>
+        </div>
+        <div class="bar"></div>
+        <div class="ticks" id="ticks"></div>
+      </div>
+
+      <div class="readout" id="readout" aria-live="polite"></div>
+      <p class="hint">Tap a circle — or use Tab and Enter — to explore each position.</p>
+    </div>
+  </div>
+</section>
+
+<!-- THE THREAD (unnumbered) -->
+<section id="thread">
+  <div class="wrap">
+    <div class="thread">
+      <div class="wrap2">
+        <h2>The thread that ties it together</h2>
+        <p class="lead">This is not four separate topics. It is ONE argument, asked four times: <b>are moral values FACTS?</b> Spot the thread and you are writing at the top of the mark scheme.</p>
+        <div class="threads">
+          <div class="tcard"><div class="t">One question, four times</div><p>The Map sets up the question, DCT answers it with a supernatural fact, Naturalism with a natural fact, and Non-naturalism with a non-natural fact — until the non-cognitivists say there is no fact at all.</p></div>
+          <div class="tcard"><div class="t">The is–ought gap runs underneath</div><p>Hume's gap sits under all four sub-topics. Every theory here either tries to cross it (naturalism, DCT), declares it uncrossable (Moore), or gives up on facts entirely (Ayer, Hare).</p></div>
+          <div class="tcard"><div class="t">The standing trade</div><p>The more <em>measurable</em> a moral 'fact' is, the less it looks like goodness; the more it looks like goodness, the less measurable it is. Every position on the spectrum is a different price paid for that trade.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 · FOUR DEBATES -->
+<section id="debates">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">02</span><h2>The same question, four times</h2></div>
+    <p class="sec-lead">Four sub-topics, four big questions — but each one is really asking whether a moral claim states a <em>fact</em>, and if so, what KIND of fact. Each panel gives you the two opposed answers you must be able to set against each other.</p>
+    <div class="quadtych">
+
+      <div class="panel b1">
+        <div class="cap">
+          <div class="n">Sub-topic 1 · The Meta-ethical Map</div>
+          <h3>Cognitivism vs non-cognitivism</h3>
+          <div class="ask">What KIND of question is “What does <b>good</b> mean?” — and why does the answer change everything?</div>
+        </div>
+        <div class="versus">
+          <div class="side"><span class="k">Answer A · Cognitivism</span><p>Moral claims ARE about facts, so they can be <b>true or false</b> and can be known. Naturalism, non-naturalism and DCT all sit here.</p></div>
+          <div class="vs">VS</div>
+          <div class="side"><span class="k">Answer B · Non-cognitivism</span><p>Moral claims state no facts at all — they express feeling, wish or prescription, so they are <b>neither true nor false</b>. Ayer and Hare sit here.</p></div>
+        </div>
+        <div class="body">
+          <div class="row"><span class="v">Descriptive</span><span class="d">How people actually behave — pure fact, no 'ought'.</span></div>
+          <div class="row"><span class="v">Normative</span><span class="d">First-order: how we ought to behave.</span></div>
+          <div class="row"><span class="v">Applied</span><span class="d">Normative principles cashed out in a real case.</span></div>
+          <div class="row"><span class="v">Meta-ethics</span><span class="d">Second-order: what the moral words MEAN.</span></div>
+        </div>
+      </div>
+
+      <div class="panel b2">
+        <div class="cap">
+          <div class="n">Sub-topic 2 · Divine Command Theory</div>
+          <h3>The Euthyphro Dilemma</h3>
+          <div class="ask">If God commands it, does that <b>make</b> it right — or does God command it because it already was?</div>
+        </div>
+        <div class="versus">
+          <div class="side"><span class="k">Horn 1 · Voluntarism</span><p>It is right <b>BECAUSE God commands it</b>. God's will constitutes morality (Ockham) — but then 'God is good' says only 'God does what God does'.</p></div>
+          <div class="vs">VS</div>
+          <div class="side"><span class="k">Horn 2 · Independent standard</span><p><b>God commands it BECAUSE it is right</b>. Goodness stands independently — but then God is not the source of morality, and omnipotence is lost.</p></div>
+        </div>
+        <div class="body">
+          <div class="row"><span class="v">Classical DCT</span><span class="d">'Good' MEANS commanded by God — real, non-natural, revealed.</span></div>
+          <div class="row"><span class="v">Ockham</span><span class="d">Bite the bullet: whatever God willed would be good.</span></div>
+          <div class="row"><span class="v">Essentialism</span><span class="d">God does not invent or obey goodness — God IS it.</span></div>
+          <div class="row"><span class="v">Secular reply</span><span class="d">Obedience for a reward is not autonomous moral choice.</span></div>
+        </div>
+      </div>
+
+      <div class="panel b3">
+        <div class="cap">
+          <div class="n">Sub-topic 3 · Ethical Naturalism</div>
+          <h3>Can 'good' be a natural fact?</h3>
+          <div class="ask">Can 'good' be <b>reduced to a fact</b> about the world — and is pleasure that fact?</div>
+        </div>
+        <div class="versus">
+          <div class="side"><span class="k">Answer A · Yes, it reduces</span><p>'Good' MEANS a natural property — the balance of pleasure over pain (Bentham), higher-quality happiness (Mill), agape, or human flourishing (Foot, Midgley, Warnock). Observable, measurable, objective.</p></div>
+          <div class="vs">VS</div>
+          <div class="side"><span class="k">Answer B · No, that's the fallacy</span><p>Identifying 'good' with any natural property is the <b>naturalistic fallacy</b> — an 'ought' smuggled out of an 'is' (Hume, Moore). No natural fact can BE goodness.</p></div>
+        </div>
+        <div class="body">
+          <div class="row"><span class="v">Bentham</span><span class="d">Quantity of pleasure — the hedonic calculus.</span></div>
+          <div class="row"><span class="v">Mill</span><span class="d">Higher and lower pleasures, plus useful rules.</span></div>
+          <div class="row"><span class="v">The family</span><span class="d">Utilitarianism · Situation Ethics · Virtue Ethics · Natural Moral Law.</span></div>
+          <div class="row"><span class="v">Neo-naturalism</span><span class="d">Human flourishing fills the is–ought gap with further facts.</span></div>
+        </div>
+      </div>
+
+      <div class="panel b4">
+        <div class="cap">
+          <div class="n">Sub-topic 4 · Non-naturalism &amp; the non-cognitive turn</div>
+          <h3>A fact you cannot define — or no fact at all?</h3>
+          <div class="ask">If 'good' cannot be defined, can a moral claim be <b>true</b> at all — or is it just a shout?</div>
+        </div>
+        <div class="versus">
+          <div class="side"><span class="k">Answer A · Real but non-natural</span><p>'Good' is simple and unanalysable, like yellow (Moore). It names a real, <b>non-natural</b> property known by intuition — still cognitivist, still true or false.</p></div>
+          <div class="vs">VS</div>
+          <div class="side"><span class="k">Answer B · Not a statement at all</span><p>'Murder is wrong' is an emotional ejaculation (Ayer) or a universal prescription (Hare) — it names no property, so it is <b>neither true nor false</b>.</p></div>
+        </div>
+        <div class="body">
+          <div class="row"><span class="v">Moore</span><span class="d">The Open Question argument and the naturalistic fallacy.</span></div>
+          <div class="row"><span class="v">Intuitionism</span><span class="d">We just SENSE that torturing an innocent is wrong.</span></div>
+          <div class="row"><span class="v">Ross</span><span class="d">Prima facie duties; intuition settles the conflicts.</span></div>
+          <div class="row"><span class="v">Ayer &amp; Hare</span><span class="d">Emotivism and Prescriptivism — the non-cognitive turn.</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- MISCONCEPTION STRIP -->
+<section id="misconceptions" style="padding-top:0">
+  <div class="wrap">
+    <div class="miscon">
+      <span class="ml">Mark-losers</span>
+      <h3>Four mistakes that cost the most marks</h3>
+      <p class="mlead">Examiners see these four every series. Fix them now — each one is worth more than any extra quotation you could learn.</p>
+      <div class="mgrid">
+        <div class="mcard">
+          <p class="say">Intuitionism is non-cognitive.</p>
+          <div class="fix"><span class="tagno">Wrong</span><span>It is <b>COGNITIVE</b> and <b>NON-NATURAL</b>. Moore and Ross hold that moral claims are true or false and state real facts — we just know them by intuition rather than observation.</span></div>
+        </div>
+        <div class="mcard">
+          <p class="say">Divine Command Theory is naturalist because God made nature.</p>
+          <div class="fix"><span class="tagno">Wrong</span><span>DCT is <b>NON-naturalist</b>. The good is grounded in a <b>supernatural</b> being — literally 'above the natural' — not in facts about nature or human nature.</span></div>
+        </div>
+        <div class="mcard">
+          <p class="say">Meta-ethics tells you what to do.</p>
+          <div class="fix"><span class="tagno">Wrong</span><span>It is <b>second-order</b>. It asks what the moral words MEAN and how moral claims could be justified. 'What should I do?' is a first-order, normative question.</span></div>
+        </div>
+        <div class="mcard">
+          <p class="say">The naturalistic fallacy proves naturalism false.</p>
+          <div class="fix"><span class="tagmaybe">Contested</span><span>Attfield argues Moore <b>assumed his own conclusion</b> — that no successful definition would ever be produced. Neo-naturalists (Foot, Midgley, Warnock) claim to fill the is–ought gap with further facts about flourishing.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 · YOUR RESOURCES -->
+<section id="resources">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">03</span><h2>Your resources</h2></div>
+    <p class="sec-lead">Everything for the unit, in one place. Open a sub-topic's lesson, booklet and podcast, and use the <b>Philosopher Companion</b> across all four.</p>
+
+    <div class="res-note" id="resNote">
+      <b>Teacher setup:</b> links aren't set yet. Open this file, find the <code>LINKS</code> list near the bottom, and paste each SharePoint share link once. Buttons with no link show as “Link not set”.
+    </div>
+
+    <div class="res-grid">
+      <div class="res-col rc1">
+        <div class="rc-head"><span class="rc-n">Sub-topic 1</span><h3>The Meta-ethical Map</h3></div>
+        <a class="res-btn" data-key="lesson_map"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="booklet_map"><span class="ic">✎</span><span>Completion booklet</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="podcast_map"><span class="ic">♪</span><span>Lesson podcast</span><span class="go">↗</span></a>
+      </div>
+      <div class="res-col rc2">
+        <div class="rc-head"><span class="rc-n">Sub-topic 2</span><h3>Divine Command Theory</h3></div>
+        <a class="res-btn" data-key="lesson_dct"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="booklet_dct"><span class="ic">✎</span><span>Completion booklet</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="podcast_dct"><span class="ic">♪</span><span>Lesson podcast</span><span class="go">↗</span></a>
+      </div>
+      <div class="res-col rc3">
+        <div class="rc-head"><span class="rc-n">Sub-topic 3</span><h3>Ethical Naturalism: Utilitarianism</h3></div>
+        <a class="res-btn" data-key="lesson_nat"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="booklet_nat"><span class="ic">✎</span><span>Completion booklet</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="podcast_nat"><span class="ic">♪</span><span>Lesson podcast</span><span class="go">↗</span></a>
+      </div>
+      <div class="res-col rc4">
+        <div class="rc-head"><span class="rc-n">Sub-topic 4</span><h3>Non-naturalism, Intuitionism &amp; Non-cognitivism</h3></div>
+        <a class="res-btn" data-key="lesson_nonnat"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="booklet_nonnat"><span class="ic">✎</span><span>Completion booklet</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="podcast_nonnat"><span class="ic">♪</span><span>Lesson podcast</span><span class="go">↗</span></a>
+      </div>
+    </div>
+
+    <div class="res-wide">
+      <a class="res-btn big" data-key="companion"><span class="ic">🦉</span><span><b>Philosopher Companion</b> — checklist, AO1 &amp; AO2 planning, key terms &amp; review</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="review"><span class="ic">↻</span><span><b>Review lessons</b> — consolidation decks for all four sub-topics</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="overview_podcast"><span class="ic">♪</span><span><b>Overview podcast</b> — the whole unit as one argument (team teach)</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="flashcards"><span class="ic">▤</span><span><b>Printable flashcards</b> — fold-over key terms &amp; positions to cut out</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="exam_questions"><span class="ic">✓</span><span><b>Exam questions</b> — AQA-style AO1, AO2 and 25-mark dialogue questions</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="textbook"><span class="ic">▥</span><span><b>Textbook chapter</b> — the meta-ethics reading for the whole unit</span><span class="go">↗</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- 04 · HOW TO REVISE -->
+<section id="revise">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">04</span><h2>How to revise this unit</h2></div>
+    <p class="sec-lead">Use your resources in this order. The <b>Philosopher Companion</b> is where you learn to <em>plan</em> both question types — and meta-ethics is a unit where precision of language is worth more than volume.</p>
+    <div class="revise">
+      <div class="steps">
+        <div class="step"><div><h4>Watch the lesson &amp; listen to the podcast</h4><p>One podcast per sub-topic — a teacher and student talk each position through to a judgement. Annotate as you listen.</p></div></div>
+        <div class="step"><div><h4>Complete the greyscale booklet</h4><p>Read the given text, write the key claims in your own words, then decide the strength and weakness you would give each position.</p></div></div>
+        <div class="step"><div><h4>Master the 24 key terms — then place every theory on the map</h4><p>Cognitivist or non-cognitivist? Natural or non-natural? If you cannot place a theory on the spectrum above, you do not yet know it. Use the flashcards in section 06.</p></div></div>
+        <div class="step"><div><h4>Plan AO1, then build AO2 on top</h4><p>Use the Companion frameworks and the guidance-left / your-turn-right scaffolds. Never evaluate what you have not first explained.</p></div></div>
+        <div class="step"><div><h4>Write to time, then use the review decks</h4><p>Sit one AO1 and one AO2 under exam conditions, mark against the AQA levels, then close the gaps with the review lessons.</p></div></div>
+      </div>
+      <div class="ao">
+        <div class="h ao1">AO1 · “Examine…” (10 marks)</div>
+        <div class="c"><b>What it is —</b> the factual chain. Define the terms, then set out each position in order and show how one leads to the next: cognitivism → naturalism → the naturalistic fallacy → non-naturalism → non-cognitivism.</div>
+        <div class="c"><b>Aim —</b> explain the whole range accurately and neutrally, with named scholars and precise vocabulary. No judging yet.</div>
+        <div class="h ao2">AO2 · “Evaluate this claim.” (15 marks)</div>
+        <div class="c"><b>What it is —</b> a three-paragraph dialectic: state the view, then evaluation → counter-evaluation → implication; mirror it for the opposing view; then judge.</div>
+        <div class="c"><b>Aim —</b> weigh the positions, use one as a lens on another (Moore refutes the naturalist; Ayer then turns on Moore), and reach a justified judgement that links back to your thesis.</div>
+        <div class="h ao3">Paper 1 · the 25-mark dialogue questions</div>
+        <div class="c"><b>What it is —</b> the connections question: AO1 (10) plus AO2 (15) on how philosophy of religion and ethics speak to each other — e.g. whether the Euthyphro Dilemma damages religious ethics as a whole.</div>
+        <div class="c"><b>Aim —</b> argue across the two halves of the paper rather than repeating one topic. Meta-ethics is the natural bridge: it is the level at which religious and secular ethics actually meet.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 · WATCH -->
+<section id="watch">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">05</span><h2>Watch: the whole unit in one go</h2></div>
+    <p class="sec-lead">A full review of <b>Meta-ethics</b> — the map, Divine Command Theory, ethical naturalism and the non-cognitive turn. Best watched before you start revising, then again to check your recall.</p>
+    <div class="video-frame" id="videoFrame">
+      <div class="video-placeholder" id="videoPlaceholder">
+        <div class="vp-badge">Video not set</div>
+        <p><b>Teacher:</b> paste the YouTube link in the <code>VIDEO_URL</code> line near the bottom of this file. The player then appears here automatically.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 · FLASHCARDS -->
+<section id="flashcards">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">06</span><h2>Flashcards — test yourself</h2></div>
+    <p class="sec-lead">Flip a card to check yourself. Switch between <b>key terms</b> (term → meaning) and <b>positions</b> (position → claim, meaning of 'good', strength &amp; weakness), and filter by sub-topic.</p>
+    <div class="fc-controls">
+      <div class="fc-tabs" role="tablist" aria-label="Sub-topic">
+        <button class="fc-btn" role="tab" aria-selected="true"  data-topic="all">All</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-topic="map">The Map</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-topic="dct">DCT</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-topic="nat">Naturalism</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-topic="nonnat">Non-naturalism</button>
+      </div>
+      <div class="fc-type" role="tablist" aria-label="Card type">
+        <button class="fc-btn" role="tab" aria-selected="true"  data-type="terms">Key terms</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-type="views">Positions</button>
+      </div>
+      <span class="fc-hint">Tap any card to flip · <span id="fcCount"></span></span>
+    </div>
+    <div class="fc-grid" id="fcGrid"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Meta-ethics: the meaning of right and wrong · Unit at a glance · AQA Paper 1</span>
+    <span class="gold">Harlington School · Philosophy &amp; Ethics</span>
+  </div>
+</footer>
+
+<script>
+/* =====================================================================
+   01 · THE COGNITIVISM SPECTRUM
+   Stops come straight from each sub-topic's own content module.
+   ===================================================================== */
+const SPECTRUM = {
+  map:{
+    label:"The Meta-ethical Map",
+    poles:["MOST factual · moral claims are about nature","LEAST factual · moral claims are not claims at all"],
+    insight:"As you move left to right, moral claims lose factual content — and gain honesty about disagreement. Every theory in this unit is a different answer to how much of that trade you are willing to make.",
+    stops:[
+      {label:"Naturalism", sub:"facts of nature", color:"#2F6B4F",
+       gloss:"Moral values ARE natural facts — pleasure, happiness, flourishing — so they can be observed, measured and known."},
+      {label:"Non-naturalism", sub:"non-natural facts", color:"#5B2A86",
+       gloss:"Moral facts are real but NOT natural: known by intuition (Moore, Ross) or revealed by God (DCT). Still cognitivist."},
+      {label:"Prescriptivism", sub:"universal commands", color:"#8E6B00",
+       gloss:"Hare: a moral claim issues a universalisable command — not a description of the world, but not mere feeling either."},
+      {label:"Emotivism", sub:"expressions of feeling", color:"#8E2430",
+       gloss:"Ayer: 'murder is wrong' is an emotional ejaculation. It states no fact, so it is neither true nor false."}
+    ]
+  },
+  dct:{
+    label:"Divine Command Theory",
+    poles:["MOST divine · God's will constitutes morality","LEAST divine · morality is independent of God"],
+    insight:"Moving right, God's role in morality shrinks and the theory becomes easier to defend — until God is doing no moral work at all. DCT's problem is that there seems to be no stable place to stop.",
+    stops:[
+      {label:"Ockham", sub:"will alone", color:"#6E1420",
+       gloss:"Voluntarism — a thing is good purely because God WILLS it. Even a command to kill would, on this view, be good."},
+      {label:"Classical DCT", sub:"commands + character", color:"#8E2430",
+       gloss:"'Good' MEANS commanded by God, revealed through scripture and the Church — real moral facts, but non-natural ones."},
+      {label:"Identity thesis", sub:"God IS goodness", color:"#B0574E",
+       gloss:"God neither invents goodness nor obeys it: God's nature IS the good, so the commands cannot be arbitrary."},
+      {label:"Secular rejection", sub:"reason alone", color:"#5B6770",
+       gloss:"Morality must rest on reason and shared experience — and obedience bought with heaven and hell is not autonomous moral choice."}
+    ]
+  },
+  nat:{
+    label:"Ethical Naturalism: Utilitarianism",
+    poles:["MOST measurable · quantity of pleasure","MOST general · flourishing of a whole life"],
+    insight:"Moving right, the 'fact' gets richer and harder to measure — and harder for Moore to attack. Naturalism's problem is that the more measurable the fact, the less it looks like goodness; the more it looks like goodness, the less measurable it is.",
+    stops:[
+      {label:"Bentham", sub:"quantity of pleasure", color:"#1F5F45",
+       gloss:"Pain and pleasure are the two sovereign masters. The hedonic calculus turns 'good' into something you can measure."},
+      {label:"Mill", sub:"quality + rules", color:"#2F6B4F",
+       gloss:"Higher and lower pleasures, plus rules of proven utility — better to be Socrates dissatisfied than a fool satisfied."},
+      {label:"Situation Ethics", sub:"agape-love", color:"#4F8C6B",
+       gloss:"The moral fact is agape-love — often read as a religious version of Utilitarianism."},
+      {label:"Neo-naturalism", sub:"human flourishing", color:"#7FAE97",
+       gloss:"Foot, Midgley and Warnock: the factual content of morality is human flourishing — filling the is–ought gap with FURTHER facts."}
+    ]
+  },
+  nonnat:{
+    label:"Non-naturalism, Intuitionism & the Non-cognitive Turn",
+    poles:["MOST factual · moral claims describe the world","LEAST factual · moral claims describe nothing"],
+    insight:"Each step right gives up a little more factual content in exchange for a little more honesty about what we can actually observe. The exam question is always: is that a good trade?",
+    stops:[
+      {label:"Moore", sub:"non-natural facts", color:"#3E1C5C",
+       gloss:"'Good' is simple and unanalysable, like yellow. Real, but non-natural — defining it in natural terms is the naturalistic fallacy."},
+      {label:"Ross", sub:"intuited duties", color:"#5B2A86",
+       gloss:"Prima facie duties hold 'at first sight'; when two of them conflict, moral intuition supplies the answer."},
+      {label:"Hare", sub:"prescriptions", color:"#8E6BB0",
+       gloss:"Prescriptivism — a moral claim is a universal prescription: a command you would apply to anyone in that situation."},
+      {label:"Ayer", sub:"emotions", color:"#B79ED0",
+       gloss:"Emotivism — moral 'statements' are not statements at all, merely expressions of feeling."}
+    ]
+  }
+};
+
+(function wireSpectrum(){
+  const ticks=document.getElementById("ticks");
+  const readout=document.getElementById("readout");
+  const poleL=document.getElementById("poleL"), poleR=document.getElementById("poleR");
+  let topic="map", active=0;
+
+  function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+
+  function renderReadout(stop,d){
+    readout.innerHTML=
+      '<span class="badge">'+esc(d.label)+'</span>'+
+      '<div class="body">'+
+        '<h4>'+esc(stop.label)+' <span style="opacity:.6;font-style:italic;font-weight:400">· '+esc(stop.sub)+'</span></h4>'+
+        '<div class="auth">Position '+(d.stops.indexOf(stop)+1)+' of '+d.stops.length+' on this axis</div>'+
+        '<p>'+esc(stop.gloss || (stop.label+" locates moral claims here: "+stop.sub+"."))+'</p>'+
+        '<div class="ins"><span class="k">The trade on this axis</span>'+esc(d.insight)+'</div>'+
+      '</div>';
+  }
+
+  function renderTopic(){
+    const d=SPECTRUM[topic];
+    poleL.textContent=d.poles[0]; poleR.textContent=d.poles[1];
+    ticks.innerHTML="";
+    const n=d.stops.length;
+    active=Math.min(active,n-1);
+    d.stops.forEach(function(stop,i){
+      const x = n===1 ? 50 : 8 + i*(84/(n-1));
+      const el=document.createElement("div");
+      el.className="node"; el.style.left=x+"%"; el.tabIndex=0;
+      el.setAttribute("role","button");
+      el.setAttribute("aria-label",stop.label+": "+stop.sub);
+      el.dataset.active=(i===active);
+      el.dataset.stop=stop.label;
+      el.innerHTML='<div class="dot" style="border-color:'+stop.color+'"></div>'+
+                   '<div class="nm">'+esc(stop.label)+'</div>'+
+                   '<div class="sb">'+esc(stop.sub)+'</div>';
+      const pick=function(){
+        active=i;
+        Array.prototype.forEach.call(ticks.children,function(c,j){c.dataset.active=(j===i);});
+        renderReadout(stop,d);
+      };
+      el.addEventListener("click",pick);
+      el.addEventListener("keydown",function(e){
+        if(e.key==="Enter"||e.key===" "){e.preventDefault();pick();}
+      });
+      ticks.appendChild(el);
+    });
+    Array.prototype.forEach.call(ticks.children,function(c,j){c.dataset.active=(j===active);});
+    renderReadout(d.stops[active],d);
+  }
+
+  document.querySelectorAll("#spectrum .tab").forEach(function(t){
+    t.addEventListener("click",function(){
+      document.querySelectorAll("#spectrum .tab").forEach(function(x){x.setAttribute("aria-selected","false");});
+      t.setAttribute("aria-selected","true");
+      topic=t.dataset.topic; active=0; renderTopic();
+    });
+  });
+  renderTopic();
+})();
+
+/* =====================================================================
+   06 · FLASHCARDS — 24 key terms + 16 positions, from the content modules
+   ===================================================================== */
+const FLASHCARDS = {"unit":{"name":"Meta-ethics: the meaning of right and wrong","short":"Meta-ethics","paper":"AQA Paper 1"},"subs":[{"key":"map","name":"The Meta-ethical Map","short":"The Map","accent":"1F4E79","terms":[{"term":"Descriptive ethics","def":"describes and compares the ethical norms actually held in different societies."},{"term":"Normative ethics","def":"first-order questions about how we OUGHT to behave and which norms we should follow."},{"term":"Applied ethics","def":"applying normative principles and arguments to particular areas or dilemmas."},{"term":"Meta-ethics","def":"second-order questions about the nature and purpose of morality — what 'good', 'bad', 'right' and 'wrong' actually MEAN, and how moral claims could be justified."},{"term":"Cognitivism","def":"the view that moral claims are about facts, so they can be true or false and can be known."},{"term":"Non-cognitivism","def":"the view that moral claims do not state facts at all, but express something else — emotions, wishes or prescriptions."}],"views":[{"n":"Descriptive ethics","c":"This is how people actually behave — no more, no less.","m":"'good' here just labels what a society happens to approve of.","s":"Rigorous, empirical and testable; it exposes how much of what we call 'obvious' morality is local and historically contingent.","w":"It can never generate a moral conclusion. Treating 'this is what we do' as 'this is what we ought to do' is precisely the is–ought error the whole unit is about."},{"n":"Normative ethics","c":"How ought we to behave? Which norms should we follow?","m":"'Good' means whatever the chosen theory says it means — which is exactly what meta-ethics refuses to take for granted.","s":"It is the branch of ethics that actually answers the question people care about: what should I do, here, now?","w":"Every normative theory silently assumes an answer to the meta-ethical question. Two theories can use the word 'good' to mean completely different things and never notice they are talking past each other."},{"n":"Applied ethics","c":"Take the principles — now decide this actual case.","m":"'Good' means what the parent normative theory says it means, tested against a real case.","s":"It keeps ethics honest: a theory that produces monstrous answers in real medical or legal cases has been refuted by its own application.","w":"It cannot be independent. Applied ethics is second-hand normative ethics, so it never reaches the meta-ethical question of what 'good' means — it just inherits an answer."},{"n":"Meta-ethics","c":"Not 'what should I do?' but 'what am I even saying?'","m":"This is the view that ASKS what 'good' means rather than assuming it — the question the rest of the unit tries to answer.","s":"It is genuinely foundational: without it, rival normative theories use the same word for different things and moral disagreement can never be resolved, only repeated.","w":"It is second-order all the way down — it gives no guidance whatsoever on any actual moral decision, and some argue that a lifetime of it would leave you no better at living well."}]},{"key":"dct","name":"Divine Command Theory","short":"DCT","accent":"8E2430","terms":[{"term":"Divine Command Theory","def":"meta-ethically, the NON-NATURAL view that morality is defined by God's commands, revealed through scripture and the Church."},{"term":"Religious ethics","def":"the approach to ethics which derives moral values from God or a divine realm."},{"term":"Secular ethics","def":"the approach which argues that ethical theories and actions are based on human faculties such as logic and reason, not on religious values or divine commands."},{"term":"Voluntarism","def":"the view that a thing is good purely because God WILLS it — God's will, not God's nature, is the source of morality."},{"term":"Euthyphro Dilemma","def":"Plato's question: is conduct right because the gods command it, or do the gods command it because it is right?"},{"term":"Autonomy","def":"self-rule; making a free moral choice for yourself rather than under compulsion or incentive."}],"views":[{"n":"Classical Divine Command Theory","c":"Whatever God commands is good; whatever God forbids is evil.","m":"'good' MEANS 'commanded by God'. Moral facts are real, non-natural and revealed.","s":"For religious people it grounds moral behaviour in a factually existing God who is all-knowing and all-loving, so the commands must be right; the rules are universal across all times, places and cultures; and 'good', 'bad', 'right' and 'wrong' are defined precisely, with an end-goal (life after death) and a totally fair, omniscient judge.","w":"It assumes we can know what God actually commanded. There is no 'original' version of any Old Testament book; the New Testament survives only in Greek though Jesus taught in Aramaic — so we cannot tell whether the commands are as God gave them."},{"n":"Ockham's voluntarism","c":"Bite the bullet: if God commanded it, it would be good — whatever it is.","m":"'good' means nothing more than 'willed by God'. There is no independent standard at all.","s":"Utterly consistent, and it protects God's omnipotence completely: God is subject to no external moral law, which is what 'all-powerful' should mean.","w":"It makes 'God is good' an empty statement — it says only 'God does what God does'. It also collides with the Bible's own images of God requiring justice, fairness and love of the stranger and the outcast."},{"n":"The essentialist reply: God's nature IS the good","c":"God does not invent goodness or obey it — God IS it.","m":"'good' means 'in accordance with what God essentially is' — known by a true intuition rather than by observation.","s":"It preserves God's goodness AND God's omnipotence together, and it explains why believers experience God's commands as loving rather than arbitrary.","w":"It leaves the immoral commands entirely unexplained; and the 'corrupt text' repair is self-defeating, because a scripture that may be corrupt anywhere cannot be a reliable revelation of God's commands anywhere."},{"n":"The autonomy objection and the secular rejection","c":"Morality should be based on reason — a command you obey for a reward is not a moral choice.","m":"'good' must be defined by human reason and shared experience if it is to bind anyone.","s":"It appeals to everyone, believer or not, on the basis of shared reason and experience; and it explains our strong intuition that some recorded divine commands are simply wrong.","w":"It has to supply its own account of what 'good' means — and the rest of this unit shows how hard that is. It also gives up the universality and clarity that made DCT attractive in the first place."}]},{"key":"nat","name":"Ethical Naturalism: Utilitarianism","short":"Naturalism","accent":"2F6B4F","terms":[{"term":"Ethical naturalism","def":"the meta-ethical view that morality is defined by facts about nature or human nature."},{"term":"Intrinsic good","def":"the value that something has 'in itself', not for some other valuable thing it produces."},{"term":"Hedonic calculus","def":"Bentham's method of measuring pleasure objectively by its intensity, duration, certainty, proximity, productiveness, purity and extent."},{"term":"Consequentialism","def":"the view that the moral value of an action is determined by the results it seeks to achieve."},{"term":"Neo-naturalism","def":"'new naturalism' (Foot, Midgley, Warnock): virtue depends on biological and sociological facts about humans, so morality's factual content is human flourishing."},{"term":"Is–ought gap","def":"the alleged logical gap between statements of what IS the case and statements about what OUGHT to be done."}],"views":[{"n":"Ethical naturalism itself","c":"Moral values are natural facts — objective, discoverable, real.","m":"'good' MEANS some natural property — pleasure, love, flourishing — which can be observed and measured.","s":"Ethical propositions are true because they are FACTUAL: they reduce to non-ethical properties such as happiness, love and well-being, grounded in nature or in human nature; right and wrong are therefore objective, so we can KNOW whether we are doing right.","w":"The claim that ethical propositions are factual does not impress ethical non-cognitivists, who deny that moral propositions are about facts at all — and Moore argues that all naturalist theories commit the naturalistic fallacy."},{"n":"Bentham's Utilitarianism","c":"Pain and pleasure are the two sovereign masters — measure them, and you have your ethics.","m":"'good' MEANS the balance of pleasure over pain — an observable, calculable natural fact.","s":"It gives a factual basis for morality, with guidelines and rules; it provides a way of measuring the moral worth of actions and of people; it is practical — UK law and politics are broadly utilitarian in character; and if you ask people what they want, most say happiness.","w":"'Happiness' varies between people and is impossible to define — some derive pleasure from inflicting pain. It also requires us to second-guess the future, so any decision may maximise pain instead."},{"n":"Mill's Utilitarianism","c":"Better to be Socrates dissatisfied than a fool satisfied.","m":"'good' still MEANS happiness, but happiness of a certain QUALITY, secured by rules that have proved their utility.","s":"It rescues Utilitarianism from the charge of being 'pig philosophy' and explains why we value art, learning and justice; and the rule element gives stable guidance rather than case-by-case calculation.","w":"Deciding which pleasures are 'higher' imports a value judgement not derived from any natural fact — the very move naturalism claimed to avoid."},{"n":"Neo-naturalism (Foot, Midgley, Warnock)","c":"Morality does have a factual content — human flourishing.","m":"'good' MEANS what contributes to the flourishing of human beings — objective, factual, but not absolute.","s":"It answers Moore directly, it fills the is–ought gap with further facts rather than a leap, and it unifies Utilitarianism, Situation Ethics, Virtue Ethics and Natural Moral Law under one factual content.","w":"There is no guarantee the right 'facts' will be appealed to — that is an issue with all factual claims — and 'the flourishing of human beings' may be too narrow, since humanity is only one species within the planet's biosphere."}]},{"key":"nonnat","name":"Non-naturalism, Intuitionism & the Non-cognitive Turn","short":"Non-naturalism","accent":"5B2A86","terms":[{"term":"Ethical non-naturalism","def":"the meta-ethical view that moral knowledge is a factual property known by intuition, or by God's commands — real, but NOT natural."},{"term":"Naturalistic fallacy","def":"G.E. Moore's argument that it is a fallacy when people reason from facts to moral claims."},{"term":"Intuitionism","def":"as a form of non-naturalism, the meta-ethical view that moral knowledge is a factual property known by intuition."},{"term":"Prima facie duties","def":"duties that hold 'at first sight' — such as duties to parents or to care for the sick — which may be outweighed when they conflict."},{"term":"Emotivism","def":"Ayer's non-cognitive theory: ethical statements are mere statements of emotion, not proper statements at all."},{"term":"Ethical non-cognitivism","def":"the view that morality is non-cognitive, has nothing to do with facts, and reduces instead to emotional ejaculations (Ayer) or to universalisable prescriptions about moral behaviour (Hare)."}],"views":[{"n":"Moore's ethical non-naturalism","c":"'Good' is simple and unanalysable — like yellow.","m":"'good' means simply 'good'. It names a real, non-natural quality that we recognise but cannot analyse.","s":"It overcomes one of the central problems of ethical naturalism — that there is no agreement about what the 'facts' of ethics ARE, since they differ for Utilitarianism, Situation Ethics, Natural Law and Virtue Ethics.","w":"Ethical naturalists reply that Moore was wrong: the Open Question argument does not destroy naturalism, and as Attfield puts it, Moore was assuming that no successful definition would ever be produced — assuming his own conclusion on the way to reaching it."},{"n":"Intuitionism (Moore and Ross)","c":"We just SENSE that torturing an innocent is wrong — and that sense is knowledge.","m":"'good' names a real non-natural property we grasp directly — self-evident, but not provable.","s":"Everyone has moral intuitions and tends to use them to underpin or check moral arguments, whether they are recognised as such or not — many hold the intuition that killing can sometimes be justified in war or self-defence whereas murder cannot.","w":"Intuitionism does not give a satisfactory answer to HOW we come to have intuitions about right and wrong. Is intuition a faculty in the brain, or does it amount simply to reasoning? If we cannot observe the presence of such a faculty, it seems more likely that it does not exist."},{"n":"Ross's prima facie duties","c":"Intuition is how we choose between conflicting duties.","m":"'good' is still a non-natural fact, but which duty it attaches to is settled case by case, by intuition.","s":"It turns Intuitionism's greatest weakness into a strength: it is realistic in explaining that our moral intuitions are not perfect, and that every moral situation is different — as Ross points out.","w":"It makes ethical discussion very difficult, since there seems to be no fundamental reasoned basis on which to argue. People may have different intuitions about what is right, but if they cannot justify their intuitions in any way, all they can do is continue to state them."},{"n":"Emotivism (Ayer) & Prescriptivism (Hare)","c":"'Murder is wrong' is not a statement at all — it is a shout, or a command.","m":"'good' does not name a property. Moral language expresses feeling (Ayer) or issues a universal prescription (Hare).","s":"It is honest about what we can actually observe: no one has ever detected a moral fact, natural or non-natural, and it explains at a stroke why moral disagreement is so persistent and so heated.","w":"It gives an unsatisfactory account of the importance we place on our moral views, and cannot ask whether an aversion is the right one to have. If society as a whole came to believe there are no factual moral values, the results are likely to be horrendous."}]}]};
+
+(function wireFlashcards(){
+  let fcTopic="all", fcType="terms";
+  const grid=document.getElementById("fcGrid"), count=document.getElementById("fcCount");
+  const SUBS=FLASHCARDS.subs;
+  function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+  function build(){
+    const chosen = fcTopic==="all" ? SUBS : SUBS.filter(function(s){return s.key===fcTopic;});
+    let cards=[];
+    chosen.forEach(function(s){
+      if(fcType==="terms"){
+        s.terms.forEach(function(t){
+          cards.push({tp:s.key,tag:s.short,front:t.term,
+            back:"<div class='fc-def'>"+esc(t.def)+"</div>"});
+        });
+      }else{
+        s.views.forEach(function(v){
+          cards.push({tp:s.key,tag:s.short,front:v.n,
+            back:"<div class='fc-def'>"+esc(v.c)+"</div>"+
+                 "<div class='fc-sw'><div class='up'><span class='k'>'Good' means</span><br>"+esc(v.m)+"</div>"+
+                 "<div class='dn' style='margin-top:6px'><span class='k'>Weakness</span><br>"+esc(v.w)+"</div></div>"});
+        });
+      }
+    });
+    grid.className = "fc-grid" + (fcType==="views" ? " views" : "");
+    grid.innerHTML=cards.map(function(c){
+      return '<button class="fc-card '+c.tp+'" data-flipped="false" aria-label="Flashcard: '+esc(c.front)+'. Tap to reveal.">'+
+        '<div class="fc-inner">'+
+          '<div class="fc-face fc-front"><div class="fc-tag">'+esc(c.tag)+'</div><div class="fc-term">'+esc(c.front)+'</div><div class="fc-flip">tap to flip ↺</div></div>'+
+          '<div class="fc-face fc-back"><div class="fc-tag">'+esc(c.tag)+'</div>'+c.back+'</div>'+
+        '</div></button>';
+    }).join("");
+    count.textContent = cards.length + " cards";
+    grid.querySelectorAll(".fc-card").forEach(function(el){
+      el.addEventListener("click",function(){
+        el.dataset.flipped = el.dataset.flipped==="true" ? "false" : "true";
+      });
+    });
+  }
+  document.querySelectorAll('#flashcards .fc-tabs .fc-btn').forEach(function(b){
+    b.addEventListener("click",function(){
+      document.querySelectorAll('#flashcards .fc-tabs .fc-btn').forEach(function(x){x.setAttribute("aria-selected","false");});
+      b.setAttribute("aria-selected","true"); fcTopic=b.dataset.topic; build();
+    });
+  });
+  document.querySelectorAll('#flashcards .fc-type .fc-btn').forEach(function(b){
+    b.addEventListener("click",function(){
+      document.querySelectorAll('#flashcards .fc-type .fc-btn').forEach(function(x){x.setAttribute("aria-selected","false");});
+      b.setAttribute("aria-selected","true"); fcType=b.dataset.type; build();
+    });
+  });
+  build();
+})();
+
+
+/* =====================================================================
+   ============  TEACHER-FILL BLOCK — EVERYTHING YOU EDIT IS HERE  ======
+   =====================================================================
+
+   TWO things to fill in, and nothing else in this file needs touching:
+
+     1. VIDEO_URL — the YouTube link for the whole-unit review video.
+     2. LINKS     — one SharePoint share link per resource button.
+
+   Both are plain text between the quote marks. Save the file and
+   re-upload it to SharePoint; students see the change immediately.
+   ===================================================================== */
+
+/* ---------------------------------------------------------------------
+   1. VIDEO_URL — paste your YouTube link between the quotes.
+      Any format works:
+        https://www.youtube.com/watch?v=XXXXXXXXXXX
+        https://youtu.be/XXXXXXXXXXX
+        https://www.youtube.com/embed/XXXXXXXXXXX
+        https://www.youtube.com/shorts/XXXXXXXXXXX
+        https://www.youtube.com/live/XXXXXXXXXXX
+        or just the 11-character video id on its own.
+      Leave it empty ("") and section 05 shows a "Video not set" panel.
+   --------------------------------------------------------------------- */
+const VIDEO_URL = "";
+
+/* ---------------------------------------------------------------------
+   2. LINKS — paste your SharePoint share links between the quotes.
+      Leave a link empty ("") and its button shows "Link not set".
+      Tip: in SharePoint, open the file's ... menu -> Copy link -> paste.
+
+      Sub-topic keys:  map = The Meta-ethical Map
+                       dct = Divine Command Theory
+                       nat = Ethical Naturalism: Utilitarianism
+                    nonnat = Non-naturalism, Intuitionism & Non-cognitivism
+   --------------------------------------------------------------------- */
+const LINKS = {
+  /* --- Sub-topic 1 · The Meta-ethical Map --- */
+  lesson_map:        "",
+  booklet_map:       "",
+  podcast_map:       "",
+
+  /* --- Sub-topic 2 · Divine Command Theory --- */
+  lesson_dct:        "",
+  booklet_dct:       "",
+  podcast_dct:       "",
+
+  /* --- Sub-topic 3 · Ethical Naturalism: Utilitarianism --- */
+  lesson_nat:        "",
+  booklet_nat:       "",
+  podcast_nat:       "",
+
+  /* --- Sub-topic 4 · Non-naturalism, Intuitionism & the Non-cognitive Turn --- */
+  lesson_nonnat:     "",
+  booklet_nonnat:    "",
+  podcast_nonnat:    "",
+
+  /* --- Whole unit --- */
+  companion:         "",
+  review:            "",
+  overview_podcast:  "",
+  flashcards:        "",
+  exam_questions:    "",
+  textbook:          ""
+};
+
+/* =====================================================================
+   END OF TEACHER-FILL BLOCK — nothing below needs editing.
+   ===================================================================== */
+
+(function wireVideo(){
+  const url=(VIDEO_URL||"").trim();
+  if(!url) return; // keep the placeholder
+  // extract the 11-char YouTube id from all the common URL shapes
+  let id="";
+  const m = url.match(/(?:youtu\.be\/|[?&]v=|\/embed\/|\/shorts\/|\/live\/|\/v\/)([A-Za-z0-9_-]{11})/);
+  if(m) id=m[1];
+  else if(/^[A-Za-z0-9_-]{11}$/.test(url)) id=url; // a bare video id
+  const frame=document.getElementById("videoFrame");
+  if(!frame) return;
+  if(id){
+    frame.innerHTML =
+      '<iframe src="https://www.youtube-nocookie.com/embed/'+id+'?rel=0" '+
+      'title="Meta-ethics — full unit review" '+
+      'allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" '+
+      'allowfullscreen loading="lazy"></iframe>';
+  } else {
+    // not a recognisable YouTube link — fall back to a button that opens it
+    frame.innerHTML =
+      '<div class="video-placeholder"><a class="res-btn big" style="background:#fff" href="'+url+'" target="_blank" rel="noopener">'+
+      '<span class="ic">▶</span><span><b>Watch the full unit review</b></span><span class="go">↗</span></a></div>';
+  }
+})();
+
+(function wireResources(){
+  let anySet=false;
+  document.querySelectorAll(".res-btn[data-key]").forEach(function(btn){
+    const url=(LINKS[btn.dataset.key]||"").trim();
+    if(url){
+      btn.href=url; btn.target="_blank"; btn.rel="noopener"; anySet=true;
+    }else{
+      btn.classList.add("unset"); btn.removeAttribute("href"); btn.setAttribute("aria-disabled","true");
+    }
+  });
+  if(anySet){ const n=document.getElementById("resNote"); if(n) n.classList.add("hide"); }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Self, Death &amp; the Afterlife — Unit at a Glance</title>
+<style>
+  :root{
+    --ink:#12294D;        /* deep manuscript navy */
+    --ink-2:#0C1B33;
+    --parch:#F3ECDD;      /* aged parchment */
+    --parch-2:#EAE0C9;
+    --gold:#C9A227;       /* gold leaf */
+    --gold-soft:#E4CE86;
+    --rubric:#B01C2E;     /* rubrication red */
+    --teal:#00695C;
+    --violet:#6A1B9A;
+    --blue:#1565C0;
+    --green:#2E7D32;
+    --paper:#FBF7EE;
+    --line:rgba(18,41,77,.16);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1060px;margin:0 auto;padding:0 24px}
+  .eyebrow{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;font-weight:700}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    background:
+      radial-gradient(1200px 400px at 80% -10%, rgba(201,162,39,.18), transparent 60%),
+      linear-gradient(180deg,var(--ink) 0%, var(--ink-2) 100%);
+    color:var(--parch);
+    padding:64px 0 72px;
+    position:relative;
+    overflow:hidden;
+    border-bottom:3px solid var(--gold);
+  }
+  .hero::after{ /* faint ruled manuscript lines */
+    content:"";position:absolute;inset:0;pointer-events:none;opacity:.06;
+    background:repeating-linear-gradient(180deg,transparent 0 38px,#fff 38px 39px);
+  }
+  .hero .wrap{position:relative;z-index:2}
+  .crest{display:flex;align-items:center;gap:16px;margin-bottom:34px}
+  .crest svg{width:54px;height:54px;flex:none}
+  .crest .who{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-soft)}
+  .crest .who b{color:var(--parch);display:block;letter-spacing:.14em;font-size:.86rem;margin-top:3px}
+  h1{font-size:clamp(2.4rem,6vw,4.1rem);line-height:1.02;font-weight:700;letter-spacing:-.01em}
+  h1 .amp{color:var(--gold);font-style:italic}
+  .sub{margin-top:20px;max-width:56ch;font-size:1.12rem;color:#E7DFCB}
+  .bigq{
+    margin-top:30px;display:inline-flex;gap:14px;align-items:flex-start;
+    border-left:3px solid var(--gold);padding:8px 0 8px 18px;max-width:60ch;
+  }
+  .bigq .q{font-family:"Trebuchet MS",sans-serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-soft);padding-top:5px}
+  .bigq p{font-size:1.24rem;font-style:italic;color:#fff}
+
+  /* ---------- SECTION SHELL ---------- */
+  section{padding:64px 0}
+  .sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:8px}
+  .sec-head .num{font-family:"Trebuchet MS",sans-serif;color:var(--gold);font-weight:700;font-size:.9rem;letter-spacing:.15em}
+  .sec-head h2{font-size:clamp(1.6rem,3.4vw,2.3rem);letter-spacing:-.01em}
+  .sec-lead{color:#4a4a52;max-width:64ch;margin-bottom:34px;font-size:1.05rem}
+
+  /* ---------- SIGNATURE: authority spectrum ---------- */
+  .spectrum-card{
+    background:linear-gradient(180deg,#fff, var(--paper));
+    border:1px solid var(--line);border-radius:14px;
+    box-shadow:0 18px 40px -28px rgba(18,41,77,.5);
+    padding:28px 26px 34px;
+  }
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:26px}
+  .tab{
+    font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.82rem;letter-spacing:.04em;
+    border:1px solid var(--line);background:#fff;color:var(--ink);
+    padding:9px 16px;border-radius:999px;cursor:pointer;transition:.18s;
+  }
+  .tab[aria-selected="true"]{background:var(--ink);color:var(--parch);border-color:var(--ink)}
+  .tab:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+
+  .axis{position:relative;margin:8px 4px 0}
+  .axis-labels{display:flex;justify-content:space-between;font-family:"Trebuchet MS",sans-serif;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:#6a6a72;margin-bottom:10px}
+  .axis-labels .l{color:var(--rubric);font-weight:700}
+  .axis-labels .r{color:var(--blue);font-weight:700}
+  .bar{height:10px;border-radius:999px;background:linear-gradient(90deg,var(--rubric),#b06a1e 40%,#5a7d3a 66%,var(--blue));position:relative}
+  .ticks{position:relative;height:112px;margin-top:0}
+  .node{position:absolute;top:0;transform:translateX(-50%);width:132px;text-align:center;cursor:pointer}
+  .node .dot{width:20px;height:20px;border-radius:50%;background:#fff;border:3px solid var(--ink);margin:0 auto;position:relative;top:-15px;transition:.18s}
+  .node .nm{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.82rem;margin-top:-6px}
+  .node .sb{font-size:.76rem;color:#6a6a72;font-style:italic;margin-top:2px;line-height:1.25}
+  .node:hover .dot,.node[data-active="true"] .dot{transform:scale(1.25);border-color:var(--gold);box-shadow:0 0 0 5px rgba(201,162,39,.2)}
+  .node:focus-visible{outline:none}
+  .node:focus-visible .dot{outline:3px solid var(--gold);outline-offset:3px}
+
+  .readout{
+    margin-top:14px;background:var(--ink);color:var(--parch);border-radius:12px;padding:20px 22px;
+    min-height:104px;display:flex;gap:18px;align-items:flex-start;
+  }
+  .readout .badge{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;
+    background:var(--gold);color:var(--ink-2);padding:6px 10px;border-radius:6px;white-space:nowrap;margin-top:2px}
+  .readout .body h4{font-size:1.12rem;margin-bottom:4px}
+  .readout .body .auth{color:var(--gold-soft);font-family:"Trebuchet MS",sans-serif;font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+  .readout .body p{color:#E7DFCB;font-size:.98rem}
+  .readout .body .sw{display:flex;gap:22px;margin-top:10px;flex-wrap:wrap}
+  .readout .body .sw div{font-size:.9rem}
+  .readout .body .sw .k{font-family:"Trebuchet MS",sans-serif;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase}
+  .readout .body .sw .up .k{color:#8BD08F}
+  .readout .body .sw .dn .k{color:#F2A0A0}
+  .hint{font-family:"Trebuchet MS",sans-serif;font-size:.76rem;color:#8a8a92;margin-top:14px;text-align:center}
+
+  /* ---------- THREE DEBATES ---------- */
+  .triptych{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .panel{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;display:flex;flex-direction:column}
+  .panel .cap{padding:16px 18px;color:#fff;position:relative}
+  .panel.b1 .cap{background:linear-gradient(135deg,#1F4E79,#12294D)}
+  .panel.b2 .cap{background:linear-gradient(135deg,#00695C,#0C3B34)}
+  .panel.b3 .cap{background:linear-gradient(135deg,#6A1B9A,#3B0E56)}
+  .panel .cap .n{font-family:"Trebuchet MS",sans-serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;opacity:.85}
+  .panel .cap h3{font-size:1.24rem;margin-top:3px}
+  .panel .cap .ask{font-style:italic;font-size:.9rem;margin-top:8px;opacity:.95}
+  .panel .body{padding:16px 18px;font-size:.92rem}
+  .panel .body .row{display:flex;gap:9px;padding:7px 0;border-bottom:1px dashed var(--line)}
+  .panel .body .row:last-child{border-bottom:0}
+  .panel .body .row .v{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.8rem;white-space:nowrap;color:var(--ink)}
+  .panel .body .row .d{color:#55555c}
+
+  /* ---------- THREAD ---------- */
+  .thread{background:var(--ink);color:var(--parch);border-radius:14px;padding:34px 30px;position:relative;overflow:hidden}
+  .thread::before{content:"";position:absolute;inset:0;opacity:.07;background:repeating-linear-gradient(180deg,transparent 0 30px,#fff 30px 31px)}
+  .thread .wrap2{position:relative;z-index:2}
+  .thread h2{color:#fff;font-size:clamp(1.5rem,3vw,2.1rem);margin-bottom:8px}
+  .thread .lead{color:#E7DFCB;max-width:62ch;margin-bottom:24px}
+  .threads{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .tcard{border:1px solid rgba(228,206,134,.3);border-radius:10px;padding:16px 16px 18px;background:rgba(255,255,255,.03)}
+  .tcard .t{font-family:"Trebuchet MS",sans-serif;color:var(--gold);font-weight:700;font-size:.82rem;letter-spacing:.05em;margin-bottom:6px}
+  .tcard p{font-size:.9rem;color:#E7DFCB}
+
+  /* ---------- REVISE ---------- */
+  .revise{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:start}
+  .steps{counter-reset:s;display:flex;flex-direction:column;gap:14px}
+  .step{display:flex;gap:16px;align-items:flex-start;border-left:2px solid var(--line);padding:2px 0 2px 18px;position:relative}
+  .step::before{counter-increment:s;content:counter(s);position:absolute;left:-15px;top:-2px;width:28px;height:28px;border-radius:50%;
+    background:var(--gold);color:var(--ink-2);font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.9rem;display:grid;place-items:center}
+  .step h4{font-size:1.02rem}
+  .step p{font-size:.9rem;color:#55555c;margin-top:2px}
+  .ao{border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .ao .h{padding:12px 16px;font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.82rem;letter-spacing:.06em;color:#fff}
+  .ao .ao1 .h,.ao .h.ao1{background:var(--ink)}
+  .ao .h.ao2{background:var(--green)}
+  .ao .c{padding:14px 16px;font-size:.9rem;border-bottom:1px solid var(--line)}
+  .ao .c:last-child{border-bottom:0}
+  .ao .c b{font-family:"Trebuchet MS",sans-serif;font-size:.78rem;letter-spacing:.04em}
+
+  /* ---------- VIDEO ---------- */
+  .video-frame{position:relative;width:100%;aspect-ratio:16/9;border-radius:14px;overflow:hidden;
+    border:1px solid var(--line);box-shadow:0 20px 44px -30px rgba(18,41,77,.55);background:var(--ink)}
+  .video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .video-placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:14px;text-align:center;padding:30px;color:#C9C4B6;
+    background:radial-gradient(700px 300px at 50% 30%,rgba(201,162,39,.14),transparent 60%),linear-gradient(180deg,var(--ink),var(--ink-2))}
+  .video-placeholder .vp-badge{font-family:"Trebuchet MS",Verdana,sans-serif;font-weight:700;font-size:.72rem;letter-spacing:.14em;
+    text-transform:uppercase;background:var(--gold);color:var(--ink-2);padding:6px 12px;border-radius:6px}
+  .video-placeholder p{max-width:52ch;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.92rem;line-height:1.55}
+  .video-placeholder code{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:4px;padding:1px 6px}
+
+
+  /* ---------- FLASHCARDS ---------- */
+  .fc-controls{display:flex;gap:18px;flex-wrap:wrap;align-items:center;margin-bottom:24px}
+  .fc-tabs,.fc-type{display:flex;gap:8px;flex-wrap:wrap}
+  .fc-btn{font-family:"Trebuchet MS",Verdana,sans-serif;font-weight:700;font-size:.8rem;border:1px solid var(--line);
+    background:#fff;color:var(--ink);padding:8px 15px;border-radius:999px;cursor:pointer;transition:.18s}
+  .fc-btn[aria-selected="true"]{background:var(--ink);color:var(--parch);border-color:var(--ink)}
+  .fc-btn:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+  .fc-hint{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.78rem;color:#8a8a92;margin-left:auto}
+  .fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+  .fc-card{perspective:1200px;height:180px;cursor:pointer;background:none;border:0;padding:0;font-family:inherit;text-align:left}
+  .fc-inner{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+  .fc-card[data-flipped="true"] .fc-inner{transform:rotateY(180deg)}
+  .fc-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+    border-radius:12px;padding:18px;display:flex;flex-direction:column;border:1px solid var(--line);overflow:auto}
+  .fc-front{background:linear-gradient(180deg,#fff,var(--paper))}
+  .fc-back{transform:rotateY(180deg);color:var(--parch)}
+  .fc-card.purpose .fc-back{background:linear-gradient(160deg,#1F4E79,#12294D)}
+  .fc-card.resurrection .fc-back{background:linear-gradient(160deg,#00695C,#0C3B34)}
+  .fc-card.judgement .fc-back{background:linear-gradient(160deg,#6A1B9A,#3B0E56)}
+  .fc-tag{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--gold);font-weight:700;margin-bottom:8px}
+  .fc-front .fc-tag{color:#9a8028}
+  .fc-term{font-size:1.24rem;font-weight:700;line-height:1.15}
+  .fc-front .fc-flip{margin-top:auto;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.72rem;color:#9a9a9a}
+  .fc-def{font-size:.92rem;line-height:1.4}
+  .fc-back .fc-sw{margin-top:8px;font-size:.82rem}
+  .fc-back .fc-sw .k{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.62rem;letter-spacing:.08em;text-transform:uppercase}
+  .fc-back .up .k{color:#8BD08F}.fc-back .dn .k{color:#F2A0A0}
+  @media(max-width:820px){.fc-grid{grid-template-columns:1fr 1fr}.fc-hint{width:100%;margin-left:0}}
+
+  /* ---------- RESOURCES ---------- */
+  .res-note{background:#FBF0D6;border:1px solid var(--gold);border-left:4px solid var(--gold);
+    border-radius:8px;padding:12px 16px;margin-bottom:22px;font-size:.9rem;color:#5a4a1c;
+    font-family:"Trebuchet MS",Verdana,sans-serif}
+  .res-note code{background:#fff;border:1px solid var(--line);border-radius:4px;padding:1px 6px;font-size:.85em}
+  .res-note.hide{display:none}
+  .res-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:16px}
+  .res-col{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff}
+  .rc-head{padding:14px 16px;color:#fff}
+  .rc1 .rc-head{background:linear-gradient(135deg,#1F4E79,#12294D)}
+  .rc2 .rc-head{background:linear-gradient(135deg,#00695C,#0C3B34)}
+  .rc3 .rc-head{background:linear-gradient(135deg,#6A1B9A,#3B0E56)}
+  .rc-head .rc-n{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;opacity:.85}
+  .rc-head h3{font-size:1.16rem;margin-top:2px}
+  .res-btn{display:flex;align-items:center;gap:12px;padding:13px 16px;border-top:1px solid var(--line);
+    font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.92rem;color:var(--ink);text-decoration:none;
+    cursor:pointer;transition:background .15s}
+  .res-col .res-btn:first-of-type{border-top:0}
+  .res-btn:hover{background:var(--parch)}
+  .res-btn .ic{width:26px;height:26px;flex:none;display:grid;place-items:center;border-radius:6px;
+    background:var(--ink);color:var(--gold);font-size:.9rem}
+  .res-btn .go{margin-left:auto;color:var(--gold);font-weight:700;opacity:0;transition:.15s}
+  .res-btn:hover .go{opacity:1}
+  .res-btn:focus-visible{outline:3px solid var(--gold);outline-offset:-3px}
+  .res-btn.unset{opacity:.5;cursor:not-allowed}
+  .res-btn.unset .go{content:"";opacity:0}
+  .res-btn.unset::after{content:"Link not set";margin-left:auto;font-size:.74rem;color:#9a7d2c;
+    background:#FBF0D6;border:1px solid var(--gold-soft);border-radius:5px;padding:2px 7px}
+  .res-wide{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:2px}
+  .res-btn.big{border:1px solid var(--line);border-radius:12px;background:#fff;padding:16px 18px}
+  .res-btn.big:hover{background:var(--parch)}
+  .res-btn.big .ic{width:34px;height:34px;font-size:1.1rem;background:var(--ink)}
+  @media(max-width:820px){.res-grid{grid-template-columns:1fr}.res-wide{grid-template-columns:1fr}}
+
+  footer{background:var(--ink-2);color:#C9C4B6;padding:26px 0;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.8rem}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+  footer .gold{color:var(--gold)}
+
+  @media(max-width:820px){
+    .triptych{grid-template-columns:1fr}
+    .threads{grid-template-columns:1fr}
+    .revise{grid-template-columns:1fr}
+    .node{width:96px}
+    .node .sb{display:none}
+  }
+  @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<!--BACKPILL--><a href="../alevel.html" style="position:fixed;left:14px;bottom:14px;z-index:99999;background:#12294D;color:#F6F1E4;font:600 14px/1 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;padding:10px 15px;border-radius:999px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.28);border:1px solid #C9A227">&#8592; All units</a>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap">
+    <div class="crest">
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <rect x="2" y="2" width="60" height="60" rx="13" fill="#0C1B33" stroke="#C9A227" stroke-width="1.5"/>
+        <g fill="none" stroke="#F3ECDD" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M23 21C21 17 21 14 22 12c2 2 3 5 3 8"/><path d="M41 21c2-4 2-7 1-9-2 2-3 5-3 8"/>
+          <path d="M32 17C21 17 18 26 18 33c0 12 6 19 14 19s14-7 14-19c0-7-3-16-14-16z"/>
+          <path d="M32 21c-3 4-5 6-7 7M32 21c3 4 5 6 7 7"/>
+        </g>
+        <circle cx="27" cy="31" r="5" fill="none" stroke="#F3ECDD" stroke-width="2.4"/>
+        <circle cx="37" cy="31" r="5" fill="none" stroke="#F3ECDD" stroke-width="2.4"/>
+        <circle cx="27" cy="31" r="1.9" fill="#F3ECDD"/><circle cx="37" cy="31" r="1.9" fill="#F3ECDD"/>
+        <path d="M32 34l-2.2 4.2h4.4z" fill="#C9A227"/>
+      </svg>
+      <div class="who">A-Level Religious Studies · AQA Paper 2B
+        <b>Harlington School · Philosophy &amp; Ethics</b></div>
+    </div>
+    <h1>Self, Death <span class="amp">&amp;</span> the Afterlife</h1>
+    <p class="sub">One unit, one argument — told three times. What can death actually take? What is life <b>for</b>, what could <b>survive</b> dying, and what <b>awaits</b> whatever survives?</p>
+    <div class="bigq">
+      <span class="q">The<br>big<br>question</span>
+      <p>Does human life have purpose because there is continuing personal existence after death — and what exactly would continue?</p>
+    </div>
+  </div>
+</header>
+
+<!-- SIGNATURE: SPECTRUM -->
+<section id="spectrum">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">01</span><h2>The afterlife spectrum</h2></div>
+    <p class="sec-lead">Every debate in this unit lines up on an axis — from the <b>literal and external</b> at one end (bodily resurrection; real places of judgement) to the <b>re-described and internal</b> at the other (the psyche; states of mind; God's memory). Pick a sub-topic, then tap a position to see what it claims and where it's strong or weak.</p>
+
+    <div class="spectrum-card">
+      <div class="tabs" role="tablist" aria-label="Choose a sub-topic">
+        <button class="tab" role="tab" aria-selected="true"  data-topic="purpose">Purpose of Life</button>
+        <button class="tab" role="tab" aria-selected="false" data-topic="resurrection">Resurrection</button>
+        <button class="tab" role="tab" aria-selected="false" data-topic="judgement">Judgement &amp; the Afterlife</button>
+      </div>
+
+      <div class="axis">
+        <div class="axis-labels"><span class="l" id="poleL">Most authority</span><span class="r" id="poleR">Least authority</span></div>
+        <div class="bar"></div>
+        <div class="ticks" id="ticks"></div>
+      </div>
+
+      <div class="readout" id="readout" aria-live="polite"></div>
+      <p class="hint">Tap a circle — or use Tab and Enter — to explore each position.</p>
+    </div>
+  </div>
+</section>
+
+<!-- THE THREAD -->
+<section>
+  <div class="wrap">
+    <div class="thread">
+      <div class="wrap2">
+        <h2>The thread that ties it together</h2>
+        <p class="lead">Top answers don't treat the three debates separately. The same questions run through all of them — spot the thread and you're writing at the top of the mark scheme.</p>
+        <div class="threads">
+          <div class="tcard"><div class="t">Does meaning need an afterlife?</div><p>Purpose asks it directly; resurrection and judgement decide whether the answer can be yes. The Nov 2021 question lives here.</p></div>
+          <div class="tcard"><div class="t">What carries 'you'?</div><p>Body, body-and-soul reunited, a transformed spiritual body, the soul alone — or nothing. Every position is an answer to this.</p></div>
+          <div class="tcard"><div class="t">Literal or re-described?</div><p>Bodily → spiritual → psychological → God's memory. At each step, ask what survives the translation — and when it stops being the doctrine.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THREE DEBATES -->
+<section id="debates">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">02</span><h2>The same question, three times</h2></div>
+    <p class="sec-lead">The unit splits into three debates. They look different, but each is really asking <em>who gets the final word</em>.</p>
+    <div class="triptych">
+      <div class="panel b1">
+        <div class="cap"><div class="n">Sub-topic 1</div><h3>The Purpose of Life</h3><div class="ask">What is life <b>for</b>?</div></div>
+        <div class="body">
+          <div class="row"><span class="v">Glorify &amp; relate</span><span class="d">Reflect God's glory; know him personally.</span></div>
+          <div class="row"><span class="v">Prepare</span><span class="d">Be reconciled before all are raised and judged.</span></div>
+          <div class="row"><span class="v">Liberal / Hick</span><span class="d">Judgement re-read; soul-making, no hell.</span></div>
+          <div class="row"><span class="v">The Kingdom</span><span class="d">Build peace, justice &amp; freedom from want — now.</span></div>
+        </div>
+      </div>
+      <div class="panel b2">
+        <div class="cap"><div class="n">Sub-topic 2</div><h3>Resurrection</h3><div class="ask">What could <b>survive</b> death?</div></div>
+        <div class="body">
+          <div class="row"><span class="v">The soul</span><span class="d">Jewish nephesh meets Plato's immortal soul.</span></div>
+          <div class="row"><span class="v">The flesh</span><span class="d">Bodily rising — Augustine &amp; the Catechism.</span></div>
+          <div class="row"><span class="v">Spiritual body</span><span class="d">Sown physical, raised spiritual (1 Cor 15).</span></div>
+          <div class="row"><span class="v">Psyche only</span><span class="d">No soul to rise — the modern challenge.</span></div>
+        </div>
+      </div>
+      <div class="panel b3">
+        <div class="cap"><div class="n">Sub-topic 3</div><h3>Judgement &amp; the Afterlife</h3><div class="ask">What <b>awaits</b> what survives?</div></div>
+        <div class="body">
+          <div class="row"><span class="v">Physical</span><span class="d">Real places — thrones, fire, the banquet.</span></div>
+          <div class="row"><span class="v">Spiritual</span><span class="d">States of the soul before a timeless God.</span></div>
+          <div class="row"><span class="v">Psychological</span><span class="d">The mind's own heaven and hell, lived now.</span></div>
+          <div class="row"><span class="v">Process</span><span class="d">Objective immortality in the mind of God.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- YOUR RESOURCES -->
+<section id="resources">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">03</span><h2>Your resources</h2></div>
+    <p class="sec-lead">Everything for the unit, in one place. Open a sub-topic's lesson, booklet and podcast, and use the <b>Philosopher Companion</b> across all three.</p>
+
+    <div class="res-note" id="resNote">
+      <b>Teacher setup:</b> links aren't set yet. Open this file, find the <code>LINKS</code> list near the bottom, and paste each SharePoint share link once. Buttons with no link show as “Link not set”.
+    </div>
+
+    <div class="res-grid">
+      <div class="res-col rc1">
+        <div class="rc-head"><span class="rc-n">Sub-topic 1</span><h3>The Purpose of Life</h3></div>
+        <a class="res-btn" data-key="purpose_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="purpose_booklet"><span class="ic">✎</span><span>Completion booklet</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="purpose_podcast"><span class="ic">♪</span><span>Lesson podcast</span><span class="go">↗</span></a>
+      </div>
+      <div class="res-col rc2">
+        <div class="rc-head"><span class="rc-n">Sub-topic 2</span><h3>Resurrection</h3></div>
+        <a class="res-btn" data-key="resurrection_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="resurrection_booklet"><span class="ic">✎</span><span>Completion booklet</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="resurrection_podcast"><span class="ic">♪</span><span>Lesson podcast</span><span class="go">↗</span></a>
+      </div>
+      <div class="res-col rc3">
+        <div class="rc-head"><span class="rc-n">Sub-topic 3</span><h3>Judgement &amp; the Afterlife</h3></div>
+        <a class="res-btn" data-key="judgement_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="judgement_booklet"><span class="ic">✎</span><span>Completion booklet</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="judgement_podcast"><span class="ic">♪</span><span>Lesson podcast</span><span class="go">↗</span></a>
+      </div>
+    </div>
+
+    <div class="res-wide">
+      <a class="res-btn big" data-key="companion"><span class="ic">🦉</span><span><b>Philosopher Companion</b> — checklist, AO1 &amp; AO2 planning, key terms &amp; review</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="review"><span class="ic">↻</span><span><b>Review lessons</b> — consolidation decks for all three sub-topics</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="overview_podcast"><span class="ic">♪</span><span><b>Overview podcast</b> — the whole unit as one argument (team teach)</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="flashcards_pdf"><span class="ic">▤</span><span><b>Printable flashcards</b> — fold-over key terms &amp; views to cut out</span><span class="go">↗</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- HOW TO REVISE -->
+<section id="revise">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">04</span><h2>How to revise this unit</h2></div>
+    <p class="sec-lead">Use your resources in this order. The <b>Philosopher Companion</b> is where you learn to <em>plan</em> both question types.</p>
+    <div class="revise">
+      <div class="steps">
+        <div class="step"><div><h4>Watch the lesson &amp; listen to the podcast</h4><p>One podcast per sub-topic — a teacher and student talk each view through to a judgement. Annotate as you listen.</p></div></div>
+        <div class="step"><div><h4>Complete the greyscale booklet</h4><p>Read the given text, write the key claims in your own words, then decide the strength and weakness you'd give each view.</p></div></div>
+        <div class="step"><div><h4>Match &amp; apply the key terms</h4><p>In the Companion: match each term to its meaning, then use it in a sentence. RAG-rate the mastery checklist with the three faces.</p></div></div>
+        <div class="step"><div><h4>Plan AO1, then build AO2 on top</h4><p>Use the Companion frameworks and the guidance-left / your-turn-right scaffolds. Never evaluate what you haven't first explained.</p></div></div>
+      </div>
+      <div class="ao">
+        <div class="ao1"><div class="h ao1">AO1 · Examine the views (10)</div></div>
+        <div class="c"><b>What it is —</b> the factual chain: define the terms, then set out each view in order and apply the evidence (e.g. Genesis 2:7 or 1 Corinthians 15).</div>
+        <div class="c"><b>Aim —</b> explain the whole range accurately and neutrally. No judging yet.</div>
+        <div class="h ao2">AO2 · Evaluate the claim (15)</div>
+        <div class="c"><b>What it is —</b> a three-paragraph dialectic: view, then evaluation → counter-evaluation → implication; mirror it; then judge.</div>
+        <div class="c"><b>Aim —</b> weigh the views, use one as a lens on another, and reach a justified judgement that links back to your thesis.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WATCH: FULL UNIT REVIEW -->
+<section id="watch">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">05</span><h2>Watch: the whole unit in one go</h2></div>
+    <p class="sec-lead">A full review of <b>Self, Death &amp; the Afterlife</b> — the purpose of life, resurrection, and judgement, heaven, hell &amp; purgatory. Best watched before you start revising, then again to check your recall.</p>
+    <div class="video-frame" id="videoFrame">
+      <div class="video-placeholder" id="videoPlaceholder">
+        <div class="vp-badge">Video not set</div>
+        <p><b>Teacher:</b> paste the YouTube link in the <code>VIDEO_URL</code> line near the bottom of this file. The player then appears here automatically.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- FLASHCARDS -->
+<section id="flashcards">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">06</span><h2>Flashcards — test yourself</h2></div>
+    <p class="sec-lead">Flip a card to check yourself. Switch between <b>key terms</b> (term → meaning) and <b>views</b> (view → claim, strength &amp; weakness), and filter by sub-topic.</p>
+    <div class="fc-controls">
+      <div class="fc-tabs" role="tablist" aria-label="Sub-topic">
+        <button class="fc-btn" role="tab" aria-selected="true"  data-topic="all">All</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-topic="purpose">Purpose of Life</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-topic="resurrection">Resurrection</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-topic="judgement">Judgement</button>
+      </div>
+      <div class="fc-type" role="tablist" aria-label="Card type">
+        <button class="fc-btn" role="tab" aria-selected="true"  data-type="terms">Key terms</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-type="views">Views</button>
+      </div>
+      <span class="fc-hint">Tap any card to flip · <span id="fcCount"></span></span>
+    </div>
+    <div class="fc-grid" id="fcGrid"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Self, Death &amp; the Afterlife · Unit at a glance</span>
+    <span class="gold">Harlington School · Philosophy &amp; Ethics</span>
+  </div>
+</footer>
+
+<script>
+const DATA = {
+  purpose:{
+    poles:["Individual · the person before God","Communal · the whole creation"],
+    nodes:[
+      {x:8, nm:"Glorify & relate", sb:"reflects God", auth:"From creation",
+        claim:"Life is for representing and spreading God's glory (Genesis 1; Isaiah 43:7) and for a personal relationship with him (Genesis 2; John 17).",
+        s:"Rooted in both creation stories; makes every act purposeful.", w:"Centres the individual — a good outcome mainly for the person concerned."},
+      {x:36, nm:"Prepare", sb:"the person's destiny", auth:"From the Fall",
+        claim:"The Fall broke the relationship; the Atonement reconciles (2 Cor 5:19); all are raised and judged by their compassion (Matthew 25:31–46).",
+        s:"Explains why conduct matters ultimately.", w:"Risks being good to earn a reward — motivation by fear."},
+      {x:64, nm:"Liberal / Hick", sb:"judgement re-read", auth:"Within the debate",
+        claim:"Judgement Day is a truth-bearing story about THIS life; Hick's soul-making makes evil essential — everyone eventually reaches the Kingdom.",
+        s:"Keeps the purpose without a literal courtroom.", w:"If nobody is lost, what urgency is left in 'prepare'?"},
+      {x:92, nm:"The Kingdom", sb:"peace & justice for all", auth:"From the Kingdom",
+        claim:"Life is for bringing about God's Kingdom on Earth (Mark 1:15) — peace, justice and freedom from want, lived out now (the Quakers).",
+        s:"Answers the individualism objection; visibly lived.", w:"Without God at the centre, is it just social action?"}
+    ]
+  },
+  resurrection:{
+    poles:["BODILY · the flesh is raised","NOTHING · the psyche ends"],
+    nodes:[
+      {x:8, nm:"The flesh", sb:"Augustine", auth:"Body + soul reunited",
+        claim:"Sin stained soul AND body, so the resurrection that removes it must be bodily (City of God Bk 22); the Catechism: the soul awaits reunion with its glorified body.",
+        s:"Matches the risen Jesus, who ate and showed his injuries.", w:"Bodies rot away or are cremated, their elements re-used."},
+      {x:36, nm:"Spiritual body", sb:"1 Corinthians 15", auth:"Transformed continuity",
+        claim:"'It is sown a physical body, it is raised a spiritual body' — flesh and blood cannot inherit the kingdom; we shall all be changed, at the last trumpet.",
+        s:"Explicit, remarkably early, and answers the decay objection.", w:"What IS a spiritual body — and is a changed body still YOU?"},
+      {x:64, nm:"The soul", sb:"Jewish + Greek roots", auth:"Soul alone survives",
+        claim:"Nephesh — the breath of life (Genesis 2:7) — fused with Plato's immortal soul: received before birth, the soul leaves the body at death and returns to God.",
+        s:"Explains continuity without the decayed body.", w:"The IMMORTAL soul is Greek, not biblical."},
+      {x:92, nm:"Psyche only", sb:"the modern challenge", auth:"Nothing survives",
+        claim:"There is no measurable soul (McDougall's 21 grams was debunked); since Freud, psychology speaks of the psyche — and brackets everything before conception and after death.",
+        s:"Fits the empirical evidence.", w:"Psychology's silence is a limit of method, not a disproof."}
+    ]
+  },
+  judgement:{
+    poles:["EXTERNAL & LITERAL · real places","INTERNAL & RE-DESCRIBED · mind or memory"],
+    nodes:[
+      {x:8, nm:"Physical", sb:"places & events", auth:"At the end of time",
+        claim:"The trumpet, the great white throne, the book of life (Revelation 20) — heaven the walled city, hell the demon-filled dungeon, purgatory the purging of venial sin.",
+        s:"Anchored in the texts; coherent with bodily resurrection.", w:"Visibly mirrors its era — and fear of purgatory bred the indulgence scandal."},
+      {x:36, nm:"Spiritual", sb:"states of the soul", auth:"At death — time collapses",
+        claim:"Heaven as joy, peace and love in God's presence; hell as the eternal absence of God; for a timeless God, the moment of death and the End are no different.",
+        s:"Keeps the doctrine while dropping the medieval furniture.", w:"Purgatory — a DURATION of purging — loses its force."},
+      {x:64, nm:"Psychological", sb:"states of mind, now", auth:"Continuously, within",
+        claim:"No empirical evidence for existence after death — so eternal life is a quality of THIS life (John 17:3): harmony with your deepest beliefs is heaven; inner conflict is hell.",
+        s:"Fits the evidence and real psychology (Freud, Jung).", w:"Empties the afterlife — and Milton's line belongs to a fallen angel."},
+      {x:92, nm:"Process", sb:"objective immortality", auth:"In the mind of God",
+        claim:"God and the universe exist panentheistically; after death every entity remains forever as an 'object' in the mind of God — eternal objectively, not subjectively.",
+        s:"Fair to ALL entities — ends anthropocentrism.", w:"No conscious 'I' remains — so how can it matter to me?"}
+    ]
+  }
+};
+
+const ticks=document.getElementById("ticks");
+const readout=document.getElementById("readout");
+const poleL=document.getElementById("poleL"), poleR=document.getElementById("poleR");
+let topic="purpose", active=0;
+
+function renderReadout(n){
+  readout.innerHTML=`
+    <span class="badge">${n.auth}</span>
+    <div class="body">
+      <h4>${n.nm} <span style="opacity:.6;font-style:italic;font-weight:400">· ${n.sb}</span></h4>
+      <p>${n.claim}</p>
+      <div class="sw">
+        <div class="up"><span class="k">Strength</span><br>${n.s}</div>
+        <div class="dn"><span class="k">Weakness</span><br>${n.w}</div>
+      </div>
+    </div>`;
+}
+function renderTopic(){
+  const d=DATA[topic];
+  poleL.textContent=d.poles[0]; poleR.textContent=d.poles[1];
+  ticks.innerHTML="";
+  d.nodes.forEach((n,i)=>{
+    const el=document.createElement("div");
+    el.className="node"; el.style.left=n.x+"%"; el.tabIndex=0;
+    el.setAttribute("role","button");
+    el.setAttribute("aria-label",`${n.nm}: ${n.sb}`);
+    el.dataset.active=(i===active);
+    el.innerHTML=`<div class="dot"></div><div class="nm">${n.nm}</div><div class="sb">${n.sb}</div>`;
+    const pick=()=>{active=i;[...ticks.children].forEach((c,j)=>c.dataset.active=(j===i));renderReadout(n);};
+    el.addEventListener("click",pick);
+    el.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();pick();}});
+    ticks.appendChild(el);
+  });
+  active=Math.min(active,d.nodes.length-1);
+  [...ticks.children].forEach((c,j)=>c.dataset.active=(j===active));
+  renderReadout(d.nodes[active]);
+}
+document.querySelectorAll(".tab").forEach(t=>{
+  t.addEventListener("click",()=>{
+    document.querySelectorAll(".tab").forEach(x=>x.setAttribute("aria-selected","false"));
+    t.setAttribute("aria-selected","true");
+    topic=t.dataset.topic; active=0; renderTopic();
+  });
+});
+renderTopic();
+
+const FLASHCARDS = {"purpose": {"terms": [{"term": "Glory (kabod)", "def": "God's essential quality, beyond full human understanding; Isaiah links being created 'for my glory' to the purpose of life.", "note": "To glorify God = to represent and spread this glory."}, {"term": "Atonement", "def": "the doctrine that Jesus' death 'makes up' for human sin; the closest meaning is 'reconciliation' — Jesus' death reconciles God and the world.", "note": "'God was in Christ reconciling the world to himself.' (2 Cor 5:19)"}, {"term": "Reconciliation", "def": "the restoring of the broken relationship between God and humanity after the Fall.", "note": "Completed, for Christians, at the final judgement."}, {"term": "Eschatological", "def": "to do with the last days — the end of time, the last Judgement, God's Kingdom.", "note": "One hope for the Kingdom is eschatological: Christ returns in glory."}, {"term": "Kingdom of God", "def": "God's kingship over all creation; the possibility that the created order, on Earth as in heaven, will follow God's laws.", "note": "Matthew uses the similar term 'Kingdom of Heaven'."}, {"term": "Soul-making", "def": "Hick's theodicy: God made humans incomplete and free, so real virtues are gained by freely overcoming evil — evil is essential to life's purpose.", "note": "For Hick the process continues until everybody reaches God's Kingdom — no hell."}], "views": [{"n": "To glorify God & have a personal relationship with him", "c": "We exist to represent and spread God's glory — and to know him personally.", "s": "Rooted in both creation stories; makes every act purposeful.", "w": "Centres the individual — a good outcome mainly for the person concerned."}, {"n": "To prepare for judgement", "c": "Life is the time given to be reconciled to God before all the dead are raised and judged.", "s": "Explains why conduct matters ultimately.", "w": "Risks being good to earn a reward — motivation by fear; and Hick's no-hell universalism drains the urgency."}, {"n": "To bring about God's Kingdom on Earth", "c": "Purpose is not private: complete God's work by bringing about his Kingdom here.", "s": "Answers the individualism objection; visibly lived.", "w": "Without God at the centre, is it just social action?"}]}, "resurrection": {"terms": [{"term": "Soul (nephesh)", "def": "in Genesis 2:7 Adam becomes a nephesh hayyah — 'a living being' — on receiving God's breath of life; nephesh is usually translated 'soul'.", "note": "Ruach ('spirit', similar to Greek psyche) hovers over the waters in Genesis 1:2."}, {"term": "Forms", "def": "Plato's theory that everything in the physical universe is a particular instance of a perfect idea in the metaphysical world of Forms.", "note": "The soul contemplates the Form of the Good — as close as Plato got to the idea of God."}, {"term": "Reincarnation", "def": "the belief (found in Plato and Hinduism, for example) that at death, the soul at some point is 're-enfleshed' into another body.", "note": "For Plato the soul pre-existed human life and is immortal in its own right."}, {"term": "Dualism", "def": "the world-view on which 'soul' is usually understood: humans have two aspects — a physical (perishable) body and a spiritual (immortal) soul.", "note": "Plato → the Neo-Platonists → Descartes' body/soul dualism."}, {"term": "Psyche", "def": "the Greek word for 'breath' or 'spirit' — the term modern psychologists since Freud use instead of 'soul'.", "note": "Freud's three parts: id (impulses), super-ego (moral judgement), ego (reason)."}, {"term": "Martyr", "def": "someone who gave witness or testimony — which came to mean those who testified to the gospel with a great likelihood of being killed for doing so.", "note": "Stephen, the first recorded martyr, was upheld by a vision of the resurrected Jesus (Acts 7:56)."}], "views": [{"n": "The concept of soul", "c": "The Christian soul is born where Jewish 'breath of life' meets Plato's immortal soul.", "s": "Explains continuity without the decayed body.", "w": "The IMMORTAL soul is Greek, not biblical."}, {"n": "Psyche, not soul", "c": "For modern psychology there is no soul to weigh — only the psyche to understand.", "s": "Fits the empirical evidence.", "w": "Psychology's silence is a limit of method, not a disproof."}, {"n": "Resurrection of the flesh (Augustine)", "c": "Sin stained soul AND body — so the resurrection that removes it must be bodily.", "s": "Matches the risen Jesus, who ate and showed his injuries.", "w": "Bodies rot away or are cremated, their elements re-used."}, {"n": "Spiritual resurrection (1 Corinthians 15)", "c": "It is sown a physical body — it is raised a spiritual body.", "s": "Explicit, remarkably early, and answers the decay objection.", "w": "What IS a spiritual body — and is a changed body still YOU?"}]}, "judgement": {"terms": [{"term": "Purgatory", "def": "a (particularly Catholic) doctrine of an intermediate state after death in which those destined for heaven are punished / purified in order to make them worthy of heaven.", "note": "Catechism 1030: imperfectly purified — yet assured of eternal salvation."}, {"term": "Venial sin", "def": "a 'forgivable' sin that does not result in separation from God and eternal damnation to hell (as opposed to 'mortal sin', which does result in this).", "note": "Venial sins are purged; mortal sins condemn."}, {"term": "Allegory", "def": "a piece of literature which has hidden / symbolic meaning — for example, Dante's Divine Comedy as the journey of the human soul towards God.", "note": "Its vivid fates of historical characters caught the public imagination anyway."}, {"term": "Panentheism", "def": "the philosophical view that everything that there is exists 'in' God.", "note": "Process theologians: God and the universe exist panentheistically — 'God-and-a-world'."}, {"term": "Objective immortality", "def": "the belief (in Process Theology) that every living thing exists for ever in the mind of God, because they are literally objects 'in' God.", "note": "Our actions, thoughts and ideas continue in every minute detail as objects in God's memory."}, {"term": "Subjective immortality", "def": "the belief that after death the thinking self continues as the same subject of consciousness — the same 'I'.", "note": "Most Christians believe in subjective immortality."}], "views": [{"n": "Physical realities", "c": "Real places, real fire, real feasts — the afterlife as the era could imagine it.", "s": "Anchored in the texts; coherent with bodily resurrection.", "w": "Visibly mirrors its era — and fear of purgatory bred the indulgence scandal."}, {"n": "Spiritual realities", "c": "Not places but states of the soul — presence with God, or eternal loss of him.", "s": "Keeps the doctrine while dropping the medieval furniture.", "w": "Purgatory — a DURATION of purging — loses its force."}, {"n": "Psychological realities", "c": "Heaven and hell as the mind's own places — lived now, not awaited.", "s": "Fits the evidence and real psychology (Freud, Jung).", "w": "Empties the afterlife — and Milton's line belongs to a fallen angel."}, {"n": "Objective immortality (Process)", "c": "Nothing is lost: every entity remains forever as an object in the mind of God.", "s": "Fair to ALL entities — ends anthropocentrism.", "w": "No conscious 'I' remains — so how can it matter to me?"}]}};
+(function(){
+  let fcTopic="all", fcType="terms";
+  const grid=document.getElementById("fcGrid"), count=document.getElementById("fcCount");
+  function esc(s){return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+  function build(){
+    const topics = fcTopic==="all" ? ["purpose","resurrection","judgement"] : [fcTopic];
+    let cards=[];
+    topics.forEach(tp=>{
+      const d=FLASHCARDS[tp]; if(!d) return;
+      if(fcType==="terms"){ d.terms.forEach(t=>cards.push({tp,front:t.term,tag:label(tp),back:`<div class='fc-def'>${esc(t.def)}</div>`})); }
+      else { d.views.forEach(v=>cards.push({tp,front:v.n,tag:label(tp),back:`<div class='fc-def'>${esc(v.c)}</div><div class='fc-sw'><div class='up'><span class='k'>Strength</span><br>${esc(v.s)}</div><div class='dn' style='margin-top:6px'><span class='k'>Weakness</span><br>${esc(v.w)}</div></div>`})); }
+    });
+    grid.innerHTML=cards.map(c=>`
+      <button class="fc-card ${c.tp}" data-flipped="false" aria-label="Flashcard: ${esc(c.front)}. Tap to reveal.">
+        <div class="fc-inner">
+          <div class="fc-face fc-front"><div class="fc-tag">${c.tag}</div><div class="fc-term">${esc(c.front)}</div><div class="fc-flip">tap to flip ↺</div></div>
+          <div class="fc-face fc-back"><div class="fc-tag">${c.tag}</div>${c.back}</div>
+        </div>
+      </button>`).join("");
+    count.textContent = cards.length + " cards";
+    grid.querySelectorAll(".fc-card").forEach(el=>{
+      const flip=()=>el.dataset.flipped = el.dataset.flipped==="true" ? "false":"true";
+      el.addEventListener("click",flip);
+    });
+  }
+  function label(tp){return tp==="purpose"?"Purpose of Life":tp==="resurrection"?"Resurrection":"Judgement & the Afterlife";}
+  document.querySelectorAll('#flashcards .fc-tabs .fc-btn').forEach(b=>b.addEventListener("click",()=>{
+    document.querySelectorAll('#flashcards .fc-tabs .fc-btn').forEach(x=>x.setAttribute("aria-selected","false"));
+    b.setAttribute("aria-selected","true"); fcTopic=b.dataset.topic; build();
+  }));
+  document.querySelectorAll('#flashcards .fc-type .fc-btn').forEach(b=>b.addEventListener("click",()=>{
+    document.querySelectorAll('#flashcards .fc-type .fc-btn').forEach(x=>x.setAttribute("aria-selected","false"));
+    b.setAttribute("aria-selected","true"); fcType=b.dataset.type; build();
+  }));
+  build();
+})();
+
+/* =====================================================================
+   TEACHER: paste your YouTube link between the quotes below.
+   Any format works — youtube.com/watch?v=…, youtu.be/…, or an embed URL.
+   Leave it empty ("") and the page shows a "Video not set" placeholder.
+   ===================================================================== */
+const VIDEO_URL = "";
+
+(function wireVideo(){
+  const url=(VIDEO_URL||"").trim();
+  if(!url) return; // keep placeholder
+  // extract the 11-char YouTube id from common URL shapes
+  let id="";
+  const m = url.match(/(?:youtu\.be\/|v=|\/embed\/|\/shorts\/)([A-Za-z0-9_-]{11})/);
+  if(m) id=m[1];
+  else if(/^[A-Za-z0-9_-]{11}$/.test(url)) id=url; // a bare id
+  const frame=document.getElementById("videoFrame");
+  if(id && frame){
+    frame.innerHTML =
+      '<iframe src="https://www.youtube-nocookie.com/embed/'+id+'?rel=0" '+
+      'title="Self, Death & the Afterlife — full unit review" '+
+      'allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" '+
+      'allowfullscreen loading="lazy"></iframe>';
+  } else if(frame){
+    // not a YouTube link — fall back to a button that opens it
+    frame.innerHTML =
+      '<div class="video-placeholder"><a class="res-btn big" style="background:#fff" href="'+url+'" target="_blank" rel="noopener"><span class="ic">▶</span><span><b>Watch the full unit review</b></span><span class="go">↗</span></a></div>';
+  }
+})();
+
+/* =====================================================================
+   TEACHER: paste your SharePoint share links between the quotes below.
+   Leave a link empty ("") and its button will show "Link not set".
+   Tip: in SharePoint, open the file's ... menu -> Copy link -> paste here.
+   ===================================================================== */
+const LINKS = {
+  purpose_lesson:       "",
+  purpose_booklet:      "",
+  purpose_podcast:      "",
+  resurrection_lesson:  "",
+  resurrection_booklet: "",
+  resurrection_podcast: "",
+  judgement_lesson:     "",
+  judgement_booklet:    "",
+  judgement_podcast:    "",
+  companion:            "",
+  review:               "",
+  overview_podcast:     "",
+  flashcards_pdf:       ""
+};
+
+(function wireResources(){
+  let anySet=false;
+  document.querySelectorAll(".res-btn").forEach(btn=>{
+    const url=(LINKS[btn.dataset.key]||"").trim();
+    if(url){
+      btn.href=url; btn.target="_blank"; btn.rel="noopener"; anySet=true;
+    }else{
+      btn.classList.add("unset"); btn.removeAttribute("href"); btn.setAttribute("aria-disabled","true");
+    }
+  });
+  if(anySet){ const n=document.getElementById("resNote"); if(n) n.classList.add("hide"); }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Religious Language — Unit at a Glance</title>
+<style>
+  :root{
+    --ink:#12294D;        /* deep manuscript navy */
+    --ink-2:#0C1B33;
+    --parch:#F3ECDD;      /* aged parchment */
+    --parch-2:#EAE0C9;
+    --gold:#C9A227;       /* gold leaf */
+    --gold-soft:#E4CE86;
+    --rubric:#B01C2E;     /* rubrication red */
+    --blue:#1565C0;
+    --green:#2E7D32;
+    --paper:#FBF7EE;
+    --line:rgba(18,41,77,.16);
+    /* sub-topic accents (from unit.js) */
+    --c1:#8E2430; --c1d:#5A1620;   /* challenges — oxblood */
+    --c2:#33658A; --c2d:#1E3E56;   /* responses — slate blue */
+    --c3:#2F6B4F; --c3d:#1B3F2F;   /* negativa — forest green */
+    --c4:#5B2A86; --c4d:#37184F;   /* symbol — plum */
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+  .eyebrow{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;font-weight:700}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    background:
+      radial-gradient(1200px 400px at 80% -10%, rgba(201,162,39,.18), transparent 60%),
+      linear-gradient(180deg,var(--ink) 0%, var(--ink-2) 100%);
+    color:var(--parch);
+    padding:64px 0 72px;
+    position:relative;
+    overflow:hidden;
+    border-bottom:3px solid var(--gold);
+  }
+  .hero::after{
+    content:"";position:absolute;inset:0;pointer-events:none;opacity:.06;
+    background:repeating-linear-gradient(180deg,transparent 0 38px,#fff 38px 39px);
+  }
+  .hero .wrap{position:relative;z-index:2}
+  .crest{display:flex;align-items:center;gap:16px;margin-bottom:34px}
+  .crest svg{width:54px;height:54px;flex:none}
+  .crest .who{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-soft)}
+  .crest .who b{color:var(--parch);display:block;letter-spacing:.14em;font-size:.86rem;margin-top:3px}
+  h1{font-size:clamp(2.4rem,6vw,4.1rem);line-height:1.02;font-weight:700;letter-spacing:-.01em}
+  h1 .amp{color:var(--gold);font-style:italic}
+  .sub{margin-top:20px;max-width:58ch;font-size:1.12rem;color:#E7DFCB}
+  .bigq{
+    margin-top:30px;display:inline-flex;gap:14px;align-items:flex-start;
+    border-left:3px solid var(--gold);padding:8px 0 8px 18px;max-width:60ch;
+  }
+  .bigq .q{font-family:"Trebuchet MS",sans-serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-soft);padding-top:5px}
+  .bigq p{font-size:1.24rem;font-style:italic;color:#fff}
+
+  /* ---------- SECTION SHELL ---------- */
+  section{padding:64px 0}
+  .sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:8px}
+  .sec-head .num{font-family:"Trebuchet MS",sans-serif;color:var(--gold);font-weight:700;font-size:.9rem;letter-spacing:.15em}
+  .sec-head h2{font-size:clamp(1.6rem,3.4vw,2.3rem);letter-spacing:-.01em}
+  .sec-lead{color:#4a4a52;max-width:68ch;margin-bottom:34px;font-size:1.05rem}
+
+  /* ---------- SIGNATURE: meaningfulness spectrum ---------- */
+  .spectrum-card{
+    background:linear-gradient(180deg,#fff, var(--paper));
+    border:1px solid var(--line);border-radius:14px;
+    box-shadow:0 18px 40px -28px rgba(18,41,77,.5);
+    padding:28px 26px 34px;
+  }
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:26px}
+  .tab{
+    font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.82rem;letter-spacing:.04em;
+    border:1px solid var(--line);background:#fff;color:var(--ink);
+    padding:9px 16px;border-radius:999px;cursor:pointer;transition:.18s;
+  }
+  .tab[aria-selected="true"]{background:var(--ink);color:var(--parch);border-color:var(--ink)}
+  .tab:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+
+  .axis{position:relative;margin:8px 4px 0}
+  .axis-labels{display:flex;justify-content:space-between;font-family:"Trebuchet MS",sans-serif;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:#6a6a72;margin-bottom:10px}
+  .axis-labels .l{color:var(--rubric);font-weight:700}
+  .axis-labels .r{color:var(--blue);font-weight:700}
+  .bar{height:10px;border-radius:999px;background:linear-gradient(90deg,var(--rubric),#b06a1e 40%,#5a7d3a 66%,var(--blue));position:relative}
+  .ticks{position:relative;height:112px;margin-top:0}
+  .node{position:absolute;top:0;transform:translateX(-50%);width:150px;text-align:center;cursor:pointer}
+  .node .dot{width:20px;height:20px;border-radius:50%;background:#fff;border:3px solid var(--ink);margin:0 auto;position:relative;top:-15px;transition:.18s}
+  .node .nm{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.82rem;margin-top:-6px}
+  .node .sb{font-size:.76rem;color:#6a6a72;font-style:italic;margin-top:2px;line-height:1.25}
+  .node:hover .dot,.node[data-active="true"] .dot{transform:scale(1.25);border-color:var(--gold);box-shadow:0 0 0 5px rgba(201,162,39,.2)}
+  .node:focus-visible{outline:none}
+  .node:focus-visible .dot{outline:3px solid var(--gold);outline-offset:3px}
+
+  .readout{
+    margin-top:14px;background:var(--ink);color:var(--parch);border-radius:12px;padding:20px 22px;
+    min-height:104px;display:flex;gap:18px;align-items:flex-start;
+  }
+  .readout .badge{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;
+    background:var(--gold);color:var(--ink-2);padding:6px 10px;border-radius:6px;white-space:nowrap;margin-top:2px}
+  .readout .body h4{font-size:1.12rem;margin-bottom:4px}
+  .readout .body p{color:#E7DFCB;font-size:.98rem}
+  .hint{font-family:"Trebuchet MS",sans-serif;font-size:.76rem;color:#8a8a92;margin-top:14px;text-align:center}
+
+  /* ---------- FOUR DEBATES ---------- */
+  .tetraptych{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  .panel{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;display:flex;flex-direction:column}
+  .panel .cap{padding:16px 16px;color:#fff;position:relative}
+  .panel.p-challenges .cap{background:linear-gradient(135deg,var(--c1),var(--c1d))}
+  .panel.p-responses .cap{background:linear-gradient(135deg,var(--c2),var(--c2d))}
+  .panel.p-negativa .cap{background:linear-gradient(135deg,var(--c3),var(--c3d))}
+  .panel.p-symbol .cap{background:linear-gradient(135deg,var(--c4),var(--c4d))}
+  .panel .cap .n{font-family:"Trebuchet MS",sans-serif;font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;opacity:.85}
+  .panel .cap h3{font-size:1.12rem;margin-top:3px}
+  .panel .cap .ask{font-style:italic;font-size:.86rem;margin-top:8px;opacity:.95}
+  .panel .body{padding:14px 16px;font-size:.88rem}
+  .panel .body .row{padding:8px 0;border-bottom:1px dashed var(--line)}
+  .panel .body .row:last-child{border-bottom:0}
+  .panel .body .row .v{display:block;font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.78rem;color:var(--ink);margin-bottom:2px}
+  .panel .body .row .d{color:#55555c}
+
+  /* ---------- THREAD ---------- */
+  .thread{background:var(--ink);color:var(--parch);border-radius:14px;padding:34px 30px;position:relative;overflow:hidden}
+  .thread::before{content:"";position:absolute;inset:0;opacity:.07;background:repeating-linear-gradient(180deg,transparent 0 30px,#fff 30px 31px)}
+  .thread .wrap2{position:relative;z-index:2}
+  .thread h2{color:#fff;font-size:clamp(1.5rem,3vw,2.1rem);margin-bottom:8px}
+  .thread .lead{color:#E7DFCB;max-width:66ch;margin-bottom:24px}
+  .threads{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .tcard{border:1px solid rgba(228,206,134,.3);border-radius:10px;padding:16px 16px 18px;background:rgba(255,255,255,.03)}
+  .tcard .t{font-family:"Trebuchet MS",sans-serif;color:var(--gold);font-weight:700;font-size:.82rem;letter-spacing:.05em;margin-bottom:6px}
+  .tcard p{font-size:.9rem;color:#E7DFCB}
+
+  /* ---------- REVISE ---------- */
+  .revise{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:start}
+  .steps{counter-reset:s;display:flex;flex-direction:column;gap:14px}
+  .step{display:flex;gap:16px;align-items:flex-start;border-left:2px solid var(--line);padding:2px 0 2px 18px;position:relative}
+  .step::before{counter-increment:s;content:counter(s);position:absolute;left:-15px;top:-2px;width:28px;height:28px;border-radius:50%;
+    background:var(--gold);color:var(--ink-2);font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.9rem;display:grid;place-items:center}
+  .step h4{font-size:1.02rem}
+  .step p{font-size:.9rem;color:#55555c;margin-top:2px}
+  .ao{border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .ao .h{padding:12px 16px;font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.82rem;letter-spacing:.06em;color:#fff}
+  .ao .h.ao1{background:var(--ink)}
+  .ao .h.ao2{background:var(--green)}
+  .ao .c{padding:14px 16px;font-size:.9rem;border-bottom:1px solid var(--line)}
+  .ao .c:last-child{border-bottom:0}
+  .ao .c b{font-family:"Trebuchet MS",sans-serif;font-size:.78rem;letter-spacing:.04em}
+
+  /* ---------- VIDEO ---------- */
+  .video-frame{position:relative;width:100%;aspect-ratio:16/9;border-radius:14px;overflow:hidden;
+    border:1px solid var(--line);box-shadow:0 20px 44px -30px rgba(18,41,77,.55);background:var(--ink)}
+  .video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .video-placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:14px;text-align:center;padding:30px;color:#C9C4B6;
+    background:radial-gradient(700px 300px at 50% 30%,rgba(201,162,39,.14),transparent 60%),linear-gradient(180deg,var(--ink),var(--ink-2))}
+  .video-placeholder .vp-badge{font-family:"Trebuchet MS",Verdana,sans-serif;font-weight:700;font-size:.72rem;letter-spacing:.14em;
+    text-transform:uppercase;background:var(--gold);color:var(--ink-2);padding:6px 12px;border-radius:6px}
+  .video-placeholder p{max-width:52ch;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.92rem;line-height:1.55}
+  .video-placeholder code{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:4px;padding:1px 6px}
+
+  /* ---------- FLASHCARDS ---------- */
+  .fc-controls{display:flex;gap:18px;flex-wrap:wrap;align-items:center;margin-bottom:24px}
+  .fc-tabs,.fc-type{display:flex;gap:8px;flex-wrap:wrap}
+  .fc-btn{font-family:"Trebuchet MS",Verdana,sans-serif;font-weight:700;font-size:.8rem;border:1px solid var(--line);
+    background:#fff;color:var(--ink);padding:8px 15px;border-radius:999px;cursor:pointer;transition:.18s}
+  .fc-btn[aria-selected="true"]{background:var(--ink);color:var(--parch);border-color:var(--ink)}
+  .fc-btn:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+  .fc-hint{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.78rem;color:#8a8a92;margin-left:auto}
+  .fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+  .fc-card{perspective:1200px;height:190px;cursor:pointer;background:none;border:0;padding:0;font-family:inherit;text-align:left}
+  .fc-inner{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+  .fc-card[data-flipped="true"] .fc-inner{transform:rotateY(180deg)}
+  .fc-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+    border-radius:12px;padding:18px;display:flex;flex-direction:column;border:1px solid var(--line);overflow:auto}
+  .fc-front{background:linear-gradient(180deg,#fff,var(--paper))}
+  .fc-back{transform:rotateY(180deg);color:var(--parch)}
+  .fc-card.challenges .fc-back{background:linear-gradient(160deg,var(--c1),var(--c1d))}
+  .fc-card.responses .fc-back{background:linear-gradient(160deg,var(--c2),var(--c2d))}
+  .fc-card.negativa .fc-back{background:linear-gradient(160deg,var(--c3),var(--c3d))}
+  .fc-card.symbol .fc-back{background:linear-gradient(160deg,var(--c4),var(--c4d))}
+  .fc-tag{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--gold);font-weight:700;margin-bottom:8px}
+  .fc-front .fc-tag{color:#9a8028}
+  .fc-term{font-size:1.2rem;font-weight:700;line-height:1.15}
+  .fc-front .fc-flip{margin-top:auto;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.72rem;color:#9a9a9a}
+  .fc-def{font-size:.9rem;line-height:1.4}
+  .fc-back .fc-sw{margin-top:8px;font-size:.8rem}
+  .fc-back .fc-sw .k{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.62rem;letter-spacing:.08em;text-transform:uppercase}
+  .fc-back .up .k{color:#8BD08F}.fc-back .dn .k{color:#F2A0A0}
+  @media(max-width:820px){.fc-grid{grid-template-columns:1fr 1fr}.fc-hint{width:100%;margin-left:0}}
+
+  /* ---------- RESOURCES ---------- */
+  .res-note{background:#FBF0D6;border:1px solid var(--gold);border-left:4px solid var(--gold);
+    border-radius:8px;padding:12px 16px;margin-bottom:22px;font-size:.9rem;color:#5a4a1c;
+    font-family:"Trebuchet MS",Verdana,sans-serif}
+  .res-note code{background:#fff;border:1px solid var(--line);border-radius:4px;padding:1px 6px;font-size:.85em}
+  .res-note.hide{display:none}
+  .res-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:16px}
+  .res-col{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff}
+  .rc-head{padding:14px 14px;color:#fff}
+  .rc-challenges .rc-head{background:linear-gradient(135deg,var(--c1),var(--c1d))}
+  .rc-responses .rc-head{background:linear-gradient(135deg,var(--c2),var(--c2d))}
+  .rc-negativa .rc-head{background:linear-gradient(135deg,var(--c3),var(--c3d))}
+  .rc-symbol .rc-head{background:linear-gradient(135deg,var(--c4),var(--c4d))}
+  .rc-head .rc-n{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.64rem;letter-spacing:.18em;text-transform:uppercase;opacity:.85}
+  .rc-head h3{font-size:1.02rem;margin-top:2px}
+  .res-btn{display:flex;align-items:center;gap:12px;padding:13px 14px;border-top:1px solid var(--line);
+    font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.88rem;color:var(--ink);text-decoration:none;
+    cursor:pointer;transition:background .15s}
+  .res-col .res-btn:first-of-type{border-top:0}
+  .res-btn:hover{background:var(--parch)}
+  .res-btn .ic{width:24px;height:24px;flex:none;display:grid;place-items:center;border-radius:6px;
+    background:var(--ink);color:var(--gold);font-size:.85rem}
+  .res-btn .go{margin-left:auto;color:var(--gold);font-weight:700;opacity:0;transition:.15s}
+  .res-btn:hover .go{opacity:1}
+  .res-btn:focus-visible{outline:3px solid var(--gold);outline-offset:-3px}
+  .res-btn.unset{opacity:.5;cursor:not-allowed}
+  .res-btn.unset .go{content:"";opacity:0}
+  .res-btn.unset::after{content:"Link not set";margin-left:auto;font-size:.72rem;color:#9a7d2c;
+    background:#FBF0D6;border:1px solid var(--gold-soft);border-radius:5px;padding:2px 7px}
+  .res-wide{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:2px}
+  .res-btn.big{border:1px solid var(--line);border-radius:12px;background:#fff;padding:16px 18px}
+  .res-btn.big:hover{background:var(--parch)}
+  .res-btn.big .ic{width:34px;height:34px;font-size:1.1rem;background:var(--ink)}
+  @media(max-width:980px){.tetraptych{grid-template-columns:repeat(2,1fr)}.res-grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:820px){.res-grid{grid-template-columns:1fr}.res-wide{grid-template-columns:1fr}}
+
+  footer{background:var(--ink-2);color:#C9C4B6;padding:26px 0;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.8rem}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+  footer .gold{color:var(--gold)}
+
+  @media(max-width:820px){
+    .tetraptych{grid-template-columns:1fr}
+    .threads{grid-template-columns:1fr}
+    .revise{grid-template-columns:1fr}
+    .node{width:104px}
+    .node .sb{display:none}
+  }
+  @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<!--BACKPILL--><a href="../alevel.html" style="position:fixed;left:14px;bottom:14px;z-index:99999;background:#12294D;color:#F6F1E4;font:600 14px/1 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;padding:10px 15px;border-radius:999px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.28);border:1px solid #C9A227">&#8592; All units</a>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap">
+    <div class="crest">
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <rect x="2" y="2" width="60" height="60" rx="13" fill="#0C1B33" stroke="#C9A227" stroke-width="1.5"/>
+        <g fill="none" stroke="#F3ECDD" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M23 21C21 17 21 14 22 12c2 2 3 5 3 8"/><path d="M41 21c2-4 2-7 1-9-2 2-3 5-3 8"/>
+          <path d="M32 17C21 17 18 26 18 33c0 12 6 19 14 19s14-7 14-19c0-7-3-16-14-16z"/>
+          <path d="M32 21c-3 4-5 6-7 7M32 21c3 4 5 6 7 7"/>
+        </g>
+        <circle cx="27" cy="31" r="5" fill="none" stroke="#F3ECDD" stroke-width="2.4"/>
+        <circle cx="37" cy="31" r="5" fill="none" stroke="#F3ECDD" stroke-width="2.4"/>
+        <circle cx="27" cy="31" r="1.9" fill="#F3ECDD"/><circle cx="37" cy="31" r="1.9" fill="#F3ECDD"/>
+        <path d="M32 34l-2.2 4.2h4.4z" fill="#C9A227"/>
+      </svg>
+      <div class="who">A-Level Religious Studies · AQA Paper 1 (7062/1)
+        <b>Philosophy &amp; Ethics · Section A: Philosophy of Religion</b></div>
+    </div>
+    <h1>Religious <span class="amp">Language</span></h1>
+    <p class="sub">One unit, one argument — asked in four different registers. Whatever a scholar's answer, they are all wrestling with the same worry: that talk about God might not mean anything at all.</p>
+    <div class="bigq">
+      <span class="q">The<br>big<br>question</span>
+      <p>Can talk about God be meaningful at all?</p>
+    </div>
+  </div>
+</header>
+
+<!-- SIGNATURE: SPECTRUM -->
+<section id="spectrum">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">01</span><h2>The meaningfulness spectrum</h2></div>
+    <p class="sec-lead">Every debate in this unit lines up on the same axis — from <b>meaningless</b> (the challenges destroy religious language completely) to <b>meaningful, in many registers</b> (cognitive, non-cognitive, analogical, symbolic). Pick a sub-topic, then tap a position to see what it claims.</p>
+
+    <div class="spectrum-card">
+      <div class="tabs" role="tablist" aria-label="Choose a sub-topic">
+        <button class="tab" role="tab" aria-selected="true"  data-topic="challenges">The Challenges</button>
+        <button class="tab" role="tab" aria-selected="false" data-topic="responses">The Responses</button>
+        <button class="tab" role="tab" aria-selected="false" data-topic="negativa">Analogy &amp; Via Negativa</button>
+        <button class="tab" role="tab" aria-selected="false" data-topic="symbol">Symbol &amp; Synthesis</button>
+      </div>
+
+      <div class="axis">
+        <div class="axis-labels"><span class="l" id="poleL">Meaningful</span><span class="r" id="poleR">Meaningless</span></div>
+        <div class="bar"></div>
+        <div class="ticks" id="ticks"></div>
+      </div>
+
+      <div class="readout" id="readout" aria-live="polite"></div>
+      <p class="hint">Tap a circle — or use Tab and Enter — to explore each position.</p>
+    </div>
+  </div>
+</section>
+
+<!-- THE THREAD -->
+<section>
+  <div class="wrap">
+    <div class="thread">
+      <div class="wrap2">
+        <h2>The thread that ties it together</h2>
+        <p class="lead">The four sub-topics don't argue in isolation. Three questions run through all of them — spot the thread and you're writing at the top of the mark scheme.</p>
+        <div class="threads">
+          <div class="tcard"><div class="t">Cognitive or non-cognitive?</div><p>Ayer and Flew assume God-talk must state facts to mean anything. Hick agrees, and defers the check to death; Hare and Wittgenstein rescue meaning by giving up the fact-claim; Aquinas and Tillich try to keep a foot in both camps.</p></div>
+          <div class="tcard"><div class="t">What would count as evidence against it?</div><p>Flew's question — what would disprove this? — never goes away. The Via Negativa and Tillich's symbol both try to say something true about God without making a claim that could be falsified in the ordinary sense: is that honesty, or evasion?</p></div>
+          <div class="tcard"><div class="t">How much transcendence survives?</div><p>Univocal language shrinks God to a creature; the Via Negativa protects his otherness completely but says nothing positive. Analogy and symbol both try to keep real content AND real transcendence together — ask whether picking just one descriptor was ever the right demand.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOUR DEBATES -->
+<section id="debates">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">03</span><h2>The same question, four times</h2></div>
+    <p class="sec-lead">The unit splits into four debates. They look different, but each is really asking <em>what would it take for talk about God to mean something</em>?</p>
+    <div class="tetraptych">
+      <div class="panel p-challenges">
+        <div class="cap"><div class="n">Sub-topic 1</div><h3>The Challenges</h3><div class="ask">Is it meaningful <b>at all</b>?</div></div>
+        <div class="body">
+          <div class="row"><span class="v">Logical Positivism</span><span class="d">Metaphysics is literally nonsense (Vienna Circle).</span></div>
+          <div class="row"><span class="v">Ayer's Verification</span><span class="d">Meaningful only if analytic or verifiable — God-talk is neither.</span></div>
+          <div class="row"><span class="v">Flew's Falsification</span><span class="d">Unfalsifiable claims die "the death of a thousand qualifications."</span></div>
+        </div>
+      </div>
+      <div class="panel p-responses">
+        <div class="cap"><div class="n">Sub-topic 2</div><h3>The Responses</h3><div class="ask">Can it <b>survive</b> the challenge?</div></div>
+        <div class="body">
+          <div class="row"><span class="v">Hick</span><span class="d">Cognitive — verified eschatologically, at death.</span></div>
+          <div class="row"><span class="v">Hare</span><span class="d">Non-cognitive — an unfalsifiable "blik."</span></div>
+          <div class="row"><span class="v">Wittgenstein</span><span class="d">Meaning is use — its own language game.</span></div>
+        </div>
+      </div>
+      <div class="panel p-negativa">
+        <div class="cap"><div class="n">Sub-topic 3</div><h3>Analogy &amp; Via Negativa</h3><div class="ask">How can words reach a <b>transcendent</b> God?</div></div>
+        <div class="body">
+          <div class="row"><span class="v">Analogy of attribution</span><span class="d">Creaturely goodness points to the Creator who produces it.</span></div>
+          <div class="row"><span class="v">Analogy of proportionality</span><span class="d">Faithful dog, faithful human, faithful God — proportional to each nature.</span></div>
+          <div class="row"><span class="v">Via Negativa</span><span class="d">Say only what God is NOT — Pseudo-Dionysius, Maimonides.</span></div>
+        </div>
+      </div>
+      <div class="panel p-symbol">
+        <div class="cap"><div class="n">Sub-topic 4</div><h3>Symbol &amp; Synthesis</h3><div class="ask">Is there a <b>better way</b> still?</div></div>
+        <div class="body">
+          <div class="row"><span class="v">Tillich's symbol</span><span class="d">Points beyond itself AND participates in what it points to.</span></div>
+          <div class="row"><span class="v">Being-itself</span><span class="d">The one literal claim — everything else about God is symbol.</span></div>
+          <div class="row"><span class="v">The combined view</span><span class="d">A factual core wrapped in myth, symbol and poetry.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- YOUR RESOURCES -->
+<section id="resources">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">04</span><h2>Your resources</h2></div>
+    <p class="sec-lead">Everything for the unit, in one place. Open a sub-topic's lesson, booklet and podcast, and use the <b>Philosopher Companion</b> across all four.</p>
+
+    <div class="res-note" id="resNote">
+      <b>Teacher setup:</b> links aren't set yet. Open this file, find the <code>LINKS</code> list near the bottom, and paste each SharePoint share link once. Buttons with no link show as "Link not set".
+    </div>
+
+    <div class="res-grid">
+      <div class="res-col rc-challenges">
+        <div class="rc-head"><span class="rc-n">Sub-topic 1</span><h3>The Challenges</h3></div>
+        <a class="res-btn" data-key="challenges_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="challenges_booklet"><span class="ic">✎</span><span>Completion booklet</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="challenges_podcast"><span class="ic">♪</span><span>Lesson podcast</span><span class="go">↗</span></a>
+      </div>
+      <div class="res-col rc-responses">
+        <div class="rc-head"><span class="rc-n">Sub-topic 2</span><h3>The Responses</h3></div>
+        <a class="res-btn" data-key="responses_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="responses_booklet"><span class="ic">✎</span><span>Completion booklet</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="responses_podcast"><span class="ic">♪</span><span>Lesson podcast</span><span class="go">↗</span></a>
+      </div>
+      <div class="res-col rc-negativa">
+        <div class="rc-head"><span class="rc-n">Sub-topic 3</span><h3>Analogy &amp; VN</h3></div>
+        <a class="res-btn" data-key="negativa_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="negativa_booklet"><span class="ic">✎</span><span>Completion booklet</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="negativa_podcast"><span class="ic">♪</span><span>Lesson podcast</span><span class="go">↗</span></a>
+      </div>
+      <div class="res-col rc-symbol">
+        <div class="rc-head"><span class="rc-n">Sub-topic 4</span><h3>Symbol &amp; Synthesis</h3></div>
+        <a class="res-btn" data-key="symbol_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="symbol_booklet"><span class="ic">✎</span><span>Completion booklet</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="symbol_podcast"><span class="ic">♪</span><span>Lesson podcast</span><span class="go">↗</span></a>
+      </div>
+    </div>
+
+    <div class="res-wide">
+      <a class="res-btn big" data-key="companion"><span class="ic">🦉</span><span><b>Philosopher Companion</b> — checklist, AO1 &amp; AO2 planning, key terms &amp; review</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="review"><span class="ic">↻</span><span><b>Review lessons</b> — consolidation decks &amp; podcast for all four sub-topics</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="overview_podcast"><span class="ic">♪</span><span><b>Overview podcast</b> — the whole unit as one argument (team teach)</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="flashcards_pdf"><span class="ic">▤</span><span><b>Printable flashcards</b> — fold-over key terms &amp; views to cut out</span><span class="go">↗</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- HOW TO REVISE -->
+<section id="revise">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">05</span><h2>How to revise this unit</h2></div>
+    <p class="sec-lead">Use your resources in this order. The <b>Philosopher Companion</b> is where you learn to <em>plan</em> both question types.</p>
+    <div class="revise">
+      <div class="steps">
+        <div class="step"><div><h4>Watch the lesson &amp; listen to the podcast</h4><p>One podcast per sub-topic — a teacher and student talk each view through to a judgement. Annotate as you listen.</p></div></div>
+        <div class="step"><div><h4>Complete the greyscale booklet</h4><p>Read the given text, write each scholar's claim in your own words, then decide the strength and weakness you'd give each view.</p></div></div>
+        <div class="step"><div><h4>Match &amp; apply the key terms</h4><p>In the Companion: match each term to its meaning, then use it in a sentence. RAG-rate the mastery checklist with the three faces.</p></div></div>
+        <div class="step"><div><h4>Plan AO1, then build AO2 on top</h4><p>Use the Companion frameworks and the guidance-left / your-turn-right scaffolds. Never evaluate what you haven't first explained.</p></div></div>
+      </div>
+      <div class="ao">
+        <div class="h ao1">AO1 · Examine the views (10)</div>
+        <div class="c"><b>What it is —</b> the factual chain: define the key terms, then set out each scholar's view in order and apply their examples (the Gardener, the Celestial City, the healthy bull, the flag).</div>
+        <div class="c"><b>Aim —</b> explain the whole range accurately and neutrally. No judging yet.</div>
+        <div class="h ao2">AO2 · Evaluate this claim (15)</div>
+        <div class="c"><b>What it is —</b> a three-paragraph dialectic: view, then evaluation → counter-evaluation → implication; mirror it; then judge.</div>
+        <div class="c"><b>Aim —</b> weigh the views, use one as a lens on another (e.g. Hick's "verifiable in principle" against Hare's blik), and reach a justified judgement that links back to your thesis.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WATCH: FULL UNIT REVIEW -->
+<section id="watch">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">06</span><h2>Watch: the whole unit in one go</h2></div>
+    <p class="sec-lead">A full review of <b>Religious Language</b> — the Challenges, the Responses, Analogy &amp; the Via Negativa, and Symbol &amp; Synthesis. Best watched before you start revising, then again to check your recall.</p>
+    <div class="video-frame" id="videoFrame">
+      <div class="video-placeholder" id="videoPlaceholder">
+        <div class="vp-badge">Video not set</div>
+        <p><b>Teacher:</b> paste the YouTube link in the <code>VIDEO_URL</code> line near the bottom of this file. The player then appears here automatically.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FLASHCARDS -->
+<section id="flashcards">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">07</span><h2>Flashcards — test yourself</h2></div>
+    <p class="sec-lead">Flip a card to check yourself. Switch between <b>key terms</b> (term → meaning) and <b>views</b> (view → claim, strength &amp; weakness), and filter by sub-topic.</p>
+    <div class="fc-controls">
+      <div class="fc-tabs" role="tablist" aria-label="Sub-topic">
+        <button class="fc-btn" role="tab" aria-selected="true"  data-topic="all">All</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-topic="challenges">Challenges</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-topic="responses">Responses</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-topic="negativa">Analogy &amp; VN</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-topic="symbol">Symbol</button>
+      </div>
+      <div class="fc-type" role="tablist" aria-label="Card type">
+        <button class="fc-btn" role="tab" aria-selected="true"  data-type="terms">Key terms</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-type="views">Views</button>
+      </div>
+      <span class="fc-hint">Tap any card to flip · <span id="fcCount"></span></span>
+    </div>
+    <div class="fc-grid" id="fcGrid"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Religious Language · Unit at a glance</span>
+    <span class="gold">Philosophy &amp; Ethics · AQA Paper 1</span>
+  </div>
+</footer>
+
+<script>
+const DATA = {
+  challenges:{
+    poles:["Religious language is MEANINGFUL","Religious language is MEANINGLESS"],
+    insight:"The further right you go, the more the test destroys ALONGSIDE religion — morality, poetry, history, even atheism itself. The question becomes: is the test too strong to be true?",
+    nodes:[
+      {x:8,  nm:"The believer", sb:"cognitive, factual, true"},
+      {x:36, nm:"Popper", sb:"unfalsifiable ≠ science (but he targets science, not God)"},
+      {x:64, nm:"Flew", sb:"vacuous — killed by 1000 qualifications"},
+      {x:92, nm:"Ayer", sb:"literally meaningless — pseudo-propositions"}
+    ]
+  },
+  responses:{
+    poles:["Fully COGNITIVE — factual claims","Fully NON-COGNITIVE — no facts asserted"],
+    insight:"Each rescue pays a price: Hick keeps facts but not normal falsifiability; Hare and Wittgenstein keep meaning but surrender the facts most believers think they are asserting. The combined view asks: why choose at all?",
+    nodes:[
+      {x:8,  nm:"Hick", sb:"cognitive; verified at death"},
+      {x:36, nm:"The combined view", sb:"factual core + non-factual myth (later Hick)"},
+      {x:64, nm:"Hare", sb:"non-cognitive blik"},
+      {x:92, nm:"Wittgenstein", sb:"meaning = use in the game"}
+    ]
+  },
+  negativa:{
+    poles:["Says TOO MUCH — God shrunk to a creature","Says NOTHING — God beyond all words"],
+    insight:"Every position trades content for transcendence: the more we protect God's otherness, the less our words say — until, at the far end, they say nothing at all. Analogy claims the workable middle; Tillich's symbol claims to beat them both.",
+    nodes:[
+      {x:8,  nm:"Univocal", sb:"literal — limits God"},
+      {x:36, nm:"Analogy (attribution)", sb:"Creator has what it takes"},
+      {x:64, nm:"Analogy (proportionality)", sb:"each word to each nature"},
+      {x:92, nm:"Via Negativa", sb:"only what God is NOT"}
+    ]
+  },
+  symbol:{
+    poles:["Religious language is MEANINGLESS","Meaningful — in MANY registers"],
+    insight:"The final synthesis: no single descriptor wins. Each account — cognitive, non-cognitive, analogical, negative, symbolic — brings out something real about religious language; the exam rewards the student who can weigh them ALL and still land a judgement.",
+    nodes:[
+      {x:8,  nm:"Ayer & Flew", sb:"unverifiable, unfalsifiable — nonsense"},
+      {x:36, nm:"Hick", sb:"cognitive — verified at death"},
+      {x:64, nm:"Hare · Wittgenstein", sb:"non-cognitive — blik, language game"},
+      {x:92, nm:"Aquinas · VN · Tillich", sb:"analogy, negation, symbol"}
+    ]
+  }
+};
+const TOPIC_LABEL = {challenges:"Challenges", responses:"Responses", negativa:"Analogy & VN", symbol:"Symbol"};
+
+const ticks=document.getElementById("ticks");
+const readout=document.getElementById("readout");
+const poleL=document.getElementById("poleL"), poleR=document.getElementById("poleR");
+let topic="challenges", active=0;
+
+function renderReadout(n,d){
+  readout.innerHTML=`
+    <span class="badge">${TOPIC_LABEL[topic]}</span>
+    <div class="body">
+      <h4>${n.nm} <span style="opacity:.6;font-style:italic;font-weight:400">· ${n.sb}</span></h4>
+      <p>${d.insight}</p>
+    </div>`;
+}
+function renderTopic(){
+  const d=DATA[topic];
+  poleL.textContent=d.poles[0]; poleR.textContent=d.poles[1];
+  ticks.innerHTML="";
+  d.nodes.forEach((n,i)=>{
+    const el=document.createElement("div");
+    el.className="node"; el.style.left=n.x+"%"; el.tabIndex=0;
+    el.setAttribute("role","button");
+    el.setAttribute("aria-label",`${n.nm}: ${n.sb}`);
+    el.dataset.active=(i===active);
+    el.innerHTML=`<div class="dot"></div><div class="nm">${n.nm}</div><div class="sb">${n.sb}</div>`;
+    const pick=()=>{active=i;[...ticks.children].forEach((c,j)=>c.dataset.active=(j===i));renderReadout(n,d);};
+    el.addEventListener("click",pick);
+    el.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();pick();}});
+    ticks.appendChild(el);
+  });
+  active=Math.min(active,d.nodes.length-1);
+  [...ticks.children].forEach((c,j)=>c.dataset.active=(j===active));
+  renderReadout(d.nodes[active],d);
+}
+document.querySelectorAll("#spectrum .tab").forEach(t=>{
+  t.addEventListener("click",()=>{
+    document.querySelectorAll("#spectrum .tab").forEach(x=>x.setAttribute("aria-selected","false"));
+    t.setAttribute("aria-selected","true");
+    topic=t.dataset.topic; active=0; renderTopic();
+  });
+});
+renderTopic();
+
+const FLASHCARDS = {"challenges": {"terms": [{"term": "Cognitive", "def": "language that conveys factual information; most cognitive statements are synthetic — shown true or false by evidence."}, {"term": "Non-cognitive", "def": "language for which it is inappropriate to ask 'is it factual?' — it may convey emotion, give orders, make moral claims, or perform an act."}, {"term": "Metaphysics", "def": "the philosophy of concepts beyond the physical — the nature of time, space, reality, God."}, {"term": "Logical Positivism", "def": "the approach of the Vienna Circle (1920s–30s): metaphysical and theological language is literally meaningless, being neither logical truth nor empirically provable."}, {"term": "Verification Principle", "def": "the meaning of a statement is its method of verification; a statement is meaningful only if analytic or empirically verifiable."}, {"term": "Falsification Principle", "def": "a sentence is factually significant only if some evidence could count against (falsify) it."}], "views": [{"n": "Logical Positivism (the Vienna Circle)", "c": "Only logic and observation make language meaningful — metaphysics is literally nonsense.", "s": "Rests on a genuinely successful model of knowledge — empirical science — and gives a clear, public criterion of meaning anyone can apply.", "w": "The criterion devours far more than theology: morality, aesthetics, history and poetry all fail the test — yet few accept that 'torturing children is wrong' is meaningless. A theory of meaning that rules out most of human discourse looks self-condemning."}, {"n": "The Verification Principle (Ayer)", "c": "A statement is meaningful only if analytic or empirically verifiable — 'God-talk' is neither.", "s": "Straightforward and disciplined: it demands that factual claims cash out in possible experience, brackets out emotion, and aligns with scientific method. And even if it fails, it forced decades of careful analysis of what religious language actually does.", "w": "The VP fails its OWN test: it is neither a tautology nor empirically verifiable, so by its own criterion it is meaningless. Ayer's retreat — that it is a 'convention' or 'policy' — reduces it to an arbitrary preference. It also seems too narrow (science itself uses unobservables like quarks) and arguably the Gospels' eyewitness claims give religious statements verification IN PRINCIPLE."}, {"n": "The Falsification challenge (Popper → Flew)", "c": "If nothing is allowed to count against 'God loves us', the claim dies the death of a thousand qualifications.", "s": "Widely rated the STRONGER challenge: it targets what believers actually do (qualify endlessly), and it demands intellectual honesty — if the criterion of a real assertion is knowing what would falsify it, believers seem unable to say.", "w": "Popper's test was designed for SCIENCE; God-claims are metaphysical, so demanding empirical falsifiability may be a category error. It confines meaning to facts, ignoring poetry, art and drama as vehicles of insight. And it is simply untrue that believers allow nothing to count against belief — the problem of evil drives many to doubt or abandon faith; Flew himself, following the evidence, late in life accepted a deistic creative intelligence."}]}, "responses": {"terms": [{"term": "Eschatology", "def": "the doctrine of what happens at the end of time / in the last days / at the final judgement."}, {"term": "Eschatological verification", "def": "Hick's view that the 'facts' of the Christian religion will be verified (or not) at death."}, {"term": "Blik", "def": "Hare's term for a framework of interpretation: a view of the world that is not an assertion — non-cognitive and non-falsifiable."}, {"term": "Language game", "def": "Wittgenstein's idea that language has meaning within a social context governed by rules, as different games have different rules."}, {"term": "Form of life", "def": "the wider activity a language game belongs to — the shared practice that gives its words their sense."}, {"term": "Experiencing-as", "def": "Hick's argument that ALL experience involves interpretation — we always experience things AS something."}], "views": [{"n": "Hick: eschatological verification", "c": "Religious claims are factual — and will be verified when we die.", "s": "'There is life after death' must be true or false — and if we do wake, a whole web of Christian claims is verified at once. 'Experiencing-as' explains religious disagreement without calling either side irrational.", "w": "The claim is not a NORMAL factual claim: verifiable if true but never falsifiable if false — the dead cannot discover they were wrong. His rescue example is mathematical (logical), not factual. And for the atheist focused on evil, the Celestial City is wishful thinking."}, {"n": "Hare: religious language as a blik", "c": "Religious statements are not assertions — they are unfalsifiable frameworks that interpret everything.", "s": "Explains two stubborn facts: why contradictory religions each hold their 'truths' sincerely, and why believers are rarely moved by counter-evidence — they see the world THROUGH the blik. Religion as a whole-of-life interpretive stance rings true.", "w": "Most believers take 'There is a God' as fact, not framework — and Hare says they are non-cognitivists whether they know it or not, as if they don't know their own minds. If Christianity contains no facts, its value shrinks to psychology and sociology; and 'God exists' looks verifiable in principle (design, cosmology) and falsifiable (evil) anyway."}, {"n": "Wittgenstein: language games", "c": "Meaning is use: religious language plays its own game — science cannot referee it.", "s": "Dissolves the verification/falsification confusion at the root; allows artistic, ethical, historical AND religious meaning without forcing everything into a scientific mould; and captures religion as lived commitment ('belief in') rather than hypothesis-testing.", "w": "It insulates religion from external criticism and discourages dialogue with secular thinkers — yet Christianity claims UNIVERSAL significance and evangelises outsiders. Most believers think they are making true assertions about reality, not moves in a game; and a coherent game could be built on bloodthirsty practices — internal consistency is not truth."}]}, "negativa": {"terms": [{"term": "Univocal", "def": "using a word with exactly the same meaning in different cases — 'black' coat, 'black' coal."}, {"term": "Equivocal", "def": "using the same word with quite different meanings — a cricket 'bat' and a flying 'bat'."}, {"term": "Analogy", "def": "explaining something hard to grasp by comparing it with something more securely within our reference-frame."}, {"term": "Kataphatic theology", "def": "from the Greek for 'affirmation': speaking of God in positive terms — creeds, descriptions, praise."}, {"term": "Apophatic theology", "def": "from the Greek 'to deny': refusing positive descriptions of God."}, {"term": "Via Negativa", "def": "the 'negative way' — to state only what may NOT be said about God."}], "views": [{"n": "Aquinas: religious language as analogical", "c": "Words stretch from creatures to their Creator — neither univocal nor equivocal, but analogical.", "s": "Avoids both horns of the dilemma: God is neither shrunk (univocal) nor unspeakable (equivocal). It explains anthropomorphic language without literalism, gives mystics words to stretch beyond ordinary meaning, and — being rooted in experience — keeps God-talk cognitive.", "w": "Analogy seems to require PRIOR knowledge of both terms — but we do not know God, so how do we know 'loving' applies at all? If God's qualities are infinite, human-to-God cannot be proportional as dog-to-human is. And attribution cuts both ways: if God has what it takes to produce goodness in humans, he has what it takes to produce evil too (Aquinas' 'evil is absence of good' reply has its own problems)."}, {"n": "The Via Negativa: Pseudo-Dionysius & Maimonides", "c": "God so transcends language that we can truly say only what God is NOT.", "s": "It refuses to make God a 'thing' among things — fitting for the Creator who is the SOURCE of all things; it cannot be accused of anthropomorphism; and it matches the testimony of mystics (Otto, Stace) that encounters with God are ineffable.", "w": "Davies: negations alone could describe a wardrobe as well as a ship — or nothing at all. Flew's Gardener shows where pure negation ends: invisible, intangible, inaudible — a God who 'dies the death of a thousand qualifications'. If mystics cannot describe their experience, how do we know it was God and not the brain? And can anyone actually WORSHIP a God described only by what he is not?"}]}, "symbol": {"terms": [{"term": "Sign", "def": "a conventional pointer to something other than itself — like a road sign — replaceable by agreement."}, {"term": "Symbol", "def": "points beyond itself like a sign, but also PARTICIPATES in the power of what it points to."}, {"term": "Participation", "def": "Tillich's claim that a symbol shares in the reality it points to — the feature that separates symbol from sign."}, {"term": "Being-itself", "def": "Tillich's name for God: not a being among beings, but being/existence itself — the ground on which all beings stand."}, {"term": "Ultimate concern", "def": "what ultimately gives life value and meaning; for the believer, God demands total attention and commitment."}, {"term": "Myth", "def": "non-literal, non-cognitive sacred story that still evokes a true dispositional attitude — e.g. the Fall expressing human alienation from God."}], "views": [{"n": "Tillich: religious language as symbolic", "c": "All religious language is symbolic — pointing to, and participating in, Being-itself.", "s": "It relates religious language to everyday experience (love, birth, communion); it needs only ONE literal claim, so it escapes both analogy's prior-knowledge problem and the Via Negativa's emptiness; and it reflects what religious experience (Otto's numinous) is actually like, speaking existentially to guilt, alienation, redemption and meaning.", "w": "Hick's double attack: what does 'participate' actually MEAN (everything participates in Being-itself — what's special about symbols?), and complex doctrines ('God is not dependent on any reality other than himself') surely come from conscious theological reasoning, not the unconscious. And most Christians do NOT share Tillich's God: for them God IS a transcendent being — deists and process theologians disagree with him too. If 'God' names an experience of depth, has religion quietly become poetry?"}, {"n": "The combined view: cognitive AND non-cognitive", "c": "Religious language needs no single descriptor — a factual core wrapped in myth, symbol and poetry.", "s": "It fits believers' actual practice (mixed cognitive/non-cognitive belief); it keeps what each account got right — Hick's factual core, Hare's interpretive depth, Wittgenstein's contextual meaning, Tillich's symbol — and it honours the chapter's closing counsel: truth need not have only one level and one descriptor.", "w": "A critic will call it having it both ways: whenever a claim is attacked as unverifiable it retreats to 'myth'; whenever myth seems empty it appeals to the factual core — the boundary between core and poetry is never fixed. Cognitivists and non-cognitivists each see the other's strengths as weaknesses, so 'both' may inherit both sets of objections rather than neither."}]}};
+
+(function(){
+  let fcTopic="all", fcType="terms";
+  const grid=document.getElementById("fcGrid"), count=document.getElementById("fcCount");
+  function esc(s){return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+  function label(tp){return TOPIC_LABEL[tp]||tp;}
+  function build(){
+    const topics = fcTopic==="all" ? ["challenges","responses","negativa","symbol"] : [fcTopic];
+    let cards=[];
+    topics.forEach(tp=>{
+      const d=FLASHCARDS[tp]; if(!d) return;
+      if(fcType==="terms"){ d.terms.forEach(t=>cards.push({tp,front:t.term,tag:label(tp),back:`<div class='fc-def'>${esc(t.def)}</div>`})); }
+      else { d.views.forEach(v=>cards.push({tp,front:v.n,tag:label(tp),back:`<div class='fc-def'>${esc(v.c)}</div><div class='fc-sw'><div class='up'><span class='k'>Strength</span><br>${esc(v.s)}</div><div class='dn' style='margin-top:6px'><span class='k'>Weakness</span><br>${esc(v.w)}</div></div>`})); }
+    });
+    grid.innerHTML=cards.map(c=>`
+      <button class="fc-card ${c.tp}" data-flipped="false" aria-label="Flashcard: ${esc(c.front)}. Tap to reveal.">
+        <div class="fc-inner">
+          <div class="fc-face fc-front"><div class="fc-tag">${c.tag}</div><div class="fc-term">${esc(c.front)}</div><div class="fc-flip">tap to flip ↺</div></div>
+          <div class="fc-face fc-back"><div class="fc-tag">${c.tag}</div>${c.back}</div>
+        </div>
+      </button>`).join("");
+    count.textContent = cards.length + " cards";
+    grid.querySelectorAll(".fc-card").forEach(el=>{
+      const flip=()=>el.dataset.flipped = el.dataset.flipped==="true" ? "false":"true";
+      el.addEventListener("click",flip);
+    });
+  }
+  document.querySelectorAll('#flashcards .fc-tabs .fc-btn').forEach(b=>b.addEventListener("click",()=>{
+    document.querySelectorAll('#flashcards .fc-tabs .fc-btn').forEach(x=>x.setAttribute("aria-selected","false"));
+    b.setAttribute("aria-selected","true"); fcTopic=b.dataset.topic; build();
+  }));
+  document.querySelectorAll('#flashcards .fc-type .fc-btn').forEach(b=>b.addEventListener("click",()=>{
+    document.querySelectorAll('#flashcards .fc-type .fc-btn').forEach(x=>x.setAttribute("aria-selected","false"));
+    b.setAttribute("aria-selected","true"); fcType=b.dataset.type; build();
+  }));
+  build();
+})();
+
+/* =====================================================================
+   TEACHER: paste your YouTube link between the quotes below.
+   Any format works — youtube.com/watch?v=…, youtu.be/…, or an embed URL.
+   Leave it empty ("") and the page shows a "Video not set" placeholder.
+   ===================================================================== */
+const VIDEO_URL = "";
+
+(function wireVideo(){
+  const url=(VIDEO_URL||"").trim();
+  if(!url) return; // keep placeholder
+  let id="";
+  const m = url.match(/(?:youtu\.be\/|v=|\/embed\/|\/shorts\/)([A-Za-z0-9_-]{11})/);
+  if(m) id=m[1];
+  else if(/^[A-Za-z0-9_-]{11}$/.test(url)) id=url;
+  const frame=document.getElementById("videoFrame");
+  if(id && frame){
+    frame.innerHTML =
+      '<iframe src="https://www.youtube-nocookie.com/embed/'+id+'?rel=0" '+
+      'title="Religious Language — full unit review" '+
+      'allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" '+
+      'allowfullscreen loading="lazy"></iframe>';
+  } else if(frame){
+    frame.innerHTML =
+      '<div class="video-placeholder"><a class="res-btn big" style="background:#fff" href="'+url+'" target="_blank" rel="noopener"><span class="ic">▶</span><span><b>Watch the full unit review</b></span><span class="go">↗</span></a></div>';
+  }
+})();
+
+/* =====================================================================
+   TEACHER: paste your SharePoint share links between the quotes below.
+   Leave a link empty ("") and its button will show "Link not set".
+   Tip: in SharePoint, open the file's ... menu -> Copy link -> paste here.
+   ===================================================================== */
+const LINKS = {
+  challenges_lesson:  "",
+  challenges_booklet: "",
+  challenges_podcast: "",
+  responses_lesson:   "",
+  responses_booklet:  "",
+  responses_podcast:  "",
+  negativa_lesson:    "",
+  negativa_booklet:   "",
+  negativa_podcast:   "",
+  symbol_lesson:      "",
+  symbol_booklet:     "",
+  symbol_podcast:     "",
+  companion:        "",
+  review:           "",
+  overview_podcast: "",
+  flashcards_pdf:   ""
+};
+
+(function wireResources(){
+  let anySet=false;
+  document.querySelectorAll(".res-btn").forEach(btn=>{
+    const url=(LINKS[btn.dataset.key]||"").trim();
+    if(url){
+      btn.href=url; btn.target="_blank"; btn.rel="noopener"; anySet=true;
+    }else{
+      btn.classList.add("unset"); btn.removeAttribute("href"); btn.setAttribute("aria-disabled","true");
+    }
+  });
+  if(anySet){ const n=document.getElementById("resNote"); if(n) n.classList.add("hide"); }
+})();
+</script>
+</body>
+</html>

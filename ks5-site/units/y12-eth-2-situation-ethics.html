@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Situation Ethics — Unit at a Glance</title>
+<style>
+  :root{
+    --ink:#12294D;        /* deep manuscript navy */
+    --ink-2:#0C1B33;
+    --parch:#F3ECDD;      /* aged parchment */
+    --parch-2:#EAE0C9;
+    --gold:#C9A227;       /* gold leaf */
+    --gold-soft:#E4CE86;
+    --rubric:#B01C2E;     /* rubrication red */
+    --navy:#1F4E79;
+    --teal:#00695C;
+    --violet:#6A1B9A;
+    --blue:#1565C0;
+    --green:#2E7D32;
+    --paper:#FBF7EE;
+    --line:rgba(18,41,77,.16);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1060px;margin:0 auto;padding:0 24px}
+  .eyebrow{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;font-weight:700}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    background:
+      radial-gradient(1200px 400px at 80% -10%, rgba(201,162,39,.18), transparent 60%),
+      linear-gradient(180deg,var(--ink) 0%, var(--ink-2) 100%);
+    color:var(--parch);
+    padding:64px 0 72px;
+    position:relative;
+    overflow:hidden;
+    border-bottom:3px solid var(--gold);
+  }
+  .hero::after{ /* faint ruled manuscript lines */
+    content:"";position:absolute;inset:0;pointer-events:none;opacity:.06;
+    background:repeating-linear-gradient(180deg,transparent 0 38px,#fff 38px 39px);
+  }
+  .hero .wrap{position:relative;z-index:2}
+  .crest{display:flex;align-items:center;gap:16px;margin-bottom:34px}
+  .crest svg{width:54px;height:54px;flex:none}
+  .crest .who{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-soft)}
+  .crest .who b{color:var(--parch);display:block;letter-spacing:.14em;font-size:.86rem;margin-top:3px}
+  h1{font-size:clamp(2.4rem,6vw,4.1rem);line-height:1.02;font-weight:700;letter-spacing:-.01em}
+  h1 .amp{color:var(--gold);font-style:italic}
+  .sub{margin-top:20px;max-width:56ch;font-size:1.12rem;color:#E7DFCB}
+  .bigq{
+    margin-top:30px;display:inline-flex;gap:14px;align-items:flex-start;
+    border-left:3px solid var(--gold);padding:8px 0 8px 18px;max-width:60ch;
+  }
+  .bigq .q{font-family:"Trebuchet MS",sans-serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-soft);padding-top:5px}
+  .bigq p{font-size:1.24rem;font-style:italic;color:#fff}
+
+  /* ---------- SECTION SHELL ---------- */
+  section{padding:64px 0}
+  .sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:8px}
+  .sec-head .num{font-family:"Trebuchet MS",sans-serif;color:var(--gold);font-weight:700;font-size:.9rem;letter-spacing:.15em}
+  .sec-head h2{font-size:clamp(1.6rem,3.4vw,2.3rem);letter-spacing:-.01em}
+  .sec-lead{color:#4a4a52;max-width:64ch;margin-bottom:34px;font-size:1.05rem}
+
+  /* ---------- SIGNATURE: rules spectrum ---------- */
+  .spectrum-card{
+    background:linear-gradient(180deg,#fff, var(--paper));
+    border:1px solid var(--line);border-radius:14px;
+    box-shadow:0 18px 40px -28px rgba(18,41,77,.5);
+    padding:28px 26px 34px;
+  }
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+  .tab{
+    font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.82rem;letter-spacing:.04em;
+    border:1px solid var(--line);background:#fff;color:var(--ink);
+    padding:9px 16px;border-radius:999px;cursor:pointer;transition:.18s;
+  }
+  .tab[aria-selected="true"]{background:var(--ink);color:var(--parch);border-color:var(--ink)}
+  .tab:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+  .spec-title{font-size:1.16rem;font-weight:700;margin-bottom:18px}
+  .spec-title span{font-family:"Trebuchet MS",sans-serif;font-size:.68rem;letter-spacing:.2em;
+    text-transform:uppercase;color:#8a8a92;display:block;font-weight:700;margin-bottom:3px}
+
+  .axis{position:relative;margin:8px 4px 0}
+  .axis-labels{display:flex;justify-content:space-between;font-family:"Trebuchet MS",sans-serif;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:#6a6a72;margin-bottom:10px}
+  .axis-labels .l{color:var(--rubric);font-weight:700}
+  .axis-labels .r{color:var(--violet);font-weight:700}
+  .bar{height:10px;border-radius:999px;background:#ccc;position:relative}
+  .ticks{position:relative;height:112px;margin-top:0}
+  .node{position:absolute;top:0;transform:translateX(-50%);width:132px;text-align:center;cursor:pointer}
+  .node .dot{width:20px;height:20px;border-radius:50%;background:#fff;border:3px solid var(--ink);margin:0 auto;position:relative;top:-15px;transition:.18s}
+  .node .nm{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.82rem;margin-top:-6px}
+  .node .sb{font-size:.76rem;color:#6a6a72;font-style:italic;margin-top:2px;line-height:1.25}
+  .node:hover .dot,.node[data-active="true"] .dot{transform:scale(1.25);box-shadow:0 0 0 5px rgba(201,162,39,.25)}
+  .node:focus-visible{outline:none}
+  .node:focus-visible .dot{outline:3px solid var(--gold);outline-offset:3px}
+
+  .readout{
+    margin-top:14px;background:var(--ink);color:var(--parch);border-radius:12px;padding:20px 22px;
+    min-height:104px;display:flex;gap:18px;align-items:flex-start;
+  }
+  .readout .badge{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;
+    background:var(--gold);color:var(--ink-2);padding:6px 10px;border-radius:6px;white-space:nowrap;margin-top:2px}
+  .readout .body h4{font-size:1.12rem;margin-bottom:4px}
+  .readout .body p{color:#E7DFCB;font-size:.98rem}
+  .readout .body .sw{display:flex;gap:22px;margin-top:10px;flex-wrap:wrap}
+  .readout .body .sw div{font-size:.9rem;flex:1 1 220px}
+  .readout .body .sw .k{font-family:"Trebuchet MS",sans-serif;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase}
+  .readout .body .sw .up .k{color:#8BD08F}
+  .readout .body .sw .dn .k{color:#F2A0A0}
+  .insight{margin-top:14px;border-left:3px solid var(--gold);padding:4px 0 4px 14px;font-style:italic;
+    font-size:.95rem;color:#4a4a52;max-width:70ch}
+  .hint{font-family:"Trebuchet MS",sans-serif;font-size:.76rem;color:#8a8a92;margin-top:14px;text-align:center}
+
+  /* ---------- THREE DEBATES ---------- */
+  .triptych{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .panel{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;display:flex;flex-direction:column}
+  .panel .cap{padding:16px 18px;color:#fff;position:relative;min-height:152px}
+  .panel.b1 .cap{background:linear-gradient(135deg,#1F4E79,#12294D)}
+  .panel.b2 .cap{background:linear-gradient(135deg,#00695C,#0C3B34)}
+  .panel.b3 .cap{background:linear-gradient(135deg,#6A1B9A,#3B0E56)}
+  .panel .cap .n{font-family:"Trebuchet MS",sans-serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;opacity:.85}
+  .panel .cap h3{font-size:1.24rem;margin-top:3px}
+  .panel .cap .ask{font-style:italic;font-size:.9rem;margin-top:8px;opacity:.95}
+  .panel .body{padding:16px 18px;font-size:.92rem}
+  .panel .side{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.72rem;letter-spacing:.06em;
+    text-transform:uppercase;margin:0 0 6px;padding-bottom:5px;border-bottom:1px solid var(--line)}
+  .panel .side.a{color:var(--rubric)}
+  .panel .side.b{color:var(--green)}
+  .panel .side.b{margin-top:16px}
+  .panel .body ul{list-style:none}
+  .panel .body li{display:flex;gap:8px;padding:5px 0;color:#55555c}
+  .panel .body li::before{content:"—";color:var(--gold);font-weight:700}
+
+  /* ---------- THREAD ---------- */
+  .thread{background:var(--ink);color:var(--parch);border-radius:14px;padding:34px 30px;position:relative;overflow:hidden}
+  .thread::before{content:"";position:absolute;inset:0;opacity:.07;background:repeating-linear-gradient(180deg,transparent 0 30px,#fff 30px 31px)}
+  .thread .wrap2{position:relative;z-index:2}
+  .thread h2{color:#fff;font-size:clamp(1.5rem,3vw,2.1rem);margin-bottom:8px}
+  .thread .lead{color:#E7DFCB;max-width:62ch;margin-bottom:24px}
+  .threads{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .tcard{border:1px solid rgba(228,206,134,.3);border-radius:10px;padding:16px 16px 18px;background:rgba(255,255,255,.03)}
+  .tcard .t{font-family:"Trebuchet MS",sans-serif;color:var(--gold);font-weight:700;font-size:.82rem;letter-spacing:.05em;margin-bottom:6px}
+  .tcard p{font-size:.9rem;color:#E7DFCB}
+  .spine{margin-top:24px;border-left:3px solid var(--gold);padding:6px 0 6px 18px;font-size:1.06rem;font-style:italic;color:#fff;max-width:64ch}
+  .spine b{font-family:"Trebuchet MS",sans-serif;font-style:normal;font-size:.66rem;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--gold-soft);display:block;margin-bottom:4px;font-weight:700}
+
+  /* ---------- REVISE ---------- */
+  .revise{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:start}
+  .steps{counter-reset:s;display:flex;flex-direction:column;gap:14px}
+  .step{display:flex;gap:16px;align-items:flex-start;border-left:2px solid var(--line);padding:2px 0 2px 18px;position:relative}
+  .step::before{counter-increment:s;content:counter(s);position:absolute;left:-15px;top:-2px;width:28px;height:28px;border-radius:50%;
+    background:var(--gold);color:var(--ink-2);font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.9rem;display:grid;place-items:center}
+  .step h4{font-size:1.02rem}
+  .step p{font-size:.9rem;color:#55555c;margin-top:2px}
+  .ao{border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .ao .h{padding:12px 16px;font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.82rem;letter-spacing:.06em;color:#fff}
+  .ao .h.ao1{background:var(--ink)}
+  .ao .h.ao2{background:var(--green)}
+  .ao .h.ao3{background:var(--violet)}
+  .ao .c{padding:14px 16px;font-size:.9rem;border-bottom:1px solid var(--line)}
+  .ao .c:last-child{border-bottom:0}
+  .ao .c b{font-family:"Trebuchet MS",sans-serif;font-size:.78rem;letter-spacing:.04em}
+
+  /* ---------- VIDEO ---------- */
+  .video-frame{position:relative;width:100%;aspect-ratio:16/9;border-radius:14px;overflow:hidden;
+    border:1px solid var(--line);box-shadow:0 20px 44px -30px rgba(18,41,77,.55);background:var(--ink)}
+  .video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .video-placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:14px;text-align:center;padding:30px;color:#C9C4B6;
+    background:radial-gradient(700px 300px at 50% 30%,rgba(201,162,39,.14),transparent 60%),linear-gradient(180deg,var(--ink),var(--ink-2))}
+  .video-placeholder .vp-badge{font-family:"Trebuchet MS",Verdana,sans-serif;font-weight:700;font-size:.72rem;letter-spacing:.14em;
+    text-transform:uppercase;background:var(--gold);color:var(--ink-2);padding:6px 12px;border-radius:6px}
+  .video-placeholder p{max-width:52ch;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.92rem;line-height:1.55}
+  .video-placeholder code{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:4px;padding:1px 6px}
+
+  /* ---------- FLASHCARDS ---------- */
+  .fc-controls{display:flex;gap:18px;flex-wrap:wrap;align-items:center;margin-bottom:24px}
+  .fc-tabs,.fc-type{display:flex;gap:8px;flex-wrap:wrap}
+  .fc-btn{font-family:"Trebuchet MS",Verdana,sans-serif;font-weight:700;font-size:.8rem;border:1px solid var(--line);
+    background:#fff;color:var(--ink);padding:8px 15px;border-radius:999px;cursor:pointer;transition:.18s}
+  .fc-btn[aria-selected="true"]{background:var(--ink);color:var(--parch);border-color:var(--ink)}
+  .fc-btn:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+  .fc-hint{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.78rem;color:#8a8a92;margin-left:auto}
+  .fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+  .fc-card{perspective:1200px;height:200px;cursor:pointer;background:none;border:0;padding:0;font-family:inherit;text-align:left}
+  .fc-inner{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+  .fc-card[data-flipped="true"] .fc-inner{transform:rotateY(180deg)}
+  .fc-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+    border-radius:12px;padding:18px;display:flex;flex-direction:column;border:1px solid var(--line);overflow:auto}
+  .fc-front{background:linear-gradient(180deg,#fff,var(--paper))}
+  .fc-back{transform:rotateY(180deg);color:var(--parch)}
+  .fc-card.middleway .fc-back{background:linear-gradient(160deg,#1F4E79,#12294D)}
+  .fc-card.propositions .fc-back{background:linear-gradient(160deg,#00695C,#0C3B34)}
+  .fc-card.evaluating .fc-back{background:linear-gradient(160deg,#6A1B9A,#3B0E56)}
+  .fc-tag{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--gold);font-weight:700;margin-bottom:8px}
+  .fc-front .fc-tag{color:#9a8028}
+  .fc-term{font-size:1.18rem;font-weight:700;line-height:1.18}
+  .fc-front .fc-flip{margin-top:auto;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.72rem;color:#9a9a9a}
+  .fc-def{font-size:.92rem;line-height:1.4}
+  .fc-back .fc-sw{margin-top:8px;font-size:.82rem}
+  .fc-back .fc-sw .k{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.62rem;letter-spacing:.08em;text-transform:uppercase}
+  .fc-back .up .k{color:#8BD08F}.fc-back .dn .k{color:#F2A0A0}
+  @media(max-width:820px){.fc-grid{grid-template-columns:1fr 1fr}.fc-hint{width:100%;margin-left:0}}
+
+  /* ---------- RESOURCES ---------- */
+  .res-note{background:#FBF0D6;border:1px solid var(--gold);border-left:4px solid var(--gold);
+    border-radius:8px;padding:12px 16px;margin-bottom:22px;font-size:.9rem;color:#5a4a1c;
+    font-family:"Trebuchet MS",Verdana,sans-serif}
+  .res-note code{background:#fff;border:1px solid var(--line);border-radius:4px;padding:1px 6px;font-size:.85em}
+  .res-note.hide{display:none}
+  .res-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:16px}
+  .res-col{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff}
+  .rc-head{padding:14px 16px;color:#fff}
+  .rc1 .rc-head{background:linear-gradient(135deg,#1F4E79,#12294D)}
+  .rc2 .rc-head{background:linear-gradient(135deg,#00695C,#0C3B34)}
+  .rc3 .rc-head{background:linear-gradient(135deg,#6A1B9A,#3B0E56)}
+  .rc-head .rc-n{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;opacity:.85}
+  .rc-head h3{font-size:1.16rem;margin-top:2px}
+  .res-btn{display:flex;align-items:center;gap:12px;padding:13px 16px;border-top:1px solid var(--line);
+    font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.92rem;color:var(--ink);text-decoration:none;
+    cursor:pointer;transition:background .15s}
+  .res-col .res-btn:first-of-type{border-top:0}
+  .res-btn:hover{background:var(--parch)}
+  .res-btn .ic{width:26px;height:26px;flex:none;display:grid;place-items:center;border-radius:6px;
+    background:var(--ink);color:var(--gold);font-size:.9rem}
+  .res-btn .go{margin-left:auto;color:var(--gold);font-weight:700;opacity:0;transition:.15s}
+  .res-btn:hover .go{opacity:1}
+  .res-btn:focus-visible{outline:3px solid var(--gold);outline-offset:-3px}
+  .res-btn.unset{opacity:.5;cursor:not-allowed}
+  .res-btn.unset .go{opacity:0}
+  .res-btn.unset::after{content:"Link not set";margin-left:auto;font-size:.74rem;color:#9a7d2c;
+    background:#FBF0D6;border:1px solid var(--gold-soft);border-radius:5px;padding:2px 7px}
+  .res-wide{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:2px}
+  .res-btn.big{border:1px solid var(--line);border-radius:12px;background:#fff;padding:16px 18px}
+  .res-btn.big:hover{background:var(--parch)}
+  .res-btn.big .ic{width:34px;height:34px;font-size:1.1rem;background:var(--ink)}
+  @media(max-width:820px){.res-grid{grid-template-columns:1fr}.res-wide{grid-template-columns:1fr}}
+
+  footer{background:var(--ink-2);color:#C9C4B6;padding:26px 0;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.8rem}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+  footer .gold{color:var(--gold)}
+
+  @media(max-width:820px){
+    .triptych{grid-template-columns:1fr}
+    .panel .cap{min-height:0}
+    .threads{grid-template-columns:1fr}
+    .revise{grid-template-columns:1fr}
+    .node{width:96px}
+    .node .sb{display:none}
+  }
+  @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<!--BACKPILL--><a href="../alevel.html" style="position:fixed;left:14px;bottom:14px;z-index:99999;background:#12294D;color:#F6F1E4;font:600 14px/1 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;padding:10px 15px;border-radius:999px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.28);border:1px solid #C9A227">&#8592; All units</a>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap">
+    <div class="crest">
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <rect x="2" y="2" width="60" height="60" rx="13" fill="#0C1B33" stroke="#C9A227" stroke-width="1.5"/>
+        <g fill="none" stroke="#F3ECDD" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M32 13v36"/><path d="M24 49h16"/><path d="M14 22h36"/>
+          <path d="M14 22l-6 13c0 3.3 2.7 5.5 6 5.5s6-2.2 6-5.5z"/>
+          <path d="M50 22l-6 13c0 3.3 2.7 5.5 6 5.5s6-2.2 6-5.5z"/>
+        </g>
+        <circle cx="32" cy="17" r="3.4" fill="#C9A227"/>
+        <path d="M32 24c-2.6 2.6-2.6 5.4 0 8 2.6-2.6 2.6-5.4 0-8z" fill="#C9A227"/>
+      </svg>
+      <div class="who">A-Level Religious Studies · AQA Paper 1
+        <b>Harlington School · Philosophy &amp; Ethics</b></div>
+    </div>
+    <h1>Situation <span class="amp">Ethics</span></h1>
+    <p class="sub">Joseph Fletcher takes the whole rule-book away and leaves exactly one line on it: <em>do the most loving thing</em>. One unit, one move — worked out three times.</p>
+    <div class="bigq">
+      <span class="q">The<br>big<br>question</span>
+      <p>Is one rule enough — or does taking the others away leave nothing at all to hold on to?</p>
+    </div>
+  </div>
+</header>
+
+<!-- 01 · SIGNATURE: SPECTRUM -->
+<section id="spectrum">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">01</span><h2>The rules spectrum</h2></div>
+    <p class="sec-lead">Every argument in this unit lines up on the same axis — from <b>rules decide everything</b> to <b>nothing decides in advance</b>. Fletcher plants himself in the middle. Pick a sub-topic, then tap a position to see what it claims and where it is strong or weak.</p>
+
+    <div class="spectrum-card">
+      <div class="tabs" role="tablist" aria-label="Choose a sub-topic">
+        <button class="tab" role="tab" aria-selected="true"  data-topic="middleway">The Middle Way</button>
+        <button class="tab" role="tab" aria-selected="false" data-topic="propositions">The Six Propositions</button>
+        <button class="tab" role="tab" aria-selected="false" data-topic="evaluating">Evaluating Situation Ethics</button>
+      </div>
+
+      <div class="spec-title" id="specTitle"></div>
+
+      <div class="axis">
+        <div class="axis-labels"><span class="l" id="poleL">Rules decide</span><span class="r" id="poleR">Nothing decides</span></div>
+        <div class="bar" id="bar"></div>
+        <div class="ticks" id="ticks"></div>
+      </div>
+
+      <div class="readout" id="readout" aria-live="polite"></div>
+      <p class="insight" id="specInsight"></p>
+      <p class="hint">Tap a circle — or use Tab and Enter — to explore each position.</p>
+    </div>
+  </div>
+</section>
+
+<!-- THE THREAD -->
+<section>
+  <div class="wrap">
+    <div class="thread">
+      <div class="wrap2">
+        <h2>The thread that ties it together</h2>
+        <p class="lead">Top answers do not treat the three sub-topics as three separate lists. The same three ideas run through all of them — spot the thread and you are writing at the top of the mark scheme.</p>
+        <div class="threads">
+          <div class="tcard"><div class="t">One rule, no rules</div><p>Situationism is defined by what it stands <em>between</em> — legalism, where the rules decide, and antinomianism, where nothing does.</p></div>
+          <div class="tcard"><div class="t">Love has to do arithmetic</div><p>Agape is willed rather than felt, so it can be calculated. That is the theory&rsquo;s power — and the thing critics find scandalous.</p></div>
+          <div class="tcard"><div class="t">Every strength has a cost</div><p>Flexibility buys relevance and pays in consensus; autonomy buys freedom and pays in authority. Pair them, never list them.</p></div>
+        </div>
+        <p class="spine"><b>The spine of the unit</b>Fletcher removes every moral rule but one. Everything else in this unit is a consequence of that single move.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 · THREE DEBATES -->
+<section id="debates">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">02</span><h2>The same question, three times</h2></div>
+    <p class="sec-lead">Each sub-topic ends in the same shape of argument: both sides agree on the facts and split on what <em>settles</em> the question. Learn one case per sub-topic and you can argue all three.</p>
+    <div class="triptych">
+      <div class="panel b1">
+        <div class="cap"><div class="n">Sub-topic 1 · The Middle Way</div><h3>The axe-murderer at the door</h3>
+          <div class="ask">Why did Christian ethics need a &lsquo;new morality&rsquo; — and can a middle way between rules and no-rules hold?</div></div>
+        <div class="body">
+          <p class="side a">The legalist reading — the rule settles it</p>
+          <ul>
+            <li>Lying is wrong absolutely; what follows from it does not change that.</li>
+            <li>Rules protect the weak precisely because they do not bend for hard cases.</li>
+            <li>If the murderer kills, the guilt is his act, not yours.</li>
+          </ul>
+          <p class="side b">The situationist reading — the person settles it</p>
+          <ul>
+            <li>Ask who is to be helped: obviously your friend, not the man with the axe.</li>
+            <li>Love is the only absolute; truth-telling is a variable serving it.</li>
+            <li>You must accept the responsibility of deciding — including being wrong.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="panel b2">
+        <div class="cap"><div class="n">Sub-topic 2 · The Six Propositions</div><h3>The Wilderness Road</h3>
+          <div class="ask">If love is the only rule, how do you actually work out what to do?</div></div>
+        <div class="body">
+          <p class="side a">The legalist verdict — the first woman was right</p>
+          <ul>
+            <li>Killing an innocent child is wrong in itself; no outcome can make it right.</li>
+            <li>Once innocent life is a permissible means, no life is safe from a calculation.</li>
+            <li>Rules exist for exactly the moments when the arithmetic says break them.</li>
+          </ul>
+          <p class="side b">The situationist verdict — the second woman was right</p>
+          <ul>
+            <li>Her agapeic calculation was the only one that saved anybody at all.</li>
+            <li>Both women acted out of love, so motive cannot be what separates them.</li>
+            <li>Fletcher&rsquo;s answer to &lsquo;does an evil means cancel a good end?&rsquo; is no.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="panel b3">
+        <div class="cap"><div class="n">Sub-topic 3 · Evaluating SE</div><h3>&lsquo;It gives no rules&rsquo;</h3>
+          <div class="ask">Is one rule enough — or does situation ethics collapse into whatever you happen to want?</div></div>
+        <div class="body">
+          <p class="side a">It is the fatal flaw</p>
+          <ul>
+            <li>A theory that forbids nothing in advance cannot protect anyone from a sincere calculation.</li>
+            <li>It sets aside centuries of accumulated Church and biblical experience.</li>
+            <li>Barclay: law distils what has been found to work — and not all men are angels.</li>
+          </ul>
+          <p class="side b">It is the whole point</p>
+          <ul>
+            <li>Rules run out exactly where the hard cases begin; that is why casuistry exists.</li>
+            <li>Jesus acted situationally — the woman taken in adultery was saved by a rule set aside.</li>
+            <li>It is not lawless: you owe a reason, and &lsquo;it served love&rsquo; can be challenged.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 · YOUR RESOURCES -->
+<section id="resources">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">03</span><h2>Your resources</h2></div>
+    <p class="sec-lead">Everything for the unit, in one place. Open a sub-topic&rsquo;s lesson, booklet and podcast, and use the <b>Philosopher Companion</b> across all three.</p>
+
+    <div class="res-note" id="resNote">
+      <b>Teacher setup:</b> links aren&rsquo;t set yet. Open this file, find the <code>LINKS</code> list near the bottom, and paste each SharePoint share link once. Buttons with no link show as &ldquo;Link not set&rdquo;.
+    </div>
+
+    <div class="res-grid">
+      <div class="res-col rc1">
+        <div class="rc-head"><span class="rc-n">Sub-topic 1</span><h3>The Middle Way</h3></div>
+        <a class="res-btn" data-key="lesson_middleway"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="booklet_middleway"><span class="ic">✎</span><span>Completion booklet</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="podcast_middleway"><span class="ic">♪</span><span>Lesson podcast</span><span class="go">↗</span></a>
+      </div>
+      <div class="res-col rc2">
+        <div class="rc-head"><span class="rc-n">Sub-topic 2</span><h3>The Six Propositions</h3></div>
+        <a class="res-btn" data-key="lesson_propositions"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="booklet_propositions"><span class="ic">✎</span><span>Completion booklet</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="podcast_propositions"><span class="ic">♪</span><span>Lesson podcast</span><span class="go">↗</span></a>
+      </div>
+      <div class="res-col rc3">
+        <div class="rc-head"><span class="rc-n">Sub-topic 3</span><h3>Evaluating Situation Ethics</h3></div>
+        <a class="res-btn" data-key="lesson_evaluating"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="booklet_evaluating"><span class="ic">✎</span><span>Completion booklet</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="podcast_evaluating"><span class="ic">♪</span><span>Lesson podcast</span><span class="go">↗</span></a>
+      </div>
+    </div>
+
+    <div class="res-wide">
+      <a class="res-btn big" data-key="companion"><span class="ic">🦉</span><span><b>Philosopher Companion</b> — checklist, AO1 &amp; AO2 planning, key terms &amp; review</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="review"><span class="ic">↻</span><span><b>Review lessons</b> — consolidation decks for all three sub-topics</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="overview_podcast"><span class="ic">♪</span><span><b>Overview podcast</b> — the whole unit as one argument</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="flashcards"><span class="ic">▤</span><span><b>Printable flashcards</b> — fold-over key terms &amp; positions to cut out</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="exam_questions"><span class="ic">✒</span><span><b>Exam question bank</b> — AO1 and AO2 practice with mark schemes</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="comparison"><span class="ic">⇄</span><span><b>Theory comparison grid</b> — SE against natural moral law, utilitarianism &amp; DCT</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="textbook"><span class="ic">▥</span><span><b>Textbook chapter</b> — the set reading on Fletcher</span><span class="go">↗</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- 04 · HOW TO REVISE -->
+<section id="revise">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">04</span><h2>How to revise this unit</h2></div>
+    <p class="sec-lead">Use your resources in this order. The <b>Philosopher Companion</b> is where you learn to <em>plan</em> both question types — never evaluate what you have not first explained.</p>
+    <div class="revise">
+      <div class="steps">
+        <div class="step"><div><h4>Watch the lesson &amp; listen to the podcast</h4><p>One podcast per sub-topic — a teacher and a student talk each position through to a judgement. Annotate as you listen.</p></div></div>
+        <div class="step"><div><h4>Complete the booklet</h4><p>Put Fletcher&rsquo;s claims into your own words, then decide the strength and the weakness you would give each position.</p></div></div>
+        <div class="step"><div><h4>Learn the terms and the numbers</h4><p>Match each key term to its meaning, then use it in a sentence. Quote the six propositions by number <em>and</em> by content — the cheapest AO1 marks in the unit.</p></div></div>
+        <div class="step"><div><h4>Rehearse the cases</h4><p>The axe-murderer, the Wilderness Road, Bonhoeffer, the burning plane. One case, argued both ways, is worth a page of general comment.</p></div></div>
+        <div class="step"><div><h4>Plan AO1, then build AO2 on top</h4><p>Use the Companion frameworks and the comparison grid. Pair every strength with the cost it carries — that pairing is what a top level looks like.</p></div></div>
+      </div>
+      <div class="ao">
+        <div class="h ao1">AO1 · &ldquo;Examine…&rdquo; (10 marks)</div>
+        <div class="c"><b>What it is —</b> the factual chain of reasoning: define the terms, then set out each position in order, with Fletcher&rsquo;s own evidence and cases.</div>
+        <div class="c"><b>Aim —</b> explain the whole range accurately and neutrally, in Fletcher&rsquo;s terms. No judging yet.</div>
+        <div class="h ao2">AO2 · &ldquo;Evaluate this claim.&rdquo; (15 marks)</div>
+        <div class="c"><b>What it is —</b> a three-paragraph dialectic: take the claim seriously, give Fletcher&rsquo;s reply, then press from the other side — evaluation → counter-evaluation → implication.</div>
+        <div class="c"><b>Aim —</b> weigh the positions, hold rival theories to the same standard, and reach a justified judgement that links back to one sustained thesis.</div>
+        <div class="h ao3">Paper 2B · dialogues (25 marks)</div>
+        <div class="c"><b>Also worth knowing —</b> the 25-mark dialogue questions ask how ideas in one area feed another. The same skill, longer: state the shared ground first, then the two readings, then judge.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 · WATCH -->
+<section id="watch">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">05</span><h2>Watch: the whole unit in one go</h2></div>
+    <p class="sec-lead">A full review of <b>Situation Ethics</b> — the middle way, the six propositions, and the evaluation. Best watched before you start revising, then again to check your recall.</p>
+    <div class="video-frame" id="videoFrame">
+      <div class="video-placeholder" id="videoPlaceholder">
+        <div class="vp-badge">Video not set</div>
+        <p><b>Teacher:</b> paste the YouTube link in the <code>VIDEO_URL</code> line near the bottom of this file. The player then appears here automatically.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 · FLASHCARDS -->
+<section id="flashcards">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">06</span><h2>Flashcards — test yourself</h2></div>
+    <p class="sec-lead">Flip a card to check yourself. Switch between <b>key terms</b> (term → meaning) and <b>positions</b> (position → claim, strength &amp; weakness), and filter by sub-topic.</p>
+    <div class="fc-controls">
+      <div class="fc-tabs" role="tablist" aria-label="Sub-topic">
+        <button class="fc-btn" role="tab" aria-selected="true"  data-topic="all">All</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-topic="middleway">Middle Way</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-topic="propositions">Six Propositions</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-topic="evaluating">Evaluating SE</button>
+      </div>
+      <div class="fc-type" role="tablist" aria-label="Card type">
+        <button class="fc-btn" role="tab" aria-selected="true"  data-type="terms">Key terms</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-type="views">Positions</button>
+      </div>
+      <span class="fc-hint">Tap any card to flip · <span id="fcCount"></span></span>
+    </div>
+    <div class="fc-grid" id="fcGrid"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Situation Ethics · Unit at a glance · AQA Paper 1 (Religion &amp; Ethics)</span>
+    <span class="gold">Harlington School · Philosophy &amp; Ethics</span>
+  </div>
+</footer>
+
+<script>
+/* =====================================================================
+   01 · THE RULES SPECTRUM
+   One entry per sub-topic. Each stop carries its OWN colour, which is
+   used for its dot and for its segment of the gradient bar.
+   ===================================================================== */
+const SPECTRUM = {
+  middleway:{
+    title:"The rules spectrum",
+    poles:["RULES decide everything","NOTHING decides in advance"],
+    insight:"Fletcher's position is defined by what it stands BETWEEN. That is its great strength in an exam answer — and the pressure point every critic aims at.",
+    stops:[
+      {label:"Legalism", sub:"rules are absolute", color:"#8E2430", badge:"The rule decides",
+        claim:"Once the rule is identified, the situation stops mattering. Kant's answer to the axe-murderer at the door is Fletcher's showcase case; Catholic natural moral law and Protestant Divine Command Theory are both examples.",
+        s:"Consistent, predictable and public — everyone knows the standard in advance, and it cannot be bent to suit the powerful.",
+        w:"It produces answers no reasonable person accepts. And inventing casuistry to soften a rule concedes that the rule alone was not enough."},
+      {label:"Casuistry", sub:"rules for bending rules", color:"#B45309", badge:"Rules for the rules",
+        claim:"Legalism's own escape hatch: clever rule-work for hard cases, such as double effect. Fletcher reads it as love being smuggled quietly back into a system that had squeezed it out.",
+        s:"It keeps the rule-book intact while softening its cruellest results, so hard cases can be handled at all.",
+        w:"It hands Fletcher his argument — the moment you need rules for bending rules, you have admitted the rules lacked love."},
+      {label:"Situationism", sub:"one rule: agape", color:"#1F4E79", badge:"Agape decides",
+        claim:"The middle way. Reason is the instrument of moral judgement, rules are useful guidelines carrying inherited wisdom, and exactly one absolute survives: do the most loving thing.",
+        s:"It keeps the honesty of antinomianism — situations really are different — without losing accountability, because you must give a reason.",
+        w:"The middle is squeezed from both sides: to a legalist one overriding absolute is still an absolute, to an antinomian agape is a law smuggled back in."},
+      {label:"Antinomianism", sub:"no rules at all", color:"#6A1B9A", badge:"Nothing decides",
+        claim:"Literally 'against law': no rule, no principle, no prior standard of any kind. Fletcher has in mind those who claim a special knowledge or intuition and will simply KNOW when the moment comes.",
+        s:"It takes seriously that every situation is genuinely new, and no rule can ever be used cruelly because there are no rules to use.",
+        w:"It is unaccountable — nobody can examine or correct your reasoning. Fletcher's own charge sticks: anarchic and intellectually irresponsible."}
+    ]
+  },
+  propositions:{
+    title:"How much does love calculate?",
+    poles:["Love as pure FEELING","Love as pure ARITHMETIC"],
+    insight:"Fletcher sits deliberately in the middle two stops: love that is willed and therefore calculable. Every criticism of the theory is really a claim that he has drifted toward one end or the other.",
+    stops:[
+      {label:"Sentiment", sub:"love as affection", color:"#B45309", badge:"Love as feeling",
+        claim:"Love as liking — sympathy, affection, warmth toward the people we happen to warm to. Fletcher separates this out from agape and rejects it: love resting on affection, he says, ends up as a form of self-love.",
+        s:"It matches what most people actually mean by the word, and it is recognisable in ordinary life.",
+        w:"A feeling cannot be commanded, so 'love your enemy' becomes impossible — and love is unusable as a moral norm."},
+      {label:"Willed goodwill", sub:"conative — love as choice", color:"#00695C", badge:"Love is willed",
+        claim:"Love is conative: brought about by the will rather than felt. Because it is chosen, it can be commanded, owed to strangers, and extended to people we find repellent.",
+        s:"It makes the command to love intelligible — if love were an emotion, commanding it would be absurd.",
+        w:"Detached from feeling, love starts to look like a policy; critics ask whether willed goodwill is still recognisably love."},
+      {label:"Agapeic calculus", sub:"love using its head", color:"#1F4E79", badge:"Justice = love shared out",
+        claim:"Love in society must be careful, prudent and distributive — justice is simply love distributed. Weigh the end, the means, the motive and the foreseeable consequences, then choose the act generating the most agape for the most neighbours.",
+        s:"It rescues situation ethics from being a private ethic, giving it something to say about war, poverty, employment and policy.",
+        w:"Calculation is uncertain, outcomes are unknown in advance, and a minority can be outvoted by the sum."},
+      {label:"Felicific calculus", sub:"Bentham: pleasure maximised", color:"#6A1B9A", badge:"Pleasure maximised",
+        claim:"Bentham's arithmetic, measuring pleasure by intensity, duration and nearness. Fletcher openly proposes a coalition with Utilitarianism: the structure is identical, and only the currency changes from pleasure to agape.",
+        s:"It shows clearly why situation ethics is teleological, and borrows a worked-out method rather than inventing one.",
+        w:"If only the currency changes, the inherited problems come too — and critics say agape has become cost-benefit analysis under another name."}
+    ]
+  },
+  evaluating:{
+    title:"How far does situation ethics survive?",
+    poles:["SURVIVES the objection","SUNK by the objection"],
+    insight:"The theory is strongest exactly where legalism is weakest, and weakest exactly where legalism is strongest. An essay that shows THAT — rather than listing points — is doing the evaluation the mark scheme asks for.",
+    stops:[
+      {label:"Grounded in Jesus", sub:"the foundation holds", color:"#2E7D32", badge:"Survives well",
+        claim:"Agape is not invented. Jesus acted situationally — the woman taken in adultery is saved by a rule being set aside — and made love of God and neighbour the hinge on which everything else hangs.",
+        s:"It answers the charge that this is a 1960s fashion: an ethic built on agape is arguably more traditional than the rule-systems it displaces.",
+        w:"Choosing agape as THE principle is itself a choice — if Fletcher may pick his favourite biblical theme, so may anyone else."},
+      {label:"Flexible & humane", sub:"answers new problems", color:"#1F4E79", badge:"Survives in practice",
+        claim:"The practical case: it promotes autonomy where religious legalism often does the opposite, keeps moral rules as inherited wisdom, and can answer questions Scripture legislates nothing about — IVF, cloning, genetic engineering.",
+        s:"It is genuinely future-proof; a theory whose only fixed point is the welfare of persons can address technology that did not exist when it was written.",
+        w:"Every advantage depends on people using their freedom well — flexibility looks identical in the hands of someone simply seeking permission.",
+        sk:"Why it works", wk:"The catch"},
+      {label:"Too much on one person", sub:"not all men are angels", color:"#B01C2E", badge:"Seriously damaged",
+        claim:"The central objection: the individual ends up with more moral authority than either the Bible or the Church, and it asks a great deal of an ordinary person to put a neighbour's welfare ahead of their own.",
+        s:"It is empirical rather than theoretical — it does not say the theory is incoherent, only that people are not the creatures it assumes. That is hard to argue against.",
+        w:"Fletcher anticipates it: we will have to grow up and get used to freedom, and hiding behind rules is moral cowardice rather than moral safety.",
+        sk:"Why it bites", wk:"Fletcher's reply"},
+      {label:"No consensus", sub:"sincere but arbitrary", color:"#6A1B9A", badge:"Sunk?",
+        claim:"With nothing ruled out in advance, two sincere situationists can reach opposite verdicts on the same case and neither can be shown to be wrong. Robinson agreed with Fletcher at first, then drew back, fearing moral chaos.",
+        s:"The sharpest version attacks from inside: if love is willed rather than felt, sincerity is exactly what should NOT settle whether an act was loving.",
+        w:"The theory is not lawless — you must give a reason, and 'it served love' is a claim that can be examined, challenged and corrected.",
+        sk:"Why it bites", wk:"Fletcher's reply"}
+    ]
+  }
+};
+
+const ticks=document.getElementById("ticks");
+const readout=document.getElementById("readout");
+const bar=document.getElementById("bar");
+const poleL=document.getElementById("poleL"), poleR=document.getElementById("poleR");
+const specTitle=document.getElementById("specTitle"), specInsight=document.getElementById("specInsight");
+let topic="middleway", active=0;
+
+function esc(s){return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+function posOf(i,n){ return n<=1 ? 50 : 8 + i*(84/(n-1)); }
+
+function renderReadout(n){
+  readout.innerHTML=
+    '<span class="badge">'+esc(n.badge)+'</span>'+
+    '<div class="body">'+
+      '<h4>'+esc(n.label)+' <span style="opacity:.6;font-style:italic;font-weight:400">· '+esc(n.sub)+'</span></h4>'+
+      '<p>'+esc(n.claim)+'</p>'+
+      '<div class="sw">'+
+        '<div class="up"><span class="k">'+esc(n.sk||"Strength")+'</span><br>'+esc(n.s)+'</div>'+
+        '<div class="dn"><span class="k">'+esc(n.wk||"Weakness")+'</span><br>'+esc(n.w)+'</div>'+
+      '</div>'+
+    '</div>';
+}
+function renderTopic(){
+  const d=SPECTRUM[topic];
+  const stops=d.stops;
+  specTitle.innerHTML='<span>This sub-topic&rsquo;s axis</span>'+esc(d.title);
+  specInsight.textContent=d.insight;
+  poleL.textContent=d.poles[0]; poleR.textContent=d.poles[1];
+  // gradient built from each stop's OWN colour, at that stop's position
+  bar.style.background="linear-gradient(90deg,"+stops.map(function(s,i){
+    return s.color+" "+posOf(i,stops.length).toFixed(1)+"%";
+  }).join(",")+")";
+  ticks.innerHTML="";
+  active=Math.min(active,stops.length-1);
+  stops.forEach(function(n,i){
+    const el=document.createElement("div");
+    el.className="node"; el.style.left=posOf(i,stops.length)+"%"; el.tabIndex=0;
+    el.setAttribute("role","button");
+    el.setAttribute("aria-label",n.label+": "+n.sub);
+    el.dataset.active=(i===active);
+    el.innerHTML='<div class="dot" style="border-color:'+n.color+'"></div>'+
+                 '<div class="nm">'+esc(n.label)+'</div><div class="sb">'+esc(n.sub)+'</div>';
+    const pick=function(){
+      active=i;
+      Array.prototype.forEach.call(ticks.children,function(c,j){c.dataset.active=(j===i);});
+      renderReadout(n);
+    };
+    el.addEventListener("click",pick);
+    el.addEventListener("keydown",function(e){
+      if(e.key==="Enter"||e.key===" "){e.preventDefault();pick();}
+    });
+    ticks.appendChild(el);
+  });
+  Array.prototype.forEach.call(ticks.children,function(c,j){c.dataset.active=(j===active);});
+  renderReadout(stops[active]);
+}
+document.querySelectorAll(".tab").forEach(function(t){
+  t.addEventListener("click",function(){
+    document.querySelectorAll(".tab").forEach(function(x){x.setAttribute("aria-selected","false");});
+    t.setAttribute("aria-selected","true");
+    topic=t.dataset.topic; active=0; renderTopic();
+  });
+});
+renderTopic();
+
+/* =====================================================================
+   06 · FLASHCARDS — key terms and positions, per sub-topic
+   ===================================================================== */
+const FLASHCARDS = {
+  middleway:{
+    label:"The Middle Way",
+    terms:[
+      {term:"Legalism", def:"the view that it is always right to obey the moral law — the rule decides, whatever the situation."},
+      {term:"Antinomianism", def:"'against law' — the belief that there should be no laws or principles governing behaviour at all."},
+      {term:"Situationism", def:"the middle way: rules are useful guidelines, set aside whenever love demands it."},
+      {term:"Casuistry", def:"using rules cleverly to resolve hard cases — rules for bending the rules, such as double effect."},
+      {term:"Normative ethics", def:"a rule or theory by which moral judgements are made, laying down standards of acceptable behaviour."},
+      {term:"Absolute", def:"a principle that cannot be challenged — held true at all times, in all places, in every society."}
+    ],
+    views:[
+      {n:"Legalism", c:"It is always right to obey the moral law.",
+        s:"Consistent, predictable and public; it protects the weak precisely because it does not negotiate.",
+        w:"It produces answers nobody accepts, and casuistry is legalism admitting its own rules lacked love."},
+      {n:"Antinomianism", c:"There should be no laws or principles at all.",
+        s:"Takes seriously that every situation is new, and no rule can be used cruelly because there are none.",
+        w:"Unaccountable and, in Fletcher's phrase, intellectually irresponsible — disagreement becomes impossible rather than resolvable."},
+      {n:"Situationism", c:"One rule only: do the most loving thing.",
+        s:"Keeps the honesty of antinomianism without losing accountability — you must give a reason for setting a rule aside.",
+        w:"Squeezed from both sides, and 'the most loving thing' still has to be identified before it can be done."}
+    ]
+  },
+  propositions:{
+    label:"The Six Propositions",
+    terms:[
+      {term:"Agape", def:"selfless, unconditional love for the neighbour — the one absolute in Fletcher's ethic."},
+      {term:"Agapeic calculus", def:"working out which act produces the most love for the most neighbours in this situation."},
+      {term:"Conative", def:"belonging to the will — love as something chosen and done, not something felt."},
+      {term:"Intrinsic good", def:"good in and of itself; for Fletcher only love qualifies, everything else borrows its value."},
+      {term:"Predicate", def:"something said OF an act; for Fletcher goodness is a predicate of acts, not a property they own."},
+      {term:"Norm", def:"the standard by which decisions are judged; situation ethics has exactly one."}
+    ],
+    views:[
+      {n:"Love only is always good", c:"Only love is intrinsically good; love replaces law.",
+        s:"Gives Christian ethics a single, unambiguous foundation that is recognisably Jesus' own.",
+        w:"If nothing else has intrinsic value, honesty, promises and life itself become sacrificeable in principle."},
+      {n:"Love and justice are the same", c:"Justice is love distributed — love using its head.",
+        s:"Rescues the theory from being purely private, giving it something to say about war, poverty and policy.",
+        w:"The coalition with Utilitarianism inherits its problems: uncertain calculation and minorities outvoted."},
+      {n:"Love is not liking", c:"Love wills the neighbour's good, whether we like them or not.",
+        s:"Makes the command to love intelligible — a willed disposition can be owed to anyone, including an enemy."},
+      {n:"Love justifies its means", c:"Only the end justifies the means — and it is decided here, in this situation.",
+        s:"Honest about real choices: no theory forbidding all lying, killing and mutilation can describe surgery, war or resistance.",
+        w:"If nothing is ruled out in advance, nothing is ruled out — and foreseeable consequences are what we most often get wrong."}
+    ]
+  },
+  evaluating:{
+    label:"Evaluating SE",
+    terms:[
+      {term:"Autonomy", def:"self-rule — the individual making and owning the moral decision rather than receiving it."},
+      {term:"Moralism", def:"mistaking petty disciplines for the moral life, with little concern for the great issues of love and justice."},
+      {term:"Dilemma", def:"a situation where every available choice carries a serious moral cost."},
+      {term:"Teleological", def:"judging an act by the end it aims at rather than by conformity to a rule."},
+      {term:"Divine Command Theory", def:"the view that morality is obedience to God's commands as laid down in Scripture."},
+      {term:"Humanism", def:"an outlook centring on human welfare and reason rather than on divine authority."}
+    ],
+    views:[
+      {n:"It is Jesus' own ethic", c:"Agape is what Jesus taught and did, so the foundation is not invented.",
+        s:"Answers the charge of 1960s fashion: an ethic built on agape may be more traditional than the systems it displaces.",
+        w:"Selecting agape is itself a choice — if Fletcher may pick his theme, so may anyone else."},
+      {n:"Autonomy, flexibility and justice", c:"It empowers people, keeps up with science, and pushes for social justice.",
+        s:"Future-proof: an ethic fixed only on the welfare of persons can address technologies that did not exist when it was written.",
+        w:"Every advantage depends on people using their autonomy well."},
+      {n:"Too much on the individual", c:"It gives one person more moral authority than the Bible or the Church.",
+        s:"A powerful objection because it is empirical, not theoretical — Barclay: not all men are angels.",
+        w:"Fletcher's reply: we must grow up and get used to freedom; hiding behind rules is cowardice, not safety."},
+      {n:"Extreme cases and the motive problem", c:"The examples are not ordinary life, and a loving motive does not make an act right.",
+        s:"The motive objection attacks from inside: if love is willed, sincerity should not settle whether an act was loving.",
+        w:"Hard cases are how you test a method, not how you use it — so the 'extreme cases' half is answerable."}
+    ]
+  }
+};
+
+(function(){
+  let fcTopic="all", fcType="terms";
+  const grid=document.getElementById("fcGrid"), count=document.getElementById("fcCount");
+  function build(){
+    const topics = fcTopic==="all" ? ["middleway","propositions","evaluating"] : [fcTopic];
+    let cards=[];
+    topics.forEach(function(tp){
+      const d=FLASHCARDS[tp]; if(!d) return;
+      if(fcType==="terms"){
+        d.terms.forEach(function(t){
+          cards.push({tp:tp,front:t.term,tag:d.label,back:"<div class='fc-def'>"+esc(t.def)+"</div>"});
+        });
+      }else{
+        d.views.forEach(function(v){
+          let back="<div class='fc-def'>"+esc(v.c)+"</div><div class='fc-sw'>";
+          if(v.s) back+="<div class='up'><span class='k'>Strength</span><br>"+esc(v.s)+"</div>";
+          if(v.w) back+="<div class='dn' style='margin-top:6px'><span class='k'>Weakness</span><br>"+esc(v.w)+"</div>";
+          back+="</div>";
+          cards.push({tp:tp,front:v.n,tag:d.label,back:back});
+        });
+      }
+    });
+    grid.innerHTML=cards.map(function(c){
+      return '<button class="fc-card '+c.tp+'" data-flipped="false" aria-label="Flashcard: '+esc(c.front)+'. Tap to reveal.">'+
+        '<div class="fc-inner">'+
+          '<div class="fc-face fc-front"><div class="fc-tag">'+esc(c.tag)+'</div><div class="fc-term">'+esc(c.front)+'</div><div class="fc-flip">tap to flip ↺</div></div>'+
+          '<div class="fc-face fc-back"><div class="fc-tag">'+esc(c.tag)+'</div>'+c.back+'</div>'+
+        '</div></button>';
+    }).join("");
+    count.textContent = cards.length + " cards";
+    grid.querySelectorAll(".fc-card").forEach(function(el){
+      el.addEventListener("click",function(){
+        el.dataset.flipped = el.dataset.flipped==="true" ? "false" : "true";
+      });
+    });
+  }
+  document.querySelectorAll('#flashcards .fc-tabs .fc-btn').forEach(function(b){
+    b.addEventListener("click",function(){
+      document.querySelectorAll('#flashcards .fc-tabs .fc-btn').forEach(function(x){x.setAttribute("aria-selected","false");});
+      b.setAttribute("aria-selected","true"); fcTopic=b.dataset.topic; build();
+    });
+  });
+  document.querySelectorAll('#flashcards .fc-type .fc-btn').forEach(function(b){
+    b.addEventListener("click",function(){
+      document.querySelectorAll('#flashcards .fc-type .fc-btn').forEach(function(x){x.setAttribute("aria-selected","false");});
+      b.setAttribute("aria-selected","true"); fcType=b.dataset.type; build();
+    });
+  });
+  build();
+})();
+
+/* =====================================================================
+   TEACHER FILL 1 of 2 — THE VIDEO
+   Paste your YouTube link between the quotes below.
+   Any format works: youtube.com/watch?v=… , youtu.be/… , /embed/… ,
+   /shorts/… , or a bare 11-character video id.
+   Leave it empty ("") and the page shows a "Video not set" placeholder.
+   ===================================================================== */
+const VIDEO_URL = "";
+
+(function wireVideo(){
+  const url=(VIDEO_URL||"").trim();
+  if(!url) return; // keep the placeholder
+  let id="";
+  const m = url.match(/(?:youtu\.be\/|[?&]v=|\/embed\/|\/shorts\/|\/live\/)([A-Za-z0-9_-]{11})/);
+  if(m) id=m[1];
+  else if(/^[A-Za-z0-9_-]{11}$/.test(url)) id=url; // a bare id
+  const frame=document.getElementById("videoFrame");
+  if(!frame) return;
+  if(id){
+    frame.innerHTML =
+      '<iframe src="https://www.youtube-nocookie.com/embed/'+id+'?rel=0" '+
+      'title="Situation Ethics — full unit review" '+
+      'allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" '+
+      'allowfullscreen loading="lazy"></iframe>';
+  }else{
+    // not a recognisable YouTube link — fall back to a button that opens it
+    frame.innerHTML =
+      '<div class="video-placeholder"><a class="res-btn big" style="background:#fff" href="'+url+
+      '" target="_blank" rel="noopener"><span class="ic">▶</span><span><b>Watch the full unit review</b></span><span class="go">↗</span></a></div>';
+  }
+})();
+
+/* =====================================================================
+   TEACHER FILL 2 of 2 — THE RESOURCE LINKS
+   Paste your SharePoint share links between the quotes below.
+   Leave a link empty ("") and its button shows "Link not set".
+   Tip: in SharePoint, open the file's ... menu -> Copy link -> paste here.
+   ===================================================================== */
+const LINKS = {
+  lesson_middleway:     "",
+  lesson_propositions:  "",
+  lesson_evaluating:    "",
+  booklet_middleway:    "",
+  booklet_propositions: "",
+  booklet_evaluating:   "",
+  podcast_middleway:    "",
+  podcast_propositions: "",
+  podcast_evaluating:   "",
+  companion:            "",
+  review:               "",
+  overview_podcast:     "",
+  flashcards:           "",
+  exam_questions:       "",
+  comparison:           "",
+  textbook:             ""
+};
+
+(function wireResources(){
+  let anySet=false;
+  document.querySelectorAll(".res-btn").forEach(function(btn){
+    if(!btn.dataset.key) return;
+    const url=(LINKS[btn.dataset.key]||"").trim();
+    if(url){
+      btn.href=url; btn.target="_blank"; btn.rel="noopener"; anySet=true;
+    }else{
+      btn.classList.add("unset"); btn.removeAttribute("href"); btn.setAttribute("aria-disabled","true");
+    }
+  });
+  if(anySet){ const n=document.getElementById("resNote"); if(n) n.classList.add("hide"); }
+})();
+</script>
+</body>
+</html>

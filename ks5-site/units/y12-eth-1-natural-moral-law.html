@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Natural Moral Law — Unit at a Glance</title>
+<style>
+  :root{
+    --ink:#12294D;        /* deep manuscript navy */
+    --ink-2:#0C1B33;
+    --parch:#F3ECDD;      /* aged parchment */
+    --parch-2:#EAE0C9;
+    --gold:#C9A227;       /* gold leaf */
+    --gold-soft:#E4CE86;
+    --rubric:#B01C2E;     /* rubrication red */
+    --teal:#00695C;
+    --violet:#6A1B9A;
+    --blue:#1565C0;
+    --green:#2E7D32;
+    --paper:#FBF7EE;
+    --line:rgba(18,41,77,.16);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1060px;margin:0 auto;padding:0 24px}
+  .eyebrow{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;font-weight:700}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    background:
+      radial-gradient(1200px 400px at 80% -10%, rgba(201,162,39,.18), transparent 60%),
+      linear-gradient(180deg,var(--ink) 0%, var(--ink-2) 100%);
+    color:var(--parch);
+    padding:64px 0 72px;
+    position:relative;
+    overflow:hidden;
+    border-bottom:3px solid var(--gold);
+  }
+  .hero::after{
+    content:"";position:absolute;inset:0;pointer-events:none;opacity:.06;
+    background:repeating-linear-gradient(180deg,transparent 0 38px,#fff 38px 39px);
+  }
+  .hero .wrap{position:relative;z-index:2}
+  .crest{display:flex;align-items:center;gap:16px;margin-bottom:34px}
+  .crest svg{width:54px;height:54px;flex:none}
+  .crest .who{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-soft)}
+  .crest .who b{color:var(--parch);display:block;letter-spacing:.14em;font-size:.86rem;margin-top:3px}
+  h1{font-size:clamp(2.2rem,5.6vw,3.7rem);line-height:1.05;font-weight:700;letter-spacing:-.01em}
+  h1 .amp{color:var(--gold);font-style:italic}
+  .sub{margin-top:20px;max-width:58ch;font-size:1.12rem;color:#E7DFCB}
+  .bigq{
+    margin-top:30px;display:inline-flex;gap:14px;align-items:flex-start;
+    border-left:3px solid var(--gold);padding:8px 0 8px 18px;max-width:62ch;
+  }
+  .bigq .q{font-family:"Trebuchet MS",sans-serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-soft);padding-top:5px}
+  .bigq p{font-size:1.2rem;font-style:italic;color:#fff}
+
+  /* ---------- SECTION SHELL ---------- */
+  section{padding:64px 0}
+  .sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:8px}
+  .sec-head .num{font-family:"Trebuchet MS",sans-serif;color:var(--gold);font-weight:700;font-size:.9rem;letter-spacing:.15em}
+  .sec-head h2{font-size:clamp(1.6rem,3.4vw,2.3rem);letter-spacing:-.01em}
+  .sec-lead{color:#4a4a52;max-width:64ch;margin-bottom:34px;font-size:1.05rem}
+
+  /* ---------- SIGNATURE: authority spectrum ---------- */
+  .spectrum-card{
+    background:linear-gradient(180deg,#fff, var(--paper));
+    border:1px solid var(--line);border-radius:14px;
+    box-shadow:0 18px 40px -28px rgba(18,41,77,.5);
+    padding:28px 26px 34px;
+  }
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:26px}
+  .tab{
+    font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.82rem;letter-spacing:.04em;
+    border:1px solid var(--line);background:#fff;color:var(--ink);
+    padding:9px 16px;border-radius:999px;cursor:pointer;transition:.18s;
+  }
+  .tab[aria-selected="true"]{background:var(--ink);color:var(--parch);border-color:var(--ink)}
+  .tab:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+
+  .axis{position:relative;margin:8px 4px 0}
+  .axis-labels{display:flex;justify-content:space-between;font-family:"Trebuchet MS",sans-serif;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:#6a6a72;margin-bottom:10px}
+  .axis-labels .l{color:var(--rubric);font-weight:700}
+  .axis-labels .r{color:var(--blue);font-weight:700}
+  .bar{height:10px;border-radius:999px;background:linear-gradient(90deg,var(--rubric),#b06a1e 40%,#5a7d3a 66%,var(--blue));position:relative}
+  .ticks{position:relative;height:112px;margin-top:0}
+  .node{position:absolute;top:0;transform:translateX(-50%);width:132px;text-align:center;cursor:pointer}
+  .node .dot{width:20px;height:20px;border-radius:50%;background:#fff;border:3px solid var(--ink);margin:0 auto;position:relative;top:-15px;transition:.18s}
+  .node .nm{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.82rem;margin-top:-6px}
+  .node .sb{font-size:.76rem;color:#6a6a72;font-style:italic;margin-top:2px;line-height:1.25}
+  .node:hover .dot,.node[data-active="true"] .dot{transform:scale(1.25);border-color:var(--gold);box-shadow:0 0 0 5px rgba(201,162,39,.2)}
+  .node:focus-visible{outline:none}
+  .node:focus-visible .dot{outline:3px solid var(--gold);outline-offset:3px}
+
+  .readout{
+    margin-top:14px;background:var(--ink);color:var(--parch);border-radius:12px;padding:20px 22px;
+    min-height:104px;display:flex;gap:18px;align-items:flex-start;
+  }
+  .readout .badge{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;
+    background:var(--gold);color:var(--ink-2);padding:6px 10px;border-radius:6px;white-space:nowrap;margin-top:2px}
+  .readout .body h4{font-size:1.12rem;margin-bottom:4px}
+  .readout .body .auth{color:var(--gold-soft);font-family:"Trebuchet MS",sans-serif;font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+  .readout .body p{color:#E7DFCB;font-size:.98rem}
+  .readout .body .sw{display:flex;gap:22px;margin-top:10px;flex-wrap:wrap}
+  .readout .body .sw div{font-size:.9rem}
+  .readout .body .sw .k{font-family:"Trebuchet MS",sans-serif;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase}
+  .readout .body .sw .up .k{color:#8BD08F}
+  .readout .body .sw .dn .k{color:#F2A0A0}
+  .hint{font-family:"Trebuchet MS",sans-serif;font-size:.76rem;color:#8a8a92;margin-top:14px;text-align:center}
+
+  /* ---------- THREE DEBATES ---------- */
+  .triptych{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .panel{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;display:flex;flex-direction:column}
+  .panel .cap{padding:16px 18px;color:#fff;position:relative}
+  .panel.b1 .cap{background:linear-gradient(135deg,#1F4E79,#12294D)}
+  .panel.b2 .cap{background:linear-gradient(135deg,#00695C,#0C3B34)}
+  .panel.b3 .cap{background:linear-gradient(135deg,#6A1B9A,#3B0E56)}
+  .panel .cap .n{font-family:"Trebuchet MS",sans-serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;opacity:.85}
+  .panel .cap h3{font-size:1.24rem;margin-top:3px}
+  .panel .cap .ask{font-style:italic;font-size:.9rem;margin-top:8px;opacity:.95}
+  .panel .body{padding:16px 18px;font-size:.92rem}
+  .panel .body .row{display:flex;gap:9px;padding:7px 0;border-bottom:1px dashed var(--line)}
+  .panel .body .row:last-child{border-bottom:0}
+  .panel .body .row .v{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.8rem;white-space:nowrap;color:var(--ink)}
+  .panel .body .row .d{color:#55555c}
+
+  /* ---------- THREAD ---------- */
+  .thread{background:var(--ink);color:var(--parch);border-radius:14px;padding:34px 30px;position:relative;overflow:hidden}
+  .thread::before{content:"";position:absolute;inset:0;opacity:.07;background:repeating-linear-gradient(180deg,transparent 0 30px,#fff 30px 31px)}
+  .thread .wrap2{position:relative;z-index:2}
+  .thread h2{color:#fff;font-size:clamp(1.5rem,3vw,2.1rem);margin-bottom:8px}
+  .thread .lead{color:#E7DFCB;max-width:62ch;margin-bottom:24px}
+  .threads{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .tcard{border:1px solid rgba(228,206,134,.3);border-radius:10px;padding:16px 16px 18px;background:rgba(255,255,255,.03)}
+  .tcard .t{font-family:"Trebuchet MS",sans-serif;color:var(--gold);font-weight:700;font-size:.82rem;letter-spacing:.05em;margin-bottom:6px}
+  .tcard p{font-size:.9rem;color:#E7DFCB}
+
+  /* ---------- REVISE ---------- */
+  .revise{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:start}
+  .steps{counter-reset:s;display:flex;flex-direction:column;gap:14px}
+  .step{display:flex;gap:16px;align-items:flex-start;border-left:2px solid var(--line);padding:2px 0 2px 18px;position:relative}
+  .step::before{counter-increment:s;content:counter(s);position:absolute;left:-15px;top:-2px;width:28px;height:28px;border-radius:50%;
+    background:var(--gold);color:var(--ink-2);font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.9rem;display:grid;place-items:center}
+  .step h4{font-size:1.02rem}
+  .step p{font-size:.9rem;color:#55555c;margin-top:2px}
+  .ao{border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .ao .h{padding:12px 16px;font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.82rem;letter-spacing:.06em;color:#fff}
+  .ao .ao1 .h,.ao .h.ao1{background:var(--ink)}
+  .ao .h.ao2{background:var(--green)}
+  .ao .c{padding:14px 16px;font-size:.9rem;border-bottom:1px solid var(--line)}
+  .ao .c:last-child{border-bottom:0}
+  .ao .c b{font-family:"Trebuchet MS",sans-serif;font-size:.78rem;letter-spacing:.04em}
+
+  /* ---------- VIDEO ---------- */
+  .video-frame{position:relative;width:100%;aspect-ratio:16/9;border-radius:14px;overflow:hidden;
+    border:1px solid var(--line);box-shadow:0 20px 44px -30px rgba(18,41,77,.55);background:var(--ink)}
+  .video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .video-placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:14px;text-align:center;padding:30px;color:#C9C4B6;
+    background:radial-gradient(700px 300px at 50% 30%,rgba(201,162,39,.14),transparent 60%),linear-gradient(180deg,var(--ink),var(--ink-2))}
+  .video-placeholder .vp-badge{font-family:"Trebuchet MS",Verdana,sans-serif;font-weight:700;font-size:.72rem;letter-spacing:.14em;
+    text-transform:uppercase;background:var(--gold);color:var(--ink-2);padding:6px 12px;border-radius:6px}
+  .video-placeholder p{max-width:52ch;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.92rem;line-height:1.55}
+  .video-placeholder code{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:4px;padding:1px 6px}
+
+  /* ---------- FLASHCARDS ---------- */
+  .fc-controls{display:flex;gap:18px;flex-wrap:wrap;align-items:center;margin-bottom:24px}
+  .fc-tabs,.fc-type{display:flex;gap:8px;flex-wrap:wrap}
+  .fc-btn{font-family:"Trebuchet MS",Verdana,sans-serif;font-weight:700;font-size:.8rem;border:1px solid var(--line);
+    background:#fff;color:var(--ink);padding:8px 15px;border-radius:999px;cursor:pointer;transition:.18s}
+  .fc-btn[aria-selected="true"]{background:var(--ink);color:var(--parch);border-color:var(--ink)}
+  .fc-btn:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+  .fc-hint{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.78rem;color:#8a8a92;margin-left:auto}
+  .fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+  .fc-card{perspective:1200px;height:180px;cursor:pointer;background:none;border:0;padding:0;font-family:inherit;text-align:left}
+  .fc-inner{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+  .fc-card[data-flipped="true"] .fc-inner{transform:rotateY(180deg)}
+  .fc-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+    border-radius:12px;padding:18px;display:flex;flex-direction:column;border:1px solid var(--line);overflow:auto}
+  .fc-front{background:linear-gradient(180deg,#fff,var(--paper))}
+  .fc-back{transform:rotateY(180deg);color:var(--parch)}
+  .fc-card.aquinas .fc-back{background:linear-gradient(160deg,#1F4E79,#12294D)}
+  .fc-card.applying .fc-back{background:linear-gradient(160deg,#00695C,#0C3B34)}
+  .fc-card.proportionalism .fc-back{background:linear-gradient(160deg,#6A1B9A,#3B0E56)}
+  .fc-tag{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--gold);font-weight:700;margin-bottom:8px}
+  .fc-front .fc-tag{color:#9a8028}
+  .fc-term{font-size:1.24rem;font-weight:700;line-height:1.15}
+  .fc-front .fc-flip{margin-top:auto;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.72rem;color:#9a9a9a}
+  .fc-def{font-size:.92rem;line-height:1.4}
+  .fc-back .fc-sw{margin-top:8px;font-size:.82rem}
+  .fc-back .fc-sw .k{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.62rem;letter-spacing:.08em;text-transform:uppercase}
+  .fc-back .up .k{color:#8BD08F}.fc-back .dn .k{color:#F2A0A0}
+  @media(max-width:820px){.fc-grid{grid-template-columns:1fr 1fr}.fc-hint{width:100%;margin-left:0}}
+
+  /* ---------- RESOURCES ---------- */
+  .res-note{background:#FBF0D6;border:1px solid var(--gold);border-left:4px solid var(--gold);
+    border-radius:8px;padding:12px 16px;margin-bottom:22px;font-size:.9rem;color:#5a4a1c;
+    font-family:"Trebuchet MS",Verdana,sans-serif}
+  .res-note code{background:#fff;border:1px solid var(--line);border-radius:4px;padding:1px 6px;font-size:.85em}
+  .res-note.hide{display:none}
+  .res-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:16px}
+  .res-col{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff}
+  .rc-head{padding:14px 16px;color:#fff}
+  .rc1 .rc-head{background:linear-gradient(135deg,#1F4E79,#12294D)}
+  .rc2 .rc-head{background:linear-gradient(135deg,#00695C,#0C3B34)}
+  .rc3 .rc-head{background:linear-gradient(135deg,#6A1B9A,#3B0E56)}
+  .rc-head .rc-n{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;opacity:.85}
+  .rc-head h3{font-size:1.16rem;margin-top:2px}
+  .res-btn{display:flex;align-items:center;gap:12px;padding:13px 16px;border-top:1px solid var(--line);
+    font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.92rem;color:var(--ink);text-decoration:none;
+    cursor:pointer;transition:background .15s}
+  .res-col .res-btn:first-of-type{border-top:0}
+  .res-btn:hover{background:var(--parch)}
+  .res-btn .ic{width:26px;height:26px;flex:none;display:grid;place-items:center;border-radius:6px;
+    background:var(--ink);color:var(--gold);font-size:.9rem}
+  .res-btn .go{margin-left:auto;color:var(--gold);font-weight:700;opacity:0;transition:.15s}
+  .res-btn:hover .go{opacity:1}
+  .res-btn:focus-visible{outline:3px solid var(--gold);outline-offset:-3px}
+  .res-btn.unset{opacity:.5;cursor:not-allowed}
+  .res-btn.unset .go{content:"";opacity:0}
+  .res-btn.unset::after{content:"Link not set";margin-left:auto;font-size:.74rem;color:#9a7d2c;
+    background:#FBF0D6;border:1px solid var(--gold-soft);border-radius:5px;padding:2px 7px}
+  .res-wide{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:2px}
+  .res-btn.big{border:1px solid var(--line);border-radius:12px;background:#fff;padding:16px 18px}
+  .res-btn.big:hover{background:var(--parch)}
+  .res-btn.big .ic{width:34px;height:34px;font-size:1.1rem;background:var(--ink)}
+  @media(max-width:820px){.res-grid{grid-template-columns:1fr}.res-wide{grid-template-columns:1fr}}
+
+  footer{background:var(--ink-2);color:#C9C4B6;padding:26px 0;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.8rem}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+  footer .gold{color:var(--gold)}
+
+  @media(max-width:820px){
+    .triptych{grid-template-columns:1fr}
+    .threads{grid-template-columns:1fr}
+    .revise{grid-template-columns:1fr}
+    .node{width:96px}
+    .node .sb{display:none}
+  }
+  @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<!--BACKPILL--><a href="../alevel.html" style="position:fixed;left:14px;bottom:14px;z-index:99999;background:#12294D;color:#F6F1E4;font:600 14px/1 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;padding:10px 15px;border-radius:999px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.28);border:1px solid #C9A227">&#8592; All units</a>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap">
+    <div class="crest">
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <rect x="2" y="2" width="60" height="60" rx="13" fill="#0C1B33" stroke="#C9A227" stroke-width="1.5"/>
+        <g fill="none" stroke="#F3ECDD" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M23 21C21 17 21 14 22 12c2 2 3 5 3 8"/><path d="M41 21c2-4 2-7 1-9-2 2-3 5-3 8"/>
+          <path d="M32 17C21 17 18 26 18 33c0 12 6 19 14 19s14-7 14-19c0-7-3-16-14-16z"/>
+          <path d="M32 21c-3 4-5 6-7 7M32 21c3 4 5 6 7 7"/>
+        </g>
+        <circle cx="27" cy="31" r="5" fill="none" stroke="#F3ECDD" stroke-width="2.4"/>
+        <circle cx="37" cy="31" r="5" fill="none" stroke="#F3ECDD" stroke-width="2.4"/>
+        <circle cx="27" cy="31" r="1.9" fill="#F3ECDD"/><circle cx="37" cy="31" r="1.9" fill="#F3ECDD"/>
+        <path d="M32 34l-2.2 4.2h4.4z" fill="#C9A227"/>
+      </svg>
+      <div class="who">A-Level Philosophy &amp; Ethics · AQA Paper 1
+        <b>Harlington School · Philosophy &amp; Ethics</b></div>
+    </div>
+    <h1>Normative Ethical Theories: <span class="amp">Natural Moral Law</span></h1>
+    <p class="sub">One unit, one argument — told three times. Can reason alone, reading a fixed human nature, deliver a moral law binding on everyone?</p>
+    <div class="bigq">
+      <span class="q">The<br>big<br>question</span>
+      <p>Does natural moral law survive contact with a real, particular case — or does the rule break the moment it meets one?</p>
+    </div>
+  </div>
+</header>
+
+<!-- SIGNATURE: SPECTRUM -->
+<section id="spectrum">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">01</span><h2>The authority spectrum</h2></div>
+    <p class="sec-lead">Every debate in this unit lines up on the same kind of axis — from <b>fixed, exceptionless</b> to <b>flexible, case-by-case</b>. Pick a sub-topic, then tap a position to see what it claims and where it's strong or weak.</p>
+
+    <div class="spectrum-card">
+      <div class="tabs" role="tablist" aria-label="Choose a sub-topic">
+        <button class="tab" role="tab" aria-selected="true"  data-topic="aquinas">Aquinas' NML</button>
+        <button class="tab" role="tab" aria-selected="false" data-topic="applying">Applying NML</button>
+        <button class="tab" role="tab" aria-selected="false" data-topic="proportionalism">Proportionalism &amp; Evaluating</button>
+      </div>
+
+      <div class="axis">
+        <div class="axis-labels"><span class="l" id="poleL">Left pole</span><span class="r" id="poleR">Right pole</span></div>
+        <div class="bar"></div>
+        <div class="ticks" id="ticks"></div>
+      </div>
+
+      <div class="readout" id="readout" aria-live="polite"></div>
+      <p class="hint">Tap a circle — or use Tab and Enter — to explore each position.</p>
+    </div>
+  </div>
+</section>
+
+<!-- THE THREAD -->
+<section>
+  <div class="wrap">
+    <div class="thread">
+      <div class="wrap2">
+        <h2>The thread that ties it together</h2>
+        <p class="lead">Top answers don't treat the three sub-topics separately. One tension runs through all of them — spot it and you're writing at the top of the mark scheme.</p>
+        <div class="threads">
+          <div class="tcard"><div class="t">Exceptionless rules vs particular cases</div><p>Every sub-topic returns to the same fault-line: can a rule that admits no exceptions survive contact with one agonising, particular case?</p></div>
+          <div class="tcard"><div class="t">Reason vs revelation</div><p>Aquinas grounds the law in reason reading a common human nature — but 'worship God' and the beatific vision both quietly assume a Creator.</p></div>
+          <div class="tcard"><div class="t">The proportionalist turn</div><p>Each time application gets hard — the starving man, the lying verdict, abortion — someone asks whether a PROPORTIONATE reason should override the rule.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THREE SUB-TOPICS -->
+<section id="debates">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">02</span><h2>The same question, three times</h2></div>
+    <p class="sec-lead">The unit splits into three sub-topics. They look different, but each is really asking <em>how far a rule can bind before it breaks</em>.</p>
+    <div class="triptych">
+      <div class="panel b1">
+        <div class="cap"><div class="n">Sub-topic 1</div><h3>Aquinas' NML</h3><div class="ask">Where does the <b>law</b> come from?</div></div>
+        <div class="body">
+          <div class="row"><span class="v">Four-fold law</span><span class="d">One order, known four ways.</span></div>
+          <div class="row"><span class="v">First precept</span><span class="d">'Good is to be pursued, evil avoided.'</span></div>
+          <div class="row"><span class="v">Primary precepts</span><span class="d">Preserve life · reproduce · educate · worship · society.</span></div>
+          <div class="row"><span class="v">Telos</span><span class="d">Flourishing on Earth → the beatific vision.</span></div>
+        </div>
+      </div>
+      <div class="panel b2">
+        <div class="cap"><div class="n">Sub-topic 2</div><h3>Applying NML</h3><div class="ask">Does it survive <b>real cases</b>?</div></div>
+        <div class="body">
+          <div class="row"><span class="v">Secondary precepts</span><span class="d">Absolute ends, flexible detail.</span></div>
+          <div class="row"><span class="v">Real vs apparent goods</span><span class="d">We mistake evil for good.</span></div>
+          <div class="row"><span class="v">The virtues</span><span class="d">Character completes the law.</span></div>
+          <div class="row"><span class="v">Double effect</span><span class="d">One act, two effects.</span></div>
+        </div>
+      </div>
+      <div class="panel b3">
+        <div class="cap"><div class="n">Sub-topic 3</div><h3>Proportionalism &amp; Evaluating</h3><div class="ask">Can a <b>reason</b> override the rule?</div></div>
+        <div class="body">
+          <div class="row"><span class="v">Manualism</span><span class="d">NML narrowed into a rule-book.</span></div>
+          <div class="row"><span class="v">Proportionalism</span><span class="d">Proportionate reason overturns rules.</span></div>
+          <div class="row"><span class="v">Veritatis Splendor</span><span class="d">Some acts are intrinsically evil.</span></div>
+          <div class="row"><span class="v">Verdict</span><span class="d">An anchor — or a source of misery?</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- YOUR RESOURCES -->
+<section id="resources">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">03</span><h2>Your resources</h2></div>
+    <p class="sec-lead">Everything for the unit, in one place. Open a sub-topic's lesson, booklet and podcast, and use the <b>Philosopher Companion</b> across all three.</p>
+
+    <div class="res-note" id="resNote">
+      <b>Teacher setup:</b> links aren't set yet. Open this file, find the <code>LINKS</code> list near the bottom, and paste each SharePoint share link once. Buttons with no link show as “Link not set”.
+    </div>
+
+    <div class="res-grid">
+      <div class="res-col rc1">
+        <div class="rc-head"><span class="rc-n">Sub-topic 1</span><h3>Aquinas' NML</h3></div>
+        <a class="res-btn" data-key="aquinas_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="aquinas_booklet"><span class="ic">✎</span><span>Completion booklet</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="aquinas_podcast"><span class="ic">♪</span><span>Lesson podcast</span><span class="go">↗</span></a>
+      </div>
+      <div class="res-col rc2">
+        <div class="rc-head"><span class="rc-n">Sub-topic 2</span><h3>Applying NML</h3></div>
+        <a class="res-btn" data-key="applying_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="applying_booklet"><span class="ic">✎</span><span>Completion booklet</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="applying_podcast"><span class="ic">♪</span><span>Lesson podcast</span><span class="go">↗</span></a>
+      </div>
+      <div class="res-col rc3">
+        <div class="rc-head"><span class="rc-n">Sub-topic 3</span><h3>Proportionalism &amp; Evaluating</h3></div>
+        <a class="res-btn" data-key="proportionalism_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="proportionalism_booklet"><span class="ic">✎</span><span>Completion booklet</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="proportionalism_podcast"><span class="ic">♪</span><span>Lesson podcast</span><span class="go">↗</span></a>
+      </div>
+    </div>
+
+    <div class="res-wide">
+      <a class="res-btn big" data-key="companion"><span class="ic">🦉</span><span><b>Philosopher Companion</b> — checklist, AO1 &amp; AO2 planning, key terms &amp; review</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="review"><span class="ic">↻</span><span><b>Review lessons</b> — consolidation decks for all three sub-topics</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="overview_podcast"><span class="ic">♪</span><span><b>Overview podcast</b> — the whole unit as one argument (team teach)</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="flashcards_pdf"><span class="ic">▤</span><span><b>Printable flashcards</b> — fold-over key terms &amp; views to cut out</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="exam_questions"><span class="ic">✓</span><span><b>Exam questions organiser</b> — real AQA past questions, sorted by AO</span><span class="go">↗</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- HOW TO REVISE -->
+<section id="revise">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">04</span><h2>How to revise this unit</h2></div>
+    <p class="sec-lead">Use your resources in this order. The <b>Philosopher Companion</b> is where you learn to <em>plan</em> both question types.</p>
+    <div class="revise">
+      <div class="steps">
+        <div class="step"><div><h4>Watch the lesson &amp; listen to the podcast</h4><p>One podcast per sub-topic — a teacher and student talk each view through to a judgement. Annotate as you listen.</p></div></div>
+        <div class="step"><div><h4>Complete the greyscale booklet</h4><p>Read the given text, write the key claims in your own words, then decide the strength and weakness you'd give each view.</p></div></div>
+        <div class="step"><div><h4>Match &amp; apply the key terms</h4><p>In the Companion: match each term to its meaning, then use it in a sentence. RAG-rate the mastery checklist with the three faces.</p></div></div>
+        <div class="step"><div><h4>Plan AO1, then build AO2 on top</h4><p>Use the Companion frameworks and the guidance-left / your-turn-right scaffolds. Never evaluate what you haven't first explained.</p></div></div>
+      </div>
+      <div class="ao">
+        <div class="ao1"><div class="h ao1">AO1 · Examine the theory (10)</div></div>
+        <div class="c"><b>What it is —</b> the factual chain: define natural moral law, then set out the four-fold division, the first precept and the primary precepts in order, applying real detail (the five precepts, the telos).</div>
+        <div class="c"><b>Aim —</b> explain the whole chain accurately and neutrally. No judging yet.</div>
+        <div class="h ao2">AO2 · Evaluate the claim (15)</div>
+        <div class="c"><b>What it is —</b> a three-paragraph dialectic: view, then evaluation → counter-evaluation → implication; mirror it; then judge.</div>
+        <div class="c"><b>Aim —</b> weigh the views, use one as a lens on another (e.g. proportionalism on double effect), and reach a justified judgement that links back to your thesis.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WATCH: FULL UNIT REVIEW -->
+<section id="watch">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">05</span><h2>Watch: the whole unit in one go</h2></div>
+    <p class="sec-lead">A full review of <b>Natural Moral Law</b> — Aquinas' theory, its application, and proportionalism. Best watched before you start revising, then again to check your recall.</p>
+    <div class="video-frame" id="videoFrame">
+      <div class="video-placeholder" id="videoPlaceholder">
+        <div class="vp-badge">Video not set</div>
+        <p><b>Teacher:</b> paste the YouTube link in the <code>VIDEO_URL</code> line near the bottom of this file. The player then appears here automatically.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FLASHCARDS -->
+<section id="flashcards">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">06</span><h2>Flashcards — test yourself</h2></div>
+    <p class="sec-lead">Flip a card to check yourself. Switch between <b>key terms</b> (term → meaning) and <b>views</b> (view → claim, strength &amp; weakness), and filter by sub-topic.</p>
+    <div class="fc-controls">
+      <div class="fc-tabs" role="tablist" aria-label="Sub-topic">
+        <button class="fc-btn" role="tab" aria-selected="true"  data-topic="all">All</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-topic="aquinas">Aquinas' NML</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-topic="applying">Applying NML</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-topic="proportionalism">Proportionalism</button>
+      </div>
+      <div class="fc-type" role="tablist" aria-label="Card type">
+        <button class="fc-btn" role="tab" aria-selected="true"  data-type="terms">Key terms</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-type="views">Views</button>
+      </div>
+      <span class="fc-hint">Tap any card to flip · <span id="fcCount"></span></span>
+    </div>
+    <div class="fc-grid" id="fcGrid"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Natural Moral Law · Unit at a glance</span>
+    <span class="gold">Harlington School · Philosophy &amp; Ethics</span>
+  </div>
+</footer>
+
+<script>
+const DATA = {"aquinas": {"poles": ["GOD'S MIND · known by revelation", "HUMAN STATUTE · made by us"], "nodes": [{"x": 8, "nm": "Eternal law", "sb": "the blueprint", "auth": "Known fully only to God", "claim": "God's complete plan for the universe, existing in the mind of God before creation — the blueprint for everything, moral and physical.", "s": "Grounds objective morality in something more fixed than human opinion or culture.", "w": "We cannot access it directly — we only ever see it filtered through divine, natural or human law."}, {"x": 36, "nm": "Divine law", "sb": "revealed: Bible & Church", "auth": "Revealed, not reasoned to", "claim": "The part of eternal law God has directly revealed — through scripture and the teaching of the Church.", "s": "Gives access to precepts reason alone might miss (e.g. worship), and settles disputes with a clear source.", "w": "Depends on revelation being real and correctly interpreted — no force for someone who rejects it."}, {"x": 64, "nm": "Natural moral law", "sb": "grasped by reason", "auth": "Reasoned to by anyone", "claim": "The part of eternal law human beings can work out for themselves, using reason to read our own nature and inclinations.", "s": "Available to everyone, believer or not — reason, unlike revelation, is a common human faculty.", "w": "Reason can mislead just as easily as it can illuminate — Aquinas assumes it reliably tracks the eternal law."}, {"x": 92, "nm": "Human law", "sb": "our legal systems", "auth": "Made, and can be unmade", "claim": "Laws made by human societies and governments — legitimate only when they do not contradict natural law.", "s": "Gives natural law real-world teeth: the standard by which unjust laws can be judged and resisted.", "w": "In practice, human law regularly departs from natural law — slavery, unjust wars — without collapsing; the 'never contradict' claim looks aspirational."}]}, "applying": {"poles": ["FIRST PRINCIPLES · unchangeable", "PARTICULAR CASES · variation"], "nodes": [{"x": 8, "nm": "Primary precepts", "sb": "absolute ends", "auth": "Exceptionless", "claim": "Preserve life, reproduce, educate, worship, live in society — self-evident ends that never change, for anyone, anywhere.", "s": "A fixed core keeps the whole system anchored — nothing can override these five.", "w": "Being so general, they say almost nothing about what to actually DO in a hard case."}, {"x": 36, "nm": "Secondary precepts", "sb": "fail in rare cases", "auth": "Usually binding, sometimes flexes", "claim": "Specific rules derived from the primary precepts (e.g. 'return what you borrow') — normally binding but can fail in unusual circumstances.", "s": "Builds real-world flexibility into the system without touching the unchangeable primary precepts themselves.", "w": "Once exceptions are allowed, someone must judge which situations qualify — a door proportionalism will push wide open."}, {"x": 64, "nm": "The virtues", "sb": "prudence judges", "auth": "Formative, not a rulebook", "claim": "Cardinal and theological virtues, especially prudence, trained into character so a person can judge well in situations no rule anticipated.", "s": "Handles cases rules cannot reach — a genuinely prudent person navigates novelty a rulebook can't.", "w": "Virtue is far harder to assess than a rule — exactly why the Manualists left it out of the case-law manuals."}, {"x": 92, "nm": "Double effect", "sb": "algorithm for dilemmas", "auth": "A procedure, not an exception", "claim": "Four conditions that let one act with two effects (one good, one bad) stay permissible — provided the bad effect is foreseen, not intended.", "s": "Lets absolute rules survive real dilemmas (the morphine doctor, the tactical bomber) without being broken.", "w": "The intended/foreseen distinction can look like hair-splitting — refusing to lie to save a life still strikes many as the wrong call."}]}, "proportionalism": {"poles": ["EXCEPTIONLESS ABSOLUTISM", "CONSEQUENTIALISM"], "nodes": [{"x": 8, "nm": "The Manualists", "sb": "rules invade all of moral life", "auth": "Institutional — Church-backed", "claim": "17th-century seminary manuals reduced natural law to case-law: exceptionless rules for confessors to apply, minus Aquinas' virtues and telos.", "s": "Consistent, teachable guidance any priest could apply across a global Church.", "w": "Keeps Aquinas' rules while losing his point — happiness, destiny and virtue vanish from moral theology."}, {"x": 36, "nm": "Pojman's Aquinas", "sb": "exceptionless principles + double effect", "auth": "Absolutist, with one escape valve", "claim": "A reading of Aquinas as holding firm, exceptionless rules — with double effect as the only permitted way through a genuine dilemma.", "s": "Keeps moral certainty intact: acts are either right or wrong, full stop, with one clear procedure for hard cases.", "w": "Critics argue this over-simplifies Aquinas, who himself allowed secondary precepts to fail in rare cases."}, {"x": 64, "nm": "Aquinas himself", "sb": "secondary precepts flex; the starving man", "auth": "More flexible than his reputation", "claim": "Aquinas' own text: the starving man may take bread that is not his, because in that circumstance the secondary precept against theft fails to serve its purpose.", "s": "Shows the real Aquinas already contains the flexibility proportionalism later claims to have discovered.", "w": "If secondary precepts already flex for Aquinas, the difference from proportionalism starts to look like one of degree, not kind."}, {"x": 92, "nm": "Proportionalists", "sb": "proportionate reason overturns rules", "auth": "Rules hold — unless outweighed", "claim": "McCormick, Knauer and Hoose: firm moral rules stay in force UNLESS a proportionate reason of sufficient weight justifies overturning them.", "s": "Matches common moral intuition — lie to save a life, steal rather than starve — while still keeping rules as the default.", "w": "Weighing 'ontic' value against disvalue looks a lot like consequentialism — with all its problems of prediction and calculation."}]}};
+
+const ticks=document.getElementById("ticks");
+const readout=document.getElementById("readout");
+const poleL=document.getElementById("poleL"), poleR=document.getElementById("poleR");
+let topic="aquinas", active=0;
+
+function renderReadout(n){
+  readout.innerHTML=`
+    <span class="badge">${n.auth}</span>
+    <div class="body">
+      <h4>${n.nm} <span style="opacity:.6;font-style:italic;font-weight:400">· ${n.sb}</span></h4>
+      <p>${n.claim}</p>
+      <div class="sw">
+        <div class="up"><span class="k">Strength</span><br>${n.s}</div>
+        <div class="dn"><span class="k">Weakness</span><br>${n.w}</div>
+      </div>
+    </div>`;
+}
+function renderTopic(){
+  const d=DATA[topic];
+  poleL.textContent=d.poles[0]; poleR.textContent=d.poles[1];
+  ticks.innerHTML="";
+  d.nodes.forEach((n,i)=>{
+    const el=document.createElement("div");
+    el.className="node"; el.style.left=n.x+"%"; el.tabIndex=0;
+    el.setAttribute("role","button");
+    el.setAttribute("aria-label",`${n.nm}: ${n.sb}`);
+    el.dataset.active=(i===active);
+    el.innerHTML=`<div class="dot"></div><div class="nm">${n.nm}</div><div class="sb">${n.sb}</div>`;
+    const pick=()=>{active=i;[...ticks.children].forEach((c,j)=>c.dataset.active=(j===i));renderReadout(n);};
+    el.addEventListener("click",pick);
+    el.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();pick();}});
+    ticks.appendChild(el);
+  });
+  active=Math.min(active,d.nodes.length-1);
+  [...ticks.children].forEach((c,j)=>c.dataset.active=(j===active));
+  renderReadout(d.nodes[active]);
+}
+document.querySelectorAll(".tab").forEach(t=>{
+  t.addEventListener("click",()=>{
+    document.querySelectorAll(".tab").forEach(x=>x.setAttribute("aria-selected","false"));
+    t.setAttribute("aria-selected","true");
+    topic=t.dataset.topic; active=0; renderTopic();
+  });
+});
+renderTopic();
+
+const FLASHCARDS = {"aquinas": {"terms": [{"term": "Natural moral law", "def": "the part of God's eternal law that human beings can understand through the application of reason.", "note": "AQA says 'natural MORAL law' to keep the focus on Aquinas' moral theory, not the 'laws of nature'."}, {"term": "Eternal law", "def": "law which comes from God's nature as Creator — the natural and moral order existing as a 'blueprint' in the mind of God before creation.", "note": "Objective, absolute, applying to all: we share a common human nature."}, {"term": "Telos", "def": "end, goal or purpose — what a thing is directed towards; in ethics, the goal our action should attain.", "note": "From Aristotle's final cause. Whatever promotes the final end is right; whatever frustrates it is wrong."}, {"term": "Primary precepts", "def": "the self-evident first principles of natural moral law, grasped by reason from our natural inclinations.", "note": "Usually listed as five — but the five-fold list is the later commentators' tidying of Aquinas' 'and so forth'."}, {"term": "Beatific vision", "def": "the ultimate, direct self-communication of God to humanity — the complete happiness promised in the next life.", "note": "For Aquinas no created good can fully satisfy the will; God alone constitutes our happiness."}, {"term": "Thomist", "def": "'coming from Thomas Aquinas' — a position Aquinas held or would have held.", "note": "Catholic natural moral law today is still essentially Thomist."}], "views": [{"n": "The four-fold division of law", "c": "One moral order, known in four ways: eternal, divine, natural, human.", "s": "Gives ethics an objective foundation that does not depend on culture or preference — and, because it runs on reason, it speaks even to those who reject revelation.", "w": "The blueprint assumes a Creator: an atheist can accept Aristotle's reasoning but not Aquinas' eternal law — so is the 'universal' foundation really universal, or only for believers?"}, {"n": "The first precept of practical reason", "c": "'Good is to be done and pursued, and evil is to be avoided.'", "s": "An undeniable starting point — even rival theories (utilitarian, Kantian) implicitly agree that good is to be pursued; and grounding precepts in real inclinations keeps ethics anchored to human nature.", "w": "Almost empty until filled in: 'do good, avoid evil' settles nothing about hard cases — and humans have destructive inclinations too, so why trust inclination as a guide to the good?"}, {"n": "The five primary precepts", "c": "Preserve life · reproduce · educate children · worship God · ordered society.", "s": "Concrete enough to guide real communities (law, family, education trace back to the precepts) while staying flexible at the source — Aquinas is less rigid than his reputation.", "w": "'Worship of God' is not self-evident to an atheist — Aquinas ASSUMED it was natural for all humans; and if the list is open ('and so forth'), who decides what else belongs on it?"}, {"n": "The telos: happiness and the beatific vision", "c": "Flourishing on Earth; complete happiness only in the vision of God.", "s": "Answers the question rivals dodge — WHY be moral at all: because morality is what human fulfilment consists in; it unites ethics, purpose and meaning in one scheme.", "w": "The full pay-off is deferred to an afterlife the sceptic denies — strip out the beatific vision and you are left with Aristotle; Fletcher will later ask whether love, not law, better serves the goal."}]}, "applying": {"terms": [{"term": "Secondary precepts", "def": "rules that derive from the primary precepts and govern how we should act in specific situations.", "note": "The primary precepts are ends; the secondary precepts are the rules those ends generate."}, {"term": "Real & apparent goods", "def": "all humans will the good, but we can confuse what is genuinely good with what merely seems good.", "note": "Adultery feels like a real good (short-term pleasure) — but betrayal, injustice, lies and children at risk show it is not good at all."}, {"term": "Interior & exterior acts", "def": "the outward act versus the intention that accompanies it; only the good interior act makes the act properly good.", "note": "Giving to charity in order to be admired is a good exterior act only — not true morality."}, {"term": "Cardinal virtues", "def": "prudence, justice, fortitude (courage) and temperance (self-control) — from Latin cardo, 'hinge'; attainable by human effort.", "note": "Chief is prudence: practical wisdom, learned by observing those who habitually practise it."}, {"term": "Theological virtues", "def": "faith, hope and love (agape) — infused into the soul by God's grace, not attained by effort.", "note": "From St Paul (1 Corinthians 13:13). With the cardinal four, the Catechism's 'seven virtues'."}, {"term": "Double effect", "def": "the principle that one act may have two effects — one good, one bad — and may be permissible if only the good is intended.", "note": "Aquinas never uses the name; the developed doctrine (Pojman) has four conditions."}], "views": [{"n": "Secondary precepts — and their flexibility", "c": "Absolute at the top; variation as we descend into detail.", "s": "Answers the caricature: Aquinas is less rigid than his reputation; the debt example shows the system already contains the flexibility critics demand.", "w": "Once 'rare occurrence' exceptions are allowed, who judges which occurrences qualify? The door proportionalism will later push open is already ajar."}, {"n": "Real vs apparent goods; interior vs exterior acts", "c": "We never choose evil as evil — we mistake it for good.", "s": "Psychologically realistic — wrongdoing becomes intelligible (confusion, not pure malice), and hypocrisy is exposed: the admired philanthropist may not be moral at all.", "w": "If intention decides morality, we need access to intentions — our own are murky and others' are invisible; and 'they were confused about the good' can excuse almost anything."}, {"n": "The virtues: four cardinal, three theological", "c": "Following the real good is a skill — practised into character.", "s": "Unites law and character: rules alone cannot navigate every case, but a prudent, just, courageous, temperate person can — and virtue can be LEARNED by imitation.", "w": "Virtues are far harder to quantify than rules — exactly why the Manualists later left them out; and if prudence decides hard cases, the 'law' quietly defers to judgement."}, {"n": "The principle of double effect", "c": "One act, two effects — permissible only if the bad is unintended.", "s": "Preserves absolute rules while handling real medicine and real war: the morphine doctor and the tactical bomber are judged right for exactly the reasons practitioners themselves give.", "w": "The logic convolutes: the grenade soldier must merely 'foresee' his own heroic death; consequentialists reply that results, not intentions, are what matter — and refusing to lie to save a life seems plainly counter-intuitive."}]}, "proportionalism": {"terms": [{"term": "Manualism", "def": "the Roman Catholic tradition of producing manuals for use in seminaries, training clergy to apply natural moral law to difficult cases.", "note": "17th-century, especially the Jesuits. The manuals were books of case law — and they omitted Aquinas' virtues."}, {"term": "Casuistry", "def": "from Latin casus, 'case' — case law; the Catholic manuals are compilations of casuistry.", "note": "Today the word doubles as a criticism: too concerned with rules, not enough with justice."}, {"term": "Proportionalism", "def": "the view that there are firm moral rules which it can never be right to go against — UNLESS a proportionate reason of sufficient magnitude justifies it.", "note": "Vardy & Grosch's definition; the situation must be sufficiently unusual to overturn the rule."}, {"term": "Ontic goodness", "def": "the 'pre-moral' or 'physical' goodness or badness of an act, considered apart from the agent's intention.", "note": "A surgeon's incision is neither good nor bad until intention and value are weighed — echoes interior vs exterior acts."}, {"term": "Intrinsic good", "def": "something that is (ethically) good in and of itself.", "note": "The battle-line: Veritatis Splendor insists some acts are intrinsically evil; proportionalism denies any act is."}, {"term": "Magisterium", "def": "the teaching office of the Catholic Church — Pope and bishops — with authority to declare authentic teaching.", "note": "McCormick complained Catholic moral theology was 'magisterium-dominated, canon law-centred, seminary-controlled'."}], "views": [{"n": "The Manualist inheritance", "c": "Exceptionless rules, applied case by case — NML as deontology.", "s": "Delivers what a global institution needs: consistent, exceptionless guidance any priest can apply — and it takes moral rules as seriously as Aquinas' texts on lying suggest.", "w": "A considerable narrowing of Aquinas: happiness, destiny, friendship and the virtues vanish from moral theology — the system keeps his rules while losing his point."}, {"n": "Proportionalism: McCormick, Knauer, Hoose", "c": "Firm rules — unless a proportionate reason justifies the exception.", "s": "Robust pedigree (proportionality anchors Just War theory from Augustine and Aquinas, and European law); and it matches common sense — lie to save a life, steal rather than starve.", "w": "Calculating value against disvalue looks like consequentialism — with the utilitarian's prediction problem; if morality descends to guesswork, the authority of natural law is lost."}, {"n": "Rome responds: Veritatis Splendor", "c": "Some acts are intrinsically evil — no reason can proportion them away.", "s": "Guards the moral bedrock: if ANYTHING is intrinsically evil, proportionalism's central claim fails — and it names the slide: value-weighing is consequentialism wearing vestments.", "w": "Condemnation is not refutation: the starving man is still in the Summa, the lying verdict is still counter-intuitive, and Catholics attracted to proportion are still dissatisfied — for a reason."}, {"n": "Evaluating natural moral law", "c": "An anchor in limitless choice — or a source of untold misery?", "s": "Even critics concede the need it meets: firm boundaries, common rules, rights with a foundation — no rival theory grounds moral OBJECTIVITY so directly.", "w": "Its most confident deductions — the sexual secondary precepts — are exactly where its record is darkest; a theory judged by its fruits, as teleology invites, struggles on its own test."}]}};
+(function(){
+  let fcTopic="all", fcType="terms";
+  const grid=document.getElementById("fcGrid"), count=document.getElementById("fcCount");
+  function esc(s){return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+  function build(){
+    const topics = fcTopic==="all" ? ["aquinas","applying","proportionalism"] : [fcTopic];
+    let cards=[];
+    topics.forEach(tp=>{
+      const d=FLASHCARDS[tp]; if(!d) return;
+      if(fcType==="terms"){ d.terms.forEach(t=>cards.push({tp,front:t.term,tag:label(tp),back:`<div class='fc-def'>${esc(t.def)}</div>`})); }
+      else { d.views.forEach(v=>cards.push({tp,front:v.n,tag:label(tp),back:`<div class='fc-def'>${esc(v.c)}</div><div class='fc-sw'><div class='up'><span class='k'>Strength</span><br>${esc(v.s)}</div><div class='dn' style='margin-top:6px'><span class='k'>Weakness</span><br>${esc(v.w)}</div></div>`})); }
+    });
+    grid.innerHTML=cards.map(c=>`
+      <button class="fc-card ${c.tp}" data-flipped="false" aria-label="Flashcard: ${esc(c.front)}. Tap to reveal.">
+        <div class="fc-inner">
+          <div class="fc-face fc-front"><div class="fc-tag">${c.tag}</div><div class="fc-term">${esc(c.front)}</div><div class="fc-flip">tap to flip ↺</div></div>
+          <div class="fc-face fc-back"><div class="fc-tag">${c.tag}</div>${c.back}</div>
+        </div>
+      </button>`).join("");
+    count.textContent = cards.length + " cards";
+    grid.querySelectorAll(".fc-card").forEach(el=>{
+      const flip=()=>el.dataset.flipped = el.dataset.flipped==="true" ? "false":"true";
+      el.addEventListener("click",flip);
+    });
+  }
+  function label(tp){return tp==="aquinas"?"Aquinas' NML":tp==="applying"?"Applying NML":"Proportionalism";}
+  document.querySelectorAll('#flashcards .fc-tabs .fc-btn').forEach(b=>b.addEventListener("click",()=>{
+    document.querySelectorAll('#flashcards .fc-tabs .fc-btn').forEach(x=>x.setAttribute("aria-selected","false"));
+    b.setAttribute("aria-selected","true"); fcTopic=b.dataset.topic; build();
+  }));
+  document.querySelectorAll('#flashcards .fc-type .fc-btn').forEach(b=>b.addEventListener("click",()=>{
+    document.querySelectorAll('#flashcards .fc-type .fc-btn').forEach(x=>x.setAttribute("aria-selected","false"));
+    b.setAttribute("aria-selected","true"); fcType=b.dataset.type; build();
+  }));
+  build();
+})();
+
+/* =====================================================================
+   TEACHER: paste your YouTube link between the quotes below.
+   Any format works — youtube.com/watch?v=…, youtu.be/…, or an embed URL.
+   Leave it empty ("") and the page shows a "Video not set" placeholder.
+   ===================================================================== */
+const VIDEO_URL = "";
+
+(function wireVideo(){
+  const url=(VIDEO_URL||"").trim();
+  if(!url) return; // keep placeholder
+  let id="";
+  const m = url.match(/(?:youtu\.be\/|v=|\/embed\/|\/shorts\/)([A-Za-z0-9_-]{11})/);
+  if(m) id=m[1];
+  else if(/^[A-Za-z0-9_-]{11}$/.test(url)) id=url;
+  const frame=document.getElementById("videoFrame");
+  if(id && frame){
+    frame.innerHTML =
+      '<iframe src="https://www.youtube-nocookie.com/embed/'+id+'?rel=0" '+
+      'title="Natural Moral Law — full unit review" '+
+      'allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" '+
+      'allowfullscreen loading="lazy"></iframe>';
+  } else if(frame){
+    frame.innerHTML =
+      '<div class="video-placeholder"><a class="res-btn big" style="background:#fff" href="'+url+'" target="_blank" rel="noopener"><span class="ic">▶</span><span><b>Watch the full unit review</b></span><span class="go">↗</span></a></div>';
+  }
+})();
+
+/* =====================================================================
+   TEACHER: paste your SharePoint share links between the quotes below.
+   Leave a link empty ("") and its button will show "Link not set".
+   Tip: in SharePoint, open the file's ... menu -> Copy link -> paste here.
+   ===================================================================== */
+const LINKS = {
+  aquinas_lesson:   "",
+  aquinas_booklet:  "",
+  aquinas_podcast:  "",
+  applying_lesson:  "",
+  applying_booklet: "",
+  applying_podcast: "",
+  proportionalism_lesson:  "",
+  proportionalism_booklet: "",
+  proportionalism_podcast: "",
+  companion:        "",
+  review:           "",
+  overview_podcast: "",
+  flashcards_pdf:   "",
+  exam_questions:   ""
+};
+
+(function wireResources(){
+  let anySet=false;
+  document.querySelectorAll(".res-btn").forEach(btn=>{
+    const url=(LINKS[btn.dataset.key]||"").trim();
+    if(url){
+      btn.href=url; btn.target="_blank"; btn.rel="noopener"; anySet=true;
+    }else{
+      btn.classList.add("unset"); btn.removeAttribute("href"); btn.setAttribute("aria-disabled","true");
+    }
+  });
+  if(anySet){ const n=document.getElementById("resNote"); if(n) n.classList.add("hide"); }
+})();
+</script>
+</body>
+</html>

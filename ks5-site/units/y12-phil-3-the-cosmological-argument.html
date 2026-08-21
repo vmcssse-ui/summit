@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Cosmological Argument — Unit at a Glance</title>
+<style>
+  :root{
+    --ink:#12294D;        /* deep manuscript navy */
+    --ink-2:#0C1B33;
+    --parch:#F3ECDD;      /* aged parchment */
+    --parch-2:#EAE0C9;
+    --gold:#C9A227;       /* gold leaf */
+    --gold-soft:#E4CE86;
+    --rubric:#B01C2E;     /* rubrication red */
+    --teal:#00695C;
+    --violet:#6A1B9A;
+    --blue:#1565C0;
+    --green:#2E7D32;
+    --paper:#FBF7EE;
+    --line:rgba(18,41,77,.16);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1060px;margin:0 auto;padding:0 24px}
+  .eyebrow{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;font-weight:700}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    background:
+      radial-gradient(1200px 400px at 80% -10%, rgba(201,162,39,.18), transparent 60%),
+      linear-gradient(180deg,var(--ink) 0%, var(--ink-2) 100%);
+    color:var(--parch);
+    padding:64px 0 72px;
+    position:relative;
+    overflow:hidden;
+    border-bottom:3px solid var(--gold);
+  }
+  .hero::after{ /* faint ruled manuscript lines */
+    content:"";position:absolute;inset:0;pointer-events:none;opacity:.06;
+    background:repeating-linear-gradient(180deg,transparent 0 38px,#fff 38px 39px);
+  }
+  .hero .wrap{position:relative;z-index:2}
+  .crest{display:flex;align-items:center;gap:16px;margin-bottom:34px}
+  .crest svg{width:54px;height:54px;flex:none}
+  .crest .who{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-soft)}
+  .crest .who b{color:var(--parch);display:block;letter-spacing:.14em;font-size:.86rem;margin-top:3px}
+  h1{font-size:clamp(2.4rem,6vw,4.1rem);line-height:1.02;font-weight:700;letter-spacing:-.01em}
+  h1 .amp{color:var(--gold);font-style:italic}
+  .sub{margin-top:20px;max-width:56ch;font-size:1.12rem;color:#E7DFCB}
+  .bigq{
+    margin-top:30px;display:inline-flex;gap:14px;align-items:flex-start;
+    border-left:3px solid var(--gold);padding:8px 0 8px 18px;max-width:60ch;
+  }
+  .bigq .q{font-family:"Trebuchet MS",sans-serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-soft);padding-top:5px}
+  .bigq p{font-size:1.24rem;font-style:italic;color:#fff}
+
+  /* ---------- SECTION SHELL ---------- */
+  section{padding:64px 0}
+  .sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:8px}
+  .sec-head .num{font-family:"Trebuchet MS",sans-serif;color:var(--gold);font-weight:700;font-size:.9rem;letter-spacing:.15em}
+  .sec-head h2{font-size:clamp(1.6rem,3.4vw,2.3rem);letter-spacing:-.01em}
+  .sec-lead{color:#4a4a52;max-width:64ch;margin-bottom:34px;font-size:1.05rem}
+
+  /* ---------- SIGNATURE: authority spectrum ---------- */
+  .spectrum-card{
+    background:linear-gradient(180deg,#fff, var(--paper));
+    border:1px solid var(--line);border-radius:14px;
+    box-shadow:0 18px 40px -28px rgba(18,41,77,.5);
+    padding:28px 26px 34px;
+  }
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:26px}
+  .tab{
+    font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.82rem;letter-spacing:.04em;
+    border:1px solid var(--line);background:#fff;color:var(--ink);
+    padding:9px 16px;border-radius:999px;cursor:pointer;transition:.18s;
+  }
+  .tab[aria-selected="true"]{background:var(--ink);color:var(--parch);border-color:var(--ink)}
+  .tab:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+
+  .axis{position:relative;margin:8px 4px 0}
+  .axis-labels{display:flex;justify-content:space-between;font-family:"Trebuchet MS",sans-serif;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:#6a6a72;margin-bottom:10px}
+  .axis-labels .l{color:var(--rubric);font-weight:700}
+  .axis-labels .r{color:var(--blue);font-weight:700}
+  .bar{height:10px;border-radius:999px;background:linear-gradient(90deg,var(--rubric),#b06a1e 40%,#5a7d3a 66%,var(--blue));position:relative}
+  .ticks{position:relative;height:112px;margin-top:0}
+  .node{position:absolute;top:0;transform:translateX(-50%);width:132px;text-align:center;cursor:pointer}
+  .node .dot{width:20px;height:20px;border-radius:50%;background:#fff;border:3px solid var(--ink);margin:0 auto;position:relative;top:-15px;transition:.18s}
+  .node .nm{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.82rem;margin-top:-6px}
+  .node .sb{font-size:.76rem;color:#6a6a72;font-style:italic;margin-top:2px;line-height:1.25}
+  .node:hover .dot,.node[data-active="true"] .dot{transform:scale(1.25);border-color:var(--gold);box-shadow:0 0 0 5px rgba(201,162,39,.2)}
+  .node:focus-visible{outline:none}
+  .node:focus-visible .dot{outline:3px solid var(--gold);outline-offset:3px}
+
+  .readout{
+    margin-top:14px;background:var(--ink);color:var(--parch);border-radius:12px;padding:20px 22px;
+    min-height:104px;display:flex;gap:18px;align-items:flex-start;
+  }
+  .readout .badge{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;
+    background:var(--gold);color:var(--ink-2);padding:6px 10px;border-radius:6px;white-space:nowrap;margin-top:2px}
+  .readout .body h4{font-size:1.12rem;margin-bottom:4px}
+  .readout .body .auth{color:var(--gold-soft);font-family:"Trebuchet MS",sans-serif;font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+  .readout .body p{color:#E7DFCB;font-size:.98rem}
+  .readout .body .sw{display:flex;gap:22px;margin-top:10px;flex-wrap:wrap}
+  .readout .body .sw div{font-size:.9rem}
+  .readout .body .sw .k{font-family:"Trebuchet MS",sans-serif;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase}
+  .readout .body .sw .up .k{color:#8BD08F}
+  .readout .body .sw .dn .k{color:#F2A0A0}
+  .hint{font-family:"Trebuchet MS",sans-serif;font-size:.76rem;color:#8a8a92;margin-top:14px;text-align:center}
+
+  /* ---------- THREE DEBATES ---------- */
+  .triptych{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .panel{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;display:flex;flex-direction:column}
+  .panel .cap{padding:16px 18px;color:#fff;position:relative}
+  .panel.b1 .cap{background:linear-gradient(135deg,#1F4E79,#12294D)}
+  .panel.b2 .cap{background:linear-gradient(135deg,#B01C2E,#5E0F19)}
+  .panel.b3 .cap{background:linear-gradient(135deg,#B45309,#6B3105)}
+  .panel .cap .n{font-family:"Trebuchet MS",sans-serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;opacity:.85}
+  .panel .cap h3{font-size:1.24rem;margin-top:3px}
+  .panel .cap .ask{font-style:italic;font-size:.9rem;margin-top:8px;opacity:.95}
+  .panel .body{padding:16px 18px;font-size:.92rem}
+  .panel .body .row{display:flex;gap:9px;padding:7px 0;border-bottom:1px dashed var(--line)}
+  .panel .body .row:last-child{border-bottom:0}
+  .panel .body .row .v{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.8rem;white-space:nowrap;color:var(--ink)}
+  .panel .body .row .d{color:#55555c}
+
+  /* ---------- THREAD ---------- */
+  .thread{background:var(--ink);color:var(--parch);border-radius:14px;padding:34px 30px;position:relative;overflow:hidden}
+  .thread::before{content:"";position:absolute;inset:0;opacity:.07;background:repeating-linear-gradient(180deg,transparent 0 30px,#fff 30px 31px)}
+  .thread .wrap2{position:relative;z-index:2}
+  .thread h2{color:#fff;font-size:clamp(1.5rem,3vw,2.1rem);margin-bottom:8px}
+  .thread .lead{color:#E7DFCB;max-width:62ch;margin-bottom:24px}
+  .threads{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .tcard{border:1px solid rgba(228,206,134,.3);border-radius:10px;padding:16px 16px 18px;background:rgba(255,255,255,.03)}
+  .tcard .t{font-family:"Trebuchet MS",sans-serif;color:var(--gold);font-weight:700;font-size:.82rem;letter-spacing:.05em;margin-bottom:6px}
+  .tcard p{font-size:.9rem;color:#E7DFCB}
+
+  /* ---------- REVISE ---------- */
+  .revise{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:start}
+  .steps{counter-reset:s;display:flex;flex-direction:column;gap:14px}
+  .step{display:flex;gap:16px;align-items:flex-start;border-left:2px solid var(--line);padding:2px 0 2px 18px;position:relative}
+  .step::before{counter-increment:s;content:counter(s);position:absolute;left:-15px;top:-2px;width:28px;height:28px;border-radius:50%;
+    background:var(--gold);color:var(--ink-2);font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.9rem;display:grid;place-items:center}
+  .step h4{font-size:1.02rem}
+  .step p{font-size:.9rem;color:#55555c;margin-top:2px}
+  .ao{border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .ao .h{padding:12px 16px;font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.82rem;letter-spacing:.06em;color:#fff}
+  .ao .ao1 .h,.ao .h.ao1{background:var(--ink)}
+  .ao .h.ao2{background:var(--green)}
+  .ao .c{padding:14px 16px;font-size:.9rem;border-bottom:1px solid var(--line)}
+  .ao .c:last-child{border-bottom:0}
+  .ao .c b{font-family:"Trebuchet MS",sans-serif;font-size:.78rem;letter-spacing:.04em}
+
+  /* ---------- VIDEO ---------- */
+  .video-frame{position:relative;width:100%;aspect-ratio:16/9;border-radius:14px;overflow:hidden;
+    border:1px solid var(--line);box-shadow:0 20px 44px -30px rgba(18,41,77,.55);background:var(--ink)}
+  .video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .video-placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:14px;text-align:center;padding:30px;color:#C9C4B6;
+    background:radial-gradient(700px 300px at 50% 30%,rgba(201,162,39,.14),transparent 60%),linear-gradient(180deg,var(--ink),var(--ink-2))}
+  .video-placeholder .vp-badge{font-family:"Trebuchet MS",Verdana,sans-serif;font-weight:700;font-size:.72rem;letter-spacing:.14em;
+    text-transform:uppercase;background:var(--gold);color:var(--ink-2);padding:6px 12px;border-radius:6px}
+  .video-placeholder p{max-width:52ch;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.92rem;line-height:1.55}
+  .video-placeholder code{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:4px;padding:1px 6px}
+
+
+  /* ---------- FLASHCARDS ---------- */
+  .fc-controls{display:flex;gap:18px;flex-wrap:wrap;align-items:center;margin-bottom:24px}
+  .fc-tabs,.fc-type{display:flex;gap:8px;flex-wrap:wrap}
+  .fc-btn{font-family:"Trebuchet MS",Verdana,sans-serif;font-weight:700;font-size:.8rem;border:1px solid var(--line);
+    background:#fff;color:var(--ink);padding:8px 15px;border-radius:999px;cursor:pointer;transition:.18s}
+  .fc-btn[aria-selected="true"]{background:var(--ink);color:var(--parch);border-color:var(--ink)}
+  .fc-btn:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+  .fc-hint{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.78rem;color:#8a8a92;margin-left:auto}
+  .fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+  .fc-card{perspective:1200px;height:180px;cursor:pointer;background:none;border:0;padding:0;font-family:inherit;text-align:left}
+  .fc-inner{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+  .fc-card[data-flipped="true"] .fc-inner{transform:rotateY(180deg)}
+  .fc-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+    border-radius:12px;padding:18px;display:flex;flex-direction:column;border:1px solid var(--line);overflow:auto}
+  .fc-front{background:linear-gradient(180deg,#fff,var(--paper))}
+  .fc-back{transform:rotateY(180deg);color:var(--parch)}
+  .fc-card.way3 .fc-back{background:linear-gradient(160deg,#1F4E79,#12294D)}
+  .fc-card.criticisms .fc-back{background:linear-gradient(160deg,#B01C2E,#5E0F19)}
+  .fc-card.prooffaith .fc-back{background:linear-gradient(160deg,#B45309,#6B3105)}
+  .fc-tag{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--gold);font-weight:700;margin-bottom:8px}
+  .fc-front .fc-tag{color:#9a8028}
+  .fc-term{font-size:1.24rem;font-weight:700;line-height:1.15}
+  .fc-front .fc-flip{margin-top:auto;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.72rem;color:#9a9a9a}
+  .fc-def{font-size:.92rem;line-height:1.4}
+  .fc-back .fc-sw{margin-top:8px;font-size:.82rem}
+  .fc-back .fc-sw .k{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.62rem;letter-spacing:.08em;text-transform:uppercase}
+  .fc-back .up .k{color:#8BD08F}.fc-back .dn .k{color:#F2A0A0}
+  @media(max-width:820px){.fc-grid{grid-template-columns:1fr 1fr}.fc-hint{width:100%;margin-left:0}}
+
+  /* ---------- RESOURCES ---------- */
+  .res-note{background:#FBF0D6;border:1px solid var(--gold);border-left:4px solid var(--gold);
+    border-radius:8px;padding:12px 16px;margin-bottom:22px;font-size:.9rem;color:#5a4a1c;
+    font-family:"Trebuchet MS",Verdana,sans-serif}
+  .res-note code{background:#fff;border:1px solid var(--line);border-radius:4px;padding:1px 6px;font-size:.85em}
+  .res-note.hide{display:none}
+  .res-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:16px}
+  .res-col{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff}
+  .rc-head{padding:14px 16px;color:#fff}
+  .rc1 .rc-head{background:linear-gradient(135deg,#1F4E79,#12294D)}
+  .rc2 .rc-head{background:linear-gradient(135deg,#B01C2E,#5E0F19)}
+  .rc3 .rc-head{background:linear-gradient(135deg,#B45309,#6B3105)}
+  .rc-head .rc-n{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;opacity:.85}
+  .rc-head h3{font-size:1.16rem;margin-top:2px}
+  .res-btn{display:flex;align-items:center;gap:12px;padding:13px 16px;border-top:1px solid var(--line);
+    font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.92rem;color:var(--ink);text-decoration:none;
+    cursor:pointer;transition:background .15s}
+  .res-col .res-btn:first-of-type{border-top:0}
+  .res-btn:hover{background:var(--parch)}
+  .res-btn .ic{width:26px;height:26px;flex:none;display:grid;place-items:center;border-radius:6px;
+    background:var(--ink);color:var(--gold);font-size:.9rem}
+  .res-btn .go{margin-left:auto;color:var(--gold);font-weight:700;opacity:0;transition:.15s}
+  .res-btn:hover .go{opacity:1}
+  .res-btn:focus-visible{outline:3px solid var(--gold);outline-offset:-3px}
+  .res-btn.unset{opacity:.5;cursor:not-allowed}
+  .res-btn.unset .go{content:"";opacity:0}
+  .res-btn.unset::after{content:"Link not set";margin-left:auto;font-size:.74rem;color:#9a7d2c;
+    background:#FBF0D6;border:1px solid var(--gold-soft);border-radius:5px;padding:2px 7px}
+  .res-wide{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:2px}
+  .res-btn.big{border:1px solid var(--line);border-radius:12px;background:#fff;padding:16px 18px}
+  .res-btn.big:hover{background:var(--parch)}
+  .res-btn.big .ic{width:34px;height:34px;font-size:1.1rem;background:var(--ink)}
+  @media(max-width:820px){.res-grid{grid-template-columns:1fr}.res-wide{grid-template-columns:1fr}}
+
+  footer{background:var(--ink-2);color:#C9C4B6;padding:26px 0;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.8rem}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+  footer .gold{color:var(--gold)}
+
+  @media(max-width:820px){
+    .triptych{grid-template-columns:1fr}
+    .threads{grid-template-columns:1fr}
+    .revise{grid-template-columns:1fr}
+    .node{width:96px}
+    .node .sb{display:none}
+  }
+  @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<!--BACKPILL--><a href="../alevel.html" style="position:fixed;left:14px;bottom:14px;z-index:99999;background:#12294D;color:#F6F1E4;font:600 14px/1 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;padding:10px 15px;border-radius:999px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.28);border:1px solid #C9A227">&#8592; All units</a>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap">
+    <div class="crest">
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <rect x="2" y="2" width="60" height="60" rx="13" fill="#0C1B33" stroke="#C9A227" stroke-width="1.5"/>
+        <g fill="none" stroke="#F3ECDD" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M23 21C21 17 21 14 22 12c2 2 3 5 3 8"/><path d="M41 21c2-4 2-7 1-9-2 2-3 5-3 8"/>
+          <path d="M32 17C21 17 18 26 18 33c0 12 6 19 14 19s14-7 14-19c0-7-3-16-14-16z"/>
+          <path d="M32 21c-3 4-5 6-7 7M32 21c3 4 5 6 7 7"/>
+        </g>
+        <circle cx="27" cy="31" r="5" fill="none" stroke="#F3ECDD" stroke-width="2.4"/>
+        <circle cx="37" cy="31" r="5" fill="none" stroke="#F3ECDD" stroke-width="2.4"/>
+        <circle cx="27" cy="31" r="1.9" fill="#F3ECDD"/><circle cx="37" cy="31" r="1.9" fill="#F3ECDD"/>
+        <path d="M32 34l-2.2 4.2h4.4z" fill="#C9A227"/>
+      </svg>
+      <div class="who">A-Level Religious Studies · AQA Paper 1 · Philosophy of Religion
+        <b>Harlington School · Philosophy &amp; Ethics</b></div>
+    </div>
+    <h1>The Cosmological <span class="amp">Argument</span></h1>
+    <p class="sub">One argument, three moves — Aquinas&rsquo; climb from contingency to a necessary God, the attacks of Hume and Russell, and the fight over what it all proves.</p>
+    <div class="bigq">
+      <span class="q">The<br>big<br>question</span>
+      <p>Why is there something rather than nothing — and must the answer be God?</p>
+    </div>
+  </div>
+</header>
+
+<!-- SIGNATURE: SPECTRUM -->
+<section id="spectrum">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">01</span><h2>The ladder of being</h2></div>
+    <p class="sec-lead">Each lesson lines up on its own axis — the climb from <b>contingent things</b> to the <b>uncaused necessary being</b>, the criticisms ranked from <b>deflected</b> to <b>fatal</b>, and the verdicts from <b>proof</b> to <b>nothing at all</b>. Pick a lesson, then tap a position to see what it claims and where it's strong or weak.</p>
+
+    <div class="spectrum-card">
+      <div class="tabs" role="tablist" aria-label="Choose a sub-topic">
+        <button class="tab" role="tab" aria-selected="true"  data-topic="way3">Aquinas&rsquo; Way 3</button>
+        <button class="tab" role="tab" aria-selected="false" data-topic="criticisms">Hume &amp; Russell</button>
+        <button class="tab" role="tab" aria-selected="false" data-topic="prooffaith">Proof &amp; Faith</button>
+      </div>
+
+      <div class="axis">
+        <div class="axis-labels"><span class="l" id="poleL">Most authority</span><span class="r" id="poleR">Least authority</span></div>
+        <div class="bar"></div>
+        <div class="ticks" id="ticks"></div>
+      </div>
+
+      <div class="readout" id="readout" aria-live="polite"></div>
+      <p class="hint">Tap a circle — or use Tab and Enter — to explore each position.</p>
+    </div>
+  </div>
+</section>
+
+<!-- THE THREAD -->
+<section>
+  <div class="wrap">
+    <div class="thread">
+      <div class="wrap2">
+        <h2>The thread that ties it together</h2>
+        <p class="lead">Top answers don't treat the three lessons separately. Three ideas run through all of them — spot the thread and you're writing at the top of the mark scheme.</p>
+        <div class="threads">
+          <div class="tcard"><div class="t">The ladder of being</div><p>Contingent things &rarr; caused necessary beings &rarr; ONE uncaused necessary being. Way 3 climbs it; every criticism tries to cut a rung.</p></div>
+          <div class="tcard"><div class="t">When may explanation stop?</div><p>Aquinas stops at the necessary being; Russell stops at the brute fact; Hare says your blik decides. That is the whole argument in one question.</p></div>
+          <div class="tcard"><div class="t">Evenly balanced</div><p>Every criticism has a reply, and every reply a rejoinder. The essay-winning move is to adjudicate — not just to list.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THREE DEBATES -->
+<section id="debates">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">02</span><h2>One argument, three rounds</h2></div>
+    <p class="sec-lead">The unit splits into three lessons: the argument, the attacks, and the verdict. Together they are one unfolding case about <em>when explanation may stop</em>.</p>
+    <div class="triptych">
+      <div class="panel b1">
+        <div class="cap"><div class="n">Lesson 1</div><h3>Aquinas&rsquo; Way 3</h3><div class="ask">Can <b>contingency</b> prove a necessary God?</div></div>
+        <div class="body">
+          <div class="row"><span class="v">Observation</span><span class="d">A posteriori: everything is contingent.</span></div>
+          <div class="row"><span class="v">Part One</span><span class="d">If all is contingent, once there was nothing — so something is necessary.</span></div>
+          <div class="row"><span class="v">Part Two</span><span class="d">No infinite regress — an uncaused necessary being.</span></div>
+          <div class="row"><span class="v">C3</span><span class="d">&lsquo;This all men speak of as God.&rsquo;</span></div>
+        </div>
+      </div>
+      <div class="panel b2">
+        <div class="cap"><div class="n">Lesson 2</div><h3>Hume &amp; Russell</h3><div class="ask">Does the argument <b>survive</b>?</div></div>
+        <div class="body">
+          <div class="row"><span class="v">Composition</span><span class="d">Parts to whole — vs Reichenbach&rsquo;s wall.</span></div>
+          <div class="row"><span class="v">Meaningless</span><span class="d">&lsquo;Necessary being&rsquo; — vs metaphysical necessity.</span></div>
+          <div class="row"><span class="v">Necessary matter</span><span class="d">Why God? — vs caused necessity (P4).</span></div>
+          <div class="row"><span class="v">Brute fact</span><span class="d">&lsquo;Just there&rsquo; — vs science&rsquo;s wager.</span></div>
+        </div>
+      </div>
+      <div class="panel b3">
+        <div class="cap"><div class="n">Lesson 3</div><h3>Proof &amp; Faith</h3><div class="ask">What does it all <b>prove</b>?</div></div>
+        <div class="body">
+          <div class="row"><span class="v">No proof</span><span class="d">Inductive — probability, not demonstration.</span></div>
+          <div class="row"><span class="v">Hughes</span><span class="d">Proof by overwhelming probability — the quark.</span></div>
+          <div class="row"><span class="v">Hare</span><span class="d">Bliks: no proof settles it either way.</span></div>
+          <div class="row"><span class="v">For faith</span><span class="d">Reason supports; grace gives — Kant &amp; Barth dissent.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- YOUR RESOURCES -->
+<section id="resources">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">03</span><h2>Your resources</h2></div>
+    <p class="sec-lead">Everything for the unit, in one place. Open each lesson's deck, booklet and podcast, and use the <b>Philosopher Companion</b> across all three.</p>
+
+    <div class="res-note" id="resNote">
+      <b>Teacher setup:</b> links aren't set yet. Open this file, find the <code>LINKS</code> list near the bottom, and paste each SharePoint share link once. Buttons with no link show as “Link not set”.
+    </div>
+
+    <div class="res-grid">
+      <div class="res-col rc1">
+        <div class="rc-head"><span class="rc-n">Lesson 1</span><h3>Aquinas&rsquo; Way 3</h3></div>
+        <a class="res-btn" data-key="way3_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="way3_booklet"><span class="ic">✎</span><span>Completion booklet</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="way3_podcast"><span class="ic">♪</span><span>Lesson podcast</span><span class="go">↗</span></a>
+      </div>
+      <div class="res-col rc2">
+        <div class="rc-head"><span class="rc-n">Lesson 2</span><h3>Criticisms: Hume &amp; Russell</h3></div>
+        <a class="res-btn" data-key="criticisms_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="criticisms_booklet"><span class="ic">✎</span><span>Completion booklet</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="criticisms_podcast"><span class="ic">♪</span><span>Lesson podcast</span><span class="go">↗</span></a>
+      </div>
+      <div class="res-col rc3">
+        <div class="rc-head"><span class="rc-n">Lesson 3</span><h3>Proof &amp; Faith</h3></div>
+        <a class="res-btn" data-key="prooffaith_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="prooffaith_booklet"><span class="ic">✎</span><span>Completion booklet</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="prooffaith_podcast"><span class="ic">♪</span><span>Lesson podcast</span><span class="go">↗</span></a>
+      </div>
+    </div>
+
+    <div class="res-wide">
+      <a class="res-btn big" data-key="companion"><span class="ic">🦉</span><span><b>Philosopher Companion</b> — checklist, AO1 &amp; AO2 planning, key terms &amp; review</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="review"><span class="ic">↻</span><span><b>Review lessons</b> — consolidation decks for all three sub-topics</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="overview_podcast"><span class="ic">♪</span><span><b>Overview podcast</b> — the whole unit as one argument (team teach)</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="flashcards_pdf"><span class="ic">▤</span><span><b>Printable flashcards</b> — fold-over key terms &amp; positions to cut out</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="exam_questions"><span class="ic">✍</span><span><b>Exam question organiser</b> — the AQA bank 2018&ndash;2024, with this unit&rsquo;s questions flagged</span><span class="go">↗</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- HOW TO REVISE -->
+<section id="revise">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">04</span><h2>How to revise this unit</h2></div>
+    <p class="sec-lead">Use your resources in this order. The <b>Philosopher Companion</b> is where you learn to <em>plan</em> both question types.</p>
+    <div class="revise">
+      <div class="steps">
+        <div class="step"><div><h4>Watch the lesson &amp; listen to the podcast</h4><p>One podcast per lesson — a teacher and student rebuild the argument and weigh it to a judgement. Annotate as you listen.</p></div></div>
+        <div class="step"><div><h4>Complete the greyscale booklet</h4><p>Read the given text, write the key claims of each step or criticism in your own words, then decide the strength and weakness you'd give it.</p></div></div>
+        <div class="step"><div><h4>Match &amp; apply the key terms</h4><p>In the Companion: match each term to its meaning, then use it in a sentence. RAG-rate the mastery checklist with the three faces.</p></div></div>
+        <div class="step"><div><h4>Plan AO1, then build AO2 on top</h4><p>Use the Companion frameworks — including the real AQA 2020 question and the 2019/2023 dialogues. Never evaluate what you haven't first explained.</p></div></div>
+      </div>
+      <div class="ao">
+        <div class="ao1"><div class="h ao1">AO1 · Examine the views (10)</div></div>
+        <div class="c"><b>What it is —</b> the factual chain: define contingency, then rebuild the argument P1&rarr;C3 — or set out each criticism WITH its reply.</div>
+        <div class="c"><b>Aim —</b> explain the whole chain accurately and neutrally. No judging yet.</div>
+        <div class="h ao2">AO2 · Evaluate the claim (15)</div>
+        <div class="c"><b>What it is —</b> a three-paragraph dialectic: position, then evaluation → counter-evaluation → implication; mirror it; then judge.</div>
+        <div class="c"><b>Aim —</b> adjudicate each criticism-and-reply pair, rank them, and reach a judgement that links back to your thesis.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WATCH: FULL UNIT REVIEW -->
+<section id="watch">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">05</span><h2>Watch: the whole unit in one go</h2></div>
+    <p class="sec-lead">A full review of <b>The Cosmological Argument</b> — Way 3, the criticisms of Hume and Russell, and the proof &amp; faith debate. Best watched before you start revising, then again to check your recall.</p>
+    <div class="video-frame" id="videoFrame">
+      <div class="video-placeholder" id="videoPlaceholder">
+        <div class="vp-badge">Video not set</div>
+        <p><b>Teacher:</b> paste the YouTube link in the <code>VIDEO_URL</code> line near the bottom of this file. The player then appears here automatically.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- FLASHCARDS -->
+<section id="flashcards">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">06</span><h2>Flashcards — test yourself</h2></div>
+    <p class="sec-lead">Flip a card to check yourself. Switch between <b>key terms</b> (term → meaning) and <b>positions</b> (position → claim, strength &amp; weakness), and filter by lesson.</p>
+    <div class="fc-controls">
+      <div class="fc-tabs" role="tablist" aria-label="Sub-topic">
+        <button class="fc-btn" role="tab" aria-selected="true"  data-topic="all">All</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-topic="way3">Way 3</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-topic="criticisms">Criticisms</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-topic="prooffaith">Proof &amp; Faith</button>
+      </div>
+      <div class="fc-type" role="tablist" aria-label="Card type">
+        <button class="fc-btn" role="tab" aria-selected="true"  data-type="terms">Key terms</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-type="views">Positions</button>
+      </div>
+      <span class="fc-hint">Tap any card to flip · <span id="fcCount"></span></span>
+    </div>
+    <div class="fc-grid" id="fcGrid"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>The Cosmological Argument · Unit at a glance</span>
+    <span class="gold">Harlington School · Philosophy &amp; Ethics</span>
+  </div>
+</footer>
+
+<script>
+const DATA = {
+  way3:{
+    poles:["Radically dependent · can not-exist","Wholly self-existent · cannot not-exist"],
+    nodes:[
+      {x:8, nm:"Contingent things", sb:"galaxies, stars, people", auth:"Radically dependent",
+        claim:"Everything we observe is moved, changed and caused — it can exist or not-exist. Stars explode, metal rots, living things die: nothing explains its own existence.",
+        s:"Evidence anyone can check — a posteriori.", w:"Shows the parts are contingent, not yet the whole."},
+      {x:36, nm:"The universe?", sb:"contingent — or necessary?", auth:"The disputed rung",
+        claim:"Way 3 treats the whole universe as contingent: if EVERYTHING could fail to exist, at some time there was nothing — and from nothing, nothing comes.",
+        s:"If it holds, something necessary must exist (C1).", w:"Russell: parts-to-whole is the fallacy of composition."},
+      {x:64, nm:"Caused necessary beings", sb:"angels, souls — perhaps matter", auth:"Given necessity",
+        claim:"Everlasting once created, but their necessity is GIVEN by another. Aquinas even allows that matter itself may exist necessarily — as caused necessity.",
+        s:"Absorbs Hume's 'necessary matter' in advance.", w:"A chain of givers with no first giver explains nothing."},
+      {x:92, nm:"Uncaused necessary being", sb:"essence = existence", auth:"Self-existent",
+        claim:"Contains the reason for its own existence: its essence IS existence, so it cannot not-exist. 'This all men speak of as God' — metaphysical, not logical, necessity.",
+        s:"Explains why there is something rather than nothing.", w:"'And this is God' is asserted, not argued."}
+    ]
+  },
+  criticisms:{
+    poles:["DEFLECTED · the reply wins","FATAL · if it lands, Way 3 dies"],
+    nodes:[
+      {x:10, nm:"Meaningless", sb:"Hume & Russell", auth:"Misses the target",
+        claim:"'Necessary being' means nothing: all existence claims are synthetic — 'God does not exist' involves no contradiction.",
+        s:"Decisive IF Way 3 claimed logical necessity.", w:"It claims METAPHYSICAL necessity — Aquinas rejects the Ontological Argument."},
+      {x:38, nm:"Necessary matter", sb:"Hume", auth:"A real rival",
+        claim:"Why may not the material universe be the necessarily-existent being? One entity instead of two — Occam's Razor smiles on Hume.",
+        s:"Economical, observable — no extra entity.", w:"Necessary matter would be CAUSED necessity (P4), still needing the uncaused ground."},
+      {x:66, nm:"Composition", sb:"Russell", auth:"Undecided",
+        claim:"Every man has a mother; the human race has no mother. From 'every thing is contingent' it does not follow that the UNIVERSE is contingent.",
+        s:"Some part-to-whole arguments really are fallacious.", w:"Reichenbach: Way 3 is the 'wall built of bricks' kind — and might be right."},
+      {x:92, nm:"Brute fact", sb:"Russell", auth:"Irrefutable — unargued",
+        claim:"The universe is just there, and that's all: an unexplainable brute fact. The demand for explanation is refused, not answered.",
+        s:"Cannot be disproved; simplest position of all.", w:"Science works on the OPPOSITE assumption — and keeps being rewarded."}
+    ]
+  },
+  prooffaith:{
+    poles:["PROOF · unreasonable to deny","NOTHING · neither proof nor support"],
+    nodes:[
+      {x:10, nm:"Hughes", sb:"proof, modified sense", auth:"Strongest modern case",
+        claim:"We accept proof by overwhelming probability — no one has seen an isolated quark, yet denying quarks would be unreasonable. The chain of explanation ends only at a Necessary Being.",
+        s:"Puts God's case on science's footing.", w:"Quarks make testable predictions; God doesn't — and Hughes concedes deniers aren't unreasonable."},
+      {x:38, nm:"Probability", sb:"a strong inductive bet", auth:"The default verdict",
+        claim:"Way 3 is inductive, so it deals in probabilities — a reasonable hypothesis that nothing rivals with MORE probability, but never a demonstration.",
+        s:"Honest about what a posteriori arguments can do.", w:"By the same strict bar, science proves nothing either."},
+      {x:66, nm:"Support for faith", sb:"reason backing grace", auth:"Aquinas' own claim",
+        claim:"Faith comes through God's grace, not from arguments — but the third way gives believers the support of reason: belief in a necessary being is shown to be reasonable.",
+        s:"Survives even if 'proof' fails — support was all it claimed.", w:"Kant and Barth, both believers, still say no."},
+      {x:92, nm:"Hare / Barth", sb:"blik-relative / wrong route", auth:"The dissolvers",
+        claim:"Hare: your blik decides what counts as an explanation, and no proof changes a blik. Barth: God is known only through Jesus Christ — natural theology is the wrong route entirely.",
+        s:"Explains why the debate never converts anyone.", w:"An acid that dissolves every argument — including itself."}
+    ]
+  }
+};
+
+const ticks=document.getElementById("ticks");
+const readout=document.getElementById("readout");
+const poleL=document.getElementById("poleL"), poleR=document.getElementById("poleR");
+let topic="way3", active=0;
+
+function renderReadout(n){
+  readout.innerHTML=`
+    <span class="badge">${n.auth}</span>
+    <div class="body">
+      <h4>${n.nm} <span style="opacity:.6;font-style:italic;font-weight:400">· ${n.sb}</span></h4>
+      <p>${n.claim}</p>
+      <div class="sw">
+        <div class="up"><span class="k">Strength</span><br>${n.s}</div>
+        <div class="dn"><span class="k">Weakness</span><br>${n.w}</div>
+      </div>
+    </div>`;
+}
+function renderTopic(){
+  const d=DATA[topic];
+  poleL.textContent=d.poles[0]; poleR.textContent=d.poles[1];
+  ticks.innerHTML="";
+  d.nodes.forEach((n,i)=>{
+    const el=document.createElement("div");
+    el.className="node"; el.style.left=n.x+"%"; el.tabIndex=0;
+    el.setAttribute("role","button");
+    el.setAttribute("aria-label",`${n.nm}: ${n.sb}`);
+    el.dataset.active=(i===active);
+    el.innerHTML=`<div class="dot"></div><div class="nm">${n.nm}</div><div class="sb">${n.sb}</div>`;
+    const pick=()=>{active=i;[...ticks.children].forEach((c,j)=>c.dataset.active=(j===i));renderReadout(n);};
+    el.addEventListener("click",pick);
+    el.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();pick();}});
+    ticks.appendChild(el);
+  });
+  active=Math.min(active,d.nodes.length-1);
+  [...ticks.children].forEach((c,j)=>c.dataset.active=(j===active));
+  renderReadout(d.nodes[active]);
+}
+document.querySelectorAll(".tab").forEach(t=>{
+  t.addEventListener("click",()=>{
+    document.querySelectorAll(".tab").forEach(x=>x.setAttribute("aria-selected","false"));
+    t.setAttribute("aria-selected","true");
+    topic=t.dataset.topic; active=0; renderTopic();
+  });
+});
+renderTopic();
+
+const FLASHCARDS = {"way3": {"terms": [{"term": "Cosmos", "def": "this space–time universe; the study of the universe is cosmology.", "note": "Aquinas watched the same cosmos we do — he saw motion, change and causation where we see the Big Bang's aftermath."}, {"term": "Contingent", "def": "a being or thing that depends on other beings/things for its existence — it can exist or not-exist.", "note": "In the Cosmological Argument, contingency is the clue pointing to something NECESSARY — God."}, {"term": "Necessary being", "def": "a being that cannot not-exist; it contains the reason for its own existence.", "note": "Aquinas distinguishes CAUSED necessary beings (everlasting once created) from ONE uncaused necessary being."}, {"term": "A posteriori", "def": "based on observation and sense experience — and therefore inductive: probable, not certain.", "note": "Like Paley's Design Argument; unlike the a priori Ontological Argument, which Aquinas rejected."}, {"term": "Ex nihilo nihil fit", "def": "'out of nothing, nothing can come'.", "note": "The engine of Part One: if there had ever been nothing, there would be nothing now."}, {"term": "Infinite regress", "def": "an indefinite sequence of causes or beings with no first member of the series.", "note": "Aquinas denies it for caused necessary beings: no first giver of necessity, no series at all."}], "views": [{"n": "The Basis in Observation", "c": "An a posteriori argument: sense experience shows that everything is contingent. Like Paley's argument, Way 3 is a posteriori and inductive — based on observing that the universe exists.", "s": "Starts from evidence anyone can check — sense experience of a changing universe — and harmonises strikingly with modern cosmology (the Big Bang, stellar life-cycles).", "w": "Observation shows that things WITHIN the universe are contingent — it cannot by itself show that the universe AS A WHOLE is contingent (Russell's fallacy-of-composition charge is waiting)."}, {"n": "From Contingency to Necessity (P1–C1)", "c": "If everything is contingent, once there was nothing — and from nothing, nothing comes. P1: everything in the natural world can exist or not-exist — everything is contingent.", "s": "Logically tight IF the premises hold: the present existence of things is undeniable, so the alternative — a past moment of total nothingness — refutes universal contingency.", "w": "P2 is contestable: even if each thing is contingent, why must there be a single time when ALL of them failed to exist together? Overlapping contingent things could hand existence down without a gap."}, {"n": "No Infinite Regress of Caused Necessity (P4–C2)", "c": "Every necessary thing is caused by another or uncaused — and the series cannot run back forever. P4: every necessary thing is either CAUSED (given its necessity by another) or UNCAUSED (has it of itself).", "s": "The caused/uncaused distinction lets Aquinas absorb rivals in advance: even necessarily-existing MATTER would still be a caused necessary being — still needing the uncaused ground (his ready-made reply to Hume's later objection).", "w": "Why can't the regress be infinite — or the chain stop at SEVERAL uncaused beings? Aquinas needs 'no first member, no series' and (later) Occam's Razor, and both intuitions can be contested."}, {"n": "‘This All Men Speak of as God’ (C3)", "c": "From an uncaused necessary being to God — the argument's boldest, quietest step. C3: the uncaused necessary being is what everyone understands by 'God' — Aquinas closes in one phrase.", "s": "Read modestly, C2–C3 offer a powerful hypothesis: an uncaused necessary being explains exactly what no scientific cosmology explains — why there is something rather than nothing.", "w": "Even granting a necessary being, 'and this is God' is far from obvious — the same gap that haunted the designer in Paley's argument: one being or many? personal or abstract? worthy of worship or merely metaphysical?"}]}, "criticisms": {"terms": [{"term": "Fallacy", "def": "a failure in reasoning which makes an argument invalid.", "note": "The argument's FORM breaks, whatever the truth of its premises."}, {"term": "Fallacy of composition", "def": "inferring that something is true of the whole from the fact that it is true of every part of the whole.", "note": "Russell's charge against Way 3: each thing contingent → the universe contingent."}, {"term": "Analytic & synthetic", "def": "analytic statements are true by definition ('all bachelors are unmarried'); synthetic statements are known true or false only by experience.", "note": "Hume: ALL existence claims are synthetic — so none is logically necessary."}, {"term": "Metaphysical necessity", "def": "a form of necessity that derives from the nature or essence of things.", "note": "'Whatever is water is H₂O' — true from the way things really are, not by definition. Way 3's actual claim about God."}, {"term": "Occam's Razor", "def": "if there are competing hypotheses, choose the one that makes the fewest assumptions; entities should not be multiplied unnecessarily.", "note": "Attributed to William of Ockham (c.1287–1347). It cuts BOTH ways in this lesson."}, {"term": "Brute fact", "def": "a fact that has no explanation.", "note": "Russell's last stand: the universe 'is just there, and that's all'."}], "views": [{"n": "The Fallacy of Composition", "c": "From 'every thing is contingent' to 'the universe is contingent' — an illicit leap from parts to whole. A fallacy of composition infers that what is true of every part must be true of the whole.", "s": "Some part-to-whole arguments really are fallacious ('all the bricks in the wall are small, so the wall is small') — and Way 3's P1–P3 undeniably moves from things to universe, so the charge cannot be waved away.", "w": "Reichenbach: if the things that make up the universe can cease to exist, then the universe — no more and no less than the sum of its parts — can also cease to exist. Way 3 is the 'brick and brick wall' kind of argument, which is not fallacious and might be right. It is NOT necessarily the case that Way 3 commits the fallacy; we do not know enough about the universe to decide."}, {"n": "'Necessary Being' Is Meaningless", "c": "Existence claims are synthetic — so no being's existence can be logically necessary. Hume: any being that exists can also not-exist — 'God does not exist' involves no contradiction.", "s": "IF Way 3 claimed logical necessity, this would be decisive: existence claims are synthetic, the Ontological Argument has already fallen, and Way 3 would fall with it. The charge polices a real confusion.", "w": "Way 3 talks about God's metaphysical, not logical, necessity — and that is a powerful distinction: Aquinas rejects the Ontological Argument outright. The objection dissolves once the right kind of necessity is named — though note, deflecting Hume does not yet PROVE a metaphysically necessary being exists."}, {"n": "The Universe Itself May Be Necessary", "c": "'Why may not the material universe be the necessarily-existent Being?' Hume: if something must be necessary, why not the matter of the universe itself — no God required?", "s": "Economical and empirically modest: it explains the universe without adding an unobservable entity, and Occam's Razor is a principle Aquinas' own defenders use elsewhere — Hume borrows their razor.", "w": "Aquinas absorbed this in advance: necessarily-existing matter would still be CAUSED necessity — everlasting once created, but not the reason for its own existence — so the uncaused ground is still required. And the case for necessary matter is no stronger than the case for a necessary mind."}, {"n": "The Universe as Brute Fact", "c": "'The universe is just there, and that's all' — no explanation needed, so no necessary being needed. Russell: we need no necessary being — the simplest account is that there is NO explanation at all.", "s": "It cannot be disproved, and it is the simplest position of all — no necessary beings, no extra entities, nothing beyond the universe. Occam's Razor arguably cuts deepest here.", "w": "It seems very odd that science works on precisely the opposite principle and keeps being rewarded for it. Declaring the whole universe the one exception looks arbitrary — a stopping-point dressed up as a conclusion."}]}, "prooffaith": {"terms": [{"term": "Proof", "def": "in the strict sense, an a priori demonstration — a conclusion that cannot be denied without contradiction.", "note": "Inductive arguments like Way 3 deal in probabilities, so they can never be proofs in THIS sense. The lesson asks whether another sense is legitimate."}, {"term": "Quark", "def": "an elementary particle assumed to be one of the building blocks of matter.", "note": "No one has seen an isolated quark, yet the indirect evidence is so overwhelming that denial would be unreasonable — Hughes' model of real-world proof."}, {"term": "Blik (R.M. Hare)", "def": "a view of the world; our blik governs what is, and what is not, an explanation for us.", "note": "Differences between bliks cannot be settled by observation — and no proof could make us adopt one blik rather than another."}, {"term": "Principle of Sufficient Reason", "def": "the doctrine that everything must have a reason or cause: every contingent fact about the universe must have an explanation.", "note": "Leibniz used it to ask why there is a universe at all, and why THIS one — concluding God must exist as a necessary being."}, {"term": "Natural theology", "def": "what we can know about God by reason and observation — the territory of the Five Ways.", "note": "For Aquinas it needs completing by revelation: we could never reason our way to the Trinity or the virgin birth."}, {"term": "Grace", "def": "God's undeserved love and mercy, bridging the gap between what God requires and what humans achieve.", "note": "For Aquinas, faith comes through grace and the Church's teaching — NOT from reasoned arguments. The Ways support faith; they do not create it."}], "views": [{"n": "No Proof — Only Probability", "c": "Inductive arguments deal in probabilities; strict proof needs a priori demonstration. Way 3 is one part of an inductive case for God — and inductive arguments deal in probabilities, not proofs.", "s": "Keeps the word 'proof' honest: probability, however high, is not demonstration — and Way 3's contestable premises (P2, P5) mean certainty was never available.", "w": "A bar this high disqualifies science as well as theology, which looks self-defeating — and it invites Hughes' question: don't we already accept proof by overwhelming probability about the real world?"}, {"n": "Hughes: Proof by Overwhelming Probability", "c": "Nobody has observed a quark — or God. Denying either may be unreasonable. Hughes (2005): we also accept proofs about the real world — things it would be unreasonable to deny.", "s": "Puts God's case on the same footing as respected scientific inference to unobservables; makes brute facts — the real battleground — carry the whole argument; and is honest about its own limits.", "w": "The quark analogy can be resisted: quark theory earns its 'proof' through precise, testable predictions, which 'God' does not make. And Hughes concedes that deniers are not unreasonable — which sounds like high probability, not proof."}, {"n": "Hare's Bliks: No Proof Settles It", "c": "Your blik decides what counts as an explanation — and no proof can change a blik. Hare (following Hume): a blik is a view of the world — it governs what counts for us as an explanation.", "s": "Explains the actual data of the debate: centuries of argument, no conversions by proof, both sides rational — and it predicted the lesson-2 stand-offs precisely.", "w": "If no proof can settle anything between bliks, the same acid dissolves atheism, science's own working assumptions — and Hare's thesis itself. A tool that ends every argument, including the argument for itself, may prove too much."}, {"n": "The Value of Way 3 for Faith", "c": "Not a proof that creates faith — a reason that supports it. Way 3 shows faith REASONABLE: an uncaused necessary being is a reasonable hypothesis — no rival is MORE probable.", "s": "The value survives even if 'proof' fails: support was all Aquinas claimed. Faith is shown reasonable, on evidence anyone can check — and the argument gives reason and philosophy to those who already believe.", "w": "If believers as serious as Kant and Barth reject the argument, and its conclusion is a metaphysical necessity rather than a person who loves and is worshipped, the support may be for a God of the seminar room — not the God of faith."}]}};
+(function(){
+  let fcTopic="all", fcType="terms";
+  const grid=document.getElementById("fcGrid"), count=document.getElementById("fcCount");
+  function esc(s){return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+  function build(){
+    const topics = fcTopic==="all" ? ["way3","criticisms","prooffaith"] : [fcTopic];
+    let cards=[];
+    topics.forEach(tp=>{
+      const d=FLASHCARDS[tp]; if(!d) return;
+      if(fcType==="terms"){ d.terms.forEach(t=>cards.push({tp,front:t.term,tag:label(tp),back:`<div class='fc-def'>${esc(t.def)}</div>`})); }
+      else { d.views.forEach(v=>cards.push({tp,front:v.n,tag:label(tp),back:`<div class='fc-def'>${esc(v.c)}</div><div class='fc-sw'><div class='up'><span class='k'>Strength</span><br>${esc(v.s)}</div><div class='dn' style='margin-top:6px'><span class='k'>Weakness</span><br>${esc(v.w)}</div></div>`})); }
+    });
+    grid.innerHTML=cards.map(c=>`
+      <button class="fc-card ${c.tp}" data-flipped="false" aria-label="Flashcard: ${esc(c.front)}. Tap to reveal.">
+        <div class="fc-inner">
+          <div class="fc-face fc-front"><div class="fc-tag">${c.tag}</div><div class="fc-term">${esc(c.front)}</div><div class="fc-flip">tap to flip ↺</div></div>
+          <div class="fc-face fc-back"><div class="fc-tag">${c.tag}</div>${c.back}</div>
+        </div>
+      </button>`).join("");
+    count.textContent = cards.length + " cards";
+    grid.querySelectorAll(".fc-card").forEach(el=>{
+      const flip=()=>el.dataset.flipped = el.dataset.flipped==="true" ? "false":"true";
+      el.addEventListener("click",flip);
+    });
+  }
+  function label(tp){return tp==="way3"?"Aquinas\u2019 Way 3":tp==="criticisms"?"Hume & Russell":"Proof & Faith";}
+  document.querySelectorAll('#flashcards .fc-tabs .fc-btn').forEach(b=>b.addEventListener("click",()=>{
+    document.querySelectorAll('#flashcards .fc-tabs .fc-btn').forEach(x=>x.setAttribute("aria-selected","false"));
+    b.setAttribute("aria-selected","true"); fcTopic=b.dataset.topic; build();
+  }));
+  document.querySelectorAll('#flashcards .fc-type .fc-btn').forEach(b=>b.addEventListener("click",()=>{
+    document.querySelectorAll('#flashcards .fc-type .fc-btn').forEach(x=>x.setAttribute("aria-selected","false"));
+    b.setAttribute("aria-selected","true"); fcType=b.dataset.type; build();
+  }));
+  build();
+})();
+
+/* =====================================================================
+   TEACHER: paste your YouTube link between the quotes below.
+   Any format works — youtube.com/watch?v=…, youtu.be/…, or an embed URL.
+   Leave it empty ("") and the page shows a "Video not set" placeholder.
+   ===================================================================== */
+const VIDEO_URL = "";
+
+(function wireVideo(){
+  const url=(VIDEO_URL||"").trim();
+  if(!url) return; // keep placeholder
+  // extract the 11-char YouTube id from common URL shapes
+  let id="";
+  const m = url.match(/(?:youtu\.be\/|v=|\/embed\/|\/shorts\/)([A-Za-z0-9_-]{11})/);
+  if(m) id=m[1];
+  else if(/^[A-Za-z0-9_-]{11}$/.test(url)) id=url; // a bare id
+  const frame=document.getElementById("videoFrame");
+  if(id && frame){
+    frame.innerHTML =
+      '<iframe src="https://www.youtube-nocookie.com/embed/'+id+'?rel=0" '+
+      'title="The Cosmological Argument — full unit review" '+
+      'allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" '+
+      'allowfullscreen loading="lazy"></iframe>';
+  } else if(frame){
+    // not a YouTube link — fall back to a button that opens it
+    frame.innerHTML =
+      '<div class="video-placeholder"><a class="res-btn big" style="background:#fff" href="'+url+'" target="_blank" rel="noopener"><span class="ic">▶</span><span><b>Watch the full unit review</b></span><span class="go">↗</span></a></div>';
+  }
+})();
+
+/* =====================================================================
+   TEACHER: paste your SharePoint share links between the quotes below.
+   Leave a link empty ("") and its button will show "Link not set".
+   Tip: in SharePoint, open the file's ... menu -> Copy link -> paste here.
+   ===================================================================== */
+const LINKS = {
+  way3_lesson:        "",
+  way3_booklet:       "",
+  way3_podcast:       "",
+  criticisms_lesson:  "",
+  criticisms_booklet: "",
+  criticisms_podcast: "",
+  prooffaith_lesson:  "",
+  prooffaith_booklet: "",
+  prooffaith_podcast: "",
+  companion:          "",
+  review:             "",
+  overview_podcast:   "",
+  flashcards_pdf:     "",
+  exam_questions:     ""
+};
+
+(function wireResources(){
+  let anySet=false;
+  document.querySelectorAll(".res-btn").forEach(btn=>{
+    const url=(LINKS[btn.dataset.key]||"").trim();
+    if(url){
+      btn.href=url; btn.target="_blank"; btn.rel="noopener"; anySet=true;
+    }else{
+      btn.classList.add("unset"); btn.removeAttribute("href"); btn.setAttribute("aria-disabled","true");
+    }
+  });
+  if(anySet){ const n=document.getElementById("resNote"); if(n) n.classList.add("hide"); }
+})();
+</script>
+</body>
+</html>

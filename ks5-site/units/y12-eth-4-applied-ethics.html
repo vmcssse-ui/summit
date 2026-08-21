@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Applied Ethics — Unit at a Glance</title>
+<style>
+  :root{
+    --ink:#12294D;        /* deep manuscript navy */
+    --ink-2:#0C1B33;
+    --parch:#F3ECDD;      /* aged parchment */
+    --parch-2:#EAE0C9;
+    --gold:#C9A227;       /* gold leaf */
+    --gold-soft:#E4CE86;
+    --rubric:#B01C2E;     /* rubrication red */
+    --teal:#00695C;
+    --violet:#6A1B9A;
+    --blue:#1565C0;
+    --green:#2E7D32;
+    --paper:#FBF7EE;
+    --line:rgba(18,41,77,.16);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1060px;margin:0 auto;padding:0 24px}
+  .eyebrow{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;font-weight:700}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    background:
+      radial-gradient(1200px 400px at 80% -10%, rgba(201,162,39,.18), transparent 60%),
+      linear-gradient(180deg,var(--ink) 0%, var(--ink-2) 100%);
+    color:var(--parch);
+    padding:64px 0 72px;
+    position:relative;
+    overflow:hidden;
+    border-bottom:3px solid var(--gold);
+  }
+  .hero::after{ /* faint ruled manuscript lines */
+    content:"";position:absolute;inset:0;pointer-events:none;opacity:.06;
+    background:repeating-linear-gradient(180deg,transparent 0 38px,#fff 38px 39px);
+  }
+  .hero .wrap{position:relative;z-index:2}
+  .crest{display:flex;align-items:center;gap:16px;margin-bottom:34px}
+  .crest svg{width:54px;height:54px;flex:none}
+  .crest .who{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-soft)}
+  .crest .who b{color:var(--parch);display:block;letter-spacing:.14em;font-size:.86rem;margin-top:3px}
+  h1{font-size:clamp(2.4rem,6vw,4.1rem);line-height:1.02;font-weight:700;letter-spacing:-.01em}
+  h1 .amp{color:var(--gold);font-style:italic}
+  .sub{margin-top:20px;max-width:56ch;font-size:1.12rem;color:#E7DFCB}
+  .bigq{
+    margin-top:30px;display:inline-flex;gap:14px;align-items:flex-start;
+    border-left:3px solid var(--gold);padding:8px 0 8px 18px;max-width:60ch;
+  }
+  .bigq .q{font-family:"Trebuchet MS",sans-serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-soft);padding-top:5px}
+  .bigq p{font-size:1.24rem;font-style:italic;color:#fff}
+
+  /* ---------- SECTION SHELL ---------- */
+  section{padding:64px 0}
+  .sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:8px}
+  .sec-head .num{font-family:"Trebuchet MS",sans-serif;color:var(--gold);font-weight:700;font-size:.9rem;letter-spacing:.15em}
+  .sec-head h2{font-size:clamp(1.6rem,3.4vw,2.3rem);letter-spacing:-.01em}
+  .sec-lead{color:#4a4a52;max-width:64ch;margin-bottom:34px;font-size:1.05rem}
+
+  /* ---------- SIGNATURE: the theory x issue spectrum ---------- */
+  .spectrum-card{
+    background:linear-gradient(180deg,#fff, var(--paper));
+    border:1px solid var(--line);border-radius:14px;
+    box-shadow:0 18px 40px -28px rgba(18,41,77,.5);
+    padding:28px 26px 34px;
+  }
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:26px}
+  .tab{
+    font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.82rem;letter-spacing:.04em;
+    border:1px solid var(--line);background:#fff;color:var(--ink);
+    padding:9px 16px;border-radius:999px;cursor:pointer;transition:.18s;
+  }
+  .tab[aria-selected="true"]{background:var(--ink);color:var(--parch);border-color:var(--ink)}
+  .tab:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+
+  .axis{position:relative;margin:8px 4px 0}
+  .axis-labels{display:flex;justify-content:space-between;font-family:"Trebuchet MS",sans-serif;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:#6a6a72;margin-bottom:10px}
+  .axis-labels .l{color:var(--rubric);font-weight:700}
+  .axis-labels .r{color:var(--blue);font-weight:700}
+  .bar{height:10px;border-radius:999px;background:linear-gradient(90deg,var(--rubric),#b06a1e 40%,#5a7d3a 66%,var(--blue));position:relative}
+  .ticks{position:relative;height:112px;margin-top:0}
+  .node{position:absolute;top:0;transform:translateX(-50%);width:132px;text-align:center;cursor:pointer}
+  .node .dot{width:20px;height:20px;border-radius:50%;background:#fff;border:3px solid var(--ink);margin:0 auto;position:relative;top:-15px;transition:.18s}
+  .node .nm{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.82rem;margin-top:-6px}
+  .node .sb{font-size:.76rem;color:#6a6a72;font-style:italic;margin-top:2px;line-height:1.25}
+  .node:hover .dot,.node[data-active="true"] .dot{transform:scale(1.25);border-color:var(--gold);box-shadow:0 0 0 5px rgba(201,162,39,.2)}
+  .node:focus-visible{outline:none}
+  .node:focus-visible .dot{outline:3px solid var(--gold);outline-offset:3px}
+
+  .readout{
+    margin-top:14px;background:var(--ink);color:var(--parch);border-radius:12px;padding:20px 22px;
+    min-height:104px;display:flex;gap:18px;align-items:flex-start;
+  }
+  .readout .badge{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;
+    background:var(--gold);color:var(--ink-2);padding:6px 10px;border-radius:6px;white-space:nowrap;margin-top:2px}
+  .readout .body h4{font-size:1.12rem;margin-bottom:4px}
+  .readout .body .auth{color:var(--gold-soft);font-family:"Trebuchet MS",sans-serif;font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+  .readout .body p{color:#E7DFCB;font-size:.98rem}
+  .readout .body .sw{display:flex;gap:22px;margin-top:10px;flex-wrap:wrap}
+  .readout .body .sw div{font-size:.9rem}
+  .readout .body .sw .k{font-family:"Trebuchet MS",sans-serif;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase}
+  .readout .body .sw .up .k{color:#8BD08F}
+  .readout .body .sw .dn .k{color:#F2A0A0}
+  .hint{font-family:"Trebuchet MS",sans-serif;font-size:.76rem;color:#8a8a92;margin-top:14px;text-align:center}
+
+  /* ---------- THREE DEBATES ---------- */
+  .triptych{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+  .panel{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;display:flex;flex-direction:column}
+  .panel .cap{padding:16px 18px;color:#fff;position:relative}
+  .panel.b1 .cap{background:linear-gradient(135deg,#1F4E79,#12294D)}
+  .panel.b2 .cap{background:linear-gradient(135deg,#B01C2E,#6E101D)}
+  .panel.b3 .cap{background:linear-gradient(135deg,#B45309,#6E3206)}
+  .panel.b4 .cap{background:linear-gradient(135deg,#2E7D32,#174A1C)}
+  .panel .cap .n{font-family:"Trebuchet MS",sans-serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;opacity:.85}
+  .panel .cap h3{font-size:1.24rem;margin-top:3px}
+  .panel .cap .ask{font-style:italic;font-size:.9rem;margin-top:8px;opacity:.95}
+  .panel .body{padding:16px 18px;font-size:.92rem}
+  .panel .body .row{display:flex;gap:9px;padding:7px 0;border-bottom:1px dashed var(--line)}
+  .panel .body .row:last-child{border-bottom:0}
+  .panel .body .row .v{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.8rem;white-space:nowrap;color:var(--ink)}
+  .panel .body .row .d{color:#55555c}
+
+  /* ---------- THREAD ---------- */
+  .thread{background:var(--ink);color:var(--parch);border-radius:14px;padding:34px 30px;position:relative;overflow:hidden}
+  .thread::before{content:"";position:absolute;inset:0;opacity:.07;background:repeating-linear-gradient(180deg,transparent 0 30px,#fff 30px 31px)}
+  .thread .wrap2{position:relative;z-index:2}
+  .thread h2{color:#fff;font-size:clamp(1.5rem,3vw,2.1rem);margin-bottom:8px}
+  .thread .lead{color:#E7DFCB;max-width:62ch;margin-bottom:24px}
+  .threads{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .tcard{border:1px solid rgba(228,206,134,.3);border-radius:10px;padding:16px 16px 18px;background:rgba(255,255,255,.03)}
+  .tcard .t{font-family:"Trebuchet MS",sans-serif;color:var(--gold);font-weight:700;font-size:.82rem;letter-spacing:.05em;margin-bottom:6px}
+  .tcard p{font-size:.9rem;color:#E7DFCB}
+
+  /* ---------- REVISE ---------- */
+  .revise{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:start}
+  .steps{counter-reset:s;display:flex;flex-direction:column;gap:14px}
+  .step{display:flex;gap:16px;align-items:flex-start;border-left:2px solid var(--line);padding:2px 0 2px 18px;position:relative}
+  .step::before{counter-increment:s;content:counter(s);position:absolute;left:-15px;top:-2px;width:28px;height:28px;border-radius:50%;
+    background:var(--gold);color:var(--ink-2);font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.9rem;display:grid;place-items:center}
+  .step h4{font-size:1.02rem}
+  .step p{font-size:.9rem;color:#55555c;margin-top:2px}
+  .ao{border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .ao .h{padding:12px 16px;font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.82rem;letter-spacing:.06em;color:#fff}
+  .ao .ao1 .h,.ao .h.ao1{background:var(--ink)}
+  .ao .h.ao2{background:var(--green)}
+  .ao .c{padding:14px 16px;font-size:.9rem;border-bottom:1px solid var(--line)}
+  .ao .c:last-child{border-bottom:0}
+  .ao .c b{font-family:"Trebuchet MS",sans-serif;font-size:.78rem;letter-spacing:.04em}
+
+  /* ---------- VIDEO ---------- */
+  .video-frame{position:relative;width:100%;aspect-ratio:16/9;border-radius:14px;overflow:hidden;
+    border:1px solid var(--line);box-shadow:0 20px 44px -30px rgba(18,41,77,.55);background:var(--ink)}
+  .video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .video-placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:14px;text-align:center;padding:30px;color:#C9C4B6;
+    background:radial-gradient(700px 300px at 50% 30%,rgba(201,162,39,.14),transparent 60%),linear-gradient(180deg,var(--ink),var(--ink-2))}
+  .video-placeholder .vp-badge{font-family:"Trebuchet MS",Verdana,sans-serif;font-weight:700;font-size:.72rem;letter-spacing:.14em;
+    text-transform:uppercase;background:var(--gold);color:var(--ink-2);padding:6px 12px;border-radius:6px}
+  .video-placeholder p{max-width:52ch;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.92rem;line-height:1.55}
+  .video-placeholder code{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:4px;padding:1px 6px}
+
+
+  /* ---------- FLASHCARDS ---------- */
+  .fc-controls{display:flex;gap:18px;flex-wrap:wrap;align-items:center;margin-bottom:24px}
+  .fc-tabs,.fc-type{display:flex;gap:8px;flex-wrap:wrap}
+  .fc-btn{font-family:"Trebuchet MS",Verdana,sans-serif;font-weight:700;font-size:.8rem;border:1px solid var(--line);
+    background:#fff;color:var(--ink);padding:8px 15px;border-radius:999px;cursor:pointer;transition:.18s}
+  .fc-btn[aria-selected="true"]{background:var(--ink);color:var(--parch);border-color:var(--ink)}
+  .fc-btn:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+  .fc-hint{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.78rem;color:#8a8a92;margin-left:auto}
+  .fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+  .fc-card{perspective:1200px;height:180px;cursor:pointer;background:none;border:0;padding:0;font-family:inherit;text-align:left}
+  .fc-inner{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+  .fc-card[data-flipped="true"] .fc-inner{transform:rotateY(180deg)}
+  .fc-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+    border-radius:12px;padding:18px;display:flex;flex-direction:column;border:1px solid var(--line);overflow:auto}
+  .fc-front{background:linear-gradient(180deg,#fff,var(--paper))}
+  .fc-back{transform:rotateY(180deg);color:var(--parch)}
+  .fc-card.theftlying .fc-back{background:linear-gradient(160deg,#1F4E79,#12294D)}
+  .fc-card.beginning .fc-back{background:linear-gradient(160deg,#B01C2E,#6E101D)}
+  .fc-card.endoflife .fc-back{background:linear-gradient(160deg,#B45309,#6E3206)}
+  .fc-card.animals .fc-back{background:linear-gradient(160deg,#2E7D32,#174A1C)}
+  .fc-tag{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--gold);font-weight:700;margin-bottom:8px}
+  .fc-front .fc-tag{color:#9a8028}
+  .fc-term{font-size:1.24rem;font-weight:700;line-height:1.15}
+  .fc-front .fc-flip{margin-top:auto;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.72rem;color:#9a9a9a}
+  .fc-def{font-size:.92rem;line-height:1.4}
+  .fc-back .fc-sw{margin-top:8px;font-size:.82rem}
+  .fc-back .fc-sw .k{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.62rem;letter-spacing:.08em;text-transform:uppercase}
+  .fc-back .up .k{color:#8BD08F}.fc-back .dn .k{color:#F2A0A0}
+  @media(max-width:820px){.fc-grid{grid-template-columns:1fr 1fr}.fc-hint{width:100%;margin-left:0}}
+
+  /* ---------- RESOURCES ---------- */
+  .res-note{background:#FBF0D6;border:1px solid var(--gold);border-left:4px solid var(--gold);
+    border-radius:8px;padding:12px 16px;margin-bottom:22px;font-size:.9rem;color:#5a4a1c;
+    font-family:"Trebuchet MS",Verdana,sans-serif}
+  .res-note code{background:#fff;border:1px solid var(--line);border-radius:4px;padding:1px 6px;font-size:.85em}
+  .res-note.hide{display:none}
+  .res-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-bottom:16px}
+  .res-col{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff}
+  .rc-head{padding:14px 16px;color:#fff}
+  .rc1 .rc-head{background:linear-gradient(135deg,#1F4E79,#12294D)}
+  .rc2 .rc-head{background:linear-gradient(135deg,#B01C2E,#6E101D)}
+  .rc3 .rc-head{background:linear-gradient(135deg,#B45309,#6E3206)}
+  .rc4 .rc-head{background:linear-gradient(135deg,#2E7D32,#174A1C)}
+  .rc-head .rc-n{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;opacity:.85}
+  .rc-head h3{font-size:1.16rem;margin-top:2px}
+  .res-btn{display:flex;align-items:center;gap:12px;padding:13px 16px;border-top:1px solid var(--line);
+    font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.92rem;color:var(--ink);text-decoration:none;
+    cursor:pointer;transition:background .15s}
+  .res-col .res-btn:first-of-type{border-top:0}
+  .res-btn:hover{background:var(--parch)}
+  .res-btn .ic{width:26px;height:26px;flex:none;display:grid;place-items:center;border-radius:6px;
+    background:var(--ink);color:var(--gold);font-size:.9rem}
+  .res-btn .go{margin-left:auto;color:var(--gold);font-weight:700;opacity:0;transition:.15s}
+  .res-btn:hover .go{opacity:1}
+  .res-btn:focus-visible{outline:3px solid var(--gold);outline-offset:-3px}
+  .res-btn.unset{opacity:.5;cursor:not-allowed}
+  .res-btn.unset .go{content:"";opacity:0}
+  .res-btn.unset::after{content:"Link not set";margin-left:auto;font-size:.74rem;color:#9a7d2c;
+    background:#FBF0D6;border:1px solid var(--gold-soft);border-radius:5px;padding:2px 7px}
+  .res-wide{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:2px}
+  .res-btn.big{border:1px solid var(--line);border-radius:12px;background:#fff;padding:16px 18px}
+  .res-btn.big:hover{background:var(--parch)}
+  .res-btn.big .ic{width:34px;height:34px;font-size:1.1rem;background:var(--ink)}
+  @media(max-width:820px){.res-grid{grid-template-columns:1fr}.res-wide{grid-template-columns:1fr}}
+
+  footer{background:var(--ink-2);color:#C9C4B6;padding:26px 0;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.8rem}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+  footer .gold{color:var(--gold)}
+
+  @media(max-width:820px){
+    .triptych{grid-template-columns:1fr}
+    .threads{grid-template-columns:1fr}
+    .revise{grid-template-columns:1fr}
+    .node{width:96px}
+    .node .sb{display:none}
+  }
+  @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<!--BACKPILL--><a href="../alevel.html" style="position:fixed;left:14px;bottom:14px;z-index:99999;background:#12294D;color:#F6F1E4;font:600 14px/1 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;padding:10px 15px;border-radius:999px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.28);border:1px solid #C9A227">&#8592; All units</a>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap">
+    <div class="crest">
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <rect x="2" y="2" width="60" height="60" rx="13" fill="#0C1B33" stroke="#C9A227" stroke-width="1.5"/>
+        <g fill="none" stroke="#F3ECDD" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M23 21C21 17 21 14 22 12c2 2 3 5 3 8"/><path d="M41 21c2-4 2-7 1-9-2 2-3 5-3 8"/>
+          <path d="M32 17C21 17 18 26 18 33c0 12 6 19 14 19s14-7 14-19c0-7-3-16-14-16z"/>
+          <path d="M32 21c-3 4-5 6-7 7M32 21c3 4 5 6 7 7"/>
+        </g>
+        <circle cx="27" cy="31" r="5" fill="none" stroke="#F3ECDD" stroke-width="2.4"/>
+        <circle cx="37" cy="31" r="5" fill="none" stroke="#F3ECDD" stroke-width="2.4"/>
+        <circle cx="27" cy="31" r="1.9" fill="#F3ECDD"/><circle cx="37" cy="31" r="1.9" fill="#F3ECDD"/>
+        <path d="M32 34l-2.2 4.2h4.4z" fill="#C9A227"/>
+      </svg>
+      <div class="who">A-Level Religious Studies · AQA Paper 1 (7062/1)
+        <b>Harlington School · Philosophy &amp; Ethics</b></div>
+    </div>
+    <h1>Applied <span class="amp">Ethics</span></h1>
+    <p class="sub">One unit, one grid. Three ethical theories &mdash; natural moral law, situation ethics and virtue ethics &mdash; applied to ten moral issues, from theft and lying to abortion, euthanasia and the treatment of animals.</p>
+    <div class="bigq">
+      <span class="q">The<br>big<br>question</span>
+      <p>How far can any ethical theory decide a genuinely hard case &mdash; and what does it cost when it does?</p>
+    </div>
+  </div>
+</header>
+
+<!-- SIGNATURE: SPECTRUM -->
+<section id="spectrum">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">01</span><h2>The theory &times; issue grid</h2></div>
+    <p class="sec-lead">Applied ethics is not ten separate topics. It is <b>three theories</b> applied to <b>ten issues</b> &mdash; and AQA sets one cell of that grid every year. Pick a sub-topic, then tap an approach to see what it claims and where it is strong or weak.</p>
+
+    <div class="spectrum-card">
+      <div class="tabs" role="tablist" aria-label="Choose a sub-topic">
+        <button class="tab" role="tab" aria-selected="true" data-topic="theftlying">Theft & Lying</button>
+        <button class="tab" role="tab" aria-selected="false" data-topic="beginning">Beginning of Life</button>
+        <button class="tab" role="tab" aria-selected="false" data-topic="endoflife">End of Life</button>
+        <button class="tab" role="tab" aria-selected="false" data-topic="animals">Non-Human Life & Death</button>
+      </div>
+
+      <div class="axis">
+        <div class="axis-labels"><span class="l" id="poleL"></span><span class="r" id="poleR"></span></div>
+        <div class="bar"></div>
+        <div class="ticks" id="ticks"></div>
+      </div>
+
+      <div class="readout" id="readout" aria-live="polite"></div>
+      <p class="hint">Tap a circle &mdash; or use Tab and Enter &mdash; to explore each approach.</p>
+    </div>
+  </div>
+</section>
+
+<!-- THE THREAD -->
+<section>
+  <div class="wrap">
+    <div class="thread">
+      <div class="wrap2">
+        <h2>The thread that ties it together</h2>
+        <p class="lead">Top answers don&rsquo;t treat the four sub-topics separately. Three ideas run through all of them &mdash; spot the thread and you&rsquo;re writing at the top of the mark scheme.</p>
+        <div class="threads">
+          <div class="tcard"><div class="t">Rigidity vs responsiveness</div><p>Natural moral law gives clear guidance but can look inhuman. Situation ethics responds to the case but is unpredictable. Virtue ethics builds character but won&rsquo;t tell you what to do.</p></div>
+          <div class="tcard"><div class="t">Where the line is drawn</div><p>Personhood at the beginning of life, dignity at the end, moral status for animals. The verdict is always downstream of the line.</p></div>
+          <div class="tcard"><div class="t">Would they say it today?</div><p>Aristotle wrote 24 centuries ago, Aquinas in the thirteenth. The textbook tells you to ask what they&rsquo;d say now &mdash; examiners reward it.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOUR DEBATES -->
+<section id="debates">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">02</span><h2>The same question, four times</h2></div>
+    <p class="sec-lead">The unit splits into four sub-topics. They look different, but each is really asking <em>how far a moral theory can decide a hard case</em>.</p>
+    <div class="triptych">
+      <div class="panel b1">
+        <div class="cap">Theft & Lying</div>
+        <div class="pbody">
+          <h3>Can a rule ever bend?</h3>
+          <p>Aquinas lets a starving man steal &mdash; but will not let anyone lie to save a life. Is that asymmetry defensible?</p>
+        </div>
+      </div>
+      <div class="panel b2">
+        <div class="cap">Beginning of Life</div>
+        <div class="pbody">
+          <h3>Who counts as a person?</h3>
+          <p>Conception, 60&ndash;80 days, fourteen days, or &lsquo;actual persons&rsquo;? Every verdict follows from where the line goes.</p>
+        </div>
+      </div>
+      <div class="panel b3">
+        <div class="cap">End of Life</div>
+        <div class="pbody">
+          <h3>Who owns the ending?</h3>
+          <p>Natural moral law forbids a dying person from choosing death &mdash; yet permits the state to execute. Can both be right?</p>
+        </div>
+      </div>
+      <div class="panel b4">
+        <div class="cap">Non-Human Life & Death</div>
+        <div class="pbody">
+          <h3>Do animals count?</h3>
+          <p>Aquinas says they have instrumental value only. Sentience, Barad and the Catechism all push back.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="resources">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">03</span><h2>Your resources</h2></div>
+    <p class="sec-lead">Everything for the unit, in one place. Open a sub-topic&rsquo;s lesson, booklet and podcast, and use the <b>Philosopher Companion</b> across all four.</p>
+
+    <div class="res-note" id="resNote">
+      <b>Teacher setup:</b> links aren&rsquo;t set yet. Open this file, find the <code>LINKS</code> list near the bottom, and paste each SharePoint share link once. Buttons with no link show as &ldquo;Link not set&rdquo;.
+    </div>
+
+    <div class="res-grid">
+      <div class="res-col rc1">
+        <div class="rc-head"><span class="rc-n">Sub-topic 1</span><h3>Theft & Lying</h3></div>
+        <a class="res-btn" data-key="theftlying_lesson"><span class="ic">&#9635;</span><span>Lesson deck</span><span class="go">&#8599;</span></a>
+        <a class="res-btn" data-key="theftlying_booklet"><span class="ic">&#9998;</span><span>Completion booklet</span><span class="go">&#8599;</span></a>
+        <a class="res-btn" data-key="theftlying_podcast"><span class="ic">&#9834;</span><span>Lesson podcast</span><span class="go">&#8599;</span></a>
+      </div>
+      <div class="res-col rc2">
+        <div class="rc-head"><span class="rc-n">Sub-topic 2</span><h3>Beginning of Life</h3></div>
+        <a class="res-btn" data-key="beginning_lesson"><span class="ic">&#9635;</span><span>Lesson deck</span><span class="go">&#8599;</span></a>
+        <a class="res-btn" data-key="beginning_booklet"><span class="ic">&#9998;</span><span>Completion booklet</span><span class="go">&#8599;</span></a>
+        <a class="res-btn" data-key="beginning_podcast"><span class="ic">&#9834;</span><span>Lesson podcast</span><span class="go">&#8599;</span></a>
+      </div>
+      <div class="res-col rc3">
+        <div class="rc-head"><span class="rc-n">Sub-topic 3</span><h3>End of Life</h3></div>
+        <a class="res-btn" data-key="endoflife_lesson"><span class="ic">&#9635;</span><span>Lesson deck</span><span class="go">&#8599;</span></a>
+        <a class="res-btn" data-key="endoflife_booklet"><span class="ic">&#9998;</span><span>Completion booklet</span><span class="go">&#8599;</span></a>
+        <a class="res-btn" data-key="endoflife_podcast"><span class="ic">&#9834;</span><span>Lesson podcast</span><span class="go">&#8599;</span></a>
+      </div>
+      <div class="res-col rc4">
+        <div class="rc-head"><span class="rc-n">Sub-topic 4</span><h3>Non-Human Life & Death</h3></div>
+        <a class="res-btn" data-key="animals_lesson"><span class="ic">&#9635;</span><span>Lesson deck</span><span class="go">&#8599;</span></a>
+        <a class="res-btn" data-key="animals_booklet"><span class="ic">&#9998;</span><span>Completion booklet</span><span class="go">&#8599;</span></a>
+        <a class="res-btn" data-key="animals_podcast"><span class="ic">&#9834;</span><span>Lesson podcast</span><span class="go">&#8599;</span></a>
+      </div>
+    </div>
+
+    <div class="res-wide">
+      <a class="res-btn big" data-key="companion"><span class="ic">&#129417;</span><span><b>Philosopher Companion</b> &mdash; checklist, AO1, AO2 &amp; AO3 planning, key terms &amp; review</span><span class="go">&#8599;</span></a>
+      <a class="res-btn big" data-key="review"><span class="ic">&#8635;</span><span><b>Review lessons</b> &mdash; consolidation decks for all four sub-topics</span><span class="go">&#8599;</span></a>
+      <a class="res-btn big" data-key="overview_podcast"><span class="ic">&#9834;</span><span><b>Overview podcast</b> &mdash; the whole unit as one grid (team teach)</span><span class="go">&#8599;</span></a>
+      <a class="res-btn big" data-key="flashcards_pdf"><span class="ic">&#9636;</span><span><b>Printable flashcards</b> &mdash; 40 fold-over key terms &amp; approaches to cut out</span><span class="go">&#8599;</span></a>
+      <a class="res-btn big" data-key="exam_questions"><span class="ic">&#9998;</span><span><b>Exam questions by sub-topic</b> &mdash; every AQA question this unit answers, 2018&ndash;2024</span><span class="go">&#8599;</span></a>
+      <a class="res-btn big" data-key="textbook"><span class="ic">&#9635;</span><span><b>Textbook chapter</b> &mdash; Application of ethical theories</span><span class="go">&#8599;</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- HOW TO REVISE -->
+<section id="revise">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">04</span><h2>How to revise this unit</h2></div>
+    <p class="sec-lead">Use your resources in this order. The <b>Philosopher Companion</b> is where you learn to <em>plan</em> both question types.</p>
+    <div class="revise">
+      <div class="steps">
+        <div class="step"><div><h4>Watch the lesson &amp; listen to the podcast</h4><p>One podcast per sub-topic &mdash; a teacher and student talk each approach through to a judgement. Annotate as you listen.</p></div></div>
+        <div class="step"><div><h4>Complete the greyscale booklet</h4><p>Read the given text, write the key claims in your own words, then decide the strength and weakness you&rsquo;d give each approach.</p></div></div>
+        <div class="step"><div><h4>Match &amp; apply the key terms</h4><p>In the Companion: match each term to its meaning, then use it in a sentence. RAG-rate the mastery checklist with the three faces.</p></div></div>
+        <div class="step"><div><h4>Plan AO1, then build AO2 on top</h4><p>Use the Companion frameworks and the guidance-left / your-turn-right scaffolds. Never evaluate what you haven't first explained.</p></div></div>
+      </div>
+      <div class="ao">
+        <div class="ao1"><div class="h ao1">AO1 &middot; Examine the approach (10)</div></div>
+        <div class="c"><b>What it is &mdash;</b> the factual chain: the issue in outline, then the theory&rsquo;s method applied to it, with a named case.</div>
+        <div class="c"><b>Aim &mdash;</b> answer the CELL you are given &mdash; one theory, one issue. No judging yet.</div>
+        <div class="h ao2">AO2 · Evaluate the claim (15)</div>
+        <div class="c"><b>What it is &mdash;</b> a three-paragraph dialectic: approach, then evaluation &rarr; counter-evaluation &rarr; implication; mirror it; then judge.</div>
+        <div class="c"><b>Aim &mdash;</b> weigh the approaches, use one as a lens on another, and reach a justified judgement that links back to your thesis.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WATCH: FULL UNIT REVIEW -->
+<section id="watch">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">05</span><h2>Watch: the whole unit in one go</h2></div>
+    <p class="sec-lead">A full review of <b>Applied Ethics</b> &mdash; theft and lying, the beginning of life, the end of life, and non-human life and death. Best watched before you start revising, then again to check your recall.</p>
+    <div class="video-frame" id="videoFrame">
+      <div class="video-placeholder" id="videoPlaceholder">
+        <div class="vp-badge">Video not set</div>
+        <p><b>Teacher:</b> paste the YouTube link in the <code>VIDEO_URL</code> line near the bottom of this file. The player then appears here automatically.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- FLASHCARDS -->
+<section id="flashcards">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">06</span><h2>Flashcards — test yourself</h2></div>
+    <p class="sec-lead">Flip a card to check yourself. Switch between <b>key terms</b> (term &rarr; meaning) and <b>approaches</b> (approach &rarr; claim, strength &amp; weakness), and filter by sub-topic.</p>
+    <div class="fc-controls">
+      <div class="fc-tabs" role="tablist" aria-label="Sub-topic">
+        <button class="fc-btn" role="tab" aria-selected="true"  data-topic="all">All</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-topic="theftlying">Theft & Lying</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-topic="beginning">Beginning of Life</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-topic="endoflife">End of Life</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-topic="animals">Non-Human Life & Death</button>
+      </div>
+      <div class="fc-type" role="tablist" aria-label="Card type">
+        <button class="fc-btn" role="tab" aria-selected="true"  data-type="terms">Key terms</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-type="views">Approaches</button>
+      </div>
+      <span class="fc-hint">Tap any card to flip · <span id="fcCount"></span></span>
+    </div>
+    <div class="fc-grid" id="fcGrid"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Applied Ethics &middot; Unit at a glance</span>
+    <span class="gold">Harlington School · Philosophy &amp; Ethics</span>
+  </div>
+</footer>
+
+<script>
+const DATA = {
+ "theftlying": {
+  "poles": [
+   "Rules NEVER bend · total predictability",
+   "There are NO rules to bend · total flexibility"
+  ],
+  "nodes": [
+   {
+    "x": 8,
+    "nm": "The necessary lie — Kant and the limits of all three",
+    "sb": "Duty, known by reason alone",
+    "auth": "ABSOLUTE",
+    "claim": "If a rule can bend once, was it ever a rule?",
+    "s": "It exposes exactly what is at stake in this whole lesson: if a consequence can override a rule, then the rule was only ever a strong default.",
+    "w": "Almost nobody will bite the bullet."
+   },
+   {
+    "x": 36,
+    "nm": "Natural moral law",
+    "sb": "Reason reading human nature",
+    "auth": "RULE-FIRST with a proportionate exception on theft — but an absolute wall on lying.",
+    "claim": "The precepts hold — but a proportionate reason can bend a secondary one.",
+    "s": "It gives an unambiguous answer, grounded in a reasoned account of human flourishing rather than in feeling — and it is not merely rigid: Aquinas himself builds in the starving-man exception and the principle of double effect, so the theory can flex without collapsing..",
+    "w": "The asymmetry looks arbitrary."
+   },
+   {
+    "x": 64,
+    "nm": "Virtue ethics",
+    "sb": "The character of the practically wise",
+    "auth": "CHARACTER-FIRST",
+    "claim": "Not 'what should I do?' but 'what would a person of practical wisdom do?'",
+    "s": "It explains why the same act can be right for one agent and wrong for another, and its account of truthfulness as a synergy of virtues is far richer than a rule about words.",
+    "w": "It does not tell you what to do at the moment of decision — 'be virtuous' is not guidance."
+   },
+   {
+    "x": 92,
+    "nm": "Situation ethics",
+    "sb": "There are no binding rules",
+    "auth": "SITUATIONAL",
+    "claim": "No act is intrinsically right or wrong — only love is absolute.",
+    "s": "It distinguishes cases a single rule cannot: self-serving theft from theft that saves a life, and it takes real consequences seriously.",
+    "w": "It is unpredictable and easy to abuse."
+   }
+  ]
+ },
+ "beginning": {
+  "poles": [
+   "Full moral status from CONCEPTION",
+   "Status depends on DEVELOPMENT and situation"
+  ],
+  "nodes": [
+   {
+    "x": 8,
+    "nm": "Natural moral law",
+    "sb": "Conception — the genetic blueprint",
+    "auth": "ABSOLUTE PROHIBITION on all four — with one narrow, principled exception via double effect.",
+    "claim": "Life is God's from conception — and only double effect can ever excuse its ending.",
+    "s": "It is consistent and it protects the most defenceless party without asking whether that party is wanted, convenient or healthy.",
+    "w": "The rigidity is its own worst argument."
+   },
+   {
+    "x": 36,
+    "nm": "Virtue ethics",
+    "sb": "Before sense and life have begun",
+    "auth": "DIVIDED",
+    "claim": "Compassion points one way — but the theory admits it is out of its depth.",
+    "s": "It refuses the false comfort of a formula, and it asks the question the other two skip: what kind of people, and what kind of society, will these technologies produce? Its willingness to say that a theory built on a shared human telos may not survive trans-humanism is intellectually honest rather than evasive..",
+    "w": "It gives no usable verdict on three of the four issues."
+   },
+   {
+    "x": 64,
+    "nm": "Hursthouse — the wrong question",
+    "sb": "Refuses the question — we cannot know",
+    "auth": "REFRAMING",
+    "claim": "Abortion has nothing to do with rights, and nothing to do with whether the foetus is a person.",
+    "s": "It breaks a genuine deadlock.",
+    "w": "Refusing to settle personhood does not make the question go away — if the foetus IS a person, no reason short of self-defence is weighty enough, and her account cannot say so."
+   },
+   {
+    "x": 92,
+    "nm": "Situation ethics",
+    "sb": "Actual persons who can be helped",
+    "auth": "SITUATIONAL AND PERMISSIVE",
+    "claim": "Actual persons come before potential persons.",
+    "s": "It can respond to the cases that make absolute rules look inhuman — the thalidomide mother, the raped girl in the mental hospital, the doctor in the camp — and it does so with a stated method rather than by simply flinching.",
+    "w": "Fletcher bases his calculations on these procedures' potential GOOD; a critic can as easily base them on their potential evil, and nothing in the theory settles which."
+   }
+  ]
+ },
+ "endoflife": {
+  "poles": [
+   "GOD and the STATE decide",
+   "The PERSON decides"
+  ],
+  "nodes": [
+   {
+    "x": 8,
+    "nm": "Natural moral law",
+    "sb": "God — and the state, by delegation",
+    "auth": "ABSOLUTE on euthanasia and assisted suicide; PERMISSIVE on capital punishment, but only for public authority.",
+    "claim": "Life is God's gift — so you may not end your own. The state, however, may end another's.",
+    "s": "It gives a clear and consistent account of who has the right to end a life, and it is not indifferent to suffering: the extraordinary-means principle allows a person to die without being kept alive officiously.",
+    "w": "The two verdicts sit very awkwardly together."
+   },
+   {
+    "x": 36,
+    "nm": "Virtue ethics",
+    "sb": "The person of practical wisdom",
+    "auth": "NO VERDICT",
+    "claim": "Competing virtues, and no formula to rank them.",
+    "s": "It is the only approach that can describe the Amour case adequately — not as a rule broken but as two real virtues in conflict — and its treatment of regret as evidence of intention captures something both rivals miss.",
+    "w": "It supports both answers on euthanasia with equal ease: courage justifies ending the suffering and courage justifies enduring it."
+   },
+   {
+    "x": 64,
+    "nm": "Situation ethics",
+    "sb": "The person, within a loving situation",
+    "auth": "SITUATIONAL",
+    "claim": "The sacredness of PERSONALITY — not the mere length of time we live.",
+    "s": "Its four questions about Jim are genuinely good practical ethics — competence, family pressure, depression, diagnostic reliability, second opinion — and they are exactly what real assisted-dying legislation tries to encode.",
+    "w": "It cannot rule out the innocent man's execution, and 'greatest love for the greatest number' collapses into the utilitarian arithmetic Fletcher elsewhere wants to avoid."
+   },
+   {
+    "x": 92,
+    "nm": "Dignity, autonomy and who decides",
+    "sb": "Contested — that IS the question",
+    "auth": "THE CRITERION, NOT A VERDICT",
+    "claim": "Every theory here claims to protect dignity. They locate it in different places.",
+    "s": "It exposes that the three theories are not really disagreeing about the facts of these cases but about where dignity resides — and the brutalisation question shows that even a rules-based debate about capital punishment eventually turns into a question about character..",
+    "w": "Naming the criterion does not settle it, and the autonomy claim proves too much: if the right to die is genuinely mine, it becomes hard to explain why society may not eventually treat it as something the dying are expected to exercise."
+   }
+  ]
+ },
+ "animals": {
+  "poles": [
+   "Animals are PROPERTY, for human use",
+   "Animals have value INDEPENDENT of us"
+  ],
+  "nodes": [
+   {
+    "x": 8,
+    "nm": "Natural moral law",
+    "sb": "Instrumental value only",
+    "auth": "PERMISSIVE THROUGHOUT",
+    "claim": "Animals were created for whatever use humans choose to put them to.",
+    "s": "It is consistent and it follows rigorously from a stated metaphysics rather than from convenience, and the Catholic tradition built on it has since added real constraints — kindness owed to animals, needless suffering condemned, pain relief required, the germline protected.",
+    "w": "The premise cannot survive the facts."
+   },
+   {
+    "x": 36,
+    "nm": "Situation ethics",
+    "sb": "Objects of care, not persons",
+    "auth": "SITUATIONAL, PERSON-CENTRED",
+    "claim": "Agape is for persons — but agape is inclusive, not exclusive.",
+    "s": "It can weigh two real goods against each other — human hunger against animal suffering — rather than ruling one out by definition, and its pragmatic conclusions (abandon factory farming for crops, develop lab-grown meat) are exactly the solutions the debate has since moved towards..",
+    "w": "It produces flatly opposite verdicts on the same issue: some situationists say expand intensive farming for the starving, others say abolish it."
+   },
+   {
+    "x": 64,
+    "nm": "Virtue ethics",
+    "sb": "Objects of compassion, if not persons",
+    "auth": "CHARACTER-FIRST",
+    "claim": "Compassion cannot be compartmentalised.",
+    "s": "It gets furthest of the three towards giving animals genuine moral weight, because compassion cannot be selectively switched off — and Hursthouse's naming of callousness explains something rules and calculations miss: why blood sports strike people as revealing about the participant, not just harmful to the animal..",
+    "w": "It is built on the very hierarchy that causes the problem, so it is arguing against its own foundations, and Aristotle himself dissected animals and lived with hunting as ordinary life."
+   },
+   {
+    "x": 92,
+    "nm": "Do animals count? Challenging the hierarchy",
+    "sb": "Value independent of human use",
+    "auth": "THE PREMISE, NOT A VERDICT",
+    "claim": "Establish the status, and the four verdicts follow. Fail to, and none of them are grounded.",
+    "s": "It supplies the premise all three theories quietly assume and none defends, and it shows the Catholic tradition itself has moved well beyond Aquinas — which is powerful evidence that his hierarchy was never as secure as his followers treated it..",
+    "w": "Establishing that animals have SOME value does not tell you how much, and the Catechism still grounds the duty in human dignity rather than in the animal, so the anthropocentric framing survives intact."
+   }
+  ]
+ }
+};
+
+const ticks=document.getElementById("ticks");
+const readout=document.getElementById("readout");
+const poleL=document.getElementById("poleL"), poleR=document.getElementById("poleR");
+let topic="theftlying", active=0;
+
+function renderReadout(n){
+  readout.innerHTML=`
+    <span class="badge">${n.auth}</span>
+    <div class="body">
+      <h4>${n.nm} <span style="opacity:.6;font-style:italic;font-weight:400">· ${n.sb}</span></h4>
+      <p>${n.claim}</p>
+      <div class="sw">
+        <div class="up"><span class="k">Strength</span><br>${n.s}</div>
+        <div class="dn"><span class="k">Weakness</span><br>${n.w}</div>
+      </div>
+    </div>`;
+}
+function renderTopic(){
+  const d=DATA[topic];
+  poleL.textContent=d.poles[0]; poleR.textContent=d.poles[1];
+  ticks.innerHTML="";
+  d.nodes.forEach((n,i)=>{
+    const el=document.createElement("div");
+    el.className="node"; el.style.left=n.x+"%"; el.tabIndex=0;
+    el.setAttribute("role","button");
+    el.setAttribute("aria-label",`${n.nm}: ${n.sb}`);
+    el.dataset.active=(i===active);
+    el.innerHTML=`<div class="dot"></div><div class="nm">${n.nm}</div><div class="sb">${n.sb}</div>`;
+    const pick=()=>{active=i;[...ticks.children].forEach((c,j)=>c.dataset.active=(j===i));renderReadout(n);};
+    el.addEventListener("click",pick);
+    el.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();pick();}});
+    ticks.appendChild(el);
+  });
+  active=Math.min(active,d.nodes.length-1);
+  [...ticks.children].forEach((c,j)=>c.dataset.active=(j===active));
+  renderReadout(d.nodes[active]);
+}
+document.querySelectorAll(".tab").forEach(t=>{
+  t.addEventListener("click",()=>{
+    document.querySelectorAll(".tab").forEach(x=>x.setAttribute("aria-selected","false"));
+    t.setAttribute("aria-selected","true");
+    topic=t.dataset.topic; active=0; renderTopic();
+  });
+});
+renderTopic();
+
+const FLASHCARDS = {"theftlying": {"terms": [{"term": "Primary precept", "def": "one of the basic goods reason directs every human towards — including living in an ordered society, which theft and lying both attack.", "note": "Both issues in this lesson are traced back to the SAME primary precept."}, {"term": "Secondary precept", "def": "a specific rule worked out from a primary precept — here, 'do not steal' and 'do not lie'.", "note": "Secondary precepts can flex where a proportionate reason exists; primary precepts do not."}, {"term": "Proportionalism", "def": "the modern development of natural moral law that weighs the value against the disvalue of an act and the agent's intention.", "note": "It reaches Aquinas' starving-man verdict by a different route — useful in an AO2."}, {"term": "Agape", "def": "selfless, other-person-regarding love — for Fletcher the only absolute; every other rule is advisory.", "note": "Fletcher: love is justice distributed — so a 'loving' act that harms other neighbours is not agapeic."}, {"term": "Practical wisdom", "def": "phronesis — the developed judgement of a person of good character, acquired by habituation rather than by rule-following.", "note": "For virtue ethics this replaces the rule, which is why it seems to give no clear answer."}, {"term": "The necessary lie", "def": "a lie told to prevent a serious harm — the test case that pushes every theory in this lesson to its limit.", "note": "Aquinas forbids it but permits prudently keeping back the truth. Kant forbids even that."}], "views": [{"n": "Natural moral law", "c": "The precepts hold — but a proportionate reason can bend a secondary one.", "s": "It gives an unambiguous answer, grounded in a reasoned account of human flourishing rather than in feeling — and it is not merely rigid: Aquinas himself builds in the starving-man exception and the principle of double effect, so the theory can flex without collapsing.", "w": "The asymmetry looks arbitrary. If urgent need can justify taking a man's food to save a life, why can it not justify a word to save a life? 'Prudently keeping back the truth' looks like a technicality when a friend is hiding in the next room — and if the axeman is unconvinced and kills them both, it is hard to say moral good has been upheld."}, {"n": "Situation ethics", "c": "No act is intrinsically right or wrong — only love is absolute.", "s": "It distinguishes cases a single rule cannot: self-serving theft from theft that saves a life, and it takes real consequences seriously. The doctor silenced about the fiancé's condition is indefensible on any rule that ignores what will actually happen to the girl and to any child of the marriage.", "w": "It is unpredictable and easy to abuse. Fletcher will not even settle his own thesaurus case, so students are left with a method and no verdict. And if no act is intrinsically wrong, a determined agent can persuade themselves that almost any lie — or theft — was the loving one, after the fact."}, {"n": "Virtue ethics", "c": "Not 'what should I do?' but 'what would a person of practical wisdom do?'", "s": "It explains why the same act can be right for one agent and wrong for another, and its account of truthfulness as a synergy of virtues is far richer than a rule about words. It also has the resources to handle the axeman without special pleading, and treats the agent's regret as evidence of a virtuous intention.", "w": "It does not tell you what to do at the moment of decision — 'be virtuous' is not guidance. Worse for consistency: Aristotle says theft admits no mean, yet modern virtue ethicists take the mean to the extreme to allow it, so the theory can be made to yield opposite verdicts on the same case."}, {"n": "The necessary lie — Kant and the limits of all three", "c": "If a rule can bend once, was it ever a rule?", "s": "It exposes exactly what is at stake in this whole lesson: if a consequence can override a rule, then the rule was only ever a strong default. Every theory here has to say where it stops bending, and Kant is the only one who answers cleanly.", "w": "Almost nobody will bite the bullet. Aquinas himself softens it with prudent silence, Fletcher rejects it outright, and virtue ethics lets the mean move. Put next to Christians hiding Jews, the absolute position looks monstrous rather than principled — which is itself an argument that consequences must count for something."}]}, "beginning": {"terms": [{"term": "Double effect", "def": "the principle that an act with a foreseen bad effect may be permissible if the act is good, the intention good, the bad effect is not the means, and there is proportionate reason.", "note": "It is the ONLY route by which Catholic teaching permits a procedure that ends a foetal life."}, {"term": "Ensoulment", "def": "the moment a rational soul is present. Aquinas placed it at around 60–80 days after conception.", "note": "Some read this as permitting early abortion — but Aquinas nowhere makes that claim."}, {"term": "Sanctity of Life", "def": "the principle that human life is sacred because humans are made in the image of God.", "note": "Rooted in Genesis 1:26–27; it is the backbone of the natural-law case on all four issues."}, {"term": "PGD", "def": "Pre-implantation Genetic Diagnosis — testing a single cell from an IVF embryo, then implanting or destroying it.", "note": "Used to check for conditions such as Down's syndrome and cystic fibrosis, to select sex, or to treat a sick sibling."}, {"term": "Personalism", "def": "Fletcher's principle that situation ethics is directed at persons — the good of ACTUAL persons outranks that of potential ones.", "note": "This single principle drives every situationist verdict in this lesson."}, {"term": "Imago Dei", "def": "'in the image of God' — the claim that human beings uniquely bear God's likeness.", "note": "Used against designer babies: engineering the species would mean God's image is no longer seen in the human form."}], "views": [{"n": "Natural moral law", "c": "Life is God's from conception — and only double effect can ever excuse its ending.", "s": "It is consistent and it protects the most defenceless party without asking whether that party is wanted, convenient or healthy. The line at conception is at least a NON-ARBITRARY line: the genetic blueprint really is complete there, whereas 14 days, viability and birth are all chosen thresholds.", "w": "The rigidity is its own worst argument. Refusing abortion after rape or incest strikes many as cruelty dressed as principle, and Pojman's barb lands: a rule that permits the same death when it arrives as a side-effect of a hysterectomy but forbids it otherwise looks like it is tracking descriptions, not lives."}, {"n": "Situation ethics", "c": "Actual persons come before potential persons.", "s": "It can respond to the cases that make absolute rules look inhuman — the thalidomide mother, the raped girl in the mental hospital, the doctor in the camp — and it does so with a stated method rather than by simply flinching. Its focus on actual suffering people is a real moral consideration a rule can ignore.", "w": "Fletcher bases his calculations on these procedures' potential GOOD; a critic can as easily base them on their potential evil, and nothing in the theory settles which. It also gives no protection at all to the embryo, and the dystopia objection — a purchased super-race — is exactly the kind of long-range consequence an agapeic calculus is worst at seeing."}, {"n": "Virtue ethics", "c": "Compassion points one way — but the theory admits it is out of its depth.", "s": "It refuses the false comfort of a formula, and it asks the question the other two skip: what kind of people, and what kind of society, will these technologies produce? Its willingness to say that a theory built on a shared human telos may not survive trans-humanism is intellectually honest rather than evasive.", "w": "It gives no usable verdict on three of the four issues. Compassion pulls towards the research, the mean cannot be applied to characters that do not yet exist, and Aristotle's own remark on abortion is a line about the city state's rules rather than an ethical argument. On this lesson's issues it is the least decisive of the three."}, {"n": "Hursthouse — the wrong question", "c": "Abortion has nothing to do with rights, and nothing to do with whether the foetus is a person.", "s": "It breaks a genuine deadlock. Natural moral law and situation ethics both need an answer to 'when does personhood begin?' and neither can prove one; Hursthouse shows a serious moral analysis can proceed without it. Extending the vices to men and boys is also a corrective the other approaches simply do not make.", "w": "Refusing to settle personhood does not make the question go away — if the foetus IS a person, no reason short of self-defence is weighty enough, and her account cannot say so. 'Weighty' and 'trivial' also do a great deal of unexamined work, and different virtuous agents will draw that line very differently."}]}, "endoflife": {"terms": [{"term": "Voluntary euthanasia", "def": "the deliberate termination or shortening of a life, usually by a doctor, at the request of a mentally competent person in unbearable pain.", "note": "The request comes because the pain is unbearable and the condition terminal or life-threatening."}, {"term": "Assisted suicide", "def": "where the person is provided with the means to end their own life and administers it themselves at a time of their choosing.", "note": "The conditions overlap heavily with voluntary euthanasia; some sources use the terms interchangeably."}, {"term": "Eudaimonia", "def": "flourishing — living and doing well. For Aristotle it is the end at which a virtuous life aims.", "note": "The key virtue-ethics move: if eudaimonia is no longer achievable, is further living pointless?"}, {"term": "Retribution", "def": "punishment justified because the offender deserves it — the crime itself warrants the penalty.", "note": "The law of 'talion' (Genesis 9:6) is used by some natural-law theorists to support capital punishment."}, {"term": "Deterrence", "def": "punishment justified because it prevents future crime by the offender or by others.", "note": "The Catechism keeps protection and deterrence as motives but stresses the possibility of reform."}, {"term": "Autonomy", "def": "the claim that persons are free to act independently, and so have a right to death as well as a right to life.", "note": "The counter-question is what a society becomes once a right to death is granted."}], "views": [{"n": "Natural moral law", "c": "Life is God's gift — so you may not end your own. The state, however, may end another's.", "s": "It gives a clear and consistent account of who has the right to end a life, and it is not indifferent to suffering: the extraordinary-means principle allows a person to die without being kept alive officiously. On capital punishment it also anticipates the obvious abuse, restricting the power to public authority so that it never becomes revenge.", "w": "The two verdicts sit very awkwardly together. If life is God's gift and death the most fearsome evil, it is hard to see why the state may impose it on an offender who wants to live but not permit a dying person who wants to die. And the Catechism has itself moved a long way from Aquinas, which suggests the original reasoning was not as secure as it looked."}, {"n": "Situation ethics", "c": "The sacredness of PERSONALITY — not the mere length of time we live.", "s": "Its four questions about Jim are genuinely good practical ethics — competence, family pressure, depression, diagnostic reliability, second opinion — and they are exactly what real assisted-dying legislation tries to encode. Fletcher's distinction between the sacredness of personality and mere duration also names something the sanctity-of-life principle cannot express.", "w": "It cannot rule out the innocent man's execution, and 'greatest love for the greatest number' collapses into the utilitarian arithmetic Fletcher elsewhere wants to avoid. On capital punishment it produces no view at all — situationists simply disagree — which is a poor advertisement for a decision procedure."}, {"n": "Virtue ethics", "c": "Competing virtues, and no formula to rank them.", "s": "It is the only approach that can describe the Amour case adequately — not as a rule broken but as two real virtues in conflict — and its treatment of regret as evidence of intention captures something both rivals miss. On capital punishment, framing the issue as a question about justice rather than about outcomes is genuinely illuminating.", "w": "It supports both answers on euthanasia with equal ease: courage justifies ending the suffering and courage justifies enduring it. When a theory's central concept can be deployed on either side of the same case, it is fair to ask whether it is deciding anything — which is exactly what the 2024 question puts to you."}, {"n": "Dignity, autonomy and who decides", "c": "Every theory here claims to protect dignity. They locate it in different places.", "s": "It exposes that the three theories are not really disagreeing about the facts of these cases but about where dignity resides — and the brutalisation question shows that even a rules-based debate about capital punishment eventually turns into a question about character.", "w": "Naming the criterion does not settle it, and the autonomy claim proves too much: if the right to die is genuinely mine, it becomes hard to explain why society may not eventually treat it as something the dying are expected to exercise. That is the slippery slope natural moral law warned about, restated from the other side."}]}, "animals": {"terms": [{"term": "Sentience", "def": "the capacity to feel and to experience sensation — including pain, distress and pleasure.", "note": "Animals possess sentience, social organisation and cognitive skills: this is the factual basis of the whole debate."}, {"term": "Hierarchy of souls", "def": "Aristotle's ranking — vegetative (plants), sensitive (animals), rational (humans) — adopted wholesale by Aquinas.", "note": "Plants exist for animals; animals for humans. Everything in this lesson traces back to it."}, {"term": "Instrumental value", "def": "value only as a means to another's end. Aquinas holds animals have instrumental value only.", "note": "Only rational beings can determine their actions, so only they are owed concern for their own sakes."}, {"term": "Xenotransplantation", "def": "the transfer of cells, tissues or organs from one species to another — for example, genetically engineered pig hearts.", "note": "The likely donors are pigs: similar organ size, readily available; chimpanzees are endangered."}, {"term": "Stewardship", "def": "the reading of 'dominion' in Genesis 1:26 as responsible care for creation rather than ownership of it.", "note": "Catholic groups have used it to call on the Pope to act over blood sports."}, {"term": "Callousness", "def": "the vice of indifference to the suffering of others — for Hursthouse, the vice that blood sports display.", "note": "Callous to the animals AND to those who sympathise with them."}], "views": [{"n": "Natural moral law", "c": "Animals were created for whatever use humans choose to put them to.", "s": "It is consistent and it follows rigorously from a stated metaphysics rather than from convenience, and the Catholic tradition built on it has since added real constraints — kindness owed to animals, needless suffering condemned, pain relief required, the germline protected. That is a tradition capable of self-correction.", "w": "The premise cannot survive the facts. Aquinas relies on Aristotle's hierarchy, in which ALL souls have a final end — so, as Barad argues, interfering with an animal's end must be wrong on his own terms. And treating cruelty as wrong only because of what it might do to the perpetrator makes the animal's suffering morally invisible. Many see this as a source of centuries of cruelty."}, {"n": "Situation ethics", "c": "Agape is for persons — but agape is inclusive, not exclusive.", "s": "It can weigh two real goods against each other — human hunger against animal suffering — rather than ruling one out by definition, and its pragmatic conclusions (abandon factory farming for crops, develop lab-grown meat) are exactly the solutions the debate has since moved towards.", "w": "It produces flatly opposite verdicts on the same issue: some situationists say expand intensive farming for the starving, others say abolish it. And personalism builds in a thumb on the scales — animals count only as objects of human care, so the theory can never reach Barad's conclusion however sentient the animal turns out to be."}, {"n": "Virtue ethics", "c": "Compassion cannot be compartmentalised.", "s": "It gets furthest of the three towards giving animals genuine moral weight, because compassion cannot be selectively switched off — and Hursthouse's naming of callousness explains something rules and calculations miss: why blood sports strike people as revealing about the participant, not just harmful to the animal.", "w": "It is built on the very hierarchy that causes the problem, so it is arguing against its own foundations, and Aristotle himself dissected animals and lived with hunting as ordinary life. Scruton shows the theory can be turned the other way, and 'what would the practically wise person do?' remains no answer to a farmer deciding this year's stocking density."}, {"n": "Do animals count? Challenging the hierarchy", "c": "Establish the status, and the four verdicts follow. Fail to, and none of them are grounded.", "s": "It supplies the premise all three theories quietly assume and none defends, and it shows the Catholic tradition itself has moved well beyond Aquinas — which is powerful evidence that his hierarchy was never as secure as his followers treated it.", "w": "Establishing that animals have SOME value does not tell you how much, and the Catechism still grounds the duty in human dignity rather than in the animal, so the anthropocentric framing survives intact. Sentience alone will not tell you whether a pig may be killed for a heart that saves a child."}]}};
+(function(){
+  let fcTopic="all", fcType="terms";
+  const grid=document.getElementById("fcGrid"), count=document.getElementById("fcCount");
+  function esc(s){return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+  function build(){
+    const topics = fcTopic==="all" ? ["theftlying", "beginning", "endoflife", "animals"] : [fcTopic];
+    let cards=[];
+    topics.forEach(tp=>{
+      const d=FLASHCARDS[tp]; if(!d) return;
+      if(fcType==="terms"){ d.terms.forEach(t=>cards.push({tp,front:t.term,tag:label(tp),back:`<div class='fc-def'>${esc(t.def)}</div>`})); }
+      else { d.views.forEach(v=>cards.push({tp,front:v.n,tag:label(tp),back:`<div class='fc-def'>${esc(v.c)}</div><div class='fc-sw'><div class='up'><span class='k'>Strength</span><br>${esc(v.s)}</div><div class='dn' style='margin-top:6px'><span class='k'>Weakness</span><br>${esc(v.w)}</div></div>`})); }
+    });
+    grid.innerHTML=cards.map(c=>`
+      <button class="fc-card ${c.tp}" data-flipped="false" aria-label="Flashcard: ${esc(c.front)}. Tap to reveal.">
+        <div class="fc-inner">
+          <div class="fc-face fc-front"><div class="fc-tag">${c.tag}</div><div class="fc-term">${esc(c.front)}</div><div class="fc-flip">tap to flip ↺</div></div>
+          <div class="fc-face fc-back"><div class="fc-tag">${c.tag}</div>${c.back}</div>
+        </div>
+      </button>`).join("");
+    count.textContent = cards.length + " cards";
+    grid.querySelectorAll(".fc-card").forEach(el=>{
+      const flip=()=>el.dataset.flipped = el.dataset.flipped==="true" ? "false":"true";
+      el.addEventListener("click",flip);
+    });
+  }
+  function label(tp){return ({"theftlying": "Theft & Lying", "beginning": "Beginning of Life", "endoflife": "End of Life", "animals": "Non-Human Life & Death"})[tp]||tp;}
+  document.querySelectorAll('#flashcards .fc-tabs .fc-btn').forEach(b=>b.addEventListener("click",()=>{
+    document.querySelectorAll('#flashcards .fc-tabs .fc-btn').forEach(x=>x.setAttribute("aria-selected","false"));
+    b.setAttribute("aria-selected","true"); fcTopic=b.dataset.topic; build();
+  }));
+  document.querySelectorAll('#flashcards .fc-type .fc-btn').forEach(b=>b.addEventListener("click",()=>{
+    document.querySelectorAll('#flashcards .fc-type .fc-btn').forEach(x=>x.setAttribute("aria-selected","false"));
+    b.setAttribute("aria-selected","true"); fcType=b.dataset.type; build();
+  }));
+  build();
+})();
+
+/* =====================================================================
+   TEACHER: paste your YouTube link between the quotes below.
+   Any format works — youtube.com/watch?v=…, youtu.be/…, or an embed URL.
+   Leave it empty ("") and the page shows a "Video not set" placeholder.
+   ===================================================================== */
+const VIDEO_URL = "";
+
+(function wireVideo(){
+  const url=(VIDEO_URL||"").trim();
+  if(!url) return; // keep placeholder
+  // extract the 11-char YouTube id from common URL shapes
+  let id="";
+  const m = url.match(/(?:youtu\.be\/|v=|\/embed\/|\/shorts\/)([A-Za-z0-9_-]{11})/);
+  if(m) id=m[1];
+  else if(/^[A-Za-z0-9_-]{11}$/.test(url)) id=url; // a bare id
+  const frame=document.getElementById("videoFrame");
+  if(id && frame){
+    frame.innerHTML =
+      '<iframe src="https://www.youtube-nocookie.com/embed/'+id+'?rel=0" '+
+      'title="Applied Ethics — full unit review" '+
+      'allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" '+
+      'allowfullscreen loading="lazy"></iframe>';
+  } else if(frame){
+    // not a YouTube link — fall back to a button that opens it
+    frame.innerHTML =
+      '<div class="video-placeholder"><a class="res-btn big" style="background:#fff" href="'+url+'" target="_blank" rel="noopener"><span class="ic">▶</span><span><b>Watch the full unit review</b></span><span class="go">↗</span></a></div>';
+  }
+})();
+
+/* =====================================================================
+   TEACHER: paste your SharePoint share links between the quotes below.
+   Leave a link empty ("") and its button will show "Link not set".
+   Tip: in SharePoint, open the file's ... menu -> Copy link -> paste here.
+   ===================================================================== */
+const LINKS = {
+  theftlying_lesson:  "",
+  theftlying_booklet: "",
+  theftlying_podcast: "",
+  beginning_lesson:   "",
+  beginning_booklet:  "",
+  beginning_podcast:  "",
+  endoflife_lesson:   "",
+  endoflife_booklet:  "",
+  endoflife_podcast:  "",
+  animals_lesson:     "",
+  animals_booklet:    "",
+  animals_podcast:    "",
+  companion:          "",
+  review:             "",
+  overview_podcast:   "",
+  flashcards_pdf:     "",
+  exam_questions:     "",
+  textbook:           "",
+};
+
+(function wireResources(){
+  let anySet=false;
+  document.querySelectorAll(".res-btn").forEach(btn=>{
+    const url=(LINKS[btn.dataset.key]||"").trim();
+    if(url){
+      btn.href=url; btn.target="_blank"; btn.rel="noopener"; anySet=true;
+    }else{
+      btn.classList.add("unset"); btn.removeAttribute("href"); btn.setAttribute("aria-disabled","true");
+    }
+  });
+  if(anySet){ const n=document.getElementById("resNote"); if(n) n.classList.add("hide"); }
+})();
+</script>
+</body>
+</html>

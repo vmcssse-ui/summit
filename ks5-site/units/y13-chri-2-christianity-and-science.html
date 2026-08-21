@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Christianity and Science — Unit at a Glance</title>
+<style>
+  :root{
+    --ink:#12294D;        /* deep manuscript navy */
+    --ink-2:#0C1B33;
+    --parch:#F3ECDD;      /* aged parchment */
+    --parch-2:#EAE0C9;
+    --gold:#C9A227;       /* gold leaf */
+    --gold-soft:#E4CE86;
+    --rubric:#B01C2E;     /* rubrication red */
+    --teal:#00695C;
+    --violet:#6A1B9A;
+    --blue:#1565C0;
+    --green:#2E7D32;
+    --paper:#FBF7EE;
+    --line:rgba(18,41,77,.16);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1060px;margin:0 auto;padding:0 24px}
+  .eyebrow{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;font-weight:700}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    background:
+      radial-gradient(1200px 400px at 80% -10%, rgba(201,162,39,.18), transparent 60%),
+      linear-gradient(180deg,var(--ink) 0%, var(--ink-2) 100%);
+    color:var(--parch);
+    padding:64px 0 72px;
+    position:relative;
+    overflow:hidden;
+    border-bottom:3px solid var(--gold);
+  }
+  .hero::after{ /* faint ruled manuscript lines */
+    content:"";position:absolute;inset:0;pointer-events:none;opacity:.06;
+    background:repeating-linear-gradient(180deg,transparent 0 38px,#fff 38px 39px);
+  }
+  .hero .wrap{position:relative;z-index:2}
+  .crest{display:flex;align-items:center;gap:16px;margin-bottom:34px}
+  .crest svg{width:54px;height:54px;flex:none}
+  .crest .who{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-soft)}
+  .crest .who b{color:var(--parch);display:block;letter-spacing:.14em;font-size:.86rem;margin-top:3px}
+  h1{font-size:clamp(2.4rem,6vw,4.1rem);line-height:1.02;font-weight:700;letter-spacing:-.01em}
+  h1 .amp{color:var(--gold);font-style:italic}
+  .sub{margin-top:20px;max-width:56ch;font-size:1.12rem;color:#E7DFCB}
+  .bigq{
+    margin-top:30px;display:inline-flex;gap:14px;align-items:flex-start;
+    border-left:3px solid var(--gold);padding:8px 0 8px 18px;max-width:60ch;
+  }
+  .bigq .q{font-family:"Trebuchet MS",sans-serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-soft);padding-top:5px}
+  .bigq p{font-size:1.24rem;font-style:italic;color:#fff}
+
+  /* ---------- SECTION SHELL ---------- */
+  section{padding:64px 0}
+  .sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:8px}
+  .sec-head .num{font-family:"Trebuchet MS",sans-serif;color:var(--gold);font-weight:700;font-size:.9rem;letter-spacing:.15em}
+  .sec-head h2{font-size:clamp(1.6rem,3.4vw,2.3rem);letter-spacing:-.01em}
+  .sec-lead{color:#4a4a52;max-width:64ch;margin-bottom:34px;font-size:1.05rem}
+
+  /* ---------- SIGNATURE: authority spectrum ---------- */
+  .spectrum-card{
+    background:linear-gradient(180deg,#fff, var(--paper));
+    border:1px solid var(--line);border-radius:14px;
+    box-shadow:0 18px 40px -28px rgba(18,41,77,.5);
+    padding:28px 26px 34px;
+  }
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:26px}
+  .tab{
+    font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.82rem;letter-spacing:.04em;
+    border:1px solid var(--line);background:#fff;color:var(--ink);
+    padding:9px 16px;border-radius:999px;cursor:pointer;transition:.18s;
+  }
+  .tab[aria-selected="true"]{background:var(--ink);color:var(--parch);border-color:var(--ink)}
+  .tab:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+
+  .axis{position:relative;margin:8px 4px 0}
+  .axis-labels{display:flex;justify-content:space-between;font-family:"Trebuchet MS",sans-serif;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:#6a6a72;margin-bottom:10px}
+  .axis-labels .l{color:var(--rubric);font-weight:700}
+  .axis-labels .r{color:var(--blue);font-weight:700}
+  .bar{height:10px;border-radius:999px;background:linear-gradient(90deg,var(--rubric),#b06a1e 40%,#5a7d3a 66%,var(--blue));position:relative}
+  .ticks{position:relative;height:112px;margin-top:0}
+  .node{position:absolute;top:0;transform:translateX(-50%);width:132px;text-align:center;cursor:pointer}
+  .node .dot{width:20px;height:20px;border-radius:50%;background:#fff;border:3px solid var(--ink);margin:0 auto;position:relative;top:-15px;transition:.18s}
+  .node .nm{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.82rem;margin-top:-6px}
+  .node .sb{font-size:.76rem;color:#6a6a72;font-style:italic;margin-top:2px;line-height:1.25}
+  .node:hover .dot,.node[data-active="true"] .dot{transform:scale(1.25);border-color:var(--gold);box-shadow:0 0 0 5px rgba(201,162,39,.2)}
+  .node:focus-visible{outline:none}
+  .node:focus-visible .dot{outline:3px solid var(--gold);outline-offset:3px}
+
+  .readout{
+    margin-top:14px;background:var(--ink);color:var(--parch);border-radius:12px;padding:20px 22px;
+    min-height:104px;display:flex;gap:18px;align-items:flex-start;
+  }
+  .readout .badge{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;
+    background:var(--gold);color:var(--ink-2);padding:6px 10px;border-radius:6px;white-space:nowrap;margin-top:2px}
+  .readout .body h4{font-size:1.12rem;margin-bottom:4px}
+  .readout .body .auth{color:var(--gold-soft);font-family:"Trebuchet MS",sans-serif;font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+  .readout .body p{color:#E7DFCB;font-size:.98rem}
+  .readout .body .sw{display:flex;gap:22px;margin-top:10px;flex-wrap:wrap}
+  .readout .body .sw div{font-size:.9rem}
+  .readout .body .sw .k{font-family:"Trebuchet MS",sans-serif;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase}
+  .readout .body .sw .up .k{color:#8BD08F}
+  .readout .body .sw .dn .k{color:#F2A0A0}
+  .hint{font-family:"Trebuchet MS",sans-serif;font-size:.76rem;color:#8a8a92;margin-top:14px;text-align:center}
+
+  /* ---------- THREE DEBATES ---------- */
+  .triptych{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
+  .panel{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;display:flex;flex-direction:column}
+  .panel .cap{padding:16px 18px;color:#fff;position:relative}
+  .panel.b1 .cap{background:linear-gradient(135deg,#1F4E79,#12294D)}
+  .panel.b2 .cap{background:linear-gradient(135deg,#00695C,#0C3B34)}
+  .panel.b3 .cap{background:linear-gradient(135deg,#2E7D32,#14421A)}
+  .panel.b4 .cap{background:linear-gradient(135deg,#B01C2E,#5E0F19)}
+  .panel.b5 .cap{background:linear-gradient(135deg,#6A1B9A,#3B0E56)}
+  .panel.b6 .cap{background:linear-gradient(135deg,#1565C0,#0B3A6B)}
+  .panel .cap .n{font-family:"Trebuchet MS",sans-serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;opacity:.85}
+  .panel .cap h3{font-size:1.24rem;margin-top:3px}
+  .panel .cap .ask{font-style:italic;font-size:.9rem;margin-top:8px;opacity:.95}
+  .panel .body{padding:16px 18px;font-size:.92rem}
+  .panel .body .row{display:flex;gap:9px;padding:7px 0;border-bottom:1px dashed var(--line)}
+  .panel .body .row:last-child{border-bottom:0}
+  .panel .body .row .v{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.8rem;white-space:nowrap;color:var(--ink)}
+  .panel .body .row .d{color:#55555c}
+
+  /* ---------- THREAD ---------- */
+  .thread{background:var(--ink);color:var(--parch);border-radius:14px;padding:34px 30px;position:relative;overflow:hidden}
+  .thread::before{content:"";position:absolute;inset:0;opacity:.07;background:repeating-linear-gradient(180deg,transparent 0 30px,#fff 30px 31px)}
+  .thread .wrap2{position:relative;z-index:2}
+  .thread h2{color:#fff;font-size:clamp(1.5rem,3vw,2.1rem);margin-bottom:8px}
+  .thread .lead{color:#E7DFCB;max-width:62ch;margin-bottom:24px}
+  .threads{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .tcard{border:1px solid rgba(228,206,134,.3);border-radius:10px;padding:16px 16px 18px;background:rgba(255,255,255,.03)}
+  .tcard .t{font-family:"Trebuchet MS",sans-serif;color:var(--gold);font-weight:700;font-size:.82rem;letter-spacing:.05em;margin-bottom:6px}
+  .tcard p{font-size:.9rem;color:#E7DFCB}
+
+  /* ---------- REVISE ---------- */
+  .revise{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:start}
+  .steps{counter-reset:s;display:flex;flex-direction:column;gap:14px}
+  .step{display:flex;gap:16px;align-items:flex-start;border-left:2px solid var(--line);padding:2px 0 2px 18px;position:relative}
+  .step::before{counter-increment:s;content:counter(s);position:absolute;left:-15px;top:-2px;width:28px;height:28px;border-radius:50%;
+    background:var(--gold);color:var(--ink-2);font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.9rem;display:grid;place-items:center}
+  .step h4{font-size:1.02rem}
+  .step p{font-size:.9rem;color:#55555c;margin-top:2px}
+  .ao{border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .ao .h{padding:12px 16px;font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.82rem;letter-spacing:.06em;color:#fff}
+  .ao .ao1 .h,.ao .h.ao1{background:var(--ink)}
+  .ao .h.ao2{background:var(--green)}
+  .ao .c{padding:14px 16px;font-size:.9rem;border-bottom:1px solid var(--line)}
+  .ao .c:last-child{border-bottom:0}
+  .ao .c b{font-family:"Trebuchet MS",sans-serif;font-size:.78rem;letter-spacing:.04em}
+
+  /* ---------- VIDEO ---------- */
+  .video-frame{position:relative;width:100%;aspect-ratio:16/9;border-radius:14px;overflow:hidden;
+    border:1px solid var(--line);box-shadow:0 20px 44px -30px rgba(18,41,77,.55);background:var(--ink)}
+  .video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .video-placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:14px;text-align:center;padding:30px;color:#C9C4B6;
+    background:radial-gradient(700px 300px at 50% 30%,rgba(201,162,39,.14),transparent 60%),linear-gradient(180deg,var(--ink),var(--ink-2))}
+  .video-placeholder .vp-badge{font-family:"Trebuchet MS",Verdana,sans-serif;font-weight:700;font-size:.72rem;letter-spacing:.14em;
+    text-transform:uppercase;background:var(--gold);color:var(--ink-2);padding:6px 12px;border-radius:6px}
+  .video-placeholder p{max-width:52ch;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.92rem;line-height:1.55}
+  .video-placeholder code{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:4px;padding:1px 6px}
+
+
+  /* ---------- FLASHCARDS ---------- */
+  .fc-controls{display:flex;gap:18px;flex-wrap:wrap;align-items:center;margin-bottom:24px}
+  .fc-tabs,.fc-type{display:flex;gap:8px;flex-wrap:wrap}
+  .fc-btn{font-family:"Trebuchet MS",Verdana,sans-serif;font-weight:700;font-size:.8rem;border:1px solid var(--line);
+    background:#fff;color:var(--ink);padding:8px 15px;border-radius:999px;cursor:pointer;transition:.18s}
+  .fc-btn[aria-selected="true"]{background:var(--ink);color:var(--parch);border-color:var(--ink)}
+  .fc-btn:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+  .fc-hint{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.78rem;color:#8a8a92;margin-left:auto}
+  .fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+  .fc-card{perspective:1200px;height:180px;cursor:pointer;background:none;border:0;padding:0;font-family:inherit;text-align:left}
+  .fc-inner{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+  .fc-card[data-flipped="true"] .fc-inner{transform:rotateY(180deg)}
+  .fc-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+    border-radius:12px;padding:18px;display:flex;flex-direction:column;border:1px solid var(--line);overflow:auto}
+  .fc-front{background:linear-gradient(180deg,#fff,var(--paper))}
+  .fc-back{transform:rotateY(180deg);color:var(--parch)}
+  .fc-card.reason .fc-back{background:linear-gradient(160deg,#1F4E79,#12294D)}
+  .fc-card.discoveries .fc-back{background:linear-gradient(160deg,#00695C,#0C3B34)}
+  .fc-card.ethics .fc-back{background:linear-gradient(160deg,#2E7D32,#14421A)}
+  .fc-card.challenge .fc-back{background:linear-gradient(160deg,#B01C2E,#5E0F19)}
+  .fc-card.polkinghorne .fc-back{background:linear-gradient(160deg,#6A1B9A,#3B0E56)}
+  .fc-card.genetic .fc-back{background:linear-gradient(160deg,#1565C0,#0B3A6B)}
+  .fc-tag{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--gold);font-weight:700;margin-bottom:8px}
+  .fc-front .fc-tag{color:#9a8028}
+  .fc-term{font-size:1.24rem;font-weight:700;line-height:1.15}
+  .fc-front .fc-flip{margin-top:auto;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.72rem;color:#9a9a9a}
+  .fc-def{font-size:.92rem;line-height:1.4}
+  .fc-back .fc-sw{margin-top:8px;font-size:.82rem}
+  .fc-back .fc-sw .k{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.62rem;letter-spacing:.08em;text-transform:uppercase}
+  .fc-back .up .k{color:#8BD08F}.fc-back .dn .k{color:#F2A0A0}
+  @media(max-width:820px){.fc-grid{grid-template-columns:1fr 1fr}.fc-hint{width:100%;margin-left:0}}
+
+  /* ---------- RESOURCES ---------- */
+  .res-note{background:#FBF0D6;border:1px solid var(--gold);border-left:4px solid var(--gold);
+    border-radius:8px;padding:12px 16px;margin-bottom:22px;font-size:.9rem;color:#5a4a1c;
+    font-family:"Trebuchet MS",Verdana,sans-serif}
+  .res-note code{background:#fff;border:1px solid var(--line);border-radius:4px;padding:1px 6px;font-size:.85em}
+  .res-note.hide{display:none}
+  .res-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:18px;margin-bottom:16px}
+  .res-col{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff}
+  .rc-head{padding:14px 16px;color:#fff}
+  .rc1 .rc-head{background:linear-gradient(135deg,#1F4E79,#12294D)}
+  .rc2 .rc-head{background:linear-gradient(135deg,#00695C,#0C3B34)}
+  .rc3 .rc-head{background:linear-gradient(135deg,#2E7D32,#14421A)}
+  .rc4 .rc-head{background:linear-gradient(135deg,#B01C2E,#5E0F19)}
+  .rc5 .rc-head{background:linear-gradient(135deg,#6A1B9A,#3B0E56)}
+  .rc6 .rc-head{background:linear-gradient(135deg,#1565C0,#0B3A6B)}
+  .rc-head .rc-n{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;opacity:.85}
+  .rc-head h3{font-size:1.16rem;margin-top:2px}
+  .res-btn{display:flex;align-items:center;gap:12px;padding:13px 16px;border-top:1px solid var(--line);
+    font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.92rem;color:var(--ink);text-decoration:none;
+    cursor:pointer;transition:background .15s}
+  .res-col .res-btn:first-of-type{border-top:0}
+  .res-btn:hover{background:var(--parch)}
+  .res-btn .ic{width:26px;height:26px;flex:none;display:grid;place-items:center;border-radius:6px;
+    background:var(--ink);color:var(--gold);font-size:.9rem}
+  .res-btn .go{margin-left:auto;color:var(--gold);font-weight:700;opacity:0;transition:.15s}
+  .res-btn:hover .go{opacity:1}
+  .res-btn:focus-visible{outline:3px solid var(--gold);outline-offset:-3px}
+  .res-btn.unset{opacity:.5;cursor:not-allowed}
+  .res-btn.unset .go{content:"";opacity:0}
+  .res-btn.unset::after{content:"Link not set";margin-left:auto;font-size:.74rem;color:#9a7d2c;
+    background:#FBF0D6;border:1px solid var(--gold-soft);border-radius:5px;padding:2px 7px}
+  .res-wide{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:2px}
+  .res-btn.big{border:1px solid var(--line);border-radius:12px;background:#fff;padding:16px 18px}
+  .res-btn.big:hover{background:var(--parch)}
+  .res-btn.big .ic{width:34px;height:34px;font-size:1.1rem;background:var(--ink)}
+  @media(max-width:820px){.res-grid{grid-template-columns:1fr}.res-wide{grid-template-columns:1fr}}
+
+  footer{background:var(--ink-2);color:#C9C4B6;padding:26px 0;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.8rem}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+  footer .gold{color:var(--gold)}
+
+  @media(max-width:820px){
+    .triptych{grid-template-columns:1fr}
+    .threads{grid-template-columns:1fr}
+    .revise{grid-template-columns:1fr}
+    .node{width:96px}
+    .node .sb{display:none}
+  }
+  @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<!--BACKPILL--><a href="../alevel.html" style="position:fixed;left:14px;bottom:14px;z-index:99999;background:#12294D;color:#F6F1E4;font:600 14px/1 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;padding:10px 15px;border-radius:999px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.28);border:1px solid #C9A227">&#8592; All units</a>
+<header class="hero">
+  <div class="wrap">
+    <div class="crest">
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <rect x="2" y="2" width="60" height="60" rx="13" fill="#0C1B33" stroke="#C9A227" stroke-width="1.5"/>
+        <g fill="none" stroke="#F3ECDD" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M23 21C21 17 21 14 22 12c2 2 3 5 3 8"/><path d="M41 21c2-4 2-7 1-9-2 2-3 5-3 8"/>
+          <path d="M32 17C21 17 18 26 18 33c0 12 6 19 14 19s14-7 14-19c0-7-3-16-14-16z"/>
+          <path d="M32 21c-3 4-5 6-7 7M32 21c3 4 5 6 7 7"/>
+        </g>
+        <circle cx="27" cy="31" r="5" fill="none" stroke="#F3ECDD" stroke-width="2.4"/>
+        <circle cx="37" cy="31" r="5" fill="none" stroke="#F3ECDD" stroke-width="2.4"/>
+        <circle cx="27" cy="31" r="1.9" fill="#F3ECDD"/><circle cx="37" cy="31" r="1.9" fill="#F3ECDD"/>
+        <path d="M32 34l-2.2 4.2h4.4z" fill="#C9A227"/>
+      </svg>
+      <div class="who">A-Level Religious Studies · AQA Paper 2B
+        <b>Harlington School · Philosophy &amp; Ethics</b></div>
+    </div>
+    <h1>Christianity and Science</h1>
+    <p class="sub">Six sub-topics, one argument: what happens to Christian belief when knowledge is built on evidence and reason. Evidence &amp; reason · the discoveries · science &amp; ethics · the challenge to belief · Polkinghorne · genetic engineering.</p>
+    <div class="bigq">
+      <span class="q">The<br>big<br>question</span>
+      <p>When science explains the world by evidence and reason, how much room is left for God — and what <em>kind</em> of God survives?</p>
+    </div>
+  </div>
+</header>
+
+<!-- SIGNATURE: SPECTRUM -->
+<section id="spectrum">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">01</span><h2>The knowledge spectrum</h2></div>
+    <p class="sec-lead">Every debate in this unit lines up on one axis — from <b>science alone decides</b> to <b>faith is untouched</b>. Pick a sub-topic, then tap a position to see what it claims and where it is strong or weak.</p>
+
+    <div class="spectrum-card">
+      <div class="tabs" role="tablist" aria-label="Choose a sub-topic">
+        <button class="tab" role="tab" aria-selected="true" data-topic="reason">1 Evidence & Reason</button>
+        <button class="tab" role="tab" aria-selected="false" data-topic="discoveries">2 The Discoveries</button>
+        <button class="tab" role="tab" aria-selected="false" data-topic="ethics">3 Science & Ethics</button>
+        <button class="tab" role="tab" aria-selected="false" data-topic="challenge">4 Challenge to Belief</button>
+        <button class="tab" role="tab" aria-selected="false" data-topic="polkinghorne">5 Polkinghorne</button>
+        <button class="tab" role="tab" aria-selected="false" data-topic="genetic">6 Genetic Engineering</button>
+      </div>
+
+      <div class="axis">
+        <div class="axis-labels"><span class="l" id="poleL"></span><span class="r" id="poleR"></span></div>
+        <div class="bar"></div>
+        <div class="ticks" id="ticks"></div>
+      </div>
+
+      <div class="readout" id="readout" aria-live="polite"></div>
+      <p class="hint">Tap a circle — or use Tab and Enter — to explore each position.</p>
+    </div>
+  </div>
+</section>
+
+<!-- THE THREAD -->
+<section>
+  <div class="wrap">
+    <div class="thread">
+      <div class="wrap2">
+        <h2>The thread that ties it together</h2>
+        <p class="lead">Top answers don't treat the six sub-topics separately. Three ideas run through all of them — spot the thread and you're writing at the top of the mark scheme.</p>
+        <div class="threads">
+          <div class="tcard"><div class="t">What KIND of thing is God?</div><p>A being inside the world can be crowded out by explanation; Being-itself cannot. Almost every argument here turns on which one you mean.</p></div>
+          <div class="tcard"><div class="t">What counts as EVIDENCE?</div><p>Falsification, fine-tuning, religious experience, scripture. Each sub-topic asks whether faith may argue from evidence — or must live without it.</p></div>
+          <div class="tcard"><div class="t">Adapt or refuse?</div><p>Rahner and Fletcher adapt; creationism refuses. The same choice returns for evolution, for ethics and for genetic engineering.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SIX DEBATES -->
+<section id="debates">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">02</span><h2>The same question, six times</h2></div>
+    <p class="sec-lead">The unit splits into six debates. They look different, but each is really asking <em>how much room scientific explanation leaves for God</em>.</p>
+    <div class="triptych">
+      <div class="panel b1">
+        <div class="cap"><div class="n">Sub-topic 1</div><h3>Evidence &amp; Reason</h3><p class="ask">If knowledge must rest on evidence and reason, where does that leave faith?</p></div>
+        <div class="body">
+          <div class="row"><span class="v">The scientific outlook</span><span class="d">Evidence in, hypothesis out, test everything — and hold every belief tentatively.</span></div>
+          <div class="row"><span class="v">Scientism</span><span class="d">The step further: science is the ONLY route to true knowledge — and it will explain everything.</span></div>
+          <div class="row"><span class="v">Deism</span><span class="d">An intelligent but IMPERSONAL creator: God builds the machine, winds it up — and walks away.</span></div>
+          <div class="row"><span class="v">Existentialism</span><span class="d">Faith answers questions of MEANING, not questions of MECHANISM — so there is nothing to fight over.</span></div>
+        </div>
+      </div>
+      <div class="panel b2">
+        <div class="cap"><div class="n">Sub-topic 2</div><h3>The Discoveries</h3><p class="ask">Do the great discoveries dismantle Christian belief — or describe how God creates?</p></div>
+        <div class="body">
+          <div class="row"><span class="v">Evolution</span><span class="d">A simple natural mechanism that explains design — and dethrones purpose.</span></div>
+          <div class="row"><span class="v">The Big Bang</span><span class="d">Not an explosion IN space — the expansion OF space: a universe with a beginning.</span></div>
+          <div class="row"><span class="v">Quantum theory</span><span class="d">Uncertainty built into nature — an obstacle for a clockwork God, an opening for a subtle one.</span></div>
+          <div class="row"><span class="v">Neuroscience</span><span class="d">If every experience is brain activity, what is left of the soul?</span></div>
+        </div>
+      </div>
+      <div class="panel b3">
+        <div class="cap"><div class="n">Sub-topic 3</div><h3>Science &amp; Ethics</h3><p class="ask">Science keeps widening what CAN be done — can Christian ethics keep deciding what SHOULD be done?</p></div>
+        <div class="body">
+          <div class="row"><span class="v">Modern medicine</span><span class="d">The power to prolong life — and the duty to decide when not to.</span></div>
+          <div class="row"><span class="v">Evolutionary ethics</span><span class="d">If only the fittest survive, is compassion a design flaw?</span></div>
+          <div class="row"><span class="v">Environmental ethics</span><span class="d">The crisis science measured — and a doctrine helped cause.</span></div>
+          <div class="row"><span class="v">The stimulus thesis</span><span class="d">Science is the ally that will not let Christian ethics sleep.</span></div>
+        </div>
+      </div>
+      <div class="panel b4">
+        <div class="cap"><div class="n">Sub-topic 4</div><h3>The Challenge to Belief</h3><p class="ask">When science explains, does God shrink — and what kind of God survives?</p></div>
+        <div class="body">
+          <div class="row"><span class="v">The case for the challenge</span><span class="d">God retreats as explanation advances — and an unfalsifiable God is no claim at all.</span></div>
+          <div class="row"><span class="v">The Christian responses</span><span class="d">Three ways to say the same thing: there never was a gap, because God was never a gap-filler.</span></div>
+          <div class="row"><span class="v">The Big Bang contested</span><span class="d">A beginning, impossibly tuned — or one lucky universe among 10⁵⁰⁰?</span></div>
+          <div class="row"><span class="v">Creationist views</span><span class="d">Where the Bible and science differ, believe the Bible — three ways of saying so.</span></div>
+        </div>
+      </div>
+      <div class="panel b5">
+        <div class="cap"><div class="n">Sub-topic 5</div><h3>Polkinghorne</h3><p class="ask">Does Polkinghorne PROVE science and Christianity are compatible — or only that a scientist can believe?</p></div>
+        <div class="body">
+          <div class="row"><span class="v">Science and Creation</span><span class="d">The world can be UNDERSTOOD — and that is the most religiously suggestive fact of all.</span></div>
+          <div class="row"><span class="v">Science and Providence</span><span class="d">A personal God with real content: acting patiently, subtly, at the quantum level.</span></div>
+          <div class="row"><span class="v">One World</span><span class="d">Two disciplines, one method: ordering experience into precise truth.</span></div>
+          <div class="row"><span class="v">The general verdict</span><span class="d">One valid scientific claim — 'there is a God' — and an honest limit: it is not specifically Christian.</span></div>
+        </div>
+      </div>
+      <div class="panel b6">
+        <div class="cap"><div class="n">Sub-topic 6</div><h3>Genetic Engineering</h3><p class="ask">Healing, improving, redesigning — where must a Christian draw the line on genetic engineering?</p></div>
+        <div class="body">
+          <div class="row"><span class="v">The foundational split</span><span class="d">Both sides start from 'life is God's gift' — and walk in opposite directions.</span></div>
+          <div class="row"><span class="v">The Catholic response</span><span class="d">Feed the hungry, heal the sick, hesitate at the germline — and never redesign humanity.</span></div>
+          <div class="row"><span class="v">The Protestant range</span><span class="d">Many churches, one spectrum — with Fletcher refusing to rule anything out.</span></div>
+          <div class="row"><span class="v">The Adventist framework</span><span class="d">One church wrote it down: four areas of concern, ten principles.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESOURCES -->
+<section id="resources">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">03</span><h2>Your resources</h2></div>
+    <p class="sec-lead">Everything for this unit, in one place. Teach order per sub-topic: lesson deck → podcast while completing the booklet → review lesson → the Companion.</p>
+    <p class="note" id="resNote">Teacher: paste your SharePoint share links into the <code>LINKS</code> object near the bottom of this file. Buttons stay greyed out until a link is set.</p>
+    <div class="res-grid">
+      <div class="res-col rc1">
+        <div class="rc-head"><span class="rc-n">Sub-topic 1</span><h3>Evidence &amp; Reason</h3></div>
+        <a class="res-btn" data-key="reason_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="reason_booklet"><span class="ic">✎</span><span>Completion booklet</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="reason_review"><span class="ic">⟳</span><span>Review lesson</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="reason_podcast"><span class="ic">♪</span><span>Lesson podcast</span><span class="go">↗</span></a>
+      </div>
+      <div class="res-col rc2">
+        <div class="rc-head"><span class="rc-n">Sub-topic 2</span><h3>The Discoveries</h3></div>
+        <a class="res-btn" data-key="discoveries_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="discoveries_booklet"><span class="ic">✎</span><span>Completion booklet</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="discoveries_review"><span class="ic">⟳</span><span>Review lesson</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="discoveries_podcast"><span class="ic">♪</span><span>Lesson podcast</span><span class="go">↗</span></a>
+      </div>
+      <div class="res-col rc3">
+        <div class="rc-head"><span class="rc-n">Sub-topic 3</span><h3>Science &amp; Ethics</h3></div>
+        <a class="res-btn" data-key="ethics_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="ethics_booklet"><span class="ic">✎</span><span>Completion booklet</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="ethics_review"><span class="ic">⟳</span><span>Review lesson</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="ethics_podcast"><span class="ic">♪</span><span>Lesson podcast</span><span class="go">↗</span></a>
+      </div>
+      <div class="res-col rc4">
+        <div class="rc-head"><span class="rc-n">Sub-topic 4</span><h3>The Challenge to Belief</h3></div>
+        <a class="res-btn" data-key="challenge_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="challenge_booklet"><span class="ic">✎</span><span>Completion booklet</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="challenge_review"><span class="ic">⟳</span><span>Review lesson</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="challenge_podcast"><span class="ic">♪</span><span>Lesson podcast</span><span class="go">↗</span></a>
+      </div>
+      <div class="res-col rc5">
+        <div class="rc-head"><span class="rc-n">Sub-topic 5</span><h3>Polkinghorne</h3></div>
+        <a class="res-btn" data-key="polkinghorne_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="polkinghorne_booklet"><span class="ic">✎</span><span>Completion booklet</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="polkinghorne_review"><span class="ic">⟳</span><span>Review lesson</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="polkinghorne_podcast"><span class="ic">♪</span><span>Lesson podcast</span><span class="go">↗</span></a>
+      </div>
+      <div class="res-col rc6">
+        <div class="rc-head"><span class="rc-n">Sub-topic 6</span><h3>Genetic Engineering</h3></div>
+        <a class="res-btn" data-key="genetic_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="genetic_booklet"><span class="ic">✎</span><span>Completion booklet</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="genetic_review"><span class="ic">⟳</span><span>Review lesson</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="genetic_podcast"><span class="ic">♪</span><span>Lesson podcast</span><span class="go">↗</span></a>
+      </div>
+    </div>
+    <div class="res-wide">
+      <a class="res-btn big" data-key="companion"><span class="ic">◈</span><span><b>The Philosopher Companion</b> — checklist, key words, review workbook, AO1 &amp; AO2 planning</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="questions"><span class="ic">?</span><span><b>Exam questions</b> — real AQA past questions + practice, by sub-topic</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="overview_podcast"><span class="ic">♫</span><span><b>Overview podcast</b> — the whole unit as one argument (team teach)</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="flashcards_pdf"><span class="ic">▤</span><span><b>Printable flashcards</b> — 60 fold-over cards, colour-tabbed by sub-topic</span><span class="go">↗</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- REVISE -->
+<section id="revise">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">04</span><h2>How to revise this unit</h2></div>
+    <p class="sec-lead">Use your resources in this order. The <b>Philosopher Companion</b> is where you learn to <em>plan</em> both question types.</p>
+    <div class="revise">
+      <div class="steps">
+        <div class="step"><div><h4>Watch the lesson &amp; listen to the podcast</h4><p>One podcast per sub-topic — a teacher and student talk each position through to a judgement. Annotate as you listen.</p></div></div>
+        <div class="step"><div><h4>Complete the greyscale booklet</h4><p>Read the given text, write the key claims in your own words, then decide the strength and weakness you'd give each position.</p></div></div>
+        <div class="step"><div><h4>Match &amp; apply the key terms</h4><p>In the Companion: match each term to its meaning, then use it in a sentence. RAG-rate the mastery checklist with the three faces.</p></div></div>
+        <div class="step"><div><h4>Plan AO1, then build AO2 on top</h4><p>Use the Companion frameworks and the guidance-left / your-turn-right scaffolds. Never evaluate what you haven't first explained.</p></div></div>
+      </div>
+      <div class="ao">
+        <div class="ao1"><div class="h ao1">AO1 · Examine (10)</div></div>
+        <div class="c"><b>What it is —</b> the factual chain: define the key terms, set out each position in order, and apply the evidence (evolution, the Big Bang, genetic engineering).</div>
+        <div class="c"><b>Aim —</b> explain the whole range accurately and neutrally. No judging yet.</div>
+        <div class="h ao2">AO2 · Evaluate the claim (15)</div>
+        <div class="c"><b>What it is —</b> a three-paragraph dialectic: position, then evaluation → counter-evaluation → implication; mirror it; then judge.</div>
+        <div class="c"><b>Aim —</b> split the claim, weigh the positions, use one as a lens on another, and reach a judgement that links back to your thesis.</div>
+        <div class="c"><b>Also possible —</b> a 25-mark “critically examine and evaluate” dialogue question that crosses components (e.g. ‘Science shows that it is not reasonable to believe in God’). Plan those last.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="watch">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">05</span><h2>Watch: the whole unit in one go</h2></div>
+    <p class="sec-lead">A full review of <b>Christianity and Science</b> — all six sub-topics in one go. Best watched before you start revising, then again to check your recall.</p>
+    <div class="video-frame" id="videoFrame">
+      <div class="video-placeholder" id="videoPlaceholder">
+        <div class="vp-badge">Video not set</div>
+        <p><b>Teacher:</b> paste the YouTube link in the <code>VIDEO_URL</code> line near the bottom of this file. The player then appears here automatically.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FLASHCARDS -->
+<section id="flashcards">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">06</span><h2>Flashcards — test yourself</h2></div>
+    <p class="sec-lead">Sixty cards. Flip one to check yourself. Switch between <b>key terms</b> (term → meaning) and <b>positions</b> (position → claim, strength &amp; weakness), and filter by sub-topic. The same set prints as fold-over cards from the PDF above.</p>
+    <div class="fc-controls">
+      <div class="fc-tabs" role="tablist" aria-label="Sub-topic">
+        <button class="fc-btn" role="tab" aria-selected="true"  data-topic="all">All</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-topic="reason">1 Evidence &amp; Reason</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-topic="discoveries">2 The Discoveries</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-topic="ethics">3 Science &amp; Ethics</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-topic="challenge">4 Challenge to Belief</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-topic="polkinghorne">5 Polkinghorne</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-topic="genetic">6 Genetic Engineering</button>
+      </div>
+      <div class="fc-type" role="tablist" aria-label="Card type">
+        <button class="fc-btn" role="tab" aria-selected="true"  data-type="terms">Key terms</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-type="views">Positions</button>
+      </div>
+      <span class="fc-hint">Tap any card to flip · <span id="fcCount"></span></span>
+    </div>
+    <div class="fc-grid" id="fcGrid"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Christianity and Science · Unit at a glance</span>
+    <span class="gold">Harlington School · Philosophy &amp; Ethics</span>
+  </div>
+</footer>
+
+<script>
+const DATA = {"reason": {"poles": ["Science is the ONLY knowledge", "Faith and science are DIFFERENT knowledge"], "nodes": [{"x": 8, "nm": "Scientism", "sb": "one method, one truth", "auth": "Science ALONE — everything else is noise", "claim": "Scientism turns a successful method into a total worldview: discovering scientific laws offers the only route to knowledge; whatever science cannot measure is not meaningful.", "s": "Ruthlessly consistent: it applies the standard of evidence everywhere, with no special pleading for comfortable beliefs.", "w": "It is self-undermining (its central claim is not scientific) and impoverishing — whole regions of human understanding are ruled out by definition, not by argument."}, {"x": 36, "nm": "The scientific outlook", "sb": "best available explanation", "auth": "Evidence and reason — tentative, testable, revisable", "claim": "Since the seventeenth century science has been based on empiricism rather than rationalism: it starts with observation and experiment, not pure thought. The inductive method is the engine of the whole enterprise.", "s": "It is self-correcting and spectacularly productive: no other way of knowing has matched its record of prediction, explanation and technology.", "w": "Its own logic limits it: induction never delivers certainty, and no evidence is free from interpretation — human mental processes always play a part."}, {"x": 64, "nm": "Deism", "sb": "order proves a retired designer", "auth": "God DESIGNED the laws — then retired", "claim": "One early Christian response to the rise of science. If everything can be explained by physical laws, there is little scope for a personal God who enters nature and performs miracles — but an ordered universe still suggests an intelligent designer.", "s": "Fully compatible with a law-governed universe: science can never refute a God who never acts, and the universe's order still gets a religious explanation.", "w": "Polkinghorne: it is not the Christian God at all — a God you cannot pray to, who does not care or provide, is an intellectual idea, not a person to be in relationship with."}, {"x": 92, "nm": "Existentialism", "sb": "meaning is a different question", "auth": "Faith rules MEANING; science rules MECHANISM", "claim": "Existentialism holds that humans create their own personal reality through the choices they make. This approach is clearly very different from that of science — and it grounds a second Christian response to science's rise.", "s": "Dissolves the conflict at a stroke, and matches how faith actually works: commitment, not laboratory evidence, is the currency of religion.", "w": "A faith no evidence can touch risks becoming a faith that says nothing about the world — critics ask whether it has been saved, or emptied."}]}, "discoveries": {"poles": ["UNDERMINES Christian belief", "SUPPORTS Christian belief"], "nodes": [{"x": 8, "nm": "Neuroscience", "sb": "the soul under pressure", "auth": "The soul challenged; mind not yet reduced to matter", "claim": "Since Descartes, dualists made an absolute distinction between the thinking self and the physical body — fitting the Christian idea of a soul that inhabits a body and lives on after death. Neuroscience has put that picture under severe pressure.", "s": "The Christian reply is genuinely philosophical, not defensive: Dual Aspect Monism concedes all the brain science while denying the reduction — minds are MORE than brain activity.", "w": "The trend-line troubles believers: every gap neuroscience closes makes the immaterial soul look more like the god-of-the-gaps — retreating as the scans improve."}, {"x": 36, "nm": "Evolution", "sb": "purpose challenged — then re-read", "auth": "Purpose and uniqueness challenged; God re-read as author of the laws", "claim": "Darwin spent twenty years after the Beagle voyage gathering evidence, publishing On the Origin of Species in 1859. The theory was hugely controversial because natural selection could explain the appearance of design without a designer.", "s": "Rahner's settlement keeps ALL the science and all the theology: evolution and God are compatible explanations, and the intervening, gap-filling God is simply no longer needed.", "w": "The challenge remains sharp: no external purpose in survival contradicts a purposeful creation — and Darwin's own drift from faith shows how naturally the theory reads as subtraction, not compatibility."}, {"x": 64, "nm": "Quantum theory", "sb": "room for freedom & subtle action", "auth": "Determinism loosened; a possible niche for freedom — and for God", "claim": "From Planck's 1900 discovery that energy comes in quanta, physics found a world so far removed from earlier cosmologies that the old debates about God and nature need revising. Quantum theory cannot predict individual particles — it describes the atomic world in probabilities.", "s": "For Christians it is unexpectedly friendly: indeterminacy makes room for free will and for undetectable divine action — the clockwork prison of the Newtonian world is unlocked.", "w": "Every one of those 'perhapses' is speculative: no one can yet say whether a quantum niche for free will exists, and a God hidden in probabilities may be a God hidden from evidence altogether."}, {"x": 92, "nm": "Big Bang", "sb": "a beginning — read as creation", "auth": "The soul challenged; mind not yet reduced to matter", "claim": "Since Descartes, dualists made an absolute distinction between the thinking self and the physical body — fitting the Christian idea of a soul that inhabits a body and lives on after death. Neuroscience has put that picture under severe pressure.", "s": "The Christian reply is genuinely philosophical, not defensive: Dual Aspect Monism concedes all the brain science while denying the reduction — minds are MORE than brain activity.", "w": "The trend-line troubles believers: every gap neuroscience closes makes the immaterial soul look more like the god-of-the-gaps — retreating as the scans improve."}]}, "ethics": {"poles": ["Science EXPOSES Christian ethics", "Science IMPROVES Christian ethics"], "nodes": [{"x": 8, "nm": "Environment", "sb": "doctrine part of the problem", "auth": "Dominion vs stewardship — and a lagging response", "claim": "Scientific advances in agriculture and farming, with the genetic modification of crops and animals, are arguably damaging the world's environment — and part of the cause lies inside Christian theology itself.", "s": "Christianity holds resources for a powerful environmental ethic — creation as God's gift, stewardship, the world 'organised for the benefit of humankind' implying care, not plunder.", "w": "Its record undercuts its sermon: a doctrine that helped license the damage, and a response too fragmented to matter, make Christianity look like part of the problem it now condemns."}, {"x": 36, "nm": "Evolutionary ethics", "sb": "compassion under accusation", "auth": "Compassion on trial before natural selection", "claim": "Modern interpretations of natural selection raise basic ethical questions for secular and religious ethics alike. Spencer's 'survival of the fittest' became the basis for a chilling social logic — and a direct accusation against Christian morality.", "s": "Christianity has a clear, costly answer: the weak are precisely whom God commands to be protected — an ethic natural selection could never generate, which is exactly its point.", "w": "The theological cost is real: a creation that RUNS on the death of the weak sits awkwardly under a compassionate God — the problem of evil rewritten in Darwin's ink."}, {"x": 64, "nm": "Modern medicine", "sb": "frameworks tested at the bedside", "auth": "Frameworks in tension: preserve life vs weigh happiness", "claim": "Modern medicine can cure many illnesses and prolong the lives of the sick. But when is it right to turn off a life-support machine? Should huge resources go to one patient? Would a brain transplant be right? Science created these questions; it cannot answer them.", "s": "Christianity brings ready-made, worked-out frameworks (Natural Law, agape, Situation Ethics) to questions secular medicine is still improvising answers to.", "w": "The frameworks DISAGREE — at the same bedside, preserve-life and maximise-happiness can prescribe opposite acts, and the Bible cannot referee technologies it never saw."}, {"x": 92, "nm": "The stimulus thesis", "sb": "reasoned, public, current", "auth": "Reasoned justification — or irrelevance", "claim": "Pull the pressure points together and a pattern appears: science keeps handing Christianity questions scripture never faced — and in doing so it FORCES Christian ethics to become reasoned, public and current.", "s": "It explains the whole sub-topic in one move: from the bedside to the biosphere, science has made Christian ethics MORE rigorous, more public and more honest about its reasons.", "w": "A stimulus that always demands reasons-anyone-can-accept quietly secularises the ethics it improves — Christianity risks becoming a chaplain to conclusions reached without it."}]}, "challenge": {"poles": ["Belief DESTROYED by explanation", "Belief UNTOUCHED by explanation"], "nodes": [{"x": 8, "nm": "Flew & the gaps", "sb": "God shrinks to nothing", "auth": "Evidence rules — and God fails the test", "claim": "Put the gaps argument and Flew's parable together and the challenge reaches full strength: history shows divine explanations retreating, and logic shows the surviving belief emptied of content.", "s": "Four centuries of closed gaps are real data, and the falsification standard is the one science itself lives by: the challenge is principled, not mere hostility.", "w": "It only ever defeats the god it constructed: a limited being hiding in gaps. Its hidden premise — God as one thing alongside others — is precisely what classical theism has always denied."}, {"x": 36, "nm": "Creationism", "sb": "explanation rejected instead", "auth": "God grounds everything — gaps are beside the point", "claim": "There are several answers religious believers can make to the 'God of the gaps' argument — and together they turn the challenge into a purifier of theology rather than its executioner.", "s": "The responses meet the challenge on its own terms and win the exchange: the gaps argument demolishes only bad theology, and clearing it away arguably leaves classical theism stronger.", "w": "Flew's ghost lingers: a God who is Being-itself, or who acts only undetectably, is safe from every test — and 'safe from every test' was exactly the disease the gardener diagnosed."}, {"x": 64, "nm": "Big Bang theism", "sb": "explanation claimed FOR God", "auth": "The same physics, claimed by both sides", "claim": "Contemporary responses to the Big Bang theory show the challenge running BOTH ways: the same physics is read as incontrovertible evidence for creation and as the final removal of the Creator.", "s": "Here the challenge visibly FAILS to be one-way: the best cosmology available is read by serious scientists as evidence FOR God — the Big Bang is the challenge argument running in reverse.", "w": "Precisely because both sides claim it, it settles nothing: an infinite series of cycles or universes would need no God for any stage — and 'no agreement' is not a victory for either reading."}, {"x": 92, "nm": "Tillich / Wiles / Polkinghorne", "sb": "wrong God attacked — no gap", "auth": "The Bible overrules the laboratory", "claim": "Creationists reject scientific accounts of origins: their explanations appeal to 'their own brand of science' — the statements of the Bible, taken as the true science where the two conflict. The spec requires reference to these views.", "s": "Total internal consistency and total protection of the literal text: Adam, the Fall, the Flood — nothing is surrendered, and no negotiation with science is ever required.", "w": "The cost is the entire scientific picture — physics, geology, genetics — with no evidence in exchange; and ID's scientific costume fails the very testability standard it claims to meet."}]}, "polkinghorne": {"poles": ["Science and faith FULLY unified", "Science and faith merely CO-EXIST"], "nodes": [{"x": 8, "nm": "One World", "sb": "same method, one reality", "auth": "Scripture and experience as evidence, weighed by reason", "claim": "In One World Polkinghorne argues theology and science are analogous activities — and that Christian claims rest on kinds of evidence that reason can examine. Two themes stand out: religious experience, and Jesus.", "s": "It dignifies both sides: religious experience becomes data, scripture becomes evidence, and reason — not authority — does the examining; faith is brought INSIDE the rational enterprise.", "w": "The analogy strains: observational science examines REPEATED instances of specific data, while the claims about Jesus are held to be a UNIQUE revelation of God. Belief in Jesus is precisely that — belief; it can never be a scientific hypothesis."}, {"x": 36, "nm": "Science & Creation", "sb": "science points to a Creator", "auth": "Intelligibility + fine-tuning → a rational Creator", "claim": "Polkinghorne's main premise: the world is intelligible — we can understand it by science — when it might easily not have been so. For Polkinghorne this has obvious religious implications, pursued through natural theology.", "s": "If this is the only universe, Polkinghorne is almost certainly right: the fine-tuning of the constants, and the world's intelligibility, would be overwhelming evidence in favour of the existence of God.", "w": "Multiverse theory is not as speculative as he claims (in String Theory it is a mathematical inference; superposition readings actualise all configurations; Penrose and Gurzadyan report evidence of earlier cosmic cycles) — and such theories are speculative and metaphysical, but so is 'God'. His dismissal looks like cutting out a major objection."}, {"x": 64, "nm": "Science & Providence", "sb": "God acts — but undetectably", "auth": "Intelligibility + fine-tuning → a rational Creator", "claim": "Polkinghorne's main premise: the world is intelligible — we can understand it by science — when it might easily not have been so. For Polkinghorne this has obvious religious implications, pursued through natural theology.", "s": "If this is the only universe, Polkinghorne is almost certainly right: the fine-tuning of the constants, and the world's intelligibility, would be overwhelming evidence in favour of the existence of God.", "w": "Multiverse theory is not as speculative as he claims (in String Theory it is a mathematical inference; superposition readings actualise all configurations; Penrose and Gurzadyan report evidence of earlier cosmic cycles) — and such theories are speculative and metaphysical, but so is 'God'. His dismissal looks like cutting out a major objection."}, {"x": 92, "nm": "The verdict", "sb": "'a God' proved; 'Christian' believed", "auth": "Compatible? Yes. Proven Christian? No.", "claim": "Draw the three books together and a careful verdict emerges: Polkinghorne mounts the strongest available case for compatibility — and its limits are as instructive as its strengths.", "s": "It survives its own evaluation: even after every critique, the intelligible, fine-tuned, caused universe leaves 'there is a God' standing as a reasonable hypothesis — from a physicist, that is no small result.", "w": "The gap between 'a God' and 'the Christian God' swallows most of what Christians actually believe: incarnation, resurrection, providence-in-Christ all remain outside the case — faith, not physics."}]}, "genetic": {"poles": ["EMBRACE: rule nothing out", "REFUSE: God's design is not ours to change"], "nodes": [{"x": 8, "nm": "Fletcher", "sb": "no vetoes — improve the species", "auth": "One gift, two readings — the axis every response sits on", "claim": "Before any denomination speaks, Christians divide over what the GIFT of life implies. The chapter presents the two instincts that every official response then organises.", "s": "It explains the entire landscape: every official position below is a calibration between these two instincts — grasp the split and the unit organises itself.", "w": "Both instincts prove too much alone: 'God's intention' would forbid all medicine, and 'God-given ability' would license anything achievable — which is why every real response must draw lines BETWEEN them."}, {"x": 36, "nm": "Protestant mainstream", "sb": "welcome, case by case", "auth": "Natural moral law + the image of God set the limits", "claim": "The Catholic Church has moved cautiously: the science of genetic engineering is still in its infancy, and the ethical issues are not particularly clear, because we are not yet aware of all the risks involved. Its line is graduated, not blanket.", "s": "A principled, graduated framework: it can say YES to feeding the hungry and healing the sick while explaining exactly where and why the line falls — caution earned by honesty about unknown risks.", "w": "Caution has a price: if germline repair could eliminate inherited disease, hesitancy costs real lives — and 'final end' reasoning struggles to explain why God-given reason may not improve God-given nature."}, {"x": 64, "nm": "Adventist framework", "sb": "principles before verdicts", "auth": "Scripture + situation, weighed church by church", "claim": "As might be expected given their number, the Protestant Churches show a wider range of reactions — though the MAIN concerns echo the Catholic Church: qualified approval for GE of crops and animals, support for therapeutic engineering to cure disease, far more caution about germline therapy.", "s": "Flexibility with a rationale: the tradition can follow evidence case-by-case, and Fletcher shows Christianity able to CHAMPION improving technologies rather than merely permitting them.", "w": "If Christian answers run from 'hesitate at the germline' to 'redesign the species', critics ask whether Christianity HAS a response to GE — or just a chorus of echoes of everyone else's."}, {"x": 92, "nm": "Catholic caution", "sb": "heal yes · enhance never", "auth": "Published principles: power entails accountability", "claim": "Some Christian Churches are much clearer on their policies than others. In 1995 the Seventh-Day Adventist Church produced an official statement — 'Christian Principles for Genetic Interventions' — a rare complete, published Christian framework for GE.", "s": "It answers the incoherence charge head-on: a systematic, public, usable Christian response — and its four concerns (dignity, privacy, rich-and-poor justice, boundaries) anticipate the exact issues now arriving.", "w": "Principles at that altitude decide few hard cases: is germline repair 'preventing suffering' or 'crossing a boundary'? The framework frames the debate admirably — and leaves the verdicts to be fought out case by case."}]}};
+
+const ticks=document.getElementById("ticks");
+const readout=document.getElementById("readout");
+const poleL=document.getElementById("poleL"), poleR=document.getElementById("poleR");
+let topic="reason", active=0;
+
+function renderReadout(n){
+  readout.innerHTML=`
+    <span class="badge">${n.auth}</span>
+    <div class="body">
+      <h4>${n.nm} <span style="opacity:.6;font-style:italic;font-weight:400">· ${n.sb}</span></h4>
+      <p>${n.claim}</p>
+      <div class="sw">
+        <div class="up"><span class="k">Strength</span><br>${n.s}</div>
+        <div class="dn"><span class="k">Weakness</span><br>${n.w}</div>
+      </div>
+    </div>`;
+}
+function renderTopic(){
+  const d=DATA[topic];
+  poleL.textContent=d.poles[0]; poleR.textContent=d.poles[1];
+  ticks.innerHTML="";
+  d.nodes.forEach((n,i)=>{
+    const el=document.createElement("div");
+    el.className="node"; el.style.left=n.x+"%"; el.tabIndex=0;
+    el.setAttribute("role","button");
+    el.setAttribute("aria-label",`${n.nm}: ${n.sb}`);
+    el.dataset.active=(i===active);
+    el.innerHTML=`<div class="dot"></div><div class="nm">${n.nm}</div><div class="sb">${n.sb}</div>`;
+    const pick=()=>{active=i;[...ticks.children].forEach((c,j)=>c.dataset.active=(j===i));renderReadout(n);};
+    el.addEventListener("click",pick);
+    el.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();pick();}});
+    ticks.appendChild(el);
+  });
+  active=Math.min(active,d.nodes.length-1);
+  [...ticks.children].forEach((c,j)=>c.dataset.active=(j===active));
+  renderReadout(d.nodes[active]);
+}
+document.querySelectorAll(".tab").forEach(t=>{
+  t.addEventListener("click",()=>{
+    document.querySelectorAll(".tab").forEach(x=>x.setAttribute("aria-selected","false"));
+    t.setAttribute("aria-selected","true");
+    topic=t.dataset.topic; active=0; renderTopic();
+  });
+});
+renderTopic();
+
+const FLASHCARDS = {"reason": {"terms": [{"term": "Empiricism", "def": "the view that all knowledge starts from sense experience — it remains at the heart of scientific thinking today.", "note": "Now the norm in ALL areas of life, including religion: 'what's the evidence for that claim?'"}, {"term": "Rationalism", "def": "the view that all knowledge starts with the processes of human thought — Descartes' method of systematic doubt.", "note": "Since the C17, science has been based on empiricism rather than rationalism."}, {"term": "Scientism", "def": "the view that science alone can give true knowledge of reality, alone determines what is meaningful, and will eventually explain everything.", "note": "Tends to ignore what the arts, psychology and the emotions contribute to human self-understanding."}, {"term": "Naturalism", "def": "science deals with the natural world as it is experienced — nothing supernatural enters its explanations.", "note": "This is what potentially brings science into conflict with the supernatural claims of Christianity."}, {"term": "Deism", "def": "belief in an intelligent but impersonal creator: one who creates the universe, then leaves it to its own free devices.", "note": "A religious way of explaining a predictable universe — at a heavy cost."}, {"term": "Existentialism", "def": "the philosophy that humans create their own personal reality through the choices they make — the world is shaped by individual commitments and values.", "note": "For Kierkegaard, faith is exactly this kind of personal commitment."}], "views": [{"n": "The scientific outlook", "c": "Evidence in, hypothesis out, test everything — and hold every belief tentatively.", "s": "It is self-correcting and spectacularly productive: no other way of knowing has matched its record of prediction, explanation and technology.", "w": "Its own logic limits it: induction never delivers certainty, and no evidence is free from interpretation — human mental processes always play a part."}, {"n": "Scientism", "c": "The step further: science is the ONLY route to true knowledge — and it will explain everything.", "s": "Ruthlessly consistent: it applies the standard of evidence everywhere, with no special pleading for comfortable beliefs.", "w": "It is self-undermining (its central claim is not scientific) and impoverishing — whole regions of human understanding are ruled out by definition, not by argument."}, {"n": "Deism", "c": "An intelligent but IMPERSONAL creator: God builds the machine, winds it up — and walks away.", "s": "Fully compatible with a law-governed universe: science can never refute a God who never acts, and the universe's order still gets a religious explanation.", "w": "Polkinghorne: it is not the Christian God at all — a God you cannot pray to, who does not care or provide, is an intellectual idea, not a person to be in relationship with."}, {"n": "Existentialism", "c": "Faith answers questions of MEANING, not questions of MECHANISM — so there is nothing to fight over.", "s": "Dissolves the conflict at a stroke, and matches how faith actually works: commitment, not laboratory evidence, is the currency of religion.", "w": "A faith no evidence can touch risks becoming a faith that says nothing about the world — critics ask whether it has been saved, or emptied."}]}, "discoveries": {"terms": [{"term": "Natural selection", "def": "one of the basic mechanisms of evolution: organisms better adapted to their environment tend to survive and produce more offspring.", "note": "For the first time, a simple NATURAL mechanism could explain the appearance of design — making a designer God unnecessary."}, {"term": "Big Bang", "def": "the theory that the universe began from the rapid expansion (not an explosion) of a gravitational singularity, a point of infinite density, some 13.8 billion years ago.", "note": "Accepted by most of the scientific community as the best available explanation for the origin of the universe."}, {"term": "Singularity", "def": "the point of close-to-zero size but infinite density from which space and time themselves expanded — all general theories of physics break down as we approach it.", "note": "Space and time come FROM it; it is not a point within them."}, {"term": "Quantum mechanics", "def": "the physics of matter at the smallest scales (Planck, 1900): energy exists in individual units — quanta; light can behave as wave or particle.", "note": "EXTENSION: not required by the spec, but usable in answers where relevant."}, {"term": "Lambda-CDM model", "def": "the current 'standard model' of Big Bang cosmology, associated with dark energy and cold dark matter, on which the universe expanded from the singularity ~13.8 billion years ago.", "note": "The cosmic microwave background is the oldest light we can detect."}, {"term": "Dual Aspect Monism", "def": "the theory that the self is a combination of mental and physical in ONE substance — the mind cannot be reduced to a simple physical description.", "note": "The standing Christian reply to neuroscience's challenge to the soul."}], "views": [{"n": "Evolution", "c": "A simple natural mechanism that explains design — and dethrones purpose.", "s": "Rahner's settlement keeps ALL the science and all the theology: evolution and God are compatible explanations, and the intervening, gap-filling God is simply no longer needed.", "w": "The challenge remains sharp: no external purpose in survival contradicts a purposeful creation — and Darwin's own drift from faith shows how naturally the theory reads as subtraction, not compatibility."}, {"n": "The Big Bang", "c": "Not an explosion IN space — the expansion OF space: a universe with a beginning.", "s": "Unlike evolution, this discovery arrived as an APOLOGETIC GIFT: a datable beginning, discovered by a priest, endorsed by the Church, and read by serious scientists as pointing beyond nature.", "w": "The atheist reading stands equally well on the physics: a spontaneous, uncaused beginning — and 'no agreement about the origin of the Big Bang' means neither side can claim the science outright."}, {"n": "Quantum theory", "c": "Uncertainty built into nature — an obstacle for a clockwork God, an opening for a subtle one.", "s": "For Christians it is unexpectedly friendly: indeterminacy makes room for free will and for undetectable divine action — the clockwork prison of the Newtonian world is unlocked.", "w": "Every one of those 'perhapses' is speculative: no one can yet say whether a quantum niche for free will exists, and a God hidden in probabilities may be a God hidden from evidence altogether."}, {"n": "Neuroscience", "c": "If every experience is brain activity, what is left of the soul?", "s": "The Christian reply is genuinely philosophical, not defensive: Dual Aspect Monism concedes all the brain science while denying the reduction — minds are MORE than brain activity.", "w": "The trend-line troubles believers: every gap neuroscience closes makes the immaterial soul look more like the god-of-the-gaps — retreating as the scans improve."}]}, "ethics": {"terms": [{"term": "Morally neutral", "def": "science is a method of understanding the world based on reason and evidence — a form of investigation, not itself good or evil.", "note": "Moral questions arise only when its TECHNOLOGIES touch lives, species and environments."}, {"term": "Natural Law approach", "def": "in extreme medical conditions, seek to preserve life because of the basic human urge to live.", "note": "The usual approach of the Roman Catholic Church."}, {"term": "Utilitarian ethic", "def": "do whatever appears to offer the greatest benefit to the greatest number — maximise happiness, minimise pain.", "note": "The default where clear harm is not shown — e.g. manipulating embryo DNA 'because it may benefit many'."}, {"term": "Evolutionary ethics", "def": "reading morality through natural selection: Spencer's 'survival of the fittest' as a basis for how society SHOULD run.", "note": "Its dark logic: encourage the strong, eliminate the weak."}, {"term": "Dominion", "def": "the belief, held by many Christians, that scripture gives humans power over the whole environment.", "note": "Not all Christians accept the interpretation — but it has contributed to the environmental crisis."}, {"term": "The stimulus", "def": "by raising issues the Bible never faced, science has pushed Christian moral thinkers to give REASONED justification for their positions.", "note": "There is no easy way to read clear answers to modern ethical questions off the Bible."}], "views": [{"n": "Modern medicine", "c": "The power to prolong life — and the duty to decide when not to.", "s": "Christianity brings ready-made, worked-out frameworks (Natural Law, agape, Situation Ethics) to questions secular medicine is still improvising answers to.", "w": "The frameworks DISAGREE — at the same bedside, preserve-life and maximise-happiness can prescribe opposite acts, and the Bible cannot referee technologies it never saw."}, {"n": "Evolutionary ethics", "c": "If only the fittest survive, is compassion a design flaw?", "s": "Christianity has a clear, costly answer: the weak are precisely whom God commands to be protected — an ethic natural selection could never generate, which is exactly its point.", "w": "The theological cost is real: a creation that RUNS on the death of the weak sits awkwardly under a compassionate God — the problem of evil rewritten in Darwin's ink."}, {"n": "Environmental ethics", "c": "The crisis science measured — and a doctrine helped cause.", "s": "Christianity holds resources for a powerful environmental ethic — creation as God's gift, stewardship, the world 'organised for the benefit of humankind' implying care, not plunder.", "w": "Its record undercuts its sermon: a doctrine that helped license the damage, and a response too fragmented to matter, make Christianity look like part of the problem it now condemns."}, {"n": "The stimulus thesis", "c": "Science is the ally that will not let Christian ethics sleep.", "s": "It explains the whole sub-topic in one move: from the bedside to the biosphere, science has made Christian ethics MORE rigorous, more public and more honest about its reasons.", "w": "A stimulus that always demands reasons-anyone-can-accept quietly secularises the ethics it improves — Christianity risks becoming a chaplain to conclusions reached without it."}]}, "challenge": {"terms": [{"term": "'God of the gaps'", "def": "using 'God' to explain what science cannot YET explain — so God retreats as knowledge grows, and when science knows all there is to know, there will be no place for God at all.", "note": "It makes God an explanatory hypothesis — part of the scientific explanation."}, {"term": "Falsification", "def": "the principle behind Flew's attack: science is based on reason and evidence — if NOTHING is allowed to count against a claim, the claim is invalid.", "note": "Religious statements, Flew argues, die 'the death of a thousand qualifications'."}, {"term": "Fine-tuning", "def": "the cosmological constants (the stickiness of gravity, the expansion rate, the production of RNA, DNA and proteins) must all be correct to an impossibly narrow configuration — odds ~10¹⁸⁰ against by chance.", "note": "'If this is the only universe, then God must have made it.'"}, {"term": "Multiverse theory", "def": "the collection of theories on which this universe is one of a potentially infinite number — perhaps 10⁵⁰⁰ or more, all beginning with a Big Bang.", "note": "Statistically some universe gets the constants right by chance — so fine-tuning 'is not as strong as it looks'."}, {"term": "Creationism", "def": "the set of beliefs on which religious accounts of the origin of the world/universe are to be believed WHERE THEY DIFFER from scientific accounts.", "note": "Three forms: Young Earth (six-day), Progressive/Old Earth, and Intelligent Design."}, {"term": "Intelligent Design", "def": "the attempt to make creationism scientifically respectable — e.g. Michael Behe's 'irreducible complexity', claiming some structures cannot be built by successive modifications.", "note": "Generally ridiculed by 'mainline' scientists: its main ideas are not testable."}], "views": [{"n": "The case for the challenge", "c": "God retreats as explanation advances — and an unfalsifiable God is no claim at all.", "s": "Four centuries of closed gaps are real data, and the falsification standard is the one science itself lives by: the challenge is principled, not mere hostility.", "w": "It only ever defeats the god it constructed: a limited being hiding in gaps. Its hidden premise — God as one thing alongside others — is precisely what classical theism has always denied."}, {"n": "The Christian responses", "c": "Three ways to say the same thing: there never was a gap, because God was never a gap-filler.", "s": "The responses meet the challenge on its own terms and win the exchange: the gaps argument demolishes only bad theology, and clearing it away arguably leaves classical theism stronger.", "w": "Flew's ghost lingers: a God who is Being-itself, or who acts only undetectably, is safe from every test — and 'safe from every test' was exactly the disease the gardener diagnosed."}, {"n": "The Big Bang contested", "c": "A beginning, impossibly tuned — or one lucky universe among 10⁵⁰⁰?", "s": "Here the challenge visibly FAILS to be one-way: the best cosmology available is read by serious scientists as evidence FOR God — the Big Bang is the challenge argument running in reverse.", "w": "Precisely because both sides claim it, it settles nothing: an infinite series of cycles or universes would need no God for any stage — and 'no agreement' is not a victory for either reading."}, {"n": "Creationist views", "c": "Where the Bible and science differ, believe the Bible — three ways of saying so.", "s": "Total internal consistency and total protection of the literal text: Adam, the Fall, the Flood — nothing is surrendered, and no negotiation with science is ever required.", "w": "The cost is the entire scientific picture — physics, geology, genetics — with no evidence in exchange; and ID's scientific costume fails the very testability standard it claims to meet."}]}, "polkinghorne": {"terms": [{"term": "Natural theology", "def": "'the search for the knowledge of God by the exercise of reason and the inspection of the world' (Paley's definition) — for Polkinghorne, the arena where religion and science interact.", "note": "It works ALONGSIDE revelation from scripture and religious experience to give a unified world view."}, {"term": "Intelligibility", "def": "Polkinghorne's main premise: the world CAN be understood by science — when it might easily not have been so. 'The universe might have been a disorderly chaos rather than an orderly cosmos.'", "note": "A non-trivial fact with obvious religious implications."}, {"term": "Anthropic Principle", "def": "the cosmological constants are so fine-tuned that they have produced beings like ourselves, capable of understanding the universe — the fact that we are here suggests a principle behind the universe.", "note": "Multiverse theory tries to trivialise it; Polkinghorne calls that unscientific."}, {"term": "Providence", "def": "God's choice to provide for, create, nurture and sustain humankind; SPECIAL providence = God meeting people's individual needs in individual ways.", "note": "Without it, Polkinghorne says, the idea of the PERSONAL God of Christianity has no content."}, {"term": "The quantum level", "def": "where Polkinghorne locates God's action: influencing events undetectably, 'nudging probabilities', so as to produce tangible results at our level.", "note": "God acts within the flexibility of creation's process — not by fussy intervention."}, {"term": "One World", "def": "Polkinghorne's claim that theology and science are ANALOGOUS activities: both formulate, in precise terms, truths disclosed by experience — religious experience and sense perception respectively.", "note": "After A. N. Whitehead's comparison of religious dogma and scientific theory."}], "views": [{"n": "Science and Creation", "c": "The world can be UNDERSTOOD — and that is the most religiously suggestive fact of all.", "s": "If this is the only universe, Polkinghorne is almost certainly right: the fine-tuning of the constants, and the world's intelligibility, would be overwhelming evidence in favour of the existence of God.", "w": "Multiverse theory is not as speculative as he claims (in String Theory it is a mathematical inference; superposition readings actualise all configurations; Penrose and Gurzadyan report evidence of earlier cosmic cycles) — and such theories are speculative and metaphysical, but so is 'God'. His dismissal looks like cutting out a major objection."}, {"n": "Science and Providence", "c": "A personal God with real content: acting patiently, subtly, at the quantum level.", "s": "It gives the personal God real mechanics: prayer, care and provision become possible in a law-governed universe, with moral freedom preserved and no crude intervention required.", "w": "It does little to solve the problem of evil — a God subtle enough to nudge probabilities but patient through holocausts looks selective, not loving. And the main problem is EVIDENCE: that God COULD work through quantum processes is one thing; demonstrating that he DOES is quite another. If we cannot see the results, how do we know they are there — and if we can, why not intervene at our level?"}, {"n": "One World", "c": "Two disciplines, one method: ordering experience into precise truth.", "s": "It dignifies both sides: religious experience becomes data, scripture becomes evidence, and reason — not authority — does the examining; faith is brought INSIDE the rational enterprise.", "w": "The analogy strains: observational science examines REPEATED instances of specific data, while the claims about Jesus are held to be a UNIQUE revelation of God. Belief in Jesus is precisely that — belief; it can never be a scientific hypothesis."}, {"n": "The general verdict", "c": "One valid scientific claim — 'there is a God' — and an honest limit: it is not specifically Christian.", "s": "It survives its own evaluation: even after every critique, the intelligible, fine-tuned, caused universe leaves 'there is a God' standing as a reasonable hypothesis — from a physicist, that is no small result.", "w": "The gap between 'a God' and 'the Christian God' swallows most of what Christians actually believe: incarnation, resurrection, providence-in-Christ all remain outside the case — faith, not physics."}]}, "genetic": {"terms": [{"term": "Genetic engineering", "def": "the attempt to engineer a unique set of genes to modify humans, animals and plants — with the potential to cure conditions, produce 'improved' children, and produce transhumans.", "note": "The spec's named test-case for Christian responses to science."}, {"term": "Therapeutic GE", "def": "genetic engineering intended to repair genes in order to correct or eliminate diseases.", "note": "The form nearly all Christian responses approve."}, {"term": "Germline therapy", "def": "introducing healthy genes into germ cells (sperm, eggs, zygotes) so corrections pass from generation to generation.", "note": "Where the Churches hesitate: unforeseen bad effects would be inherited too."}, {"term": "Transhumans", "def": "humans genetically engineered to have advanced intellectual, physical and psychological powers — 'enhancement therapy' improving the human 'specification'.", "note": "Within ~25 years intelligence could be increased exponentially — the Catholic Church rejects this outright."}, {"term": "Human Genome Project", "def": "the attempt to map all the human chromosomes, with a view to isolating the genes responsible for conditions such as cystic fibrosis and Down's syndrome.", "note": "Such knowledge 'requires great responsibility in its use'."}, {"term": "Enhancement therapy", "def": "using new technologies to improve the human 'specification' rather than to heal — the doorway to the transhuman state.", "note": "The line most responses will not cross — and Fletcher will not rule out."}], "views": [{"n": "The foundational split", "c": "Both sides start from 'life is God's gift' — and walk in opposite directions.", "s": "It explains the entire landscape: every official position below is a calibration between these two instincts — grasp the split and the unit organises itself.", "w": "Both instincts prove too much alone: 'God's intention' would forbid all medicine, and 'God-given ability' would license anything achievable — which is why every real response must draw lines BETWEEN them."}, {"n": "The Catholic response", "c": "Feed the hungry, heal the sick, hesitate at the germline — and never redesign humanity.", "s": "A principled, graduated framework: it can say YES to feeding the hungry and healing the sick while explaining exactly where and why the line falls — caution earned by honesty about unknown risks.", "w": "Caution has a price: if germline repair could eliminate inherited disease, hesitancy costs real lives — and 'final end' reasoning struggles to explain why God-given reason may not improve God-given nature."}, {"n": "The Protestant range", "c": "Many churches, one spectrum — with Fletcher refusing to rule anything out.", "s": "Flexibility with a rationale: the tradition can follow evidence case-by-case, and Fletcher shows Christianity able to CHAMPION improving technologies rather than merely permitting them.", "w": "If Christian answers run from 'hesitate at the germline' to 'redesign the species', critics ask whether Christianity HAS a response to GE — or just a chorus of echoes of everyone else's."}, {"n": "The Adventist framework", "c": "One church wrote it down: four areas of concern, ten principles.", "s": "It answers the incoherence charge head-on: a systematic, public, usable Christian response — and its four concerns (dignity, privacy, rich-and-poor justice, boundaries) anticipate the exact issues now arriving.", "w": "Principles at that altitude decide few hard cases: is germline repair 'preventing suffering' or 'crossing a boundary'? The framework frames the debate admirably — and leaves the verdicts to be fought out case by case."}]}};
+
+(function(){
+  let fcTopic="all", fcType="terms";
+  const grid=document.getElementById("fcGrid"), count=document.getElementById("fcCount");
+  function esc(s){return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+  const FC_LABEL={reason:"1 Evidence & Reason",discoveries:"2 The Discoveries",ethics:"3 Science & Ethics",challenge:"4 Challenge to Belief",polkinghorne:"5 Polkinghorne",genetic:"6 Genetic Engineering"};
+  function label(tp){return FC_LABEL[tp]||tp;}
+  function build(){
+    const topics = fcTopic==="all" ? Object.keys(FLASHCARDS) : [fcTopic];
+    let cards=[];
+    topics.forEach(tp=>{
+      const d=FLASHCARDS[tp]; if(!d) return;
+      if(fcType==="terms"){ d.terms.forEach(t=>cards.push({tp,front:t.term,tag:label(tp),back:`<div class='fc-def'>${esc(t.def)}</div>`})); }
+      else { d.views.forEach(v=>cards.push({tp,front:v.n,tag:label(tp),back:`<div class='fc-def'>${esc(v.c)}</div><div class='fc-sw'><div class='up'><span class='k'>Strength</span><br>${esc(v.s)}</div><div class='dn' style='margin-top:6px'><span class='k'>Weakness</span><br>${esc(v.w)}</div></div>`})); }
+    });
+    grid.innerHTML=cards.map(c=>`
+      <button class="fc-card ${c.tp}" data-flipped="false" aria-label="Flashcard: ${esc(c.front)}. Tap to reveal.">
+        <div class="fc-inner">
+          <div class="fc-face fc-front"><div class="fc-tag">${c.tag}</div><div class="fc-term">${esc(c.front)}</div><div class="fc-flip">tap to flip ↺</div></div>
+          <div class="fc-face fc-back"><div class="fc-tag">${c.tag}</div>${c.back}</div>
+        </div>
+      </button>`).join("");
+    count.textContent = cards.length + " cards";
+    grid.querySelectorAll(".fc-card").forEach(el=>{
+      const flip=()=>el.dataset.flipped = el.dataset.flipped==="true" ? "false":"true";
+      el.addEventListener("click",flip);
+    });
+  }
+  document.querySelectorAll('#flashcards .fc-tabs .fc-btn').forEach(b=>b.addEventListener("click",()=>{
+    document.querySelectorAll('#flashcards .fc-tabs .fc-btn').forEach(x=>x.setAttribute("aria-selected","false"));
+    b.setAttribute("aria-selected","true"); fcTopic=b.dataset.topic; build();
+  }));
+  document.querySelectorAll('#flashcards .fc-type .fc-btn').forEach(b=>b.addEventListener("click",()=>{
+    document.querySelectorAll('#flashcards .fc-type .fc-btn').forEach(x=>x.setAttribute("aria-selected","false"));
+    b.setAttribute("aria-selected","true"); fcType=b.dataset.type; build();
+  }));
+  build();
+})();
+
+/* =====================================================================
+   TEACHER: paste your YouTube link between the quotes below.
+   Any format works — youtube.com/watch?v=…, youtu.be/…, or an embed URL.
+   Leave it empty ("") and the page shows a "Video not set" placeholder.
+   ===================================================================== */
+const VIDEO_URL = "";
+
+(function wireVideo(){
+  const url=(VIDEO_URL||"").trim();
+  if(!url) return; // keep placeholder
+  let id="";
+  const m = url.match(/(?:youtu\.be\/|v=|\/embed\/|\/shorts\/)([A-Za-z0-9_-]{11})/);
+  if(m) id=m[1];
+  else if(/^[A-Za-z0-9_-]{11}$/.test(url)) id=url; // a bare id
+  const frame=document.getElementById("videoFrame");
+  if(id && frame){
+    frame.innerHTML =
+      '<iframe src="https://www.youtube-nocookie.com/embed/'+id+'?rel=0" '+
+      'title="Christianity and Science — full unit review" '+
+      'allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" '+
+      'allowfullscreen loading="lazy"></iframe>';
+  } else if(frame){
+    frame.innerHTML =
+      '<div class="video-placeholder"><a class="res-btn big" style="background:#fff" href="'+url+'" target="_blank" rel="noopener"><span class="ic">▶</span><span><b>Watch the full unit review</b></span><span class="go">↗</span></a></div>';
+  }
+})();
+
+/* =====================================================================
+   TEACHER: paste your SharePoint share links between the quotes below.
+   Leave a link empty ("") and its button will show "Link not set".
+   Tip: in SharePoint, open the file's ... menu -> Copy link -> paste here.
+   ===================================================================== */
+const LINKS = {
+  "reason_lesson": "",
+  "reason_booklet": "",
+  "reason_review": "",
+  "reason_podcast": "",
+  "discoveries_lesson": "",
+  "discoveries_booklet": "",
+  "discoveries_review": "",
+  "discoveries_podcast": "",
+  "ethics_lesson": "",
+  "ethics_booklet": "",
+  "ethics_review": "",
+  "ethics_podcast": "",
+  "challenge_lesson": "",
+  "challenge_booklet": "",
+  "challenge_review": "",
+  "challenge_podcast": "",
+  "polkinghorne_lesson": "",
+  "polkinghorne_booklet": "",
+  "polkinghorne_review": "",
+  "polkinghorne_podcast": "",
+  "genetic_lesson": "",
+  "genetic_booklet": "",
+  "genetic_review": "",
+  "genetic_podcast": "",
+  "companion": "",
+  "questions": "",
+  "overview_podcast": "",
+  "flashcards_pdf": ""
+};
+
+(function wireResources(){
+  let anySet=false;
+  document.querySelectorAll(".res-btn").forEach(btn=>{
+    const url=(LINKS[btn.dataset.key]||"").trim();
+    if(url){
+      btn.href=url; btn.target="_blank"; btn.rel="noopener"; anySet=true;
+    }else{
+      btn.classList.add("unset"); btn.removeAttribute("href"); btn.setAttribute("aria-disabled","true");
+    }
+  });
+  if(anySet){ const n=document.getElementById("resNote"); if(n) n.classList.add("hide"); }
+})();
+</script>
+</body>
+</html>

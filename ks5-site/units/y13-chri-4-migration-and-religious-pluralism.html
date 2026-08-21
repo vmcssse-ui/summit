@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Christianity, Migration &amp; Religious Pluralism — Unit at a Glance</title>
+<style>
+  :root{
+    --ink:#12294D;        /* deep manuscript navy */
+    --ink-2:#0C1B33;
+    --parch:#F3ECDD;      /* aged parchment */
+    --parch-2:#EAE0C9;
+    --gold:#C9A227;       /* gold leaf */
+    --gold-soft:#E4CE86;
+    --rubric:#B01C2E;     /* rubrication red */
+    --teal:#00695C;
+    --violet:#6A1B9A;
+    --blue:#1565C0;
+    --green:#2E7D32;
+    --paper:#FBF7EE;
+    --line:rgba(18,41,77,.16);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1060px;margin:0 auto;padding:0 24px}
+  .eyebrow{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;font-weight:700}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    background:
+      radial-gradient(1200px 400px at 80% -10%, rgba(201,162,39,.18), transparent 60%),
+      linear-gradient(180deg,var(--ink) 0%, var(--ink-2) 100%);
+    color:var(--parch);
+    padding:64px 0 72px;
+    position:relative;
+    overflow:hidden;
+    border-bottom:3px solid var(--gold);
+  }
+  .hero::after{ /* faint ruled manuscript lines */
+    content:"";position:absolute;inset:0;pointer-events:none;opacity:.06;
+    background:repeating-linear-gradient(180deg,transparent 0 38px,#fff 38px 39px);
+  }
+  .hero .wrap{position:relative;z-index:2}
+  .crest{display:flex;align-items:center;gap:16px;margin-bottom:34px}
+  .crest svg{width:54px;height:54px;flex:none}
+  .crest .who{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-soft)}
+  .crest .who b{color:var(--parch);display:block;letter-spacing:.14em;font-size:.86rem;margin-top:3px}
+  h1{font-size:clamp(2.4rem,6vw,4.1rem);line-height:1.02;font-weight:700;letter-spacing:-.01em}
+  h1 .amp{color:var(--gold);font-style:italic}
+  .sub{margin-top:20px;max-width:56ch;font-size:1.12rem;color:#E7DFCB}
+  .bigq{
+    margin-top:30px;display:inline-flex;gap:14px;align-items:flex-start;
+    border-left:3px solid var(--gold);padding:8px 0 8px 18px;max-width:60ch;
+  }
+  .bigq .q{font-family:"Trebuchet MS",sans-serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-soft);padding-top:5px}
+  .bigq p{font-size:1.24rem;font-style:italic;color:#fff}
+
+  /* ---------- SECTION SHELL ---------- */
+  section{padding:64px 0}
+  .sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:8px}
+  .sec-head .num{font-family:"Trebuchet MS",sans-serif;color:var(--gold);font-weight:700;font-size:.9rem;letter-spacing:.15em}
+  .sec-head h2{font-size:clamp(1.6rem,3.4vw,2.3rem);letter-spacing:-.01em}
+  .sec-lead{color:#4a4a52;max-width:64ch;margin-bottom:34px;font-size:1.05rem}
+
+  /* ---------- SIGNATURE: authority spectrum ---------- */
+  .spectrum-card{
+    background:linear-gradient(180deg,#fff, var(--paper));
+    border:1px solid var(--line);border-radius:14px;
+    box-shadow:0 18px 40px -28px rgba(18,41,77,.5);
+    padding:28px 26px 34px;
+  }
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:26px}
+  .tab{
+    font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.82rem;letter-spacing:.04em;
+    border:1px solid var(--line);background:#fff;color:var(--ink);
+    padding:9px 16px;border-radius:999px;cursor:pointer;transition:.18s;
+  }
+  .tab[aria-selected="true"]{background:var(--ink);color:var(--parch);border-color:var(--ink)}
+  .tab:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+
+  .axis{position:relative;margin:8px 4px 0}
+  .axis-labels{display:flex;justify-content:space-between;font-family:"Trebuchet MS",sans-serif;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:#6a6a72;margin-bottom:10px}
+  .axis-labels .l{color:var(--rubric);font-weight:700}
+  .axis-labels .r{color:var(--blue);font-weight:700}
+  .bar{height:10px;border-radius:999px;background:linear-gradient(90deg,var(--rubric),#b06a1e 40%,#5a7d3a 66%,var(--blue));position:relative}
+  .ticks{position:relative;height:112px;margin-top:0}
+  .node{position:absolute;top:0;transform:translateX(-50%);width:132px;text-align:center;cursor:pointer}
+  .node .dot{width:20px;height:20px;border-radius:50%;background:#fff;border:3px solid var(--ink);margin:0 auto;position:relative;top:-15px;transition:.18s}
+  .node .nm{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.82rem;margin-top:-6px}
+  .node .sb{font-size:.76rem;color:#6a6a72;font-style:italic;margin-top:2px;line-height:1.25}
+  .node:hover .dot,.node[data-active="true"] .dot{transform:scale(1.25);border-color:var(--gold);box-shadow:0 0 0 5px rgba(201,162,39,.2)}
+  .node:focus-visible{outline:none}
+  .node:focus-visible .dot{outline:3px solid var(--gold);outline-offset:3px}
+
+  .readout{
+    margin-top:14px;background:var(--ink);color:var(--parch);border-radius:12px;padding:20px 22px;
+    min-height:104px;display:flex;gap:18px;align-items:flex-start;
+  }
+  .readout .badge{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;
+    background:var(--gold);color:var(--ink-2);padding:6px 10px;border-radius:6px;white-space:nowrap;margin-top:2px}
+  .readout .body h4{font-size:1.12rem;margin-bottom:4px}
+  .readout .body .auth{color:var(--gold-soft);font-family:"Trebuchet MS",sans-serif;font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+  .readout .body p{color:#E7DFCB;font-size:.98rem}
+  .readout .body .sw{display:flex;gap:22px;margin-top:10px;flex-wrap:wrap}
+  .readout .body .sw div{font-size:.9rem}
+  .readout .body .sw .k{font-family:"Trebuchet MS",sans-serif;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase}
+  .readout .body .sw .up .k{color:#8BD08F}
+  .readout .body .sw .dn .k{color:#F2A0A0}
+  .hint{font-family:"Trebuchet MS",sans-serif;font-size:.76rem;color:#8a8a92;margin-top:14px;text-align:center}
+
+  /* ---------- THREE DEBATES ---------- */
+  .triptych{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .panel{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;display:flex;flex-direction:column}
+  .panel .cap{padding:16px 18px;color:#fff;position:relative}
+  .panel.b1 .cap{background:linear-gradient(135deg,#1F4E79,#12294D)}
+  .panel.b2 .cap{background:linear-gradient(135deg,#00695C,#0C3B34)}
+  .panel.b3 .cap{background:linear-gradient(135deg,#6A1B9A,#3B0E56)}
+  .panel .cap .n{font-family:"Trebuchet MS",sans-serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;opacity:.85}
+  .panel .cap h3{font-size:1.24rem;margin-top:3px}
+  .panel .cap .ask{font-style:italic;font-size:.9rem;margin-top:8px;opacity:.95}
+  .panel .body{padding:16px 18px;font-size:.92rem}
+  .panel .body .row{display:flex;gap:9px;padding:7px 0;border-bottom:1px dashed var(--line)}
+  .panel .body .row:last-child{border-bottom:0}
+  .panel .body .row .v{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.8rem;white-space:nowrap;color:var(--ink)}
+  .panel .body .row .d{color:#55555c}
+
+  /* ---------- THREAD ---------- */
+  .thread{background:var(--ink);color:var(--parch);border-radius:14px;padding:34px 30px;position:relative;overflow:hidden}
+  .thread::before{content:"";position:absolute;inset:0;opacity:.07;background:repeating-linear-gradient(180deg,transparent 0 30px,#fff 30px 31px)}
+  .thread .wrap2{position:relative;z-index:2}
+  .thread h2{color:#fff;font-size:clamp(1.5rem,3vw,2.1rem);margin-bottom:8px}
+  .thread .lead{color:#E7DFCB;max-width:62ch;margin-bottom:24px}
+  .threads{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .tcard{border:1px solid rgba(228,206,134,.3);border-radius:10px;padding:16px 16px 18px;background:rgba(255,255,255,.03)}
+  .tcard .t{font-family:"Trebuchet MS",sans-serif;color:var(--gold);font-weight:700;font-size:.82rem;letter-spacing:.05em;margin-bottom:6px}
+  .tcard p{font-size:.9rem;color:#E7DFCB}
+
+  /* ---------- REVISE ---------- */
+  .revise{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:start}
+  .steps{counter-reset:s;display:flex;flex-direction:column;gap:14px}
+  .step{display:flex;gap:16px;align-items:flex-start;border-left:2px solid var(--line);padding:2px 0 2px 18px;position:relative}
+  .step::before{counter-increment:s;content:counter(s);position:absolute;left:-15px;top:-2px;width:28px;height:28px;border-radius:50%;
+    background:var(--gold);color:var(--ink-2);font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.9rem;display:grid;place-items:center}
+  .step h4{font-size:1.02rem}
+  .step p{font-size:.9rem;color:#55555c;margin-top:2px}
+  .ao{border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .ao .h{padding:12px 16px;font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.82rem;letter-spacing:.06em;color:#fff}
+  .ao .ao1 .h,.ao .h.ao1{background:var(--ink)}
+  .ao .h.ao2{background:var(--green)}
+  .ao .c{padding:14px 16px;font-size:.9rem;border-bottom:1px solid var(--line)}
+  .ao .c:last-child{border-bottom:0}
+  .ao .c b{font-family:"Trebuchet MS",sans-serif;font-size:.78rem;letter-spacing:.04em}
+
+  /* ---------- VIDEO ---------- */
+  .video-frame{position:relative;width:100%;aspect-ratio:16/9;border-radius:14px;overflow:hidden;
+    border:1px solid var(--line);box-shadow:0 20px 44px -30px rgba(18,41,77,.55);background:var(--ink)}
+  .video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .video-placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:14px;text-align:center;padding:30px;color:#C9C4B6;
+    background:radial-gradient(700px 300px at 50% 30%,rgba(201,162,39,.14),transparent 60%),linear-gradient(180deg,var(--ink),var(--ink-2))}
+  .video-placeholder .vp-badge{font-family:"Trebuchet MS",Verdana,sans-serif;font-weight:700;font-size:.72rem;letter-spacing:.14em;
+    text-transform:uppercase;background:var(--gold);color:var(--ink-2);padding:6px 12px;border-radius:6px}
+  .video-placeholder p{max-width:52ch;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.92rem;line-height:1.55}
+  .video-placeholder code{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:4px;padding:1px 6px}
+
+
+  /* ---------- FLASHCARDS ---------- */
+  .fc-controls{display:flex;gap:18px;flex-wrap:wrap;align-items:center;margin-bottom:24px}
+  .fc-tabs,.fc-type{display:flex;gap:8px;flex-wrap:wrap}
+  .fc-btn{font-family:"Trebuchet MS",Verdana,sans-serif;font-weight:700;font-size:.8rem;border:1px solid var(--line);
+    background:#fff;color:var(--ink);padding:8px 15px;border-radius:999px;cursor:pointer;transition:.18s}
+  .fc-btn[aria-selected="true"]{background:var(--ink);color:var(--parch);border-color:var(--ink)}
+  .fc-btn:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+  .fc-hint{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.78rem;color:#8a8a92;margin-left:auto}
+  .fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+  .fc-card{perspective:1200px;height:180px;cursor:pointer;background:none;border:0;padding:0;font-family:inherit;text-align:left}
+  .fc-inner{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+  .fc-card[data-flipped="true"] .fc-inner{transform:rotateY(180deg)}
+  .fc-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+    border-radius:12px;padding:18px;display:flex;flex-direction:column;border:1px solid var(--line);overflow:auto}
+  .fc-front{background:linear-gradient(180deg,#fff,var(--paper))}
+  .fc-back{transform:rotateY(180deg);color:var(--parch)}
+  .fc-card.migration .fc-back{background:linear-gradient(160deg,#1F4E79,#12294D)}
+  .fc-card.attitudes .fc-back{background:linear-gradient(160deg,#00695C,#0C3B34)}
+  .fc-card.pluralism .fc-back{background:linear-gradient(160deg,#6A1B9A,#3B0E56)}
+  .fc-tag{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--gold);font-weight:700;margin-bottom:8px}
+  .fc-front .fc-tag{color:#9a8028}
+  .fc-term{font-size:1.24rem;font-weight:700;line-height:1.15}
+  .fc-front .fc-flip{margin-top:auto;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.72rem;color:#9a9a9a}
+  .fc-def{font-size:.92rem;line-height:1.4}
+  .fc-back .fc-sw{margin-top:8px;font-size:.82rem}
+  .fc-back .fc-sw .k{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.62rem;letter-spacing:.08em;text-transform:uppercase}
+  .fc-back .up .k{color:#8BD08F}.fc-back .dn .k{color:#F2A0A0}
+  @media(max-width:820px){.fc-grid{grid-template-columns:1fr 1fr}.fc-hint{width:100%;margin-left:0}}
+
+  /* ---------- RESOURCES ---------- */
+  .res-note{background:#FBF0D6;border:1px solid var(--gold);border-left:4px solid var(--gold);
+    border-radius:8px;padding:12px 16px;margin-bottom:22px;font-size:.9rem;color:#5a4a1c;
+    font-family:"Trebuchet MS",Verdana,sans-serif}
+  .res-note code{background:#fff;border:1px solid var(--line);border-radius:4px;padding:1px 6px;font-size:.85em}
+  .res-note.hide{display:none}
+  .res-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:16px}
+  .res-col{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff}
+  .rc-head{padding:14px 16px;color:#fff}
+  .rc1 .rc-head{background:linear-gradient(135deg,#1F4E79,#12294D)}
+  .rc2 .rc-head{background:linear-gradient(135deg,#00695C,#0C3B34)}
+  .rc3 .rc-head{background:linear-gradient(135deg,#6A1B9A,#3B0E56)}
+  .rc-head .rc-n{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;opacity:.85}
+  .rc-head h3{font-size:1.16rem;margin-top:2px}
+  .res-btn{display:flex;align-items:center;gap:12px;padding:13px 16px;border-top:1px solid var(--line);
+    font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.92rem;color:var(--ink);text-decoration:none;
+    cursor:pointer;transition:background .15s}
+  .res-col .res-btn:first-of-type{border-top:0}
+  .res-btn:hover{background:var(--parch)}
+  .res-btn .ic{width:26px;height:26px;flex:none;display:grid;place-items:center;border-radius:6px;
+    background:var(--ink);color:var(--gold);font-size:.9rem}
+  .res-btn .go{margin-left:auto;color:var(--gold);font-weight:700;opacity:0;transition:.15s}
+  .res-btn:hover .go{opacity:1}
+  .res-btn:focus-visible{outline:3px solid var(--gold);outline-offset:-3px}
+  .res-btn.unset{opacity:.5;cursor:not-allowed}
+  .res-btn.unset .go{content:"";opacity:0}
+  .res-btn.unset::after{content:"Link not set";margin-left:auto;font-size:.74rem;color:#9a7d2c;
+    background:#FBF0D6;border:1px solid var(--gold-soft);border-radius:5px;padding:2px 7px}
+  .res-wide{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:2px}
+  .res-btn.big{border:1px solid var(--line);border-radius:12px;background:#fff;padding:16px 18px}
+  .res-btn.big:hover{background:var(--parch)}
+  .res-btn.big .ic{width:34px;height:34px;font-size:1.1rem;background:var(--ink)}
+  @media(max-width:820px){.res-grid{grid-template-columns:1fr}.res-wide{grid-template-columns:1fr}}
+
+  footer{background:var(--ink-2);color:#C9C4B6;padding:26px 0;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.8rem}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+  footer .gold{color:var(--gold)}
+
+  @media(max-width:820px){
+    .triptych{grid-template-columns:1fr}
+    .threads{grid-template-columns:1fr}
+    .revise{grid-template-columns:1fr}
+    .node{width:96px}
+    .node .sb{display:none}
+  }
+  @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<!--BACKPILL--><a href="../alevel.html" style="position:fixed;left:14px;bottom:14px;z-index:99999;background:#12294D;color:#F6F1E4;font:600 14px/1 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;padding:10px 15px;border-radius:999px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.28);border:1px solid #C9A227">&#8592; All units</a>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap">
+    <div class="crest">
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <rect x="2" y="2" width="60" height="60" rx="13" fill="#0C1B33" stroke="#C9A227" stroke-width="1.5"/>
+        <g fill="none" stroke="#F3ECDD" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M23 21C21 17 21 14 22 12c2 2 3 5 3 8"/><path d="M41 21c2-4 2-7 1-9-2 2-3 5-3 8"/>
+          <path d="M32 17C21 17 18 26 18 33c0 12 6 19 14 19s14-7 14-19c0-7-3-16-14-16z"/>
+          <path d="M32 21c-3 4-5 6-7 7M32 21c3 4 5 6 7 7"/>
+        </g>
+        <circle cx="27" cy="31" r="5" fill="none" stroke="#F3ECDD" stroke-width="2.4"/>
+        <circle cx="37" cy="31" r="5" fill="none" stroke="#F3ECDD" stroke-width="2.4"/>
+        <circle cx="27" cy="31" r="1.9" fill="#F3ECDD"/><circle cx="37" cy="31" r="1.9" fill="#F3ECDD"/>
+        <path d="M32 34l-2.2 4.2h4.4z" fill="#C9A227"/>
+      </svg>
+      <div class="who">A-Level Religious Studies · AQA Paper 2B
+        <b>Harlington School · Philosophy &amp; Ethics</b></div>
+    </div>
+    <h1>Migration &amp; Religious <span class="amp">Pluralism</span></h1>
+    <p class="sub">One unit, one argument — told three times. Migration built a multi-faith Britain; exclusivism, inclusivism and Hick answer it in theology; and the law referees the space between conviction and respect.</p>
+    <div class="bigq">
+      <span class="q">The<br>big<br>question</span>
+      <p>Can many faiths share one society — and can only Christians be saved? What survives when <em>conviction</em> meets <em>respect</em>?</p>
+    </div>
+  </div>
+</header>
+
+<!-- SIGNATURE: SPECTRUM -->
+<section id="spectrum">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">01</span><h2>The salvation spectrum</h2></div>
+    <p class="sec-lead">Every debate in this unit lines up on the same axis — from <b>exclusive</b> (one culture, one true faith) to <b>plural</b> (many cultures, many faiths, all valued). Pick a sub-topic, then tap a position to see what it claims and where it's strong or weak.</p>
+
+    <div class="spectrum-card">
+      <div class="tabs" role="tablist" aria-label="Choose a sub-topic">
+        <button class="tab" role="tab" aria-selected="true"  data-topic="migration">Migration &amp; Multicultural Britain</button>
+        <button class="tab" role="tab" aria-selected="false" data-topic="attitudes">Attitudes to Other Faiths</button>
+        <button class="tab" role="tab" aria-selected="false" data-topic="pluralism">Pluralism &amp; Religious Freedom</button>
+      </div>
+
+      <div class="axis">
+        <div class="axis-labels"><span class="l" id="poleL">Exclusive</span><span class="r" id="poleR">Plural</span></div>
+        <div class="bar"></div>
+        <div class="ticks" id="ticks"></div>
+      </div>
+
+      <div class="readout" id="readout" aria-live="polite"></div>
+      <p class="hint">Tap a circle — or use Tab and Enter — to explore each position.</p>
+    </div>
+  </div>
+</section>
+
+<!-- THE THREAD -->
+<section>
+  <div class="wrap">
+    <div class="thread">
+      <div class="wrap2">
+        <h2>The thread that ties it together</h2>
+        <p class="lead">Top answers don't treat the three debates separately. Three ideas run through all of them — spot the thread and you're writing at the top of the mark scheme.</p>
+        <div class="threads">
+          <div class="tcard"><div class="t">The exclusive → plural spectrum</div><p>Society (assimilation → pluralism), salvation (exclusivism → universalism) and law (one Church → freedom for all) run on the same axis. One spectrum, three arenas.</p></div>
+          <div class="tcard"><div class="t">Central or peripheral?</div><p>The courts' test for religious expression — Eweida won her cross, Chaplin lost hers — is the unit's test for everything: what is ESSENTIAL to a faith, and what can flex?</p></div>
+          <div class="tcard"><div class="t">The circularity problem</div><p>John 14:6 is quoted by the already-committed; the Sheep and the Goats is read both for and against Hick. Every position reads the texts it already trusts.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THREE DEBATES -->
+<section id="debates">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">02</span><h2>The same question, three times</h2></div>
+    <p class="sec-lead">The unit splits into three debates. They look different, but each is really asking <em>what the ritual — or the Church — actually does</em>.</p>
+    <div class="triptych">
+      <div class="panel b1">
+        <div class="cap"><div class="n">Sub-topic 1</div><h3>Migration &amp; Multicultural Britain</h3><div class="ask">Can many faiths share <b>one society</b>?</div></div>
+        <div class="body">
+          <div class="row"><span class="v">Assimilation</span><span class="d">Newcomers adopt British culture — Powell's 1968 warning.</span></div>
+          <div class="row"><span class="v">Multiculturalism</span><span class="d">Every culture respected, protected and celebrated.</span></div>
+          <div class="row"><span class="v">The law</span><span class="d">Article 18 → Article 9 → HRA 1998; limits at incitement and harm.</span></div>
+          <div class="row"><span class="v">The debate</span><span class="d">Enrichment — or a society with nothing to hold it together?</span></div>
+        </div>
+      </div>
+      <div class="panel b2">
+        <div class="cap"><div class="n">Sub-topic 2</div><h3>Attitudes to Other Faiths</h3><div class="ask">Can <b>only Christians</b> be saved?</div></div>
+        <div class="body">
+          <div class="row"><span class="v">Exclusivism</span><span class="d">John 14:6 — 'No one comes to the Father except through me.'</span></div>
+          <div class="row"><span class="v">Inclusivism</span><span class="d">Nostra Aetate: 'a ray of the Truth' in every faith.</span></div>
+          <div class="row"><span class="v">Rahner</span><span class="d">'Anonymous Christians' — grace working through conscience.</span></div>
+          <div class="row"><span class="v">The catch</span><span class="d">'No other name' — but 'God does not show favoritism'.</span></div>
+        </div>
+      </div>
+      <div class="panel b3">
+        <div class="cap"><div class="n">Sub-topic 3</div><h3>Pluralism &amp; Religious Freedom</h3><div class="ask">Are <b>all faiths</b> equally true?</div></div>
+        <div class="body">
+          <div class="row"><span class="v">Hick</span><span class="d">One Real, many responses; in the end, everyone is saved.</span></div>
+          <div class="row"><span class="v">The critics</span><span class="d">Griffiths, the denominations, the faiths themselves — and Dawkins.</span></div>
+          <div class="row"><span class="v">Freedom</span><span class="d">Separation vs transformation; Eweida won, Chaplin lost.</span></div>
+          <div class="row"><span class="v">The catch</span><span class="d">The more equal the faiths, the harder to say why any one matters.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
+
+<!-- YOUR RESOURCES -->
+<section id="resources">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">03</span><h2>Your resources</h2></div>
+    <p class="sec-lead">Everything for the unit, in one place. Open a sub-topic's lesson, booklet and podcast, and use the <b>Philosopher Companion</b> across all three.</p>
+
+    <div class="res-note" id="resNote">
+      <b>Teacher setup:</b> links aren't set yet. Open this file, find the <code>LINKS</code> list near the bottom, and paste each SharePoint share link once. Buttons with no link show as “Link not set”.
+    </div>
+
+    <div class="res-grid">
+      <div class="res-col rc1">
+        <div class="rc-head"><span class="rc-n">Sub-topic 1</span><h3>Migration &amp; Multicultural Britain</h3></div>
+        <a class="res-btn" data-key="migration_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="migration_booklet"><span class="ic">✎</span><span>Completion booklet</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="migration_podcast"><span class="ic">♪</span><span>Lesson podcast</span><span class="go">↗</span></a>
+      </div>
+      <div class="res-col rc2">
+        <div class="rc-head"><span class="rc-n">Sub-topic 2</span><h3>Attitudes to Other Faiths</h3></div>
+        <a class="res-btn" data-key="attitudes_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="attitudes_booklet"><span class="ic">✎</span><span>Completion booklet</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="attitudes_podcast"><span class="ic">♪</span><span>Lesson podcast</span><span class="go">↗</span></a>
+      </div>
+      <div class="res-col rc3">
+        <div class="rc-head"><span class="rc-n">Sub-topic 3</span><h3>Pluralism &amp; Religious Freedom</h3></div>
+        <a class="res-btn" data-key="pluralism_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="pluralism_booklet"><span class="ic">✎</span><span>Completion booklet</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="pluralism_podcast"><span class="ic">♪</span><span>Lesson podcast</span><span class="go">↗</span></a>
+      </div>
+    </div>
+
+    <div class="res-wide">
+      <a class="res-btn big" data-key="companion"><span class="ic">🦉</span><span><b>Philosopher Companion</b> — checklist, AO1 &amp; AO2 planning, key terms &amp; review</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="review"><span class="ic">↻</span><span><b>Review lessons</b> — consolidation decks for all three sub-topics</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="overview_podcast"><span class="ic">♪</span><span><b>Overview podcast</b> — the whole unit as one argument (team teach)</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="flashcards_pdf"><span class="ic">▤</span><span><b>Printable flashcards</b> — fold-over key terms &amp; views to cut out</span><span class="go">↗</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- HOW TO REVISE -->
+<section id="revise">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">04</span><h2>How to revise this unit</h2></div>
+    <p class="sec-lead">Use your resources in this order. The <b>Philosopher Companion</b> is where you learn to <em>plan</em> both question types.</p>
+    <div class="revise">
+      <div class="steps">
+        <div class="step"><div><h4>Watch the lesson &amp; listen to the podcast</h4><p>One podcast per sub-topic — a teacher and student talk each view through to a judgement. Annotate as you listen.</p></div></div>
+        <div class="step"><div><h4>Complete the greyscale booklet</h4><p>Read the given text, write the key claims in your own words, then decide the strength and weakness you'd give each view.</p></div></div>
+        <div class="step"><div><h4>Match &amp; apply the key terms</h4><p>In the Companion: match each term to its meaning, then use it in a sentence. RAG-rate the mastery checklist with the three faces.</p></div></div>
+        <div class="step"><div><h4>Plan AO1, then build AO2 on top</h4><p>Use the Companion frameworks and the guidance-left / your-turn-right scaffolds. Never evaluate what you haven't first explained.</p></div></div>
+      </div>
+      <div class="ao">
+        <div class="ao1"><div class="h ao1">AO1 · Examine the views (10)</div></div>
+        <div class="c"><b>What it is —</b> the factual chain: define the key terms, then set out each position in order and apply the evidence (e.g. the 2011 Census, John 14:6, Nostra Aetate, the birthplace argument).</div>
+        <div class="c"><b>Aim —</b> explain the whole range accurately and neutrally. No judging yet.</div>
+        <div class="h ao2">AO2 · Evaluate the claim (15)</div>
+        <div class="c"><b>What it is —</b> a three-paragraph dialectic: view, then evaluation → counter-evaluation → implication; mirror it; then judge.</div>
+        <div class="c"><b>Aim —</b> weigh the views, use one as a lens on another, and reach a justified judgement that links back to your thesis.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WATCH: FULL UNIT REVIEW -->
+<section id="watch">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">05</span><h2>Watch: the whole unit in one go</h2></div>
+    <p class="sec-lead">A full review of <b>Christianity, Migration &amp; Religious Pluralism</b> — multicultural Britain, attitudes to other faiths, and Hick. Best watched before you start revising, then again to check your recall.</p>
+    <div class="video-frame" id="videoFrame">
+      <div class="video-placeholder" id="videoPlaceholder">
+        <div class="vp-badge">Video not set</div>
+        <p><b>Teacher:</b> paste the YouTube link in the <code>VIDEO_URL</code> line near the bottom of this file. The player then appears here automatically.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- FLASHCARDS -->
+<section id="flashcards">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">06</span><h2>Flashcards — test yourself</h2></div>
+    <p class="sec-lead">Flip a card to check yourself. Switch between <b>key terms</b> (term → meaning) and <b>views</b> (view → claim, strength &amp; weakness), and filter by sub-topic.</p>
+    <div class="fc-controls">
+      <div class="fc-tabs" role="tablist" aria-label="Sub-topic">
+        <button class="fc-btn" role="tab" aria-selected="true"  data-topic="all">All</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-topic="migration">Migration</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-topic="attitudes">Other Faiths</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-topic="pluralism">Hick &amp; Freedom</button>
+      </div>
+      <div class="fc-type" role="tablist" aria-label="Card type">
+        <button class="fc-btn" role="tab" aria-selected="true"  data-type="terms">Key terms</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-type="views">Views</button>
+      </div>
+      <span class="fc-hint">Tap any card to flip · <span id="fcCount"></span></span>
+    </div>
+    <div class="fc-grid" id="fcGrid"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Christianity, Migration &amp; Religious Pluralism (Unit 2C) · Unit at a glance</span>
+    <span class="gold">Harlington School · Philosophy &amp; Ethics</span>
+  </div>
+</footer>
+
+<script>
+const DATA = {
+  migration:{
+    poles:["ONE shared culture — newcomers adapt","MANY cultures — all celebrated"],
+    nodes:[
+      {x:8, nm:"Assimilationism", sb:"become British", auth:"One culture",
+        claim:"Britain is a Christian country by root and custom; newcomers should adopt its language, customs, dress and religion. Powell's 1968 'Rivers of Blood' speech made the fear public: the growing 'immigrant descended population' would end in conflict.",
+        s:"Names a real problem — a society needs SOMETHING held in common.", w:"History refuted the assumption: established groups retained their identity anyway — and long-settled difference (Jewish Britain) was never a threat."},
+      {x:36, nm:"The cohesion critics", sb:"mix — but share a core", auth:"Shared core",
+        claim:"Without an agreed scheme of thought, society lacks cohesion; unassimilated communities become isolated and discriminated against — and people fear challenging harmful cultural practices (FGM, forced marriage) in case they appear racist.",
+        s:"Honest about the glue a society needs — and about the practices tolerance must not shield.", w:"Risks sliding back toward assimilationism; 'what everyone must share' is never actually named."},
+      {x:66, nm:"Multiculturalism", sb:"respect & protect", auth:"Every culture",
+        claim:"By the 1980s Britain recognised that every group's culture should be respected and protected — promoting tolerance and equal access in employment, education, law and business, with a rich, beneficial mixing of traditions.",
+        s:"Made real tolerance and equal access thinkable; society is visibly richer for its diversity.", w:"Critics: nothing holds it together — and religion's own claim to offer the BEST form of life resists the levelling."},
+      {x:92, nm:"Religious pluralism", sb:"every faith intrinsic value", auth:"Every faith",
+        claim:"The religious equivalent of multiculturalism: all religions respected, celebrated and understood as having intrinsic value for their believers — each faith's beliefs reflecting its own historical and cultural background.",
+        s:"Fits the human-rights framework and makes interfaith respect possible without conversion.", w:"Asks believers to hold their deepest conviction lightly — and the strong sense slides toward relativism."}
+    ]
+  },
+  attitudes:{
+    poles:["Explicit faith in Christ ONLY","God's grace reaches ALL"],
+    nodes:[
+      {x:8, nm:"Exclusivism", sb:"John 14:6 · no other name", auth:"Christ alone",
+        claim:"Explicit faith in Christ is necessary for salvation: John 14:6, Acts 4:12, Romans 10:13 — captured in extra ecclesiam nulla salus. Evangelism is urgent and loving; only children who die young and the never-evangelised are excepted.",
+        s:"Internally consistent, and it guards the unique revelation of God in Christ.", w:"The proof-texts are CIRCULAR — written by the already-committed Church, in the last Gospel; and it limits a free God."},
+      {x:36, nm:"Inclusivism", sb:"Nostra Aetate 1965", auth:"Truth beyond walls",
+        claim:"One religion teaches the truth most completely, but others reflect 'a ray of the Truth that illuminates everyone' (Nostra Aetate). Closed: others hold SOME truth. Open: the true faith can LEARN from them. Acts 10 and Romans 2 judge by conduct, not affiliation.",
+        s:"Takes the WHOLE New Testament seriously — as much biblical support as exclusivism.", w:"If good lives can save, why is explicit faith needed at all? And it still claims superiority over the faiths it includes."},
+      {x:66, nm:"Rahner", sb:"anonymous Christians", auth:"Anonymous grace",
+        claim:"A Buddhist monk who follows his conscience 'attains salvation and lives in the grace of God' — an anonymous Christian, saved through works. Everyone encounters God's saving purpose, whether or not they ever hear of Christ.",
+        s:"Replaces confrontation with a common quest, without surrendering Christ's centrality.", w:"Hick: patronising — 'an honorary status granted unilaterally to people who have not expressed any desire for it'."},
+      {x:92, nm:"Barth", sb:"all religion judged", auth:"Grace alone",
+        claim:"Revelation in Christ ABOLISHES all religion — Christianity included. Everyone, Christian and non-Christian, stands in exactly the same position before the grace of God: the view is both inclusive (all judged equally) and exclusive (the judge is Christ).",
+        s:"Escapes the 'which religion is best?' contest altogether.", w:"If all religious practice is ineffective, the lived Church — worship, sacraments, mission — is left strangely pointless."}
+    ]
+  },
+  pluralism:{
+    poles:["ONE faith uniquely true · freedom to convert","ALL faiths equal · freedom for all"],
+    nodes:[
+      {x:8, nm:"Separationists", sb:"kingdom apart", auth:"Kingdom apart",
+        claim:"Christ's kingdom 'is not of this world' (John 18:36): salvation is grace through personal faith, so the state has no part to play — Church and State should be separate, and religion completely free.",
+        s:"Consistent: forced faith is no faith — and it protects religion FROM the state.", w:"The freedom claimed is sometimes only for one's own faith; 'using force if necessary' collides with the law."},
+      {x:36, nm:"Transformationists", sb:"common good", auth:"Freedom for all",
+        claim:"Christians should work to transform society, contributing to moral debate from their distinctive perspective. Freedom to practise ANY religion or none is essential for genuine moral choice (Benedict XVI, 2011) — actively promoted by the HRA 1998 and Equality Act 2010.",
+        s:"Grounds religious freedom for EVERYONE, and engages society rather than retreating.", w:"The hard cases remain: when conscience meets equality law, the courts must decide what is central to the faith."},
+      {x:66, nm:"Inclusivists", sb:"the bridge position", auth:"Truth beyond walls",
+        claim:"Other faiths hold real aspects of the truth, and grace reaches beyond the Church — the bridge between Christian uniqueness and Hick's full pluralism.",
+        s:"Keeps Christ central while widening grace as far as scripture allows.", w:"Still claims superiority over the faiths it 'includes' — Hick presses on to full equality."},
+      {x:92, nm:"Hick", sb:"one Real, all saved", auth:"All faiths equal",
+        claim:"Your faith 'depends nearly always on the part of the world in which one happens to have been born'; all faiths are culturally-shaped responses to one ultimately Real, religion is transformation from self-centredness to Reality-centredness — and in the end, through further lives, everyone is saved.",
+        s:"Explains the birthplace fact no rival explains, and helps real communities find a common quest.", w:"No actual faith — Muslim, Jewish or orthodox Christian — recognises itself in it; Matthew 25's judgement is real and final."}
+    ]
+  }
+};
+
+const ticks=document.getElementById("ticks");
+const readout=document.getElementById("readout");
+const poleL=document.getElementById("poleL"), poleR=document.getElementById("poleR");
+let topic="migration", active=0;
+
+function renderReadout(n){
+  readout.innerHTML=`
+    <span class="badge">${n.auth}</span>
+    <div class="body">
+      <h4>${n.nm} <span style="opacity:.6;font-style:italic;font-weight:400">· ${n.sb}</span></h4>
+      <p>${n.claim}</p>
+      <div class="sw">
+        <div class="up"><span class="k">Strength</span><br>${n.s}</div>
+        <div class="dn"><span class="k">Weakness</span><br>${n.w}</div>
+      </div>
+    </div>`;
+}
+function renderTopic(){
+  const d=DATA[topic];
+  poleL.textContent=d.poles[0]; poleR.textContent=d.poles[1];
+  ticks.innerHTML="";
+  d.nodes.forEach((n,i)=>{
+    const el=document.createElement("div");
+    el.className="node"; el.style.left=n.x+"%"; el.tabIndex=0;
+    el.setAttribute("role","button");
+    el.setAttribute("aria-label",`${n.nm}: ${n.sb}`);
+    el.dataset.active=(i===active);
+    el.innerHTML=`<div class="dot"></div><div class="nm">${n.nm}</div><div class="sb">${n.sb}</div>`;
+    const pick=()=>{active=i;[...ticks.children].forEach((c,j)=>c.dataset.active=(j===i));renderReadout(n);};
+    el.addEventListener("click",pick);
+    el.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();pick();}});
+    ticks.appendChild(el);
+  });
+  active=Math.min(active,d.nodes.length-1);
+  [...ticks.children].forEach((c,j)=>c.dataset.active=(j===active));
+  renderReadout(d.nodes[active]);
+}
+document.querySelectorAll(".tab").forEach(t=>{
+  t.addEventListener("click",()=>{
+    document.querySelectorAll(".tab").forEach(x=>x.setAttribute("aria-selected","false"));
+    t.setAttribute("aria-selected","true");
+    topic=t.dataset.topic; active=0; renderTopic();
+  });
+});
+renderTopic();
+
+const FLASHCARDS = {"migration": {"terms": [{"term": "Migration", "def": "the movement of substantial numbers of people from one place to another.", "note": "Always a feature of society — by conquest, trade, work, or flight from war."}, {"term": "Multicultural", "def": "made up of many different cultures — nationalities, beliefs, values and social customs.", "note": "Wider than 'multiracial' (race only) and 'multi-faith' (religion only)."}, {"term": "Multiculturalism", "def": "the view that all cultures in a society should be respected, celebrated and understood in terms of their origins.", "note": "Generally recognised in Britain by the 1980s; a route to tolerance and equal access."}, {"term": "Religious pluralism", "def": "a situation where people of many faiths live in the same society without conflict, respecting one another's views.", "note": "In some contexts the STRONGER sense: the view that all religions are equally valid."}, {"term": "Secular state", "def": "a country where government, legislature and society are not controlled by, or dependent on, the teachings of a religion.", "note": "Modern Britain is largely secular in practice — yet keeps an established Church."}, {"term": "Freedom of religion", "def": "the human right to hold, change and manifest a religion or belief — or none.", "note": "UDHR Art. 18 → ECHR Art. 9 → the Human Rights Act 1998 in British law."}], "views": [{"n": "Assimilationism", "c": "Newcomers should adopt British culture — or national identity is destroyed. Immigrants were expected to become fully assimilated — adopting the language, customs, dress and religion of the UK.", "s": "Names a real problem — a society needs SOMETHING held in common", "w": "History refuted the assumption: established groups retained their identity anyway. It cannot explain why long-settled difference (Jewish Britain) was no threat — and it asks Christian-majority privilege to do the work of argument."}, {"n": "Multiculturalism", "c": "Every culture respected, protected — and mixed to everyone's benefit. The cultural identity of minority groups must be RECOGNISED — the lesson of the 1960s and 70s.", "s": "Made real tolerance and equal access thinkable", "w": "Critics: there is no agreed scheme of thought holding society together — cohesion is lost"}, {"n": "Religious pluralism", "c": "The religious equivalent of multiculturalism — every faith of intrinsic value. All religions are to be respected, celebrated, and understood as having intrinsic value for their believers.", "s": "Fits the human-rights framework", "w": "Asks believers to hold their deepest conviction lightly — the very conviction ('this is the best form of life') that holds their community together"}, {"n": "Freedom of religion in law", "c": "A human right — to hold, change and manifest belief, or none at all. UDHR Article 18: freedom of thought, conscience and religion — including freedom to CHANGE belief and to manifest it in public or private.", "s": "Protects every position equally — believer, convert, humanist", "w": "Law can compel restraint, not respect: it cannot make faiths value one another. And the hard cases remain — offence is subjective, cultural and religious claims blur, and (as the next lessons show) equality law and religious conscience can collide."}]}, "attitudes": {"terms": [{"term": "Exclusivism", "def": "the view that one religion is the only true one, and that other religions are wrong.", "note": "Grounded in John 14:6, John 3:16, Romans 10:13 and Acts 4:12."}, {"term": "Inclusivism", "def": "the view that although one religion is true, other religions may show aspects of the one true religion.", "note": "Closed: others have SOME of the truth. Open: the true religion can LEARN from others."}, {"term": "extra ecclesiam nulla salus", "def": "the traditional Roman Catholic teaching that there is no salvation outside the (Roman Catholic) Church.", "note": "Modified — but not eliminated — through Vatican II."}, {"term": "Evangelism", "def": "spreading Christianity by preaching or by personal witness.", "note": "NOT the same as Evangelicalism — the branch of Christianity that sees spreading the gospel as a primary responsibility."}, {"term": "Anonymous Christians", "def": "Karl Rahner's view that people who are not Christians in practice, worship or belief are nevertheless able to experience grace and salvation.", "note": "Rejected by fundamentalists as undermining conversion — and by Hick as patronising."}, {"term": "Ecumenism", "def": "initiatives to develop relationships between Christian Churches to promote Christian unity.", "note": "Practical rather than theological: the World Council of Churches has 349 member churches."}], "views": [{"n": "Exclusivism", "c": "One religion is true; explicit faith in Christ is necessary for salvation. John 14:6 seems to say explicit faith in Christ is necessary for salvation — with John 3:16, Romans 10:13 and Acts 4:12.", "s": "Internally consistent with its proof-texts", "w": "It limits a free God — illogical to say God CANNOT act through other religions or none"}, {"n": "Inclusivism", "c": "One religion teaches the truth most completely — but other faiths hold real aspects of it. God may choose to forgive those who never committed to Jesus but lived good lives — people of other faiths, and none, can be saved.", "s": "Takes the WHOLE New Testament seriously — Jesus' inclusive practice and the Acts texts carry as much weight as John 14:6", "w": "If good conduct can save, why is explicit faith needed at all? The position risks collapsing into universalism — or, if it holds the line, still claims superiority over the faiths it 'includes', which can look patronising."}, {"n": "Rahner: 'anonymous Christians'", "c": "Without knowing it, everyone who follows conscience lives in the grace of God. A Buddhist monk who follows his conscience 'attains salvation and lives in the grace of God' — an anonymous Christian.", "s": "Explains real holiness outside the Church without surrendering Christ's centrality", "w": "Hick: patronising and an insult to people born into other faiths — an 'honorary status granted unilaterally'"}, {"n": "Barth: religion abolished", "c": "Revelation in Christ abolishes ALL religion — Christianity included. See ALL religions as ineffective — the only thing that counts is the grace of God.", "s": "Escapes the 'which religion is best?' contest altogether", "w": "If all religious practice is ineffective, the actual lived Church — worship, sacraments, mission — is left strangely pointless"}]}, "pluralism": {"terms": [{"term": "Religious pluralism (Hick)", "def": "the strong view that all religions have an equal claim to share in absolute truth — none is uniquely privileged.", "note": "Distinct from the weak, social sense (co-existence without conflict)."}, {"term": "Universalism", "def": "the view that all humans will be saved by God, whatever their religion.", "note": "Hick is a universalist — which drives his rejection of hell."}, {"term": "The 'ultimately Real'", "def": "Hick's term for divine reality as it is IN ITSELF, behind the different conceptions each faith forms of it.", "note": "Faiths differ over the VIEWS of the Real, not (he argues) over the Real itself."}, {"term": "Interfaith relations", "def": "relationships between different faiths and their worshipping communities — e.g. between Islam, Judaism and Christianity.", "note": "Hick's ideas help at COMMUNITY level, even where theologians reject them."}, {"term": "Interdenominational relations", "def": "relationships between different Christian Churches — e.g. between the Roman Catholic Church and the Church of England.", "note": "Where Hick's universalism finds least traction — even most liberals see it as separate from Christianity."}, {"term": "Freedom of religious expression", "def": "the right to express and manifest religious views in public — protected, within limits, by the Human Rights Act 1998 and the Equality Act 2010.", "note": "The courts' recurring test: is the expression CENTRAL to the faith, or peripheral?"}], "views": [{"n": "Hick's pluralist hypothesis", "c": "All religions have an equal claim to share in absolute truth — salvation is for everybody. The birthplace argument: your faith 'depends nearly always on the part of the world in which one happens to have been born'.", "s": "Explains the birthplace fact no rival explains", "w": "The monotheisms DEPEND on specific truth-claims about God — Muslims and Jews do not recognise an unknowable 'Real' behind their revelation"}, {"n": "The case against Hick", "c": "Pluralism smooths over real, sometimes deadly, differences — and pleases no faith. Griffiths: groups supporting murder or suicide cannot be 'superficially' different — Islamic State is not 'similar' to ANY mainstream religion.", "s": "Names the hard cases honestly (violent groups, conflicting norms)", "w": "Risks sliding back into the 'us/them' intolerance the unit began with — and still owes an answer to Hick's birthplace argument: why would a universally sovereign God tie salvation to geography?"}, {"n": "Separation: faith above the state", "c": "Christ's kingdom is not of this world — religion must be free OF the state. Christ's kingdom 'is not of this world' (John 18:36) — so secular rules have no relevance to personal salvation.", "s": "Consistent: protects religion FROM the state and the state from religion", "w": "The freedom claimed is sometimes only for one's own religion"}, {"n": "Transformation: faith within society", "c": "Christians are called to work for the transformation of society — freedom of religion for ALL. Christians are called to work for the transformation of society — joining moral and social debate from their distinctive perspective.", "s": "Grounds religious freedom for ALL (not just one's own faith)", "w": "The hard cases don't dissolve: when conscience (the registrar, the B&B) meets equality law, the courts must decide what is CENTRAL to the faith and what is peripheral — and 'whose values count?' returns with every case."}]}};
+
+(function(){
+  let fcTopic="all", fcType="terms";
+  const grid=document.getElementById("fcGrid"), count=document.getElementById("fcCount");
+  function esc(s){return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+  function label(tp){return tp==="migration"?"Migration & Britain":tp==="attitudes"?"Other Faiths":"Hick & Freedom";}
+  function build(){
+    const topics = fcTopic==="all" ? ["migration","attitudes","pluralism"] : [fcTopic];
+    let cards=[];
+    topics.forEach(tp=>{
+      const d=FLASHCARDS[tp]; if(!d) return;
+      if(fcType==="terms"){ d.terms.forEach(t=>cards.push({tp,front:t.term,tag:label(tp),back:`<div class='fc-def'>${esc(t.def)}</div>`})); }
+      else { d.views.forEach(v=>cards.push({tp,front:v.n,tag:label(tp),back:`<div class='fc-def'>${esc(v.c)}</div><div class='fc-sw'><div class='up'><span class='k'>Strength</span><br>${esc(v.s)}</div><div class='dn' style='margin-top:6px'><span class='k'>Weakness</span><br>${esc(v.w)}</div></div>`})); }
+    });
+    grid.innerHTML=cards.map(c=>`
+      <button class="fc-card ${c.tp}" data-flipped="false" aria-label="Flashcard: ${esc(c.front)}. Tap to reveal.">
+        <div class="fc-inner">
+          <div class="fc-face fc-front"><div class="fc-tag">${c.tag}</div><div class="fc-term">${esc(c.front)}</div><div class="fc-flip">tap to flip ↺</div></div>
+          <div class="fc-face fc-back"><div class="fc-tag">${c.tag}</div>${c.back}</div>
+        </div>
+      </button>`).join("");
+    count.textContent = cards.length + " cards";
+    grid.querySelectorAll(".fc-card").forEach(el=>{
+      const flip=()=>el.dataset.flipped = el.dataset.flipped==="true" ? "false":"true";
+      el.addEventListener("click",flip);
+    });
+  }
+  document.querySelectorAll('#flashcards .fc-tabs .fc-btn').forEach(b=>b.addEventListener("click",()=>{
+    document.querySelectorAll('#flashcards .fc-tabs .fc-btn').forEach(x=>x.setAttribute("aria-selected","false"));
+    b.setAttribute("aria-selected","true"); fcTopic=b.dataset.topic; build();
+  }));
+  document.querySelectorAll('#flashcards .fc-type .fc-btn').forEach(b=>b.addEventListener("click",()=>{
+    document.querySelectorAll('#flashcards .fc-type .fc-btn').forEach(x=>x.setAttribute("aria-selected","false"));
+    b.setAttribute("aria-selected","true"); fcType=b.dataset.type; build();
+  }));
+  build();
+})();
+
+/* =====================================================================
+   TEACHER: paste your YouTube link between the quotes below.
+   Any format works — youtube.com/watch?v=…, youtu.be/…, or an embed URL.
+   Leave it empty ("") and the page shows a "Video not set" placeholder.
+   ===================================================================== */
+const VIDEO_URL = "";
+
+(function wireVideo(){
+  const url=(VIDEO_URL||"").trim();
+  if(!url) return; // keep placeholder
+  let id="";
+  const m = url.match(/(?:youtu\.be\/|v=|\/embed\/|\/shorts\/)([A-Za-z0-9_-]{11})/);
+  if(m) id=m[1];
+  else if(/^[A-Za-z0-9_-]{11}$/.test(url)) id=url; // a bare id
+  const frame=document.getElementById("videoFrame");
+  if(id && frame){
+    frame.innerHTML =
+      '<iframe src="https://www.youtube-nocookie.com/embed/'+id+'?rel=0" '+
+      'title="Christianity, Migration & Religious Pluralism — full unit review" '+
+      'allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" '+
+      'allowfullscreen loading="lazy"></iframe>';
+  } else if(frame){
+    frame.innerHTML =
+      '<div class="video-placeholder"><a class="res-btn big" style="background:#fff" href="'+url+'" target="_blank" rel="noopener"><span class="ic">▶</span><span><b>Watch the full unit review</b></span><span class="go">↗</span></a></div>';
+  }
+})();
+
+/* =====================================================================
+   TEACHER: paste your SharePoint share links between the quotes below.
+   Leave a link empty ("") and its button will show "Link not set".
+   Tip: in SharePoint, open the file's ... menu -> Copy link -> paste here.
+   ===================================================================== */
+const LINKS = {
+  migration_lesson:    "",
+  migration_booklet:   "",
+  migration_podcast:   "",
+  attitudes_lesson:    "",
+  attitudes_booklet:   "",
+  attitudes_podcast:   "",
+  pluralism_lesson:    "",
+  pluralism_booklet:   "",
+  pluralism_podcast:   "",
+  companion:           "",
+  review:              "",
+  overview_podcast:    "",
+  flashcards_pdf:      ""
+};
+
+(function wireResources(){
+  let anySet=false;
+  document.querySelectorAll(".res-btn").forEach(btn=>{
+    const url=(LINKS[btn.dataset.key]||"").trim();
+    if(url){
+      btn.href=url; btn.target="_blank"; btn.rel="noopener"; anySet=true;
+    }else{
+      btn.classList.add("unset"); btn.removeAttribute("href"); btn.setAttribute("aria-disabled","true");
+    }
+  });
+  if(anySet){ const n=document.getElementById("resNote"); if(n) n.classList.add("hide"); }
+})();
+</script>
+</body>
+</html>

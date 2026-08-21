@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Self, Death &amp; the Afterlife — Unit at a Glance</title>
+<style>
+  :root{
+    --ink:#12294D;        /* deep manuscript navy */
+    --ink-2:#0C1B33;
+    --parch:#F3ECDD;      /* aged parchment */
+    --parch-2:#EAE0C9;
+    --gold:#C9A227;       /* gold leaf */
+    --gold-soft:#E4CE86;
+    --rubric:#B01C2E;     /* rubrication red */
+    --teal:#00695C;
+    --violet:#6A1B9A;
+    --blue:#1565C0;
+    --green:#2E7D32;
+    --paper:#FBF7EE;
+    --line:rgba(18,41,77,.16);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1060px;margin:0 auto;padding:0 24px}
+  .eyebrow{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;font-weight:700}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    background:
+      radial-gradient(1200px 400px at 80% -10%, rgba(201,162,39,.18), transparent 60%),
+      linear-gradient(180deg,var(--ink) 0%, var(--ink-2) 100%);
+    color:var(--parch);
+    padding:64px 0 72px;
+    position:relative;
+    overflow:hidden;
+    border-bottom:3px solid var(--gold);
+  }
+  .hero::after{ /* faint ruled manuscript lines */
+    content:"";position:absolute;inset:0;pointer-events:none;opacity:.06;
+    background:repeating-linear-gradient(180deg,transparent 0 38px,#fff 38px 39px);
+  }
+  .hero .wrap{position:relative;z-index:2}
+  .crest{display:flex;align-items:center;gap:16px;margin-bottom:34px}
+  .crest svg{width:54px;height:54px;flex:none}
+  .crest .who{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-soft)}
+  .crest .who b{color:var(--parch);display:block;letter-spacing:.14em;font-size:.86rem;margin-top:3px}
+  h1{font-size:clamp(2.4rem,6vw,4.1rem);line-height:1.02;font-weight:700;letter-spacing:-.01em}
+  h1 .amp{color:var(--gold);font-style:italic}
+  .sub{margin-top:20px;max-width:56ch;font-size:1.12rem;color:#E7DFCB}
+  .bigq{
+    margin-top:30px;display:inline-flex;gap:14px;align-items:flex-start;
+    border-left:3px solid var(--gold);padding:8px 0 8px 18px;max-width:60ch;
+  }
+  .bigq .q{font-family:"Trebuchet MS",sans-serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-soft);padding-top:5px}
+  .bigq p{font-size:1.24rem;font-style:italic;color:#fff}
+
+  /* ---------- SECTION SHELL ---------- */
+  section{padding:64px 0}
+  .sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:8px}
+  .sec-head .num{font-family:"Trebuchet MS",sans-serif;color:var(--gold);font-weight:700;font-size:.9rem;letter-spacing:.15em}
+  .sec-head h2{font-size:clamp(1.6rem,3.4vw,2.3rem);letter-spacing:-.01em}
+  .sec-lead{color:#4a4a52;max-width:64ch;margin-bottom:34px;font-size:1.05rem}
+
+  /* ---------- SIGNATURE: authority spectrum ---------- */
+  .spectrum-card{
+    background:linear-gradient(180deg,#fff, var(--paper));
+    border:1px solid var(--line);border-radius:14px;
+    box-shadow:0 18px 40px -28px rgba(18,41,77,.5);
+    padding:28px 26px 34px;
+  }
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:26px}
+  .tab{
+    font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.82rem;letter-spacing:.04em;
+    border:1px solid var(--line);background:#fff;color:var(--ink);
+    padding:9px 16px;border-radius:999px;cursor:pointer;transition:.18s;
+  }
+  .tab[aria-selected="true"]{background:var(--ink);color:var(--parch);border-color:var(--ink)}
+  .tab:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+
+  .axis{position:relative;margin:8px 4px 0}
+  .axis-labels{display:flex;justify-content:space-between;font-family:"Trebuchet MS",sans-serif;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:#6a6a72;margin-bottom:10px}
+  .axis-labels .l{color:var(--rubric);font-weight:700}
+  .axis-labels .r{color:var(--blue);font-weight:700}
+  .bar{height:10px;border-radius:999px;background:linear-gradient(90deg,var(--rubric),#b06a1e 40%,#5a7d3a 66%,var(--blue));position:relative}
+  .ticks{position:relative;height:112px;margin-top:0}
+  .node{position:absolute;top:0;transform:translateX(-50%);width:132px;text-align:center;cursor:pointer}
+  .node .dot{width:20px;height:20px;border-radius:50%;background:#fff;border:3px solid var(--ink);margin:0 auto;position:relative;top:-15px;transition:.18s}
+  .node .nm{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.82rem;margin-top:-6px}
+  .node .sb{font-size:.76rem;color:#6a6a72;font-style:italic;margin-top:2px;line-height:1.25}
+  .node:hover .dot,.node[data-active="true"] .dot{transform:scale(1.25);border-color:var(--gold);box-shadow:0 0 0 5px rgba(201,162,39,.2)}
+  .node:focus-visible{outline:none}
+  .node:focus-visible .dot{outline:3px solid var(--gold);outline-offset:3px}
+
+  .readout{
+    margin-top:14px;background:var(--ink);color:var(--parch);border-radius:12px;padding:20px 22px;
+    min-height:104px;display:flex;gap:18px;align-items:flex-start;
+  }
+  .readout .badge{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;
+    background:var(--gold);color:var(--ink-2);padding:6px 10px;border-radius:6px;white-space:nowrap;margin-top:2px}
+  .readout .body h4{font-size:1.12rem;margin-bottom:4px}
+  .readout .body .auth{color:var(--gold-soft);font-family:"Trebuchet MS",sans-serif;font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+  .readout .body p{color:#E7DFCB;font-size:.98rem}
+  .readout .body .sw{display:flex;gap:22px;margin-top:10px;flex-wrap:wrap}
+  .readout .body .sw div{font-size:.9rem}
+  .readout .body .sw .k{font-family:"Trebuchet MS",sans-serif;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase}
+  .readout .body .sw .up .k{color:#8BD08F}
+  .readout .body .sw .dn .k{color:#F2A0A0}
+  .hint{font-family:"Trebuchet MS",sans-serif;font-size:.76rem;color:#8a8a92;margin-top:14px;text-align:center}
+
+  /* ---------- THREE DEBATES ---------- */
+  .triptych{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .panel{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;display:flex;flex-direction:column}
+  .panel .cap{padding:16px 18px;color:#fff;position:relative}
+  .panel.b1 .cap{background:linear-gradient(135deg,#1F4E79,#12294D)}
+  .panel.b2 .cap{background:linear-gradient(135deg,#00695C,#0C3B34)}
+  .panel.b3 .cap{background:linear-gradient(135deg,#6A1B9A,#3B0E56)}
+  .panel .cap .n{font-family:"Trebuchet MS",sans-serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;opacity:.85}
+  .panel .cap h3{font-size:1.24rem;margin-top:3px}
+  .panel .cap .ask{font-style:italic;font-size:.9rem;margin-top:8px;opacity:.95}
+  .panel .body{padding:16px 18px;font-size:.92rem}
+  .panel .body .row{display:flex;gap:9px;padding:7px 0;border-bottom:1px dashed var(--line)}
+  .panel .body .row:last-child{border-bottom:0}
+  .panel .body .row .v{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.8rem;white-space:nowrap;color:var(--ink)}
+  .panel .body .row .d{color:#55555c}
+
+  /* ---------- THREAD ---------- */
+  .thread{background:var(--ink);color:var(--parch);border-radius:14px;padding:34px 30px;position:relative;overflow:hidden}
+  .thread::before{content:"";position:absolute;inset:0;opacity:.07;background:repeating-linear-gradient(180deg,transparent 0 30px,#fff 30px 31px)}
+  .thread .wrap2{position:relative;z-index:2}
+  .thread h2{color:#fff;font-size:clamp(1.5rem,3vw,2.1rem);margin-bottom:8px}
+  .thread .lead{color:#E7DFCB;max-width:62ch;margin-bottom:24px}
+  .threads{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .tcard{border:1px solid rgba(228,206,134,.3);border-radius:10px;padding:16px 16px 18px;background:rgba(255,255,255,.03)}
+  .tcard .t{font-family:"Trebuchet MS",sans-serif;color:var(--gold);font-weight:700;font-size:.82rem;letter-spacing:.05em;margin-bottom:6px}
+  .tcard p{font-size:.9rem;color:#E7DFCB}
+
+  /* ---------- REVISE ---------- */
+  .revise{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:start}
+  .steps{counter-reset:s;display:flex;flex-direction:column;gap:14px}
+  .step{display:flex;gap:16px;align-items:flex-start;border-left:2px solid var(--line);padding:2px 0 2px 18px;position:relative}
+  .step::before{counter-increment:s;content:counter(s);position:absolute;left:-15px;top:-2px;width:28px;height:28px;border-radius:50%;
+    background:var(--gold);color:var(--ink-2);font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.9rem;display:grid;place-items:center}
+  .step h4{font-size:1.02rem}
+  .step p{font-size:.9rem;color:#55555c;margin-top:2px}
+  .ao{border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .ao .h{padding:12px 16px;font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.82rem;letter-spacing:.06em;color:#fff}
+  .ao .ao1 .h,.ao .h.ao1{background:var(--ink)}
+  .ao .h.ao2{background:var(--green)}
+  .ao .c{padding:14px 16px;font-size:.9rem;border-bottom:1px solid var(--line)}
+  .ao .c:last-child{border-bottom:0}
+  .ao .c b{font-family:"Trebuchet MS",sans-serif;font-size:.78rem;letter-spacing:.04em}
+
+  /* ---------- VIDEO ---------- */
+  .video-frame{position:relative;width:100%;aspect-ratio:16/9;border-radius:14px;overflow:hidden;
+    border:1px solid var(--line);box-shadow:0 20px 44px -30px rgba(18,41,77,.55);background:var(--ink)}
+  .video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .video-placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:14px;text-align:center;padding:30px;color:#C9C4B6;
+    background:radial-gradient(700px 300px at 50% 30%,rgba(201,162,39,.14),transparent 60%),linear-gradient(180deg,var(--ink),var(--ink-2))}
+  .video-placeholder .vp-badge{font-family:"Trebuchet MS",Verdana,sans-serif;font-weight:700;font-size:.72rem;letter-spacing:.14em;
+    text-transform:uppercase;background:var(--gold);color:var(--ink-2);padding:6px 12px;border-radius:6px}
+  .video-placeholder p{max-width:52ch;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.92rem;line-height:1.55}
+  .video-placeholder code{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:4px;padding:1px 6px}
+
+
+  /* ---------- FLASHCARDS ---------- */
+  .fc-controls{display:flex;gap:18px;flex-wrap:wrap;align-items:center;margin-bottom:24px}
+  .fc-tabs,.fc-type{display:flex;gap:8px;flex-wrap:wrap}
+  .fc-btn{font-family:"Trebuchet MS",Verdana,sans-serif;font-weight:700;font-size:.8rem;border:1px solid var(--line);
+    background:#fff;color:var(--ink);padding:8px 15px;border-radius:999px;cursor:pointer;transition:.18s}
+  .fc-btn[aria-selected="true"]{background:var(--ink);color:var(--parch);border-color:var(--ink)}
+  .fc-btn:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+  .fc-hint{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.78rem;color:#8a8a92;margin-left:auto}
+  .fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+  .fc-card{perspective:1200px;height:180px;cursor:pointer;background:none;border:0;padding:0;font-family:inherit;text-align:left}
+  .fc-inner{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+  .fc-card[data-flipped="true"] .fc-inner{transform:rotateY(180deg)}
+  .fc-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+    border-radius:12px;padding:18px;display:flex;flex-direction:column;border:1px solid var(--line);overflow:auto}
+  .fc-front{background:linear-gradient(180deg,#fff,var(--paper))}
+  .fc-back{transform:rotateY(180deg);color:var(--parch)}
+  .fc-card.soul .fc-back{background:linear-gradient(160deg,#1F4E79,#12294D)}
+  .fc-card.bodysoul .fc-back{background:linear-gradient(160deg,#00695C,#0C3B34)}
+  .fc-card.afterlife .fc-back{background:linear-gradient(160deg,#6A1B9A,#3B0E56)}
+  .fc-tag{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--gold);font-weight:700;margin-bottom:8px}
+  .fc-front .fc-tag{color:#9a8028}
+  .fc-term{font-size:1.24rem;font-weight:700;line-height:1.15}
+  .fc-front .fc-flip{margin-top:auto;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.72rem;color:#9a9a9a}
+  .fc-def{font-size:.92rem;line-height:1.4}
+  .fc-back .fc-sw{margin-top:8px;font-size:.82rem}
+  .fc-back .fc-sw .k{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.62rem;letter-spacing:.08em;text-transform:uppercase}
+  .fc-back .up .k{color:#8BD08F}.fc-back .dn .k{color:#F2A0A0}
+  @media(max-width:820px){.fc-grid{grid-template-columns:1fr 1fr}.fc-hint{width:100%;margin-left:0}}
+
+  /* ---------- RESOURCES ---------- */
+  .res-note{background:#FBF0D6;border:1px solid var(--gold);border-left:4px solid var(--gold);
+    border-radius:8px;padding:12px 16px;margin-bottom:22px;font-size:.9rem;color:#5a4a1c;
+    font-family:"Trebuchet MS",Verdana,sans-serif}
+  .res-note code{background:#fff;border:1px solid var(--line);border-radius:4px;padding:1px 6px;font-size:.85em}
+  .res-note.hide{display:none}
+  .res-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:16px}
+  .res-col{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff}
+  .rc-head{padding:14px 16px;color:#fff}
+  .rc1 .rc-head{background:linear-gradient(135deg,#1F4E79,#12294D)}
+  .rc2 .rc-head{background:linear-gradient(135deg,#00695C,#0C3B34)}
+  .rc3 .rc-head{background:linear-gradient(135deg,#6A1B9A,#3B0E56)}
+  .rc-head .rc-n{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;opacity:.85}
+  .rc-head h3{font-size:1.16rem;margin-top:2px}
+  .res-btn{display:flex;align-items:center;gap:12px;padding:13px 16px;border-top:1px solid var(--line);
+    font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.92rem;color:var(--ink);text-decoration:none;
+    cursor:pointer;transition:background .15s}
+  .res-col .res-btn:first-of-type{border-top:0}
+  .res-btn:hover{background:var(--parch)}
+  .res-btn .ic{width:26px;height:26px;flex:none;display:grid;place-items:center;border-radius:6px;
+    background:var(--ink);color:var(--gold);font-size:.9rem}
+  .res-btn .go{margin-left:auto;color:var(--gold);font-weight:700;opacity:0;transition:.15s}
+  .res-btn:hover .go{opacity:1}
+  .res-btn:focus-visible{outline:3px solid var(--gold);outline-offset:-3px}
+  .res-btn.unset{opacity:.5;cursor:not-allowed}
+  .res-btn.unset .go{content:"";opacity:0}
+  .res-btn.unset::after{content:"Link not set";margin-left:auto;font-size:.74rem;color:#9a7d2c;
+    background:#FBF0D6;border:1px solid var(--gold-soft);border-radius:5px;padding:2px 7px}
+  .res-wide{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:2px}
+  .res-btn.big{border:1px solid var(--line);border-radius:12px;background:#fff;padding:16px 18px}
+  .res-btn.big:hover{background:var(--parch)}
+  .res-btn.big .ic{width:34px;height:34px;font-size:1.1rem;background:var(--ink)}
+  @media(max-width:820px){.res-grid{grid-template-columns:1fr}.res-wide{grid-template-columns:1fr}}
+
+  footer{background:var(--ink-2);color:#C9C4B6;padding:26px 0;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.8rem}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+  footer .gold{color:var(--gold)}
+
+  @media(max-width:820px){
+    .triptych{grid-template-columns:1fr}
+    .threads{grid-template-columns:1fr}
+    .revise{grid-template-columns:1fr}
+    .node{width:96px}
+    .node .sb{display:none}
+  }
+  @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<!--BACKPILL--><a href="../alevel.html" style="position:fixed;left:14px;bottom:14px;z-index:99999;background:#12294D;color:#F6F1E4;font:600 14px/1 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;padding:10px 15px;border-radius:999px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.28);border:1px solid #C9A227">&#8592; All units</a>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap">
+    <div class="crest">
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <rect x="2" y="2" width="60" height="60" rx="13" fill="#0C1B33" stroke="#C9A227" stroke-width="1.5"/>
+        <g fill="none" stroke="#F3ECDD" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M23 21C21 17 21 14 22 12c2 2 3 5 3 8"/><path d="M41 21c2-4 2-7 1-9-2 2-3 5-3 8"/>
+          <path d="M32 17C21 17 18 26 18 33c0 12 6 19 14 19s14-7 14-19c0-7-3-16-14-16z"/>
+          <path d="M32 21c-3 4-5 6-7 7M32 21c3 4 5 6 7 7"/>
+        </g>
+        <circle cx="27" cy="31" r="5" fill="none" stroke="#F3ECDD" stroke-width="2.4"/>
+        <circle cx="37" cy="31" r="5" fill="none" stroke="#F3ECDD" stroke-width="2.4"/>
+        <circle cx="27" cy="31" r="1.9" fill="#F3ECDD"/><circle cx="37" cy="31" r="1.9" fill="#F3ECDD"/>
+        <path d="M32 34l-2.2 4.2h4.4z" fill="#C9A227"/>
+      </svg>
+      <div class="who">A-Level Religious Studies · AQA Paper 1 (7062/1)
+        <b>Harlington School · Philosophy &amp; Ethics</b></div>
+    </div>
+    <h1>Self, Death <span class="amp">&amp;</span> the Afterlife</h1>
+    <p class="sub">One unit, one argument — in three steps. What is a person? How do mind and body relate? And could anything of you survive your death?</p>
+    <div class="bigq">
+      <span class="q">The<br>big<br>question</span>
+      <p>If I am nothing but a body and a brain, what could possibly survive my death — and would it still be me?</p>
+    </div>
+  </div>
+</header>
+
+<!-- SIGNATURE: SPECTRUM -->
+<section id="spectrum">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">01</span><h2>The separability spectrum</h2></div>
+    <p class="sec-lead">Every lesson in this unit lines up on the same axis — from <b>soul fully separable</b> (survival easy to explain, science hard) to <b>no soul at all</b> (science easy, the conscious &lsquo;I&rsquo; hard). Pick a sub-topic, then tap a position to see what it claims and where it's strong or weak.</p>
+
+    <div class="spectrum-card">
+      <div class="tabs" role="tablist" aria-label="Choose a sub-topic">
+        <button class="tab" role="tab" aria-selected="true"  data-topic="soul">The Soul</button>
+        <button class="tab" role="tab" aria-selected="false" data-topic="bodysoul">Body &amp; Soul</button>
+        <button class="tab" role="tab" aria-selected="false" data-topic="afterlife">Life After Death</button>
+      </div>
+
+      <div class="axis">
+        <div class="axis-labels"><span class="l" id="poleL">Most separable</span><span class="r" id="poleR">Least separable</span></div>
+        <div class="bar"></div>
+        <div class="ticks" id="ticks"></div>
+      </div>
+
+      <div class="readout" id="readout" aria-live="polite"></div>
+      <p class="hint">Tap a circle — or use Tab and Enter — to explore each position.</p>
+    </div>
+  </div>
+</section>
+
+<!-- THE THREAD -->
+<section>
+  <div class="wrap">
+    <div class="thread">
+      <div class="wrap2">
+        <h2>The thread that ties it together</h2>
+        <p class="lead">Top answers don't treat the three lessons separately. Three ideas run through all of them — spot the thread and you're writing at the top of the mark scheme.</p>
+        <div class="threads">
+          <div class="tcard"><div class="t">The trade-off</div><p>Every view trades scientific credibility against the survival of the conscious &lsquo;I&rsquo;. Gain one, lose the other.</p></div>
+          <div class="tcard"><div class="t">The Hard Problem</div><p>Why do brain processes feel like anything at all? Every physicalist account still has to answer this — none has.</p></div>
+          <div class="tcard"><div class="t">Possible &ne; personal</div><p>Showing survival is <em>possible</em> is not showing it would be <em>you</em>. Most weak answers prove the first and forget the second.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THREE DEBATES -->
+<section id="debates">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">02</span><h2>The same question, three times</h2></div>
+    <p class="sec-lead">The unit splits into three lessons. Each answers a different question — but every answer decides the next one.</p>
+    <div class="triptych">
+      <div class="panel b1">
+        <div class="cap"><div class="n">Sub-topic 1</div><h3>The Soul</h3><div class="ask">What <b>am</b> I?</div></div>
+        <div class="body">
+          <div class="row"><span class="v">Plato</span><span class="d">An immortal, partless soul in a body.</span></div>
+          <div class="row"><span class="v">Aristotle</span><span class="d">The FORM of the living body.</span></div>
+          <div class="row"><span class="v">Descartes</span><span class="d">A thinking substance — three proofs.</span></div>
+          <div class="row"><span class="v">Ryle &amp; Hume</span><span class="d">A category mistake — no soul-thing.</span></div>
+        </div>
+      </div>
+      <div class="panel b2">
+        <div class="cap"><div class="n">Sub-topic 2</div><h3>Body &amp; Soul</h3><div class="ask">How do they <b>relate</b>?</div></div>
+        <div class="body">
+          <div class="row"><span class="v">Interactionism</span><span class="d">They meet — Descartes said, in the pineal gland.</span></div>
+          <div class="row"><span class="v">Physicalism</span><span class="d">No relationship — because there is no soul.</span></div>
+          <div class="row"><span class="v">Functionalism</span><span class="d">Mind is what the brain DOES.</span></div>
+          <div class="row"><span class="v">Dual-aspect</span><span class="d">One substance, two aspects.</span></div>
+        </div>
+      </div>
+      <div class="panel b3">
+        <div class="cap"><div class="n">Sub-topic 3</div><h3>Life After Death</h3><div class="ask">Could <b>you</b> survive?</div></div>
+        <div class="body">
+          <div class="row"><span class="v">Hick</span><span class="d">God recreates you as a perfect replica.</span></div>
+          <div class="row"><span class="v">Swinburne</span><span class="d">The soul is a bulb; the brain a socket.</span></div>
+          <div class="row"><span class="v">Evidence</span><span class="d">Reincarnation &middot; near-death experiences.</span></div>
+          <div class="row"><span class="v">Parfit &amp; Dennett</span><span class="d">No self — only a narrative.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- YOUR RESOURCES -->
+<section id="resources">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">03</span><h2>Your resources</h2></div>
+    <p class="sec-lead">Everything for the unit, in one place. Open a sub-topic's lesson, booklet and podcast, and use the <b>Philosopher Companion</b> across all three.</p>
+
+    <div class="res-note" id="resNote">
+      <b>Teacher setup:</b> links aren't set yet. Open this file, find the <code>LINKS</code> list near the bottom, and paste each SharePoint share link once. Buttons with no link show as “Link not set”.
+    </div>
+
+    <div class="res-grid">
+      <div class="res-col rc1">
+        <div class="rc-head"><span class="rc-n">Sub-topic 1</span><h3>The Soul</h3></div>
+        <a class="res-btn" data-key="soul_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="soul_booklet"><span class="ic">✎</span><span>Completion booklet</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="soul_podcast"><span class="ic">♪</span><span>Lesson podcast</span><span class="go">↗</span></a>
+      </div>
+      <div class="res-col rc2">
+        <div class="rc-head"><span class="rc-n">Sub-topic 2</span><h3>Body &amp; Soul</h3></div>
+        <a class="res-btn" data-key="bodysoul_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="bodysoul_booklet"><span class="ic">✎</span><span>Completion booklet</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="bodysoul_podcast"><span class="ic">♪</span><span>Lesson podcast</span><span class="go">↗</span></a>
+      </div>
+      <div class="res-col rc3">
+        <div class="rc-head"><span class="rc-n">Sub-topic 3</span><h3>Life After Death</h3></div>
+        <a class="res-btn" data-key="afterlife_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="afterlife_booklet"><span class="ic">✎</span><span>Completion booklet</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="afterlife_podcast"><span class="ic">♪</span><span>Lesson podcast</span><span class="go">↗</span></a>
+      </div>
+    </div>
+
+    <div class="res-wide">
+      <a class="res-btn big" data-key="companion"><span class="ic">🦉</span><span><b>Philosopher Companion</b> — checklist, AO1 &amp; AO2 planning, key terms &amp; review</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="review"><span class="ic">↻</span><span><b>Review lessons</b> — consolidation decks for all three sub-topics</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="overview_podcast"><span class="ic">♪</span><span><b>Overview podcast</b> — the whole unit as one argument (team teach)</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="flashcards_pdf"><span class="ic">▤</span><span><b>Printable flashcards</b> — fold-over key terms &amp; views to cut out</span><span class="go">↗</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- HOW TO REVISE -->
+<section id="revise">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">04</span><h2>How to revise this unit</h2></div>
+    <p class="sec-lead">Use your resources in this order. The <b>Philosopher Companion</b> is where you learn to <em>plan</em> both question types.</p>
+    <div class="revise">
+      <div class="steps">
+        <div class="step"><div><h4>Watch the lesson &amp; listen to the podcast</h4><p>One podcast per sub-topic — a teacher and student talk each view through to a judgement. Annotate as you listen.</p></div></div>
+        <div class="step"><div><h4>Complete the greyscale booklet</h4><p>Read the given text, write the key claims in your own words, then decide the strength and weakness you'd give each view.</p></div></div>
+        <div class="step"><div><h4>Match &amp; apply the key terms</h4><p>In the Companion: match each term to its meaning, then use it in a sentence. RAG-rate the mastery checklist with the three faces.</p></div></div>
+        <div class="step"><div><h4>Plan AO1, then build AO2 on top</h4><p>Use the Companion frameworks and the guidance-left / your-turn-right scaffolds. Never evaluate what you haven't first explained.</p></div></div>
+      </div>
+      <div class="ao">
+        <div class="ao1"><div class="h ao1">AO1 · Examine (10)</div></div>
+        <div class="c"><b>What it is —</b> the factual chain: define the problem, then set out each position in order and apply the evidence (the eye/sight analogy, the pineal gland, Mr X).</div>
+        <div class="c"><b>Aim —</b> explain the whole range accurately and neutrally. No judging yet.</div>
+        <div class="h ao2">AO2 · Evaluate the claim (15)</div>
+        <div class="c"><b>What it is —</b> a three-paragraph dialectic: view, then evaluation → counter-evaluation → implication; mirror it; then judge.</div>
+        <div class="c"><b>Aim —</b> weigh the positions, use one as a lens on another, and reach a justified judgement that links back to your thesis.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WATCH: FULL UNIT REVIEW -->
+<section id="watch">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">05</span><h2>Watch: the whole unit in one go</h2></div>
+    <p class="sec-lead">A full review of <b>Self, Death &amp; the Afterlife</b> — the soul, the body/soul relationship and life after death. Best watched before you start revising, then again to check your recall.</p>
+    <div class="video-frame" id="videoFrame">
+      <div class="video-placeholder" id="videoPlaceholder">
+        <div class="vp-badge">Video not set</div>
+        <p><b>Teacher:</b> paste the YouTube link in the <code>VIDEO_URL</code> line near the bottom of this file. The player then appears here automatically.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- FLASHCARDS -->
+<section id="flashcards">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">06</span><h2>Flashcards — test yourself</h2></div>
+    <p class="sec-lead">Flip a card to check yourself. Switch between <b>key terms</b> (term → meaning) and <b>views</b> (view → claim, strength &amp; weakness), and filter by sub-topic.</p>
+    <div class="fc-controls">
+      <div class="fc-tabs" role="tablist" aria-label="Sub-topic">
+        <button class="fc-btn" role="tab" aria-selected="true"  data-topic="all">All</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-topic="soul">The Soul</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-topic="bodysoul">Body &amp; Soul</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-topic="afterlife">Afterlife</button>
+      </div>
+      <div class="fc-type" role="tablist" aria-label="Card type">
+        <button class="fc-btn" role="tab" aria-selected="true"  data-type="terms">Key terms</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-type="views">Views</button>
+      </div>
+      <span class="fc-hint">Tap any card to flip · <span id="fcCount"></span></span>
+    </div>
+    <div class="fc-grid" id="fcGrid"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>2Ph Self, Death &amp; the Afterlife · Unit at a glance</span>
+    <span class="gold">Harlington School · Philosophy &amp; Ethics</span>
+  </div>
+</footer>
+
+<script>
+const DATA = {
+  "soul": {
+    "poles": [
+      "Soul fully separate · survival of death easy to explain",
+      "No soul at all · best fit with neuroscience"
+    ],
+    "nodes": [
+      {
+        "x": 8,
+        "nm": "Plato",
+        "sb": "immortal, pre-existent soul",
+        "auth": "Immortal soul",
+        "claim": "The soul is immortal — trapped in a body, at home in the world of Forms.",
+        "s": "Explains our grasp of universals; makes survival of death intelligible; fits the mourner's instinct that the 'real person' has gone.",
+        "w": "Rests on the doubtful theory of Forms — and a soul simple enough to be indestructible seems too simple to be a PERSON with character."
+      },
+      {
+        "x": 36,
+        "nm": "Descartes",
+        "sb": "distinct substance, interacting",
+        "auth": "Thinking substance",
+        "claim": "I think, therefore I am — mind and body are radically different substances.",
+        "s": "Takes first-person consciousness seriously — the Hard Problem and qualia remain unsolved — and grounds the religious hope of survival.",
+        "w": "Each proof fails: doubt yields only 'there is thinking'; brain damage 'divides' the mind; CDP circles back through God (the Cartesian Circle)."
+      },
+      {
+        "x": 64,
+        "nm": "Aristotle",
+        "sb": "form of the body — inseparable",
+        "auth": "Form of the body",
+        "claim": "The soul is the FORM of the living body — you are body and soul together.",
+        "s": "Fits the scientific, biological view of persons; matches how we actually identify people (by what they say and do); no interaction problem.",
+        "w": "Seems to rule out any life after death — and the corpse intuition pulls the other way. Even Aristotle hesitates over whether nous is separable."
+      },
+      {
+        "x": 92,
+        "nm": "Ryle & Hume",
+        "sb": "category mistake — no soul-thing",
+        "auth": "No soul-thing",
+        "claim": "The 'ghost in the machine' is a category mistake — and 'soul substance' explains nothing.",
+        "s": "Fits neuroscience (brain damage damages mind); dissolves the interaction problem; puts the burden of proof on the dualist.",
+        "w": "Leaves consciousness unexplained: qualia resist third-person description, and Campbell's clock suggests memory needs a self-aware 'I'."
+      }
+    ]
+  },
+  "bodysoul": {
+    "poles": [
+      "TWO substances · mind irreducible",
+      "ONE substance · mind reduced to matter"
+    ],
+    "nodes": [
+      {
+        "x": 8,
+        "nm": "Interactionism",
+        "sb": "two substances, touching",
+        "auth": "Two substances, touching",
+        "claim": "Mind and body meet — Descartes said, in the pineal gland.",
+        "s": "Honours the obvious two-way traffic of experience, and preserves free will and a soul that could survive death.",
+        "w": "Location is not mechanism — and the anatomy was wrong. It names where, never how."
+      },
+      {
+        "x": 36,
+        "nm": "Dual-aspect monism",
+        "sb": "one substance, two aspects",
+        "auth": "One substance, two aspects",
+        "claim": "One substance — with a mental aspect and a physical aspect.",
+        "s": "No interaction problem AND no dismissal of qualia — scientifically realistic, with a quantum analogy.",
+        "w": "The 'one substance' is unknown — naming the mystery is not explaining it; and it denies souls."
+      },
+      {
+        "x": 64,
+        "nm": "Functionalism",
+        "sb": "mind as function",
+        "auth": "Mind = what it does",
+        "claim": "The mind is a function — defined by what it does, not what it's made of.",
+        "s": "Explains mind without soul-substance, fits AI and cognitive science, and allows one mind on many platforms.",
+        "w": "Describes processing, not experiencing — a robot reacting to a pin does not obviously FEEL it."
+      },
+      {
+        "x": 92,
+        "nm": "Physicalism",
+        "sb": "mind IS brain",
+        "auth": "Mind = brain",
+        "claim": "There is no body/soul relationship — because there is no soul.",
+        "s": "Simple, scientific, fits every mind–brain correlation, and avoids the interaction problem entirely.",
+        "w": "Correlation is not identity. The Hard Problem is unsolved, and qualia resist physical description."
+      }
+    ]
+  },
+  "afterlife": {
+    "poles": [
+      "The SAME conscious 'I' survives",
+      "Nothing personal survives at all"
+    ],
+    "nodes": [
+      {
+        "x": 8,
+        "nm": "Swinburne & Price",
+        "sb": "the soul, with its beliefs",
+        "auth": "Disembodied souls",
+        "claim": "The conscious self can continue — with a new 'socket', or with no body at all.",
+        "s": "Preserves the same conscious 'I' with memories and character — what believers actually hope for.",
+        "w": "Depends entirely on God's intervention; and 'sameness' without body, brain or senses is hard to state."
+      },
+      {
+        "x": 36,
+        "nm": "Hick",
+        "sb": "a replica body-soul",
+        "auth": "Bodily resurrection",
+        "claim": "God recreates you — body and all — as a perfect replica in a resurrection world.",
+        "s": "Defends the actual Christian doctrine, keeps embodied sense experience, and shows resurrection is logically possible.",
+        "w": "A replica is arguably not the original — and if God can make one, why not many?"
+      },
+      {
+        "x": 64,
+        "nm": "Dennett",
+        "sb": "the narrative, uploaded",
+        "auth": "Survival without a self",
+        "claim": "There is no 'I' to survive — only a narrative, an information stream, or a memory in God.",
+        "s": "Scientifically economical, needs no soul-stuff, and takes seriously how radically we change over a life.",
+        "w": "Searle: qualia are felt, not stored. And immortality without a self-aware 'I' may not be worth having."
+      },
+      {
+        "x": 92,
+        "nm": "Parfit / Physicalism",
+        "sb": "no enduring self",
+        "auth": "Survival without a self",
+        "claim": "There is no 'I' to survive — only a narrative, an information stream, or a memory in God.",
+        "s": "Scientifically economical, needs no soul-stuff, and takes seriously how radically we change over a life.",
+        "w": "Searle: qualia are felt, not stored. And immortality without a self-aware 'I' may not be worth having."
+      }
+    ]
+  }
+};
+const ticks=document.getElementById("ticks");
+const readout=document.getElementById("readout");
+const poleL=document.getElementById("poleL"), poleR=document.getElementById("poleR");
+let topic="soul", active=0;
+
+function renderReadout(n){
+  readout.innerHTML=`
+    <span class="badge">${n.auth}</span>
+    <div class="body">
+      <h4>${n.nm} <span style="opacity:.6;font-style:italic;font-weight:400">· ${n.sb}</span></h4>
+      <p>${n.claim}</p>
+      <div class="sw">
+        <div class="up"><span class="k">Strength</span><br>${n.s}</div>
+        <div class="dn"><span class="k">Weakness</span><br>${n.w}</div>
+      </div>
+    </div>`;
+}
+function renderTopic(){
+  const d=DATA[topic];
+  poleL.textContent=d.poles[0]; poleR.textContent=d.poles[1];
+  ticks.innerHTML="";
+  d.nodes.forEach((n,i)=>{
+    const el=document.createElement("div");
+    el.className="node"; el.style.left=n.x+"%"; el.tabIndex=0;
+    el.setAttribute("role","button");
+    el.setAttribute("aria-label",`${n.nm}: ${n.sb}`);
+    el.dataset.active=(i===active);
+    el.innerHTML=`<div class="dot"></div><div class="nm">${n.nm}</div><div class="sb">${n.sb}</div>`;
+    const pick=()=>{active=i;[...ticks.children].forEach((c,j)=>c.dataset.active=(j===i));renderReadout(n);};
+    el.addEventListener("click",pick);
+    el.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();pick();}});
+    ticks.appendChild(el);
+  });
+  active=Math.min(active,d.nodes.length-1);
+  [...ticks.children].forEach((c,j)=>c.dataset.active=(j===active));
+  renderReadout(d.nodes[active]);
+}
+document.querySelectorAll(".tab").forEach(t=>{
+  t.addEventListener("click",()=>{
+    document.querySelectorAll(".tab").forEach(x=>x.setAttribute("aria-selected","false"));
+    t.setAttribute("aria-selected","true");
+    topic=t.dataset.topic; active=0; renderTopic();
+  });
+});
+renderTopic();
+
+const FLASHCARDS = {"soul":{"terms":[{"term":"Psyche","def":"(Greek) soul, spirit, mind — for the Greeks, the 'principle of life' that distinguishes a living thing from a corpse.","note":"Plato and Aristotle both use it — but mean radically different things by it."},{"term":"Nous","def":"(Greek) intellect — the distinctively human, rational mind, as opposed to the broader psyche shared with animals.","note":"For the Greeks nous held a special place as the highest human function."},{"term":"Dualism","def":"the belief that reality has two aspects: an immaterial soul/mind AND a physical body/matter.","note":"Plato's version has a separate immortal soul; Descartes' 'radical' version makes mind and matter utterly different substances."},{"term":"Substance","def":"what something fundamentally IS. Descartes: matter is res extensa (extended substance); mind is res cogitans (thinking substance).","note":"The whole debate is whether 'thinking substance' explains anything at all (Hume: it is circular)."},{"term":"Qualia","def":"the qualities of subjective conscious experience — what it feels like, in your mind, to experience redness or the smell of a rose.","note":"Descartes' divisibility argument rests on them: smells can fade, but they cannot be cut in half."},{"term":"Category mistake","def":"treating something as if it belongs to one logical category when it actually belongs to another.","note":"Ryle: looking for a 'mind' behind behaviour is like asking to see the University after touring all its colleges."}],"views":[{"n":"Plato","c":"The soul is immortal — trapped in a body, at home in the world of Forms.","s":"Explains our grasp of universals; makes survival of death intelligible; fits the mourner's instinct that the 'real person' has gone.","w":"Rests on the doubtful theory of Forms — and a soul simple enough to be indestructible seems too simple to be a PERSON with character."},{"n":"Aristotle","c":"The soul is the FORM of the living body — you are body and soul together.","s":"Fits the scientific, biological view of persons; matches how we actually identify people (by what they say and do); no interaction problem.","w":"Seems to rule out any life after death — and the corpse intuition pulls the other way. Even Aristotle hesitates over whether nous is separable."},{"n":"Descartes","c":"I think, therefore I am — mind and body are radically different substances.","s":"Takes first-person consciousness seriously — the Hard Problem and qualia remain unsolved — and grounds the religious hope of survival.","w":"Each proof fails: doubt yields only 'there is thinking'; brain damage 'divides' the mind; CDP circles back through God (the Cartesian Circle)."},{"n":"Ryle & Hume","c":"The 'ghost in the machine' is a category mistake — and 'soul substance' explains nothing.","s":"Fits neuroscience (brain damage damages mind); dissolves the interaction problem; puts the burden of proof on the dualist.","w":"Leaves consciousness unexplained: qualia resist third-person description, and Campbell's clock suggests memory needs a self-aware 'I'."}]},"bodysoul":{"terms":[{"term":"Interactionism","def":"Descartes' view that the non-physical mind and the physical body interact — for him, within the pineal gland.","note":"Widely judged false: saying WHERE interaction happens tells us nothing about HOW."},{"term":"Physicalism","def":"the monist view that there is only one substance — physical matter; so 'mind' reduces to brain.","note":"Also called materialism. Just as 'water' reduces to H₂O, 'mind' reduces to brain."},{"term":"Functionalism","def":"the view that mental states are identified by their functional role — by what they DO, not what they are made of.","note":"A physicalist theory that grew out of cognitive science and AI."},{"term":"Multiple realisability","def":"the claim that a mind (like a clock) can run on many different platforms — brains, or a computer.","note":"Clocks can be electric, mechanical, atomic or digital — same function, different stuff."},{"term":"Hard Problem","def":"the problem of explaining WHY and HOW physical brain processes give rise to subjective conscious experience at all.","note":"Nowhere near solved — the standing embarrassment for every physicalist theory."},{"term":"Dual-aspect monism","def":"the view that there is ONE as-yet-unknown substance which has two aspects: mental (first-person) and physical (third-person).","note":"Not dualism (one substance) and not physicalism (mind isn't reduced away)."}],"views":[{"n":"Descartes' Interactionism","c":"Mind and body meet — Descartes said, in the pineal gland.","s":"Honours the obvious two-way traffic of experience, and preserves free will and a soul that could survive death.","w":"Location is not mechanism — and the anatomy was wrong. It names where, never how."},{"n":"Physicalism","c":"There is no body/soul relationship — because there is no soul.","s":"Simple, scientific, fits every mind–brain correlation, and avoids the interaction problem entirely.","w":"Correlation is not identity. The Hard Problem is unsolved, and qualia resist physical description."},{"n":"Functionalism","c":"The mind is a function — defined by what it does, not what it's made of.","s":"Explains mind without soul-substance, fits AI and cognitive science, and allows one mind on many platforms.","w":"Describes processing, not experiencing — a robot reacting to a pin does not obviously FEEL it."},{"n":"Dual-Aspect Monism","c":"One substance — with a mental aspect and a physical aspect.","s":"No interaction problem AND no dismissal of qualia — scientifically realistic, with a quantum analogy.","w":"The 'one substance' is unknown — naming the mystery is not explaining it; and it denies souls."}]},"afterlife":{"terms":[{"term":"Personal identity","def":"what makes someone the same person over time. Three families: physical (body/brain), metaphysical (consciousness/soul), psychological (memory & personality).","note":"Most people accept parts of all three — the categories are not self-contained."},{"term":"Spatio-temporal continuity","def":"occupying a single unbroken path through space and time — the physicalist's criterion for being the same person.","note":"Cells are replaced, but cerebral cortex neurons are never replaced or added after birth."},{"term":"Replica","def":"an exact copy of a person, complete with their memories at the moment of death, recreated by God in a resurrection world.","note":"Hick's solution to bodily resurrection: the replica retains identity as a mind-body unit."},{"term":"Relation R","def":"Parfit's term for psychological connectedness — memory and personality linking one state to the next, with no deeper 'self' beneath.","note":"What matters is Relation R, not identity: 'identity' is the illusion we must abandon."},{"term":"Cryptomnesia","def":"experiencing a forgotten memory that has resurfaced without being recognised as a memory.","note":"The standard deflationary explanation of past-life regression and 'recall'."},{"term":"Objective immortality","def":"Process theology's claim that at death nothing is lost: every experience remains permanently within the mind of God.","note":"Contrast SUBJECTIVE immortality: continuing as the same self-conscious 'I' who died."}],"views":[{"n":"Hick's Replica Theory","c":"God recreates you — body and all — as a perfect replica in a resurrection world.","s":"Defends the actual Christian doctrine, keeps embodied sense experience, and shows resurrection is logically possible.","w":"A replica is arguably not the original — and if God can make one, why not many?"},{"n":"Price & Swinburne","c":"The conscious self can continue — with a new 'socket', or with no body at all.","s":"Preserves the same conscious 'I' with memories and character — what believers actually hope for.","w":"Depends entirely on God's intervention; and 'sameness' without body, brain or senses is hard to state."},{"n":"Reincarnation & NDEs","c":"Two bodies of alleged evidence — and two deflationary explanations.","s":"Moves from concepts to data: Stevenson's volume of cases, Pam Reynolds, and blind-from-birth reports.","w":"Cryptomnesia and expectation cover most of it — and NDE reporters did not actually die."},{"n":"Parfit, Dennett & Process","c":"There is no 'I' to survive — only a narrative, an information stream, or a memory in God.","s":"Scientifically economical, needs no soul-stuff, and takes seriously how radically we change over a life.","w":"Searle: qualia are felt, not stored. And immortality without a self-aware 'I' may not be worth having."}]}};
+(function(){
+  let fcTopic="all", fcType="terms";
+  const grid=document.getElementById("fcGrid"), count=document.getElementById("fcCount");
+  function esc(s){return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+  function build(){
+    const topics = fcTopic==="all" ? ["soul","bodysoul","afterlife"] : [fcTopic];
+    let cards=[];
+    topics.forEach(tp=>{
+      const d=FLASHCARDS[tp]; if(!d) return;
+      if(fcType==="terms"){ d.terms.forEach(t=>cards.push({tp,front:t.term,tag:label(tp),back:`<div class='fc-def'>${esc(t.def)}</div>`})); }
+      else { d.views.forEach(v=>cards.push({tp,front:v.n,tag:label(tp),back:`<div class='fc-def'>${esc(v.c)}</div><div class='fc-sw'><div class='up'><span class='k'>Strength</span><br>${esc(v.s)}</div><div class='dn' style='margin-top:6px'><span class='k'>Weakness</span><br>${esc(v.w)}</div></div>`})); }
+    });
+    grid.innerHTML=cards.map(c=>`
+      <button class="fc-card ${c.tp}" data-flipped="false" aria-label="Flashcard: ${esc(c.front)}. Tap to reveal.">
+        <div class="fc-inner">
+          <div class="fc-face fc-front"><div class="fc-tag">${c.tag}</div><div class="fc-term">${esc(c.front)}</div><div class="fc-flip">tap to flip ↺</div></div>
+          <div class="fc-face fc-back"><div class="fc-tag">${c.tag}</div>${c.back}</div>
+        </div>
+      </button>`).join("");
+    count.textContent = cards.length + " cards";
+    grid.querySelectorAll(".fc-card").forEach(el=>{
+      const flip=()=>el.dataset.flipped = el.dataset.flipped==="true" ? "false":"true";
+      el.addEventListener("click",flip);
+    });
+  }
+  function label(tp){return tp==="soul"?"The Soul":tp==="bodysoul"?"Body / Soul":"Life After Death";}
+  document.querySelectorAll('#flashcards .fc-tabs .fc-btn').forEach(b=>b.addEventListener("click",()=>{
+    document.querySelectorAll('#flashcards .fc-tabs .fc-btn').forEach(x=>x.setAttribute("aria-selected","false"));
+    b.setAttribute("aria-selected","true"); fcTopic=b.dataset.topic; build();
+  }));
+  document.querySelectorAll('#flashcards .fc-type .fc-btn').forEach(b=>b.addEventListener("click",()=>{
+    document.querySelectorAll('#flashcards .fc-type .fc-btn').forEach(x=>x.setAttribute("aria-selected","false"));
+    b.setAttribute("aria-selected","true"); fcType=b.dataset.type; build();
+  }));
+  build();
+})();
+
+/* =====================================================================
+   TEACHER: paste your YouTube link between the quotes below.
+   Any format works — youtube.com/watch?v=…, youtu.be/…, or an embed URL.
+   Leave it empty ("") and the page shows a "Video not set" placeholder.
+   ===================================================================== */
+const VIDEO_URL = "";
+
+(function wireVideo(){
+  const url=(VIDEO_URL||"").trim();
+  if(!url) return; // keep placeholder
+  // extract the 11-char YouTube id from common URL shapes
+  let id="";
+  const m = url.match(/(?:youtu\.be\/|v=|\/embed\/|\/shorts\/)([A-Za-z0-9_-]{11})/);
+  if(m) id=m[1];
+  else if(/^[A-Za-z0-9_-]{11}$/.test(url)) id=url; // a bare id
+  const frame=document.getElementById("videoFrame");
+  if(id && frame){
+    frame.innerHTML =
+      '<iframe src="https://www.youtube-nocookie.com/embed/'+id+'?rel=0" '+
+      'title="Self, Death & the Afterlife — full unit review" '+
+      'allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" '+
+      'allowfullscreen loading="lazy"></iframe>';
+  } else if(frame){
+    // not a YouTube link — fall back to a button that opens it
+    frame.innerHTML =
+      '<div class="video-placeholder"><a class="res-btn big" style="background:#fff" href="'+url+'" target="_blank" rel="noopener"><span class="ic">▶</span><span><b>Watch the full unit review</b></span><span class="go">↗</span></a></div>';
+  }
+})();
+
+/* =====================================================================
+   TEACHER: paste your SharePoint share links between the quotes below.
+   Leave a link empty ("") and its button will show "Link not set".
+   Tip: in SharePoint, open the file's ... menu -> Copy link -> paste here.
+   ===================================================================== */
+const LINKS = {
+  soul_lesson:        "",
+  soul_booklet:       "",
+  soul_podcast:       "",
+  bodysoul_lesson:    "",
+  bodysoul_booklet:   "",
+  bodysoul_podcast:   "",
+  afterlife_lesson:   "",
+  afterlife_booklet:  "",
+  afterlife_podcast:  "",
+  companion:          "",
+  review:             "",
+  overview_podcast:   "",
+  flashcards_pdf:     ""
+};
+
+(function wireResources(){
+  let anySet=false;
+  document.querySelectorAll(".res-btn").forEach(btn=>{
+    const url=(LINKS[btn.dataset.key]||"").trim();
+    if(url){
+      btn.href=url; btn.target="_blank"; btn.rel="noopener"; anySet=true;
+    }else{
+      btn.classList.add("unset"); btn.removeAttribute("href"); btn.setAttribute("aria-disabled","true");
+    }
+  });
+  if(anySet){ const n=document.getElementById("resNote"); if(n) n.classList.add("hide"); }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Good Conduct &amp; Moral Principles — Unit at a Glance</title>
+<style>
+  :root{
+    --ink:#12294D;        /* deep manuscript navy */
+    --ink-2:#0C1B33;
+    --parch:#F3ECDD;      /* aged parchment */
+    --parch-2:#EAE0C9;
+    --gold:#C9A227;       /* gold leaf */
+    --gold-soft:#E4CE86;
+    --rubric:#B01C2E;     /* rubrication red */
+    --teal:#00695C;
+    --violet:#6A1B9A;
+    --blue:#1565C0;
+    --green:#2E7D32;
+    --paper:#FBF7EE;
+    --line:rgba(18,41,77,.16);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1060px;margin:0 auto;padding:0 24px}
+  .eyebrow{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;font-weight:700}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    background:
+      radial-gradient(1200px 400px at 80% -10%, rgba(201,162,39,.18), transparent 60%),
+      linear-gradient(180deg,var(--ink) 0%, var(--ink-2) 100%);
+    color:var(--parch);
+    padding:64px 0 72px;
+    position:relative;
+    overflow:hidden;
+    border-bottom:3px solid var(--gold);
+  }
+  .hero::after{ /* faint ruled manuscript lines */
+    content:"";position:absolute;inset:0;pointer-events:none;opacity:.06;
+    background:repeating-linear-gradient(180deg,transparent 0 38px,#fff 38px 39px);
+  }
+  .hero .wrap{position:relative;z-index:2}
+  .crest{display:flex;align-items:center;gap:16px;margin-bottom:34px}
+  .crest svg{width:54px;height:54px;flex:none}
+  .crest .who{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-soft)}
+  .crest .who b{color:var(--parch);display:block;letter-spacing:.14em;font-size:.86rem;margin-top:3px}
+  h1{font-size:clamp(2.4rem,6vw,4.1rem);line-height:1.02;font-weight:700;letter-spacing:-.01em}
+  h1 .amp{color:var(--gold);font-style:italic}
+  .sub{margin-top:20px;max-width:56ch;font-size:1.12rem;color:#E7DFCB}
+  .bigq{
+    margin-top:30px;display:inline-flex;gap:14px;align-items:flex-start;
+    border-left:3px solid var(--gold);padding:8px 0 8px 18px;max-width:60ch;
+  }
+  .bigq .q{font-family:"Trebuchet MS",sans-serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-soft);padding-top:5px}
+  .bigq p{font-size:1.24rem;font-style:italic;color:#fff}
+
+  /* ---------- SECTION SHELL ---------- */
+  section{padding:64px 0}
+  .sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:8px}
+  .sec-head .num{font-family:"Trebuchet MS",sans-serif;color:var(--gold);font-weight:700;font-size:.9rem;letter-spacing:.15em}
+  .sec-head h2{font-size:clamp(1.6rem,3.4vw,2.3rem);letter-spacing:-.01em}
+  .sec-lead{color:#4a4a52;max-width:64ch;margin-bottom:34px;font-size:1.05rem}
+
+  /* ---------- SIGNATURE: authority spectrum ---------- */
+  .spectrum-card{
+    background:linear-gradient(180deg,#fff, var(--paper));
+    border:1px solid var(--line);border-radius:14px;
+    box-shadow:0 18px 40px -28px rgba(18,41,77,.5);
+    padding:28px 26px 34px;
+  }
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:26px}
+  .tab{
+    font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.82rem;letter-spacing:.04em;
+    border:1px solid var(--line);background:#fff;color:var(--ink);
+    padding:9px 16px;border-radius:999px;cursor:pointer;transition:.18s;
+  }
+  .tab[aria-selected="true"]{background:var(--ink);color:var(--parch);border-color:var(--ink)}
+  .tab:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+
+  .axis{position:relative;margin:8px 4px 0}
+  .axis-labels{display:flex;justify-content:space-between;font-family:"Trebuchet MS",sans-serif;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:#6a6a72;margin-bottom:10px}
+  .axis-labels .l{color:var(--rubric);font-weight:700}
+  .axis-labels .r{color:var(--blue);font-weight:700}
+  .bar{height:10px;border-radius:999px;background:linear-gradient(90deg,var(--rubric),#b06a1e 40%,#5a7d3a 66%,var(--blue));position:relative}
+  .ticks{position:relative;height:112px;margin-top:0}
+  .node{position:absolute;top:0;transform:translateX(-50%);width:132px;text-align:center;cursor:pointer}
+  .node .dot{width:20px;height:20px;border-radius:50%;background:#fff;border:3px solid var(--ink);margin:0 auto;position:relative;top:-15px;transition:.18s}
+  .node .nm{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.82rem;margin-top:-6px}
+  .node .sb{font-size:.76rem;color:#6a6a72;font-style:italic;margin-top:2px;line-height:1.25}
+  .node:hover .dot,.node[data-active="true"] .dot{transform:scale(1.25);border-color:var(--gold);box-shadow:0 0 0 5px rgba(201,162,39,.2)}
+  .node:focus-visible{outline:none}
+  .node:focus-visible .dot{outline:3px solid var(--gold);outline-offset:3px}
+
+  .readout{
+    margin-top:14px;background:var(--ink);color:var(--parch);border-radius:12px;padding:20px 22px;
+    min-height:104px;display:flex;gap:18px;align-items:flex-start;
+  }
+  .readout .badge{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;
+    background:var(--gold);color:var(--ink-2);padding:6px 10px;border-radius:6px;white-space:nowrap;margin-top:2px}
+  .readout .body h4{font-size:1.12rem;margin-bottom:4px}
+  .readout .body .auth{color:var(--gold-soft);font-family:"Trebuchet MS",sans-serif;font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+  .readout .body p{color:#E7DFCB;font-size:.98rem}
+  .readout .body .sw{display:flex;gap:22px;margin-top:10px;flex-wrap:wrap}
+  .readout .body .sw div{font-size:.9rem}
+  .readout .body .sw .k{font-family:"Trebuchet MS",sans-serif;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase}
+  .readout .body .sw .up .k{color:#8BD08F}
+  .readout .body .sw .dn .k{color:#F2A0A0}
+  .hint{font-family:"Trebuchet MS",sans-serif;font-size:.76rem;color:#8a8a92;margin-top:14px;text-align:center}
+
+  /* ---------- THREE DEBATES ---------- */
+  .triptych{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .panel{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;display:flex;flex-direction:column}
+  .panel .cap{padding:16px 18px;color:#fff;position:relative}
+  .panel.b1 .cap{background:linear-gradient(135deg,#1F4E79,#12294D)}
+  .panel.b2 .cap{background:linear-gradient(135deg,#00695C,#0C3B34)}
+  .panel.b3 .cap{background:linear-gradient(135deg,#6A1B9A,#3B0E56)}
+  .panel .cap .n{font-family:"Trebuchet MS",sans-serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;opacity:.85}
+  .panel .cap h3{font-size:1.24rem;margin-top:3px}
+  .panel .cap .ask{font-style:italic;font-size:.9rem;margin-top:8px;opacity:.95}
+  .panel .body{padding:16px 18px;font-size:.92rem}
+  .panel .body .row{display:flex;gap:9px;padding:7px 0;border-bottom:1px dashed var(--line)}
+  .panel .body .row:last-child{border-bottom:0}
+  .panel .body .row .v{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.8rem;white-space:nowrap;color:var(--ink)}
+  .panel .body .row .d{color:#55555c}
+
+  /* ---------- THREAD ---------- */
+  .thread{background:var(--ink);color:var(--parch);border-radius:14px;padding:34px 30px;position:relative;overflow:hidden}
+  .thread::before{content:"";position:absolute;inset:0;opacity:.07;background:repeating-linear-gradient(180deg,transparent 0 30px,#fff 30px 31px)}
+  .thread .wrap2{position:relative;z-index:2}
+  .thread h2{color:#fff;font-size:clamp(1.5rem,3vw,2.1rem);margin-bottom:8px}
+  .thread .lead{color:#E7DFCB;max-width:62ch;margin-bottom:24px}
+  .threads{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .tcard{border:1px solid rgba(228,206,134,.3);border-radius:10px;padding:16px 16px 18px;background:rgba(255,255,255,.03)}
+  .tcard .t{font-family:"Trebuchet MS",sans-serif;color:var(--gold);font-weight:700;font-size:.82rem;letter-spacing:.05em;margin-bottom:6px}
+  .tcard p{font-size:.9rem;color:#E7DFCB}
+
+  /* ---------- REVISE ---------- */
+  .revise{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:start}
+  .steps{counter-reset:s;display:flex;flex-direction:column;gap:14px}
+  .step{display:flex;gap:16px;align-items:flex-start;border-left:2px solid var(--line);padding:2px 0 2px 18px;position:relative}
+  .step::before{counter-increment:s;content:counter(s);position:absolute;left:-15px;top:-2px;width:28px;height:28px;border-radius:50%;
+    background:var(--gold);color:var(--ink-2);font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.9rem;display:grid;place-items:center}
+  .step h4{font-size:1.02rem}
+  .step p{font-size:.9rem;color:#55555c;margin-top:2px}
+  .ao{border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .ao .h{padding:12px 16px;font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.82rem;letter-spacing:.06em;color:#fff}
+  .ao .ao1 .h,.ao .h.ao1{background:var(--ink)}
+  .ao .h.ao2{background:var(--green)}
+  .ao .c{padding:14px 16px;font-size:.9rem;border-bottom:1px solid var(--line)}
+  .ao .c:last-child{border-bottom:0}
+  .ao .c b{font-family:"Trebuchet MS",sans-serif;font-size:.78rem;letter-spacing:.04em}
+
+  /* ---------- VIDEO ---------- */
+  .video-frame{position:relative;width:100%;aspect-ratio:16/9;border-radius:14px;overflow:hidden;
+    border:1px solid var(--line);box-shadow:0 20px 44px -30px rgba(18,41,77,.55);background:var(--ink)}
+  .video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .video-placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:14px;text-align:center;padding:30px;color:#C9C4B6;
+    background:radial-gradient(700px 300px at 50% 30%,rgba(201,162,39,.14),transparent 60%),linear-gradient(180deg,var(--ink),var(--ink-2))}
+  .video-placeholder .vp-badge{font-family:"Trebuchet MS",Verdana,sans-serif;font-weight:700;font-size:.72rem;letter-spacing:.14em;
+    text-transform:uppercase;background:var(--gold);color:var(--ink-2);padding:6px 12px;border-radius:6px}
+  .video-placeholder p{max-width:52ch;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.92rem;line-height:1.55}
+  .video-placeholder code{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:4px;padding:1px 6px}
+
+  /* ---------- FLASHCARDS ---------- */
+  .fc-controls{display:flex;gap:18px;flex-wrap:wrap;align-items:center;margin-bottom:24px}
+  .fc-tabs,.fc-type{display:flex;gap:8px;flex-wrap:wrap}
+  .fc-btn{font-family:"Trebuchet MS",Verdana,sans-serif;font-weight:700;font-size:.8rem;border:1px solid var(--line);
+    background:#fff;color:var(--ink);padding:8px 15px;border-radius:999px;cursor:pointer;transition:.18s}
+  .fc-btn[aria-selected="true"]{background:var(--ink);color:var(--parch);border-color:var(--ink)}
+  .fc-btn:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+  .fc-hint{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.78rem;color:#8a8a92;margin-left:auto}
+  .fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+  .fc-card{perspective:1200px;height:180px;cursor:pointer;background:none;border:0;padding:0;font-family:inherit;text-align:left}
+  .fc-inner{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+  .fc-card[data-flipped="true"] .fc-inner{transform:rotateY(180deg)}
+  .fc-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+    border-radius:12px;padding:18px;display:flex;flex-direction:column;border:1px solid var(--line);overflow:auto}
+  .fc-front{background:linear-gradient(180deg,#fff,var(--paper))}
+  .fc-back{transform:rotateY(180deg);color:var(--parch)}
+  .fc-card.conduct  .fc-back{background:linear-gradient(160deg,#1F4E79,#12294D)}
+  .fc-card.sanctity .fc-back{background:linear-gradient(160deg,#00695C,#0C3B34)}
+  .fc-card.dominion .fc-back{background:linear-gradient(160deg,#6A1B9A,#3B0E56)}
+  .fc-tag{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--gold);font-weight:700;margin-bottom:8px}
+  .fc-front .fc-tag{color:#9a8028}
+  .fc-term{font-size:1.24rem;font-weight:700;line-height:1.15}
+  .fc-front .fc-flip{margin-top:auto;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.72rem;color:#9a9a9a}
+  .fc-def{font-size:.92rem;line-height:1.4}
+  .fc-back .fc-sw{margin-top:8px;font-size:.82rem}
+  .fc-back .fc-sw .k{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.62rem;letter-spacing:.08em;text-transform:uppercase}
+  .fc-back .up .k{color:#8BD08F}.fc-back .dn .k{color:#F2A0A0}
+  @media(max-width:820px){.fc-grid{grid-template-columns:1fr 1fr}.fc-hint{width:100%;margin-left:0}}
+
+  /* ---------- RESOURCES ---------- */
+  .res-note{background:#FBF0D6;border:1px solid var(--gold);border-left:4px solid var(--gold);
+    border-radius:8px;padding:12px 16px;margin-bottom:22px;font-size:.9rem;color:#5a4a1c;
+    font-family:"Trebuchet MS",Verdana,sans-serif}
+  .res-note code{background:#fff;border:1px solid var(--line);border-radius:4px;padding:1px 6px;font-size:.85em}
+  .res-note.hide{display:none}
+  .res-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:16px}
+  .res-col{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff}
+  .rc-head{padding:14px 16px;color:#fff}
+  .rc1 .rc-head{background:linear-gradient(135deg,#1F4E79,#12294D)}
+  .rc2 .rc-head{background:linear-gradient(135deg,#00695C,#0C3B34)}
+  .rc3 .rc-head{background:linear-gradient(135deg,#6A1B9A,#3B0E56)}
+  .rc-head .rc-n{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;opacity:.85}
+  .rc-head h3{font-size:1.16rem;margin-top:2px}
+  .res-btn{display:flex;align-items:center;gap:12px;padding:13px 16px;border-top:1px solid var(--line);
+    font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.92rem;color:var(--ink);text-decoration:none;
+    cursor:pointer;transition:background .15s}
+  .res-col .res-btn:first-of-type{border-top:0}
+  .res-btn:hover{background:var(--parch)}
+  .res-btn .ic{width:26px;height:26px;flex:none;display:grid;place-items:center;border-radius:6px;
+    background:var(--ink);color:var(--gold);font-size:.9rem}
+  .res-btn .go{margin-left:auto;color:var(--gold);font-weight:700;opacity:0;transition:.15s}
+  .res-btn:hover .go{opacity:1}
+  .res-btn:focus-visible{outline:3px solid var(--gold);outline-offset:-3px}
+  .res-btn.unset{opacity:.5;cursor:not-allowed}
+  .res-btn.unset .go{content:"";opacity:0}
+  .res-btn.unset::after{content:"Link not set";margin-left:auto;font-size:.74rem;color:#9a7d2c;
+    background:#FBF0D6;border:1px solid var(--gold-soft);border-radius:5px;padding:2px 7px}
+  .res-wide{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:2px}
+  .res-btn.big{border:1px solid var(--line);border-radius:12px;background:#fff;padding:16px 18px}
+  .res-btn.big:hover{background:var(--parch)}
+  .res-btn.big .ic{width:34px;height:34px;font-size:1.1rem;background:var(--ink)}
+  @media(max-width:820px){.res-grid{grid-template-columns:1fr}.res-wide{grid-template-columns:1fr}}
+
+  footer{background:var(--ink-2);color:#C9C4B6;padding:26px 0;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.8rem}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+  footer .gold{color:var(--gold)}
+
+  @media(max-width:820px){
+    .triptych{grid-template-columns:1fr}
+    .threads{grid-template-columns:1fr}
+    .revise{grid-template-columns:1fr}
+    .node{width:96px}
+    .node .sb{display:none}
+  }
+  @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<!--BACKPILL--><a href="../alevel.html" style="position:fixed;left:14px;bottom:14px;z-index:99999;background:#12294D;color:#F6F1E4;font:600 14px/1 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;padding:10px 15px;border-radius:999px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.28);border:1px solid #C9A227">&#8592; All units</a>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap">
+    <div class="crest">
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <rect x="2" y="2" width="60" height="60" rx="13" fill="#0C1B33" stroke="#C9A227" stroke-width="1.5"/>
+        <g fill="none" stroke="#F3ECDD" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M23 21C21 17 21 14 22 12c2 2 3 5 3 8"/><path d="M41 21c2-4 2-7 1-9-2 2-3 5-3 8"/>
+          <path d="M32 17C21 17 18 26 18 33c0 12 6 19 14 19s14-7 14-19c0-7-3-16-14-16z"/>
+          <path d="M32 21c-3 4-5 6-7 7M32 21c3 4 5 6 7 7"/>
+        </g>
+        <circle cx="27" cy="31" r="5" fill="none" stroke="#F3ECDD" stroke-width="2.4"/>
+        <circle cx="37" cy="31" r="5" fill="none" stroke="#F3ECDD" stroke-width="2.4"/>
+        <circle cx="27" cy="31" r="1.9" fill="#F3ECDD"/><circle cx="37" cy="31" r="1.9" fill="#F3ECDD"/>
+        <path d="M32 34l-2.2 4.2h4.4z" fill="#C9A227"/>
+      </svg>
+      <div class="who">A-Level Religious Studies · AQA Paper 2B
+        <b>Harlington School · Philosophy &amp; Ethics</b></div>
+    </div>
+    <h1>Good Conduct <span class="amp">&amp;</span> Moral Principles</h1>
+    <p class="sub">One unit, one argument — told three times. Because humans are made in the image of God, conduct has stakes, life is sacred, and the Earth is held in trust.</p>
+    <div class="bigq">
+      <span class="q">The<br>big<br>question</span>
+      <p>How must Christians live — and what may they do to a life that God has made sacred?</p>
+    </div>
+  </div>
+</header>
+
+<!-- SIGNATURE: SPECTRUM -->
+<section id="spectrum">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">01</span><h2>The spectrum of views</h2></div>
+    <p class="sec-lead">Every debate in this unit lines up on an axis of its own. Pick a sub-topic, then tap a position to see what it claims and where it's strong or weak.</p>
+
+    <div class="spectrum-card">
+      <div class="tabs" role="tablist" aria-label="Choose a sub-topic">
+        <button class="tab" role="tab" aria-selected="true"  data-topic="conduct">Good Conduct</button>
+        <button class="tab" role="tab" aria-selected="false" data-topic="sanctity">Sanctity &amp; Just War</button>
+        <button class="tab" role="tab" aria-selected="false" data-topic="dominion">Dominion</button>
+      </div>
+
+      <div class="axis">
+        <div class="axis-labels"><span class="l" id="poleL">Most authority</span><span class="r" id="poleR">Least authority</span></div>
+        <div class="bar"></div>
+        <div class="ticks" id="ticks"></div>
+      </div>
+
+      <div class="readout" id="readout" aria-live="polite"></div>
+      <p class="hint">Tap a circle — or use Tab and Enter — to explore each position.</p>
+    </div>
+  </div>
+</section>
+
+<!-- THE THREAD -->
+<section>
+  <div class="wrap">
+    <div class="thread">
+      <div class="wrap2">
+        <h2>The thread that ties it together</h2>
+        <p class="lead">Top answers don't treat the three debates separately. One text runs through all of them — spot the thread and you're writing at the top of the mark scheme.</p>
+        <div class="threads">
+          <div class="tcard"><div class="t">The image of God</div><p>Genesis 1:26 grounds all three debates: conduct, sanctity and dominion all flow from what humans are made AS.</p></div>
+          <div class="tcard"><div class="t">Sacred → sanctity</div><p>If the image makes life sacred, the embryo, the dying and the enemy soldier all fall under one principle — tested to breaking.</p></div>
+          <div class="tcard"><div class="t">Image → answerability</div><p>An image answers to what it images. The same verse read as licence or as trusteeship is the whole dominion debate.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THREE DEBATES -->
+<section id="debates">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">02</span><h2>The same question, three times</h2></div>
+    <p class="sec-lead">The unit splits into three debates. They look different, but each is really asking <em>what follows from being made in the image of God</em>.</p>
+    <div class="triptych">
+      <div class="panel b1">
+        <div class="cap"><div class="n">Sub-topic 1</div><h3>Good Conduct</h3><div class="ask">Why be <b>good</b>?</div></div>
+        <div class="body">
+          <div class="row"><span class="v">Faith</span><span class="d">Sola fide — Paul &amp; Luther; works are fruit.</span></div>
+          <div class="row"><span class="v">Works</span><span class="d">James: faith without works is dead.</span></div>
+          <div class="row"><span class="v">Both</span><span class="d">Trent: grace through baptism, completed by works.</span></div>
+          <div class="row"><span class="v">Predestined</span><span class="d">Augustine &amp; Calvin — willed from eternity.</span></div>
+        </div>
+      </div>
+      <div class="panel b2">
+        <div class="cap"><div class="n">Sub-topic 2</div><h3>Sanctity of Life &amp; Just War</h3><div class="ask">Can life be <b>taken</b>?</div></div>
+        <div class="body">
+          <div class="row"><span class="v">Strong</span><span class="d">Sacred from conception — no exceptions (Catholic).</span></div>
+          <div class="row"><span class="v">Weak</span><span class="d">Quality of life, autonomy and agape weigh too (CofE).</span></div>
+          <div class="row"><span class="v">Just War</span><span class="d">Eight clauses — ius ad bellum, ius in bello.</span></div>
+          <div class="row"><span class="v">WMD</span><span class="d">The limit case: intrinsically evil, or deterrence?</span></div>
+        </div>
+      </div>
+      <div class="panel b3">
+        <div class="cap"><div class="n">Sub-topic 3</div><h3>Dominion &amp; Stewardship</h3><div class="ask">Licence — or <b>trust</b>?</div></div>
+        <div class="body">
+          <div class="row"><span class="v">Power</span><span class="d">Psalm 8; subdue and rule; Genesis 9.</span></div>
+          <div class="row"><span class="v">Stewardship</span><span class="d">Creation 'good'; caretakers answerable to the owner.</span></div>
+          <div class="row"><span class="v">Eco-theology</span><span class="d">White, McFague — and Laudato Si' 67.</span></div>
+          <div class="row"><span class="v">The catch</span><span class="d">Both readings sit in the same text.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- YOUR RESOURCES -->
+<section id="resources">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">03</span><h2>Your resources</h2></div>
+    <p class="sec-lead">Everything for the unit, in one place. Open a sub-topic's lesson, booklet and podcast, and use the <b>Philosopher Companion</b> across all three.</p>
+
+    <div class="res-note" id="resNote">
+      <b>Teacher setup:</b> links aren't set yet. Open this file, find the <code>LINKS</code> list near the bottom, and paste each SharePoint share link once. Buttons with no link show as “Link not set”.
+    </div>
+
+    <div class="res-grid">
+      <div class="res-col rc1">
+        <div class="rc-head"><span class="rc-n">Sub-topic 1</span><h3>Good Conduct</h3></div>
+        <a class="res-btn" data-key="conduct_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="conduct_booklet"><span class="ic">✎</span><span>Completion booklet</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="conduct_podcast"><span class="ic">♪</span><span>Lesson podcast</span><span class="go">↗</span></a>
+      </div>
+      <div class="res-col rc2">
+        <div class="rc-head"><span class="rc-n">Sub-topic 2</span><h3>Sanctity &amp; Just War</h3></div>
+        <a class="res-btn" data-key="sanctity_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="sanctity_booklet"><span class="ic">✎</span><span>Completion booklet</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="sanctity_podcast"><span class="ic">♪</span><span>Lesson podcast</span><span class="go">↗</span></a>
+      </div>
+      <div class="res-col rc3">
+        <div class="rc-head"><span class="rc-n">Sub-topic 3</span><h3>Dominion &amp; Stewardship</h3></div>
+        <a class="res-btn" data-key="dominion_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="dominion_booklet"><span class="ic">✎</span><span>Completion booklet</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="dominion_podcast"><span class="ic">♪</span><span>Lesson podcast</span><span class="go">↗</span></a>
+      </div>
+    </div>
+
+    <div class="res-wide">
+      <a class="res-btn big" data-key="companion"><span class="ic">🦉</span><span><b>Philosopher Companion</b> — checklist, AO1 &amp; AO2 planning, key terms &amp; review</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="review"><span class="ic">↻</span><span><b>Review lessons</b> — consolidation decks for all three sub-topics</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="overview_podcast"><span class="ic">♪</span><span><b>Overview podcast</b> — the whole unit as one argument (team teach)</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="flashcards_pdf"><span class="ic">▤</span><span><b>Printable flashcards</b> — fold-over key terms &amp; views to cut out</span><span class="go">↗</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- HOW TO REVISE -->
+<section id="revise">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">04</span><h2>How to revise this unit</h2></div>
+    <p class="sec-lead">Use your resources in this order — for each of the three sub-topics. The <b>Philosopher Companion</b> is where you learn to <em>plan</em> both question types.</p>
+    <div class="revise">
+      <div class="steps">
+        <div class="step"><div><h4>Watch the lesson &amp; listen to the podcast</h4><p>One podcast per sub-topic — a teacher and student talk each view through to a judgement. Annotate as you listen.</p></div></div>
+        <div class="step"><div><h4>Complete the greyscale booklet</h4><p>Read the given text, write the key claims in your own words, then decide the strength and weakness you'd give each view.</p></div></div>
+        <div class="step"><div><h4>Match &amp; apply the key terms</h4><p>In the Companion: match each term to its meaning, then use it in a sentence. RAG-rate the mastery checklist with the three faces.</p></div></div>
+        <div class="step"><div><h4>Plan AO1, then build AO2 on top</h4><p>Use the Companion frameworks and the guidance-left / your-turn-right scaffolds. Never evaluate what you haven't first explained.</p></div></div>
+      </div>
+      <div class="ao">
+        <div class="ao1"><div class="h ao1">AO1 · Examine the views (10)</div></div>
+        <div class="c"><b>What it is —</b> the factual chain: define the key idea, then set out each view in order and apply the evidence (e.g. Genesis 1:26).</div>
+        <div class="c"><b>Aim —</b> explain the whole range accurately and neutrally. No judging yet.</div>
+        <div class="h ao2">AO2 · Evaluate the claim (15)</div>
+        <div class="c"><b>What it is —</b> a three-paragraph dialectic: view, then evaluation → counter-evaluation → implication; mirror it; then judge.</div>
+        <div class="c"><b>Aim —</b> weigh the views, use one as a lens on another, and reach a justified judgement that links back to your thesis.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WATCH: FULL UNIT REVIEW -->
+<section id="watch">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">05</span><h2>Watch: the whole unit in one go</h2></div>
+    <p class="sec-lead">A full review of <b>Good Conduct &amp; Moral Principles</b> — faith, works and predestination, the sanctity of life and Just War, and dominion &amp; stewardship. Best watched before you start revising, then again to check your recall.</p>
+    <div class="video-frame" id="videoFrame">
+      <div class="video-placeholder" id="videoPlaceholder">
+        <div class="vp-badge">Video not set</div>
+        <p><b>Teacher:</b> paste the YouTube link in the <code>VIDEO_URL</code> line near the bottom of this file. The player then appears here automatically.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FLASHCARDS -->
+<section id="flashcards">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">06</span><h2>Flashcards — test yourself</h2></div>
+    <p class="sec-lead">Flip a card to check yourself. Switch between <b>key terms</b> (term → meaning) and <b>views</b> (view → claim, strength &amp; weakness), and filter by sub-topic.</p>
+    <div class="fc-controls">
+      <div class="fc-tabs" role="tablist" aria-label="Sub-topic">
+        <button class="fc-btn" role="tab" aria-selected="true"  data-topic="all">All</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-topic="conduct">Good Conduct</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-topic="sanctity">Sanctity &amp; Just War</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-topic="dominion">Dominion</button>
+      </div>
+      <div class="fc-type" role="tablist" aria-label="Card type">
+        <button class="fc-btn" role="tab" aria-selected="true"  data-type="terms">Key terms</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-type="views">Views</button>
+      </div>
+      <span class="fc-hint">Tap any card to flip · <span id="fcCount"></span></span>
+    </div>
+    <div class="fc-grid" id="fcGrid"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Good Conduct &amp; Moral Principles · Unit at a glance</span>
+    <span class="gold">Harlington School · Philosophy &amp; Ethics</span>
+  </div>
+</footer>
+
+<script>
+const DATA = {
+  conduct:{
+    poles:["All GOD'S doing · nothing human decides","Human response counts · conduct decides"],
+    nodes:[
+      {x:8, nm:"Predestination", sb:"willed from eternity", auth:"God's decree",
+        claim:"Romans 8: those God foreknew he predestined. Augustine's double predestination; Calvin: each person 'predestinated to life or to death'.",
+        s:"Follows honestly from omnipotence + omniscience.", w:"Clashes with free will — can infinite love decree infinite punishment?"},
+      {x:36, nm:"Faith alone", sb:"works follow after", auth:"Sola fide",
+        claim:"Paul & Luther: a man is justified by faith apart from works of law (Rom 3:28); righteous works are the RESULT of being justified.",
+        s:"Protects grace — salvation can never be earned or boasted of.", w:"James: faith without works is dead; even the demons believe."},
+      {x:64, nm:"Faith + works", sb:"grace needs response", auth:"Trent's synthesis",
+        claim:"Grace comes through baptism; faith is completed by obedience (1 John 2) — without a positive response BY WORKS, salvation is not possible.",
+        s:"Holds Paul and James together instead of choosing.", w:"Protestants: any necessary human contribution reopens merit."},
+      {x:92, nm:"Works", sb:"the deed is the test", auth:"James & Matthew 25",
+        claim:"Faith is shown — and completed — by works: Abraham offering Isaac, Rahab; at Jesus' Judgement scene the verdict turns on deeds alone.",
+        s:"Matches Jesus' recorded priorities; keeps faith ethically serious.", w:"Risks making salvation something earned — Paul's 'lest any man should boast'."}
+    ]
+  },
+  sanctity:{
+    poles:["Life INVIOLABLE · sanctity absolute","Situation decides · sanctity conditional"],
+    nodes:[
+      {x:8, nm:"Strong sanctity", sb:"no exceptions", auth:"Absolute protection",
+        claim:"Sacred from conception (continuous development): no abortion, embryo research or euthanasia, whatever the case — Psalm 139:13, Jeremiah 1:5.",
+        s:"Protects life precisely where it is weakest.", w:"Critics: a pre-scientific assessment of human value; no room for the hardest cases."},
+      {x:38, nm:"Weak sanctity", sb:"quality weighs", auth:"Conditional protection",
+        claim:"Sanctity must ALWAYS be considered — but quality of life, God-given autonomy and agape can outweigh it (life support, the 14-day rule, the CofE on abortion).",
+        s:"In line with agape; realistic about medicine and poverty.", w:"Once exceptions exist — where is the line?"},
+      {x:66, nm:"Just War", sb:"eight clauses", auth:"Conditional killing",
+        claim:"Killing in war can be just inside six ius ad bellum and two ius in bello clauses — Augustine and Aquinas, from the duty to defend the innocent.",
+        s:"A usable moral checklist that takes reality seriously.", w:"Every clause contestable — Dresden and Iraq strain the theory."},
+      {x:92, nm:"WMD & deterrence", sb:"the limit case", auth:"The theory's test",
+        claim:"WMD breach discrimination, proportionality and success — 'intrinsically evil' (Pope Francis), or the deterrent that has kept great-power peace.",
+        s:"Applies the theory honestly and names intrinsic evil.", w:"No nuclear state follows the verdict; disarmament may invite worse."}
+    ]
+  },
+  dominion:{
+    poles:["Humans OVER creation · instrumental value","Humans WITHIN creation · intrinsic value"],
+    nodes:[
+      {x:10, nm:"Power over", sb:"subdue and rule", auth:"Licence",
+        claim:"Psalm 8: 'little less than God'; tselem, cbsh, rdh; Genesis 9 delivers the animals — Aquinas' indirect duties and Descartes' automata follow.",
+        s:"Faces the texts squarely; describes how humans have behaved.", w:"If the Bible encourages anthropocentrism, it encourages destruction."},
+      {x:50, nm:"Stewardship", sb:"caretakers under God", auth:"Responsibility",
+        claim:"Creation is 'good' and belongs to God (1 Chron 29:11); stewardship commands and the Principle of Plenitude make humans caretakers, not owners.",
+        s:"Equally biblical; a duty equal to the scale of the crisis.", w:"'Subdue' and 'rule' still stand in the text; practice lags theology."},
+      {x:90, nm:"Eco-theology", sb:"the world as God's body", auth:"Revision",
+        claim:"White, McFague and Harrison answer the crisis; Laudato Si' 67 forcefully rejects reading the image of God as absolute domination.",
+        s:"Honest about the evidence and religion's role in it.", w:"How much doctrine bends? And does 'dialogue' change anything on the ground?"}
+    ]
+  }
+};
+
+const ticks=document.getElementById("ticks");
+const readout=document.getElementById("readout");
+const poleL=document.getElementById("poleL"), poleR=document.getElementById("poleR");
+let topic="conduct", active=0;
+
+function renderReadout(n){
+  readout.innerHTML=`
+    <span class="badge">${n.auth}</span>
+    <div class="body">
+      <h4>${n.nm} <span style="opacity:.6;font-style:italic;font-weight:400">· ${n.sb}</span></h4>
+      <p>${n.claim}</p>
+      <div class="sw">
+        <div class="up"><span class="k">Strength</span><br>${n.s}</div>
+        <div class="dn"><span class="k">Weakness</span><br>${n.w}</div>
+      </div>
+    </div>`;
+}
+function renderTopic(){
+  const d=DATA[topic];
+  poleL.textContent=d.poles[0]; poleR.textContent=d.poles[1];
+  ticks.innerHTML="";
+  d.nodes.forEach((n,i)=>{
+    const el=document.createElement("div");
+    el.className="node"; el.style.left=n.x+"%"; el.tabIndex=0;
+    el.setAttribute("role","button");
+    el.setAttribute("aria-label",`${n.nm}: ${n.sb}`);
+    el.dataset.active=(i===active);
+    el.innerHTML=`<div class="dot"></div><div class="nm">${n.nm}</div><div class="sb">${n.sb}</div>`;
+    const pick=()=>{active=i;[...ticks.children].forEach((c,j)=>c.dataset.active=(j===i));renderReadout(n);};
+    el.addEventListener("click",pick);
+    el.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();pick();}});
+    ticks.appendChild(el);
+  });
+  active=Math.min(active,d.nodes.length-1);
+  [...ticks.children].forEach((c,j)=>c.dataset.active=(j===active));
+  renderReadout(d.nodes[active]);
+}
+document.querySelectorAll(".tab").forEach(t=>{
+  t.addEventListener("click",()=>{
+    document.querySelectorAll(".tab").forEach(x=>x.setAttribute("aria-selected","false"));
+    t.setAttribute("aria-selected","true");
+    topic=t.dataset.topic; active=0; renderTopic();
+  });
+});
+renderTopic();
+
+const FLASHCARDS = {
+  conduct:{
+    terms:[
+      {term:"Justification", def:"Christians are counted as righteous before God — on the basis of faith, of works, or of both.", note:"HOW a sinner can be declared righteous is the engine of this whole debate."},
+      {term:"Grace", def:"God's free gift of mercy to sinful humanity — for example through the atonement made by Jesus' suffering and death.", note:"Pelagius redefined it: grace is simply God's gift of free will."},
+      {term:"Sola fide", def:"Latin: Luther's doctrine of justification by 'faith alone'.", note:"From Romans 3:28 — 'a man is justified by faith apart from works of law'."},
+      {term:"Predestination", def:"the view that all events — specifically the fate of the righteous and of the damned — have been willed by God from eternity.", note:"Romans 8:28-30: those God foreknew he also predestined, called, justified, glorified."},
+      {term:"Foreknowledge", def:"an all-knowing God knows the entire future — so knows from eternity who will accept the gift of grace and who will reject it.", note:"The escape route: knowing an outcome is not the same as causing it."},
+      {term:"Double predestination", def:"God predestines some to the Kingdom through his grace but leaves others immersed in their sin to be condemned to hell.", note:"Augustine, then Calvin — each person 'predestinated to life or to death'."}
+    ],
+    views:[
+      {n:"Justification by faith", c:"The sinner is justified by faith alone — righteous works follow.", s:"Squarely grounded in Paul's chain of reasoning in Romans; protects grace — salvation can never become a wage humans earn or boast of (Ephesians 2:9).", w:"James appears to flatly disagree — 'faith apart from works is dead'; even the demons believe (James 2:19); and an antinomian gospel may minimise following Jesus' actual life and teaching."},
+      {n:"Justification by works", c:"Faith without works is dead — a man is justified by what he does.", s:"Matches Jesus' recorded priorities (Matthew 5-7 and 25); keeps Christianity ethically serious — faith cannot excuse neglect of the hungry and the sick.", w:"Risks making salvation something earned — colliding with Paul's 'not because of works, lest any man should boast'."},
+      {n:"Faith AND works", c:"Grace comes through baptism; faith is completed by obedience.", s:"Holds Paul and James together instead of choosing between them; grace still comes first — obedience follows as its necessary outworking.", w:"Protestants object that ANY necessary human contribution reopens salvation by merit; and it ties justification to the Church's sacraments, which non-Catholics reject."},
+      {n:"Predestination", c:"The fate of every individual has been willed by God from eternity.", s:"Follows honestly from omnipotence plus omniscience; a strong Pauline basis (Romans 8); makes salvation entirely God's doing, never human achievement.", w:"Clashes with free will and with a God of love — can infinite love decree infinite punishment? After almost 2,000 years no version has any chance of being accepted by all Christians."}
+    ]
+  },
+  sanctity:{
+    terms:[
+      {term:"Sanctity", def:"as in the Sanctity of Life Principle: holy, sacred to God.", note:"Everything in this sub-topic tests how far that principle bends."},
+      {term:"Intrinsic value", def:"something that has value for its own sake — human life, in the Sanctity of Life Principle.", note:"The value is God's gift, not ours to grade."},
+      {term:"Nephesh", def:"the Hebrew behind 'breath of life' and 'living being' — usually translated 'soul'.", note:"Genesis 2:7 — God breathes life into the man."},
+      {term:"Ius ad bellum", def:"Latin: the laws / conditions under which it is legitimate to go to war.", note:"Six conditions: just cause, legitimate authority, right intention, reasonable probability of success, last resort, proportionality."},
+      {term:"Ius in bello", def:"Latin: the rules under which a war must be fought once it has begun.", note:"Two rules: discrimination (spare non-combatants) and proportionality of means to ends."},
+      {term:"Proportionality", def:"the benefits expected from waging war must be proportionate to the expected harm caused.", note:"It appears twice — ad bellum 6 and in bello 2 — and WMD fail both."}
+    ],
+    views:[
+      {n:"The strong Sanctity of Life Principle", c:"All human life is sacred from conception — no exceptions.", s:"Protects life as sacred precisely where it is weakest — disability, disease, dependency; a clear line that cannot be traded away case by case.", w:"Rests on a pre-scientific assessment of human value; critics call the image of God anthropomorphism — and note the model leaves women unequal in their choices."},
+      {n:"The weak principle & Quality of Life", c:"Sanctity must always be considered — but the situation decides.", s:"In line with Jesus' teaching on agape; matches the realities of medicine and of lives stunted by poverty; God-given autonomy gives a right to decide.", w:"Once exceptions exist, where is the line? Every 'quality' judgement grades lives — and grading the least is exactly what Matthew 25 forbids."},
+      {n:"Just War theory", c:"War can be just — inside eight demanding clauses.", s:"Takes both sanctity AND political reality seriously; gives leaders a usable moral checklist; developed by Augustine and Aquinas from the Natural Law duty to defend the innocent.", w:"Every clause is contestable in practice; total war (Dresden) and modern weapons seem to escape its categories — the theory may belong to an earlier kind of warfare."},
+      {n:"Weapons of mass destruction", c:"WMD break every clause — or expose the theory as obsolete.", s:"Applies the theory honestly and reaches a clear verdict — matching the instinct that some means are evil in themselves, whoever uses them and for whatever cause.", w:"A verdict no nuclear state follows; unilateral disarmament could invite worse evils — deterrence has arguably kept great-power peace since 1945."}
+    ]
+  },
+  dominion:{
+    terms:[
+      {term:"Dominion", def:"meaning power / power over — as in the debate about human dominion over the world.", note:"Whether that power is licence or trusteeship is the whole debate."},
+      {term:"Stewardship", def:"the view that 'dominion' should be understood as responsible human care for the environment, answerable to God.", note:"Grounded in Genesis's verdict that creation was 'good' — and in God's ownership of it."},
+      {term:"Anthropocentric", def:"centring the universe on humans — regarding humans as the central fact against which everything else is measured.", note:"White's charge: if the Bible encourages anthropocentrism, it encourages environmental destruction."},
+      {term:"Anthropomorphism", def:"representing God — or animals — as having human form, personality or attributes.", note:"Critics apply it to the image of God itself."},
+      {term:"Eco-theology", def:"the approach to environmental issues focusing on establishing the right relationship between religion and nature.", note:"Harrison: 'a theology that can respond to the environmental crisis' — Laudato Si', McFague."},
+      {term:"Tselem", def:"the Hebrew 'image' of Genesis 1:26 — 'image' in the sense of a physical copy, as of the idols that should not be worshipped.", note:"Critics say the licence reading rests on tselem meaning more than the word means."}
+    ],
+    views:[
+      {n:"Dominion as power over creation", c:"'Little less than God' — the Earth subdued, the animals delivered.", s:"Faces the texts squarely — 'subdue' (cbsh) and 'rule' (rdh) are really there, and Genesis 9 delivers the animals into human hands; it also describes how humans have in fact behaved.", w:"If the Bible encourages anthropocentrism and anthropomorphism, then it encourages environmental destruction; and the reading ignores the texts where creation praises God directly."},
+      {n:"Dominion as stewardship", c:"Caretakers of God's creation — fully responsible to God for it.", s:"Equally biblical — creation's goodness (Genesis 1:31), God's ownership, explicit stewardship commands; and it matches the scale of the environmental crisis with a duty equal to it.", w:"'Subdue' and 'rule' still stand in the text; and practice lags the theology — comparatively few Christians who affirm animals' intrinsic value are even vegetarian."},
+      {n:"Eco-theology & Laudato Si'", c:"The tradition corrects itself — dominion is not domination.", s:"Honest about the evidence and about religion's role in it; unites Catholic, Protestant and feminist voices; makes religion proactive in what it does as well as what it says.", w:"Critics ask whether re-modelling God (McFague) concedes too much doctrine to the crisis — and whether 'dialogue' without instruction changes anything on the ground."}
+    ]
+  }
+};
+
+(function(){
+  let fcTopic="all", fcType="terms";
+  const grid=document.getElementById("fcGrid"), count=document.getElementById("fcCount");
+  function esc(s){return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+  function label(tp){return tp==="conduct"?"Good Conduct":tp==="sanctity"?"Sanctity & Just War":"Dominion & Stewardship";}
+  function build(){
+    const topics = fcTopic==="all" ? ["conduct","sanctity","dominion"] : [fcTopic];
+    let cards=[];
+    topics.forEach(tp=>{
+      const d=FLASHCARDS[tp]; if(!d) return;
+      if(fcType==="terms"){ d.terms.forEach(t=>cards.push({tp,front:t.term,tag:label(tp),back:`<div class='fc-def'>${esc(t.def)}</div>`})); }
+      else { d.views.forEach(v=>cards.push({tp,front:v.n,tag:label(tp),back:`<div class='fc-def'>${esc(v.c)}</div><div class='fc-sw'><div class='up'><span class='k'>Strength</span><br>${esc(v.s)}</div><div class='dn' style='margin-top:6px'><span class='k'>Weakness</span><br>${esc(v.w)}</div></div>`})); }
+    });
+    grid.innerHTML=cards.map(c=>`
+      <button class="fc-card ${c.tp}" data-flipped="false" aria-label="Flashcard: ${esc(c.front)}. Tap to reveal.">
+        <div class="fc-inner">
+          <div class="fc-face fc-front"><div class="fc-tag">${esc(c.tag)}</div><div class="fc-term">${esc(c.front)}</div><div class="fc-flip">tap to flip ↺</div></div>
+          <div class="fc-face fc-back"><div class="fc-tag">${esc(c.tag)}</div>${c.back}</div>
+        </div>
+      </button>`).join("");
+    count.textContent = cards.length + " cards";
+    grid.querySelectorAll(".fc-card").forEach(el=>{
+      const flip=()=>el.dataset.flipped = el.dataset.flipped==="true" ? "false":"true";
+      el.addEventListener("click",flip);
+    });
+  }
+  document.querySelectorAll('#flashcards .fc-tabs .fc-btn').forEach(b=>b.addEventListener("click",()=>{
+    document.querySelectorAll('#flashcards .fc-tabs .fc-btn').forEach(x=>x.setAttribute("aria-selected","false"));
+    b.setAttribute("aria-selected","true"); fcTopic=b.dataset.topic; build();
+  }));
+  document.querySelectorAll('#flashcards .fc-type .fc-btn').forEach(b=>b.addEventListener("click",()=>{
+    document.querySelectorAll('#flashcards .fc-type .fc-btn').forEach(x=>x.setAttribute("aria-selected","false"));
+    b.setAttribute("aria-selected","true"); fcType=b.dataset.type; build();
+  }));
+  build();
+})();
+
+/* =====================================================================
+   TEACHER: paste your YouTube link between the quotes below.
+   Any format works — youtube.com/watch?v=…, youtu.be/…, or an embed URL.
+   Leave it empty ("") and the page shows a "Video not set" placeholder.
+   ===================================================================== */
+const VIDEO_URL = "";
+
+(function wireVideo(){
+  const url=(VIDEO_URL||"").trim();
+  if(!url) return; // keep placeholder
+  // extract the 11-char YouTube id from common URL shapes
+  let id="";
+  const m = url.match(/(?:youtu\.be\/|v=|\/embed\/|\/shorts\/)([A-Za-z0-9_-]{11})/);
+  if(m) id=m[1];
+  else if(/^[A-Za-z0-9_-]{11}$/.test(url)) id=url; // a bare id
+  const frame=document.getElementById("videoFrame");
+  if(id && frame){
+    frame.innerHTML =
+      '<iframe src="https://www.youtube-nocookie.com/embed/'+id+'?rel=0" '+
+      'title="Good Conduct &amp; Moral Principles — full unit review" '+
+      'allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" '+
+      'allowfullscreen loading="lazy"></iframe>';
+  } else if(frame){
+    // not a YouTube link — fall back to a button that opens it
+    frame.innerHTML =
+      '<div class="video-placeholder"><a class="res-btn big" style="background:#fff" href="'+url+'" target="_blank" rel="noopener"><span class="ic">▶</span><span><b>Watch the full unit review</b></span><span class="go">↗</span></a></div>';
+  }
+})();
+
+/* =====================================================================
+   TEACHER: paste your SharePoint share links between the quotes below.
+   Leave a link empty ("") and its button will show "Link not set".
+   Tip: in SharePoint, open the file's ... menu -> Copy link -> paste here.
+   ===================================================================== */
+const LINKS = {
+  conduct_lesson:   "",
+  conduct_booklet:  "",
+  conduct_podcast:  "",
+  sanctity_lesson:  "",
+  sanctity_booklet: "",
+  sanctity_podcast: "",
+  dominion_lesson:  "",
+  dominion_booklet: "",
+  dominion_podcast: "",
+  companion:        "",
+  review:           "",
+  overview_podcast: "",
+  flashcards_pdf:   ""
+};
+
+(function wireResources(){
+  let anySet=false;
+  document.querySelectorAll(".res-btn").forEach(btn=>{
+    const url=(LINKS[btn.dataset.key]||"").trim();
+    if(url){
+      btn.href=url; btn.target="_blank"; btn.rel="noopener"; anySet=true;
+    }else{
+      btn.classList.add("unset"); btn.removeAttribute("href"); btn.setAttribute("aria-disabled","true");
+    }
+  });
+  if(anySet){ const n=document.getElementById("resNote"); if(n) n.classList.add("hide"); }
+})();
+</script>
+</body>
+</html>

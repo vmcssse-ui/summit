@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Will &amp; Moral Responsibility — Unit at a Glance</title>
+<style>
+  :root{
+    --ink:#12294D;
+    --ink-2:#0C1B33;
+    --parch:#F3ECDD;
+    --gold:#C9A227;
+    --gold-soft:#E4CE86;
+    --rubric:#B01C2E;
+    --teal:#00695C;
+    --violet:#6A1B9A;
+    --blue:#1565C0;
+    --green:#2E7D32;
+    --paper:#FBF7EE;
+    --line:rgba(18,41,77,.16);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--paper);color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;line-height:1.5;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1060px;margin:0 auto;padding:0 24px}
+
+  .hero{background:radial-gradient(1200px 400px at 80% -10%, rgba(201,162,39,.18), transparent 60%),
+      linear-gradient(180deg,var(--ink) 0%, var(--ink-2) 100%);
+    color:var(--parch);padding:64px 0 72px;position:relative;overflow:hidden;border-bottom:3px solid var(--gold)}
+  .hero::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.06;
+    background:repeating-linear-gradient(180deg,transparent 0 38px,#fff 38px 39px)}
+  .hero .wrap{position:relative;z-index:2}
+  .crest{display:flex;align-items:center;gap:16px;margin-bottom:34px}
+  .crest svg{width:54px;height:54px;flex:none}
+  .crest .who{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-soft)}
+  .crest .who b{color:var(--parch);display:block;letter-spacing:.14em;font-size:.86rem;margin-top:3px}
+  h1{font-size:clamp(2.4rem,6vw,4.1rem);line-height:1.02;font-weight:700;letter-spacing:-.01em}
+  h1 .amp{color:var(--gold);font-style:italic}
+  .sub{margin-top:20px;max-width:56ch;font-size:1.12rem;color:#E7DFCB}
+  .bigq{margin-top:30px;display:inline-flex;gap:14px;align-items:flex-start;border-left:3px solid var(--gold);padding:8px 0 8px 18px;max-width:60ch}
+  .bigq .q{font-family:"Trebuchet MS",sans-serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-soft);padding-top:5px}
+  .bigq p{font-size:1.24rem;font-style:italic;color:#fff}
+
+  section{padding:64px 0}
+  .sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:8px}
+  .sec-head .num{font-family:"Trebuchet MS",sans-serif;color:var(--gold);font-weight:700;font-size:.9rem;letter-spacing:.15em}
+  .sec-head h2{font-size:clamp(1.6rem,3.4vw,2.3rem);letter-spacing:-.01em}
+  .sec-lead{color:#4a4a52;max-width:64ch;margin-bottom:34px;font-size:1.05rem}
+
+  .spectrum-card{background:linear-gradient(180deg,#fff, var(--paper));border:1px solid var(--line);border-radius:14px;
+    box-shadow:0 18px 40px -28px rgba(18,41,77,.5);padding:28px 26px 34px}
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:26px}
+  .tab{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.82rem;letter-spacing:.04em;
+    border:1px solid var(--line);background:#fff;color:var(--ink);padding:9px 16px;border-radius:999px;cursor:pointer;transition:.18s}
+  .tab[aria-selected="true"]{background:var(--ink);color:var(--parch);border-color:var(--ink)}
+  .tab:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+
+  .axis{position:relative;margin:8px 4px 0}
+  .axis-labels{display:flex;justify-content:space-between;font-family:"Trebuchet MS",sans-serif;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:#6a6a72;margin-bottom:10px}
+  .axis-labels .l{color:var(--rubric);font-weight:700}
+  .axis-labels .r{color:var(--blue);font-weight:700}
+  .bar{height:10px;border-radius:999px;background:linear-gradient(90deg,var(--rubric),#b06a1e 40%,#5a7d3a 66%,var(--blue));position:relative}
+  .ticks{position:relative;height:118px;margin-top:0}
+  .node{position:absolute;top:0;transform:translateX(-50%);width:118px;text-align:center;cursor:pointer}
+  .node .dot{width:20px;height:20px;border-radius:50%;background:#fff;border:3px solid var(--ink);margin:0 auto;position:relative;top:-15px;transition:.18s}
+  .node .nm{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.8rem;margin-top:-6px;line-height:1.2}
+  .node .sb{font-size:.74rem;color:#6a6a72;font-style:italic;margin-top:2px;line-height:1.25}
+  .node:hover .dot,.node[data-active="true"] .dot{transform:scale(1.25);border-color:var(--gold);box-shadow:0 0 0 5px rgba(201,162,39,.2)}
+  .node:focus-visible{outline:none}
+  .node:focus-visible .dot{outline:3px solid var(--gold);outline-offset:3px}
+
+  .readout{margin-top:14px;background:var(--ink);color:var(--parch);border-radius:12px;padding:20px 22px;min-height:104px;display:flex;gap:18px;align-items:flex-start}
+  .readout .badge{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;
+    background:var(--gold);color:var(--ink-2);padding:6px 10px;border-radius:6px;white-space:nowrap;margin-top:2px}
+  .readout .body h4{font-size:1.12rem;margin-bottom:4px}
+  .readout .body p{color:#E7DFCB;font-size:.98rem}
+  .readout .body .sw{display:flex;gap:22px;margin-top:10px;flex-wrap:wrap}
+  .readout .body .sw div{font-size:.9rem;flex:1 1 240px}
+  .readout .body .sw .k{font-family:"Trebuchet MS",sans-serif;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase}
+  .readout .body .sw .up .k{color:#8BD08F}
+  .readout .body .sw .dn .k{color:#F2A0A0}
+  .hint{font-family:"Trebuchet MS",sans-serif;font-size:.76rem;color:#8a8a92;margin-top:14px;text-align:center}
+
+  .triptych{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .panel{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;display:flex;flex-direction:column}
+  .panel .cap{padding:16px 18px;color:#fff;position:relative}
+  .panel.b1 .cap{background:linear-gradient(135deg,#1F4E79,#12294D)}
+  .panel.b2 .cap{background:linear-gradient(135deg,#00695C,#0C3B34)}
+  .panel.b3 .cap{background:linear-gradient(135deg,#6A1B9A,#3B0E56)}
+  .panel .cap .n{font-family:"Trebuchet MS",sans-serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;opacity:.85}
+  .panel .cap h3{font-size:1.24rem;margin-top:3px}
+  .panel .cap .ask{font-style:italic;font-size:.9rem;margin-top:8px;opacity:.95}
+  .panel .body{padding:16px 18px;font-size:.92rem}
+  .panel .body .row{display:flex;gap:9px;padding:7px 0;border-bottom:1px dashed var(--line)}
+  .panel .body .row:last-child{border-bottom:0}
+  .panel .body .row .v{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.8rem;white-space:nowrap;color:var(--ink)}
+  .panel .body .row .d{color:#55555c}
+
+  .thread{background:var(--ink);color:var(--parch);border-radius:14px;padding:34px 30px;position:relative;overflow:hidden}
+  .thread::before{content:"";position:absolute;inset:0;opacity:.07;background:repeating-linear-gradient(180deg,transparent 0 30px,#fff 30px 31px)}
+  .thread .wrap2{position:relative;z-index:2}
+  .thread h2{color:#fff;font-size:clamp(1.5rem,3vw,2.1rem);margin-bottom:8px}
+  .thread .lead{color:#E7DFCB;max-width:62ch;margin-bottom:24px}
+  .threads{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .tcard{border:1px solid rgba(228,206,134,.3);border-radius:10px;padding:16px 16px 18px;background:rgba(255,255,255,.03)}
+  .tcard .t{font-family:"Trebuchet MS",sans-serif;color:var(--gold);font-weight:700;font-size:.82rem;letter-spacing:.05em;margin-bottom:6px}
+  .tcard p{font-size:.9rem;color:#E7DFCB}
+
+  .revise{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:start}
+  .steps{counter-reset:s;display:flex;flex-direction:column;gap:14px}
+  .step{display:flex;gap:16px;align-items:flex-start;border-left:2px solid var(--line);padding:2px 0 2px 18px;position:relative}
+  .step::before{counter-increment:s;content:counter(s);position:absolute;left:-15px;top:-2px;width:28px;height:28px;border-radius:50%;
+    background:var(--gold);color:var(--ink-2);font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.9rem;display:grid;place-items:center}
+  .step h4{font-size:1.02rem}
+  .step p{font-size:.9rem;color:#55555c;margin-top:2px}
+  .ao{border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .ao .h{padding:12px 16px;font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.82rem;letter-spacing:.06em;color:#fff}
+  .ao .h.ao1{background:var(--ink)}
+  .ao .h.ao2{background:var(--green)}
+  .ao .c{padding:14px 16px;font-size:.9rem;border-bottom:1px solid var(--line)}
+  .ao .c:last-child{border-bottom:0}
+  .ao .c b{font-family:"Trebuchet MS",sans-serif;font-size:.78rem;letter-spacing:.04em}
+
+  .video-frame{position:relative;width:100%;aspect-ratio:16/9;border-radius:14px;overflow:hidden;
+    border:1px solid var(--line);box-shadow:0 20px 44px -30px rgba(18,41,77,.55);background:var(--ink)}
+  .video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .video-placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:14px;text-align:center;padding:30px;color:#C9C4B6;
+    background:radial-gradient(700px 300px at 50% 30%,rgba(201,162,39,.14),transparent 60%),linear-gradient(180deg,var(--ink),var(--ink-2))}
+  .video-placeholder .vp-badge{font-family:"Trebuchet MS",Verdana,sans-serif;font-weight:700;font-size:.72rem;letter-spacing:.14em;
+    text-transform:uppercase;background:var(--gold);color:var(--ink-2);padding:6px 12px;border-radius:6px}
+  .video-placeholder p{max-width:52ch;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.92rem;line-height:1.55}
+  .video-placeholder code{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:4px;padding:1px 6px}
+
+  .fc-controls{display:flex;gap:18px;flex-wrap:wrap;align-items:center;margin-bottom:24px}
+  .fc-tabs,.fc-type{display:flex;gap:8px;flex-wrap:wrap}
+  .fc-btn{font-family:"Trebuchet MS",Verdana,sans-serif;font-weight:700;font-size:.8rem;border:1px solid var(--line);
+    background:#fff;color:var(--ink);padding:8px 15px;border-radius:999px;cursor:pointer;transition:.18s}
+  .fc-btn[aria-selected="true"]{background:var(--ink);color:var(--parch);border-color:var(--ink)}
+  .fc-btn:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+  .fc-hint{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.78rem;color:#8a8a92;margin-left:auto}
+  .fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+  .fc-card{perspective:1200px;height:196px;cursor:pointer;background:none;border:0;padding:0;font-family:inherit;text-align:left}
+  .fc-inner{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+  .fc-card[data-flipped="true"] .fc-inner{transform:rotateY(180deg)}
+  .fc-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+    border-radius:12px;padding:18px;display:flex;flex-direction:column;border:1px solid var(--line);overflow:auto}
+  .fc-front{background:linear-gradient(180deg,#fff,var(--paper))}
+  .fc-back{transform:rotateY(180deg);color:var(--parch)}
+  .fc-card.conditions .fc-back{background:linear-gradient(160deg,#1F4E79,#12294D)}
+  .fc-card.extent .fc-back{background:linear-gradient(160deg,#00695C,#0C3B34)}
+  .fc-card.punish .fc-back{background:linear-gradient(160deg,#6A1B9A,#3B0E56)}
+  .fc-tag{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--gold);font-weight:700;margin-bottom:8px}
+  .fc-front .fc-tag{color:#9a8028}
+  .fc-term{font-size:1.2rem;font-weight:700;line-height:1.15}
+  .fc-front .fc-flip{margin-top:auto;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.72rem;color:#9a9a9a}
+  .fc-def{font-size:.9rem;line-height:1.4}
+  .fc-back .fc-sw{margin-top:8px;font-size:.8rem}
+  .fc-back .fc-sw .k{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.62rem;letter-spacing:.08em;text-transform:uppercase}
+  .fc-back .up .k{color:#8BD08F}.fc-back .dn .k{color:#F2A0A0}
+  @media(max-width:820px){.fc-grid{grid-template-columns:1fr 1fr}.fc-hint{width:100%;margin-left:0}}
+
+  .res-note{background:#FBF0D6;border:1px solid var(--gold);border-left:4px solid var(--gold);
+    border-radius:8px;padding:12px 16px;margin-bottom:22px;font-size:.9rem;color:#5a4a1c;font-family:"Trebuchet MS",Verdana,sans-serif}
+  .res-note code{background:#fff;border:1px solid var(--line);border-radius:4px;padding:1px 6px;font-size:.85em}
+  .res-note.hide{display:none}
+  .res-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:16px}
+  .res-col{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff}
+  .rc-head{padding:14px 16px;color:#fff}
+  .rc1 .rc-head{background:linear-gradient(135deg,#1F4E79,#12294D)}
+  .rc2 .rc-head{background:linear-gradient(135deg,#00695C,#0C3B34)}
+  .rc3 .rc-head{background:linear-gradient(135deg,#6A1B9A,#3B0E56)}
+  .rc-head .rc-n{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;opacity:.85}
+  .rc-head h3{font-size:1.16rem;margin-top:2px}
+  .res-btn{display:flex;align-items:center;gap:12px;padding:13px 16px;border-top:1px solid var(--line);
+    font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.92rem;color:var(--ink);text-decoration:none;cursor:pointer;transition:background .15s}
+  .res-col .res-btn:first-of-type{border-top:0}
+  .res-btn:hover{background:var(--parch)}
+  .res-btn .ic{width:26px;height:26px;flex:none;display:grid;place-items:center;border-radius:6px;background:var(--ink);color:var(--gold);font-size:.9rem}
+  .res-btn .go{margin-left:auto;color:var(--gold);font-weight:700;opacity:0;transition:.15s}
+  .res-btn:hover .go{opacity:1}
+  .res-btn:focus-visible{outline:3px solid var(--gold);outline-offset:-3px}
+  .res-btn.unset{opacity:.5;cursor:not-allowed}
+  .res-btn.unset .go{opacity:0}
+  .res-btn.unset::after{content:"Link not set";margin-left:auto;font-size:.74rem;color:#9a7d2c;
+    background:#FBF0D6;border:1px solid var(--gold-soft);border-radius:5px;padding:2px 7px}
+  .res-wide{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:2px}
+  .res-btn.big{border:1px solid var(--line);border-radius:12px;background:#fff;padding:16px 18px}
+  .res-btn.big:hover{background:var(--parch)}
+  .res-btn.big .ic{width:34px;height:34px;font-size:1.1rem;background:var(--ink)}
+  @media(max-width:820px){.res-grid{grid-template-columns:1fr}.res-wide{grid-template-columns:1fr}}
+
+  footer{background:var(--ink-2);color:#C9C4B6;padding:26px 0;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.8rem}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+  footer .gold{color:var(--gold)}
+
+  @media(max-width:820px){
+    .triptych{grid-template-columns:1fr}
+    .threads{grid-template-columns:1fr}
+    .revise{grid-template-columns:1fr}
+    .node{width:92px}
+    .node .sb{display:none}
+  }
+  @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<!--BACKPILL--><a href="../alevel.html" style="position:fixed;left:14px;bottom:14px;z-index:99999;background:#12294D;color:#F6F1E4;font:600 14px/1 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;padding:10px 15px;border-radius:999px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.28);border:1px solid #C9A227">&#8592; All units</a>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="crest">
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <rect x="2" y="2" width="60" height="60" rx="13" fill="#0C1B33" stroke="#C9A227" stroke-width="1.5"/>
+        <g fill="none" stroke="#F3ECDD" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M23 21C21 17 21 14 22 12c2 2 3 5 3 8"/><path d="M41 21c2-4 2-7 1-9-2 2-3 5-3 8"/>
+          <path d="M32 17C21 17 18 26 18 33c0 12 6 19 14 19s14-7 14-19c0-7-3-16-14-16z"/>
+          <path d="M32 21c-3 4-5 6-7 7M32 21c3 4 5 6 7 7"/>
+        </g>
+        <circle cx="27" cy="31" r="5" fill="none" stroke="#F3ECDD" stroke-width="2.4"/>
+        <circle cx="37" cy="31" r="5" fill="none" stroke="#F3ECDD" stroke-width="2.4"/>
+        <circle cx="27" cy="31" r="1.9" fill="#F3ECDD"/><circle cx="37" cy="31" r="1.9" fill="#F3ECDD"/>
+        <path d="M32 34l-2.2 4.2h4.4z" fill="#C9A227"/>
+      </svg>
+      <div class="who">A-Level Religious Studies · AQA Paper 1
+        <b>Harlington School · Philosophy &amp; Ethics</b></div>
+    </div>
+    <h1>Free Will <span class="amp">&amp;</span> Moral Responsibility</h1>
+    <p class="sub">One argument, three moves: what responsibility requires, whether anyone ever has it, and what follows for reward and punishment.</p>
+    <div class="bigq">
+      <span class="q">The<br>big<br>question</span>
+      <p>Could you have done otherwise — and if not, can anyone fairly be praised, blamed, rewarded or punished?</p>
+    </div>
+  </div>
+</header>
+
+<section id="spectrum">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">01</span><h2>The freedom spectrum</h2></div>
+    <p class="sec-lead">Every debate in this topic lines up on the same axis — from <b>no freedom</b> (and so no desert) to <b>full freedom</b> (and so full responsibility). Pick a sub-topic, then tap a position to see what it claims and where it is strong or weak.</p>
+
+    <div class="spectrum-card">
+      <div class="tabs" role="tablist" aria-label="Choose a sub-topic">
+        <button class="tab" role="tab" aria-selected="true"  data-topic="conditions">1 · The conditions</button>
+        <button class="tab" role="tab" aria-selected="false" data-topic="extent">2 · The extent</button>
+        <button class="tab" role="tab" aria-selected="false" data-topic="punish">3 · Reward &amp; punishment</button>
+      </div>
+
+      <div class="axis">
+        <div class="axis-labels"><span class="l" id="poleL"></span><span class="r" id="poleR"></span></div>
+        <div class="bar"></div>
+        <div class="ticks" id="ticks"></div>
+      </div>
+
+      <div class="readout" id="readout" aria-live="polite"></div>
+      <p class="hint">Tap a circle — or use Tab and Enter — to explore each position.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="thread">
+      <div class="wrap2">
+        <h2>The thread that ties it together</h2>
+        <p class="lead">Top answers do not treat the three sub-topics separately. Three ideas run through all of them — spot the thread and you are writing at the top of the mark scheme.</p>
+        <div class="threads">
+          <div class="tcard"><div class="t">Could I have done otherwise?</div><p>Determinist: no. Libertarian: yes. Compatibilist: yes, if I had desired to. One question, three answers — and everything follows from which you give.</p></div>
+          <div class="tcard"><div class="t">The responsibility gradient</div><p>Blame is never on/off. Every excuse works by sliding a person along a line from fully responsible to not responsible at all.</p></div>
+          <div class="tcard"><div class="t">Positions that undercut themselves</div><p>Determinism is itself a determined statement; Skinner's engineered society assumes we can act otherwise. Spotting self-refutation is the best AO2 move here.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="debates">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">02</span><h2>One argument, three moves</h2></div>
+    <p class="sec-lead">The topic splits into three sub-topics. They look separate, but each one only makes sense because of the one before it.</p>
+    <div class="triptych">
+      <div class="panel b1">
+        <div class="cap"><div class="n">Sub-topic 1</div><h3>The conditions</h3><div class="ask">What must be true <b>before</b> we blame?</div></div>
+        <div class="body">
+          <div class="row"><span class="v">Condition 1</span><span class="d">A free, conscious, voluntary act (Aristotle).</span></div>
+          <div class="row"><span class="v">Condition 2</span><span class="d">Understanding right from wrong.</span></div>
+          <div class="row"><span class="v">Exemptions</span><span class="d">Not yet learned · cannot · permanently · temporarily forgotten.</span></div>
+          <div class="row"><span class="v">Sources</span><span class="d">Innate (Hume) · social (relativism) · religious.</span></div>
+        </div>
+      </div>
+      <div class="panel b2">
+        <div class="cap"><div class="n">Sub-topic 2</div><h3>The extent</h3><div class="ask">Does anyone <b>ever</b> meet them?</div></div>
+        <div class="body">
+          <div class="row"><span class="v">Hard determinism</span><span class="d">Universal causation — freedom is an illusion.</span></div>
+          <div class="row"><span class="v">Three forms</span><span class="d">Scientific (Laplace) · psychological (Skinner) · theological.</span></div>
+          <div class="row"><span class="v">Libertarianism</span><span class="d">We are free moral agents; influences incline, not determine.</span></div>
+          <div class="row"><span class="v">Compatibilism</span><span class="d">Hume: freedom is doing what you desire.</span></div>
+        </div>
+      </div>
+      <div class="panel b3">
+        <div class="cap"><div class="n">Sub-topic 3</div><h3>Reward &amp; punishment</h3><div class="ask">So what do we <b>do</b> with offenders?</div></div>
+        <div class="body">
+          <div class="row"><span class="v">Approach X</span><span class="d">Crime as a condition to treat — therapeutic reform.</span></div>
+          <div class="row"><span class="v">Approach Y</span><span class="d">Crime as a free act to punish — retribution, deterrence.</span></div>
+          <div class="row"><span class="v">Kant</span><span class="d">'Ought implies can'; only retribution respects reason.</span></div>
+          <div class="row"><span class="v">Just deserts</span><span class="d">Von Hirsch: the punishment must fit the crime.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="resources">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">03</span><h2>Your resources</h2></div>
+    <p class="sec-lead">Everything for the topic, in one place. Open a sub-topic's lesson, booklet and podcast, and use the <b>Philosopher Companion</b> across all three.</p>
+
+    <div class="res-note" id="resNote">
+      <b>Teacher setup:</b> links aren't set yet. Open this file, find the <code>LINKS</code> list near the bottom, and paste each SharePoint share link once. Buttons with no link show as “Link not set”.
+    </div>
+
+    <div class="res-grid">
+      <div class="res-col rc1">
+        <div class="rc-head"><span class="rc-n">Sub-topic 1</span><h3>The conditions</h3></div>
+        <a class="res-btn" data-key="conditions_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="conditions_booklet"><span class="ic">✎</span><span>Completion booklet</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="conditions_podcast"><span class="ic">♪</span><span>Lesson podcast</span><span class="go">↗</span></a>
+      </div>
+      <div class="res-col rc2">
+        <div class="rc-head"><span class="rc-n">Sub-topic 2</span><h3>The extent</h3></div>
+        <a class="res-btn" data-key="extent_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="extent_booklet"><span class="ic">✎</span><span>Completion booklet</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="extent_podcast"><span class="ic">♪</span><span>Lesson podcast</span><span class="go">↗</span></a>
+      </div>
+      <div class="res-col rc3">
+        <div class="rc-head"><span class="rc-n">Sub-topic 3</span><h3>Reward &amp; punishment</h3></div>
+        <a class="res-btn" data-key="punish_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="punish_booklet"><span class="ic">✎</span><span>Completion booklet</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="punish_podcast"><span class="ic">♪</span><span>Lesson podcast</span><span class="go">↗</span></a>
+      </div>
+    </div>
+
+    <div class="res-wide">
+      <a class="res-btn big" data-key="companion"><span class="ic">🦉</span><span><b>Philosopher Companion</b> — checklist, AO1 &amp; AO2 planning, key terms &amp; review</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="review"><span class="ic">↻</span><span><b>Review lessons</b> — consolidation decks for all three sub-topics</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="overview_podcast"><span class="ic">♪</span><span><b>Overview podcast</b> — the whole topic as one argument (team teach)</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="flashcards_pdf"><span class="ic">▤</span><span><b>Printable flashcards</b> — fold-over key terms &amp; positions to cut out</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="exam_questions"><span class="ic">★</span><span><b>Exam questions</b> — every past question by session, filterable</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="textbook"><span class="ic">▥</span><span><b>Textbook chapter</b> — the pages this topic is built from</span><span class="go">↗</span></a>
+    </div>
+  </div>
+</section>
+
+<section id="revise">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">04</span><h2>How to revise this topic</h2></div>
+    <p class="sec-lead">Use your resources in this order. The <b>Philosopher Companion</b> is where you learn to <em>plan</em> both question types.</p>
+    <div class="revise">
+      <div class="steps">
+        <div class="step"><div><h4>Watch the lesson &amp; listen to the podcast</h4><p>One podcast per sub-topic — a teacher and student talk each position through to a judgement. Annotate as you listen.</p></div></div>
+        <div class="step"><div><h4>Complete the greyscale booklet</h4><p>Read the given text, write the key claims in your own words, then decide the strength and weakness you would give each position.</p></div></div>
+        <div class="step"><div><h4>Match &amp; apply the key terms</h4><p>In the Companion: match each term to its meaning, then use it in a sentence. RAG-rate the mastery checklist with the three faces.</p></div></div>
+        <div class="step"><div><h4>Plan AO1, then build AO2 on top</h4><p>Use the Companion frameworks and the guidance-left / your-turn-right scaffolds. Free will is examined in most sessions — plan the real past questions.</p></div></div>
+      </div>
+      <div class="ao">
+        <div class="h ao1">AO1 · Examine the positions (10)</div>
+        <div class="c"><b>What it is —</b> the factual chain: set the problem, then each position in order, applying the evidence (Laplace, Skinner, Libet, Hume).</div>
+        <div class="c"><b>Aim —</b> explain the whole range accurately and neutrally. No judging yet.</div>
+        <div class="h ao2">AO2 · Evaluate the claim (15)</div>
+        <div class="c"><b>What it is —</b> a three-paragraph dialectic: position, then evaluation → counter-evaluation → implication; mirror it; then judge.</div>
+        <div class="c"><b>Aim —</b> weigh the positions, use one as a lens on another, and reach a justified judgement that links back to your thesis.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="watch">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">05</span><h2>Watch: the whole topic in one go</h2></div>
+    <p class="sec-lead">A full review of <b>Free Will &amp; Moral Responsibility</b> — the conditions, the extent, and reward and punishment. Best watched before you start revising, then again to check your recall.</p>
+    <div class="video-frame" id="videoFrame">
+      <div class="video-placeholder" id="videoPlaceholder">
+        <div class="vp-badge">Video not set</div>
+        <p><b>Teacher:</b> paste the YouTube link in the <code>VIDEO_URL</code> line near the bottom of this file. The player then appears here automatically.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="flashcards">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">06</span><h2>Flashcards — test yourself</h2></div>
+    <p class="sec-lead">Flip a card to check yourself. Switch between <b>key terms</b> (term → meaning) and <b>positions</b> (position → claim, strength &amp; weakness), and filter by sub-topic.</p>
+    <div class="fc-controls">
+      <div class="fc-tabs" role="tablist" aria-label="Sub-topic">
+        <button class="fc-btn" role="tab" aria-selected="true"  data-topic="all">All</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-topic="conditions">Conditions</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-topic="extent">Extent</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-topic="punish">Reward &amp; punishment</button>
+      </div>
+      <div class="fc-type" role="tablist" aria-label="Card type">
+        <button class="fc-btn" role="tab" aria-selected="true"  data-type="terms">Key terms</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-type="views">Positions</button>
+      </div>
+      <span class="fc-hint">Tap any card to flip · <span id="fcCount"></span></span>
+    </div>
+    <div class="fc-grid" id="fcGrid"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Free Will &amp; Moral Responsibility · Unit at a glance</span>
+    <span class="gold">Harlington School · Philosophy &amp; Ethics</span>
+  </div>
+</footer>
+
+<script>
+const DATA = {
+  conditions:{
+    poles:["FULLY responsible","NOT responsible"],
+    nodes:[
+      {x:7, nm:"Competent adult", sb:"free & informed", auth:"Full responsibility",
+        claim:"A free, conscious human agent who understood what they were doing meets both conditions — the voluntary act and knowledge of right and wrong.",
+        s:"Praise and blame clearly apply; this is the case every other position is measured against.",
+        w:"An observer weighing upbringing, psychology and social pressure may doubt that anyone is ever fully in this box."},
+      {x:29, nm:"Under pressure", sb:"rage, provocation", auth:"Reduced",
+        claim:"Under extreme pressure people may be unable to think normally, and do or say things they later know to be wrong.",
+        s:"We do recognise provocation: the law and ordinary morality both treat it as mitigating.",
+        w:"It is unmeasurable — almost any offender can claim they were not thinking clearly at the time."},
+      {x:51, nm:"Self-inflicted", sb:"drunk or intoxicated", auth:"Shifted, not removed",
+        claim:"Being blind drunk may mean you could not tell right from wrong at the moment of acting — but the moral question moves back to the choice to drink.",
+        s:"Responsibility that shifts in time explains the heart-attack driver too: blame attaches to the earlier free decision.",
+        w:"How far back can blame be traced before it becomes unfair to hold anyone to a decision made long before?"},
+      {x:73, nm:"Incapacitated", sb:"dementia, illness", auth:"None",
+        claim:"Those who have permanently lost the ability to distinguish right from wrong — through dementia or serious mental illness — cannot be blamed.",
+        s:"Clear, humane, and already embedded in law as diminished responsibility.",
+        w:"Capacity is a spectrum, not a switch, so the boundary is a judgement call in every real case."},
+      {x:94, nm:"Non-agent", sb:"infant, animal, machine", auth:"None at all",
+        claim:"Babies, animals and machines are not moral agents: the lion is not guilty, and murders are committed by people, not by guns.",
+        s:"Uncontroversial — it fixes the difference between causing harm and being to blame for it.",
+        w:"Blame simply transfers to whoever drives, programmes or is responsible for them, so the hard question returns."}
+    ]
+  },
+  extent:{
+    poles:["NO freedom · no responsibility","FULL freedom · full responsibility"],
+    nodes:[
+      {x:6, nm:"Scientific", sb:"Laplace", auth:"No free will",
+        claim:"An unbroken causal chain runs from the Big Bang to now, and the brain is part of it — Laplace's intelligence could compute the whole future.",
+        s:"Rests on the most successful body of knowledge we have; no physical gap for the will has ever been found.",
+        w:"Scientific laws are probabilistic, and if the quantum world is indeterminate determinism is false — though randomness is not freedom either."},
+      {x:20, nm:"Psychological", sb:"Skinner", auth:"No free will",
+        claim:"All behaviour is the product of genes and conditioning: good consequences dispose the brain to repeat, bad ones to avoid. Determinism is complete.",
+        s:"Grounded in experiment rather than speculation; conditioning demonstrably shapes behaviour.",
+        w:"Chomsky: animal experiments cannot carry human complexity — and if all behaviour is conditioned, so is behaviourism."},
+      {x:34, nm:"Theological", sb:"omniscience", auth:"No free will",
+        claim:"If God knows you will do x, you cannot avoid doing x — foreknowledge looks causal, and Augustine and Calvin drew out predestination.",
+        s:"Follows rigorously from a traditional definition of omniscience.",
+        w:"Only bites if God exists — and a timeless God (Aquinas) or a temporal one (process theology) removes the problem."},
+      {x:57, nm:"Compatibilism", sb:"Hume", auth:"Free enough",
+        claim:"Necessity is only constant conjunction; liberty is the power to act according to the will. Freedom is doing what you desire — and it requires determinism.",
+        s:"Dissolves a 2,000-year deadlock and matches how we use the word 'free': the coerced are unfree, the willing are free.",
+        w:"Hard determinists say desires are determined too; Kant called it a 'miserable subterfuge'."},
+      {x:77, nm:"Moderate libertarian", sb:"inclined, not determined", auth:"Real freedom",
+        claim:"The external world is deterministic and heredity and environment incline us — but they do not determine us: the kleptomaniac, unobserved, might steal or might not.",
+        s:"Concedes everything the evidence shows while keeping a genuine choice; total freedom would paralyse us anyway.",
+        w:"Where exactly does inclining stop and determining begin? The line is asserted rather than demonstrated."},
+      {x:94, nm:"Libertarianism", sb:"free moral agents", auth:"Full freedom",
+        claim:"All forms of determinism are false. Most libertarians follow Descartes: the mind is a separate substance able to act freely in the physical world.",
+        s:"Matches universal experience of deliberation and guilt — and if we cannot reason freely, we cannot reason our way to determinism.",
+        w:"No evidence for a free mind; determinists reply that the feeling of freedom is exactly what complex unconscious processing would feel like."}
+    ]
+  },
+  punish:{
+    poles:["Punishment as social TOOL","Punishment as DESERT"],
+    nodes:[
+      {x:7, nm:"Skinner", sb:"condition it away", auth:"Neither deserved",
+        claim:"Punishment is ineffective and breeds resentment. Condition what people desire, and behaviour needing punishment need never occur.",
+        s:"Aims at prevention rather than satisfaction — arguably the only thing that protects future victims.",
+        w:"Deliberate reconditioning assumes people can act otherwise, which determinism denies: Skinner as 'closet libertarian'."},
+      {x:27, nm:"Therapeutic", sb:"treat and reform", auth:"Reward over punishment",
+        claim:"Crime is a condition produced by violence, abuse and lack of education, so treatment should heal rather than hurt; capital punishment is the ultimate injustice.",
+        s:"Takes offenders' histories seriously and targets re-offending.",
+        w:"Reform is effectively a reward, and the victim can seem to matter less than the offender."},
+      {x:50, nm:"Hume", sb:"public utility", auth:"Accountable, not deserving",
+        claim:"Blame belongs where the choice came from character. Punishment's function is to improve society — which is why eternal heaven and hell are grossly disproportionate.",
+        s:"Keeps responsibility without denying causation, and gives a workable test: character, or coercion?",
+        w:"Just deserts theorists call it lenient and disproportionate — and if determinism is true, 'could have done otherwise' is never possible."},
+      {x:72, nm:"Deterrence", sb:"warn others off", auth:"Punishment as useful",
+        claim:"Punishment signals society's disapproval, warns off would-be offenders, enforces responsibility and protects society from harm.",
+        s:"Forward-looking and practical: it justifies punishment by its results.",
+        w:"Kant rejects it outright — it uses the criminal as a means to someone else's end."},
+      {x:93, nm:"Kant / just deserts", sb:"proportionate retribution", auth:"Full desert",
+        claim:"'Ought implies can', so offenders are responsible. Only retribution treats them as rational; von Hirsch adds that sentencing must be proportionate to the crime.",
+        s:"Respects the offender as an agent and gives sentencing a public, measurable standard.",
+        w:"The reversed maxim leads to hard conclusions, and the whole model collapses if determinism is true."}
+    ]
+  }
+};
+
+const ticks=document.getElementById("ticks");
+const readout=document.getElementById("readout");
+const poleL=document.getElementById("poleL"), poleR=document.getElementById("poleR");
+let topic="conditions", active=0;
+
+function renderReadout(n){
+  readout.innerHTML=
+    '<span class="badge">'+n.auth+'</span>'+
+    '<div class="body">'+
+      '<h4>'+n.nm+' <span style="opacity:.6;font-style:italic;font-weight:400">· '+n.sb+'</span></h4>'+
+      '<p>'+n.claim+'</p>'+
+      '<div class="sw">'+
+        '<div class="up"><span class="k">Strength</span><br>'+n.s+'</div>'+
+        '<div class="dn"><span class="k">Weakness</span><br>'+n.w+'</div>'+
+      '</div>'+
+    '</div>';
+}
+function renderTopic(){
+  const d=DATA[topic];
+  poleL.textContent=d.poles[0]; poleR.textContent=d.poles[1];
+  ticks.innerHTML="";
+  active=Math.min(active,d.nodes.length-1);
+  d.nodes.forEach((n,i)=>{
+    const el=document.createElement("div");
+    el.className="node"; el.style.left=n.x+"%"; el.tabIndex=0;
+    el.setAttribute("role","button");
+    el.setAttribute("aria-label",n.nm+": "+n.sb);
+    el.dataset.active=(i===active);
+    el.innerHTML='<div class="dot"></div><div class="nm">'+n.nm+'</div><div class="sb">'+n.sb+'</div>';
+    const pick=()=>{active=i;[...ticks.children].forEach((c,j)=>c.dataset.active=(j===i));renderReadout(n);};
+    el.addEventListener("click",pick);
+    el.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();pick();}});
+    ticks.appendChild(el);
+  });
+  [...ticks.children].forEach((c,j)=>c.dataset.active=(j===active));
+  renderReadout(d.nodes[active]);
+}
+document.querySelectorAll(".tab").forEach(t=>{
+  t.addEventListener("click",()=>{
+    document.querySelectorAll(".tab").forEach(x=>x.setAttribute("aria-selected","false"));
+    t.setAttribute("aria-selected","true");
+    topic=t.dataset.topic; active=0; renderTopic();
+  });
+});
+renderTopic();
+
+const FLASHCARDS = {"conditions":{"terms":[{"term":"Moral responsibility","def":"being the proper target of praise or blame for an action, as opposed to merely having caused it.","note":"'The virus was responsible' is causal responsibility only — no praise or blame attaches."},{"term":"Voluntary action","def":"an action done through the agent's own free will, with no compulsion and no relevant ignorance.","note":"Aristotle's condition: only voluntary acts qualify for praise or blame."},{"term":"Moral agent","def":"a conscious being capable of deliberating about right and wrong and acting on that judgement.","note":"Excludes machines and animals — murder is done by people, not by guns."},{"term":"Diminished responsibility","def":"the legal and moral recognition that some agents are only partly accountable for what they do.","note":"UK law applies it to children, the seriously mentally ill and others."},{"term":"Moral sense","def":"a built-in capacity to feel what is right — for Hume, a 'faculty of sympathy'.","note":"The innate source of moral awareness; links forward to the conscience unit."},{"term":"Moral relativism","def":"the view that moral principles are relative to a particular society, culture or period.","note":"Follows if moral awareness is learned socially rather than given innately."}],"views":[{"n":"The voluntary act","c":"No free, conscious human agent, no blame.","s":"It is intuitive and it is what the law actually does: we do not prosecute animals, machines or the unconscious, and we routinely trace blame back to an earlier free decision.","w":"In real life the line is blurred. Upbringing, psychology and social pressure may mean an agent who feels free has little real control — so the condition is easy to state and very hard to apply."},{"n":"Knowing right & wrong","c":"You cannot be blamed for breaking a rule you could not grasp.","s":"It explains and justifies diminished responsibility in law, and it distinguishes cleanly between the person who never had the capacity and the person who threw it away.","w":"'Temporarily forgotten' is a loophole. Anger, panic, stress and intoxication all reduce rational control, so almost any offender can claim reduced capacity — and we have no reliable way of measuring it."},{"n":"Innate moral sense","c":"We come equipped with a feeling for right and wrong.","s":"It explains why moral reactions are immediate and cross-cultural, and it grounds responsibility for everyone rather than only for the well brought-up.","w":"Moral practices vary enormously between societies and periods, which is hard to explain if a single moral sense is doing the work; and feelings alone give no way of settling a disagreement."},{"n":"Social learning","c":"We learn right and wrong from the people who raise us.","s":"It fits the evidence: moral codes plainly differ between societies and change over time, and children plainly do learn their moral vocabulary from those around them.","w":"Strict relativism makes it impossible to condemn another culture's practices, or to say a society has morally improved — yet almost everyone believes both of those things."},{"n":"Religious morality","c":"Faith adds a third layer — and a third source of conflict.","s":"It describes real moral experience accurately: believers genuinely do weigh feeling, social expectation and religious teaching, and dilemmas really do arise where those clash.","w":"It provides no procedure for resolving the clash. If the three levels disagree, the agent must choose — which seems to hand the decision back to the individual conscience anyway."}]},"extent":{"terms":[{"term":"Determinism","def":"the view that all events and states of affairs, including all human decisions and actions, are the necessary consequence of previous states of affairs.","note":"Note 'necessary' — not merely likely. Nothing could have gone otherwise."},{"term":"Causal Determinism","def":"determinism identified with cause and effect: an unbroken chain of antecedent causes reaching back to the Big Bang.","note":"The physics version, and the one most often meant in the exam."},{"term":"Hard Determinism","def":"the view that because determinism is true, no one has free will.","note":"Rests on universal causation: every event, mental as well as physical, has a cause."},{"term":"Incompatibilism","def":"the view that determinism and libertarianism cannot both be true — a determined universe leaves no room for free will.","note":"It is a claim about the RELATIONSHIP between the two, not a third position."},{"term":"Compatibilism","def":"the view that human freedom and moral responsibility are compatible with determinism; sometimes called soft determinism.","note":"Hume's position: we are shaped by causes AND free to act on our desires."},{"term":"Libertarianism","def":"the view that despite constraints from genetics and environment, human beings are free moral agents.","note":"In this topic it is a claim about free will — not the political theory of the same name."}],"views":[{"n":"Hard Determinism","c":"Determinism is true, so nobody has free will.","s":"It is continuous with the rest of science. We assume causal regularity everywhere else, and it is not obvious why the brain should be the one exception; reductionism explains thought as brain activity without adding anything mysterious.","w":"If determinism is true then the discussion of determinism is itself determined, which is deeply counter-intuitive; and nobody has proved universal causation — the evidence is cumulative at best."},{"n":"Scientific Determinism","c":"Physics governs everything, and physics is deterministic.","s":"It rests on the most successful body of knowledge we have, and the causal chain from the Big Bang is genuinely unbroken as far as we can trace it; no one has ever located a physical gap for the will to act in.","w":"Scientific laws are provisional and probabilistic rather than necessary, and if the quantum world really is indeterminate then determinism is false — though it is far from clear that quantum randomness would give us freedom rather than mere chance."},{"n":"Psychological Determinism","c":"Behaviour is the product of genes and conditioning.","s":"It is grounded in experimental evidence rather than speculation, and conditioning demonstrably does shape behaviour — which is why reward and punishment work at all.","w":"Applying principles drawn from animal experiments to far more complex human behaviour is unsound (Chomsky), and the theory undercuts itself: if everything is conditioned response, so is radical behaviourism."},{"n":"Theological Determinism","c":"If God knows what you will do, you cannot do otherwise.","s":"It follows rigorously from a traditional definition of omniscience, and it forces believers to say something precise about God's relationship to time rather than leaving it vague.","w":"If there is no God it never gets started; and if God is timeless (Aquinas) or temporal (process theology) then foreknowledge need not be causal at all — so most theologians conclude it is false, though the issue is complex."},{"n":"Libertarianism","c":"All forms of determinism are false: we are free moral agents.","s":"It matches universal experience — deliberation, guilt and moral responsibility all presuppose freedom — and it turns determinism's own logic against it: if we cannot reason freely, we cannot reason our way to determinism.","w":"Its assumptions are no more provable than the determinist's. Determinists reply that the feeling of freedom is exactly what complex unconscious processing would feel like, and no one has shown where or how a brain could act freely."},{"n":"Compatibilism","c":"Freedom is doing what you desire — and that requires determinism.","s":"It dissolves a 2,000-year deadlock by clarifying definitions, and it matches how we actually use the word 'free': the coerced person is unfree, the person acting on their own desires is free.","w":"Hard determinists say 'constant conjunction' is far too watered down — wishes and desires are themselves products of absolute causal forces. Libertarians say it makes reason redundant, and that a will which is not free is not a will at all. Kant called compatibilism a 'miserable subterfuge'."}]},"punish":{"terms":[{"term":"Retribution","def":"punishment as simple justice — it compensates the victim to some extent and allows the criminal to pay for the crime.","note":"Kant's position: only retribution treats the criminal as a rational person."},{"term":"Deterrence","def":"punishment justified by discouraging others (and the offender) from future offending.","note":"Kant rejects it: it uses the criminal as a means to an end."},{"term":"Therapeutic punishment","def":"treatment aimed at helping or healing the offender rather than being retributive or proportional to the crime.","note":"Reform is effectively a REWARD — something beneficial is given, not something disagreeable."},{"term":"Just deserts","def":"the view that punishment should be proportionate to the seriousness of the crime committed.","note":"Von Hirsch, Doing Justice (1976); used to attack determinist and compatibilist leniency."},{"term":"Diminished responsibility","def":"the legal recognition that some defendants are only partly accountable because of age, illness or circumstance.","note":"Libertarians accept it — everyone else is assumed to have been free to do otherwise."},{"term":"Universal causation","def":"the principle that every event, mental as well as physical, has a cause.","note":"The foundation of hard determinism — and the reason punishment as desert becomes hard to justify."}],"views":[{"n":"Therapeutic model","c":"Crime is a condition to be treated, not a sin to be paid for.","s":"It takes the evidence about offenders' backgrounds seriously, and it targets re-offending rather than satisfaction — arguably the only outcome that actually protects future victims.","w":"It can look like paying attention to the needs of the criminal rather than the victim; and if reform is a benefit, serious crime is answered with something better than most offenders had before."},{"n":"Punitive model","c":"Crime is deliberate anti-social behaviour, and should be punished.","s":"It respects the victim and matches most people's moral intuitions; proportionality gives sentencing a public, measurable standard that the treatment model lacks.","w":"The whole model rests on the offender having been free to do otherwise. If hard determinism is true, punishing someone for what they could not avoid is not justice at all."},{"n":"Hard Determinism","c":"If nothing could have gone otherwise, punishment loses its point.","s":"It follows consistently from its premises, and it produces a genuinely humane conclusion: if offenders could not have done otherwise, retribution is cruelty and prevention is all that is left.","w":"It is arguably self-defeating: deliberate reconditioning presupposes exactly the freedom to do otherwise that determinism denies — so Skinner ends up a 'closet libertarian'. It also strips religious ethics of sin, atonement and judgement altogether."},{"n":"Libertarianism","c":"They could have done otherwise — so they deserve what follows.","s":"It takes human dignity seriously — treating people as agents rather than as objects to be engineered — and it explains why the law already distinguishes the culpable from those with diminished responsibility.","w":"If determinism is true, libertarianism is itself just another determined response: some people are conditioned to believe they are free, others that they are not, and there is no niche in the causal world for free will to operate."},{"n":"Compatibilism","c":"Blame belongs where the choice came out of your character.","s":"It keeps moral responsibility without denying causation, and it gives a workable rule: blame where the act flowed from the agent's own character, excuse where it flowed from ignorance or coercion.","w":"Two problems bite hard. Just deserts theorists say compatibilist and determinist punishment is lenient, ineffective and disproportionate; and if determinism is true, 'could have done otherwise' is never actually possible — Kant dismissed the whole position as a 'miserable subterfuge'."}]}};
+(function(){
+  let fcTopic="all", fcType="terms";
+  const grid=document.getElementById("fcGrid"), count=document.getElementById("fcCount");
+  function esc(s){return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+  function label(tp){return tp==="conditions"?"The conditions":tp==="extent"?"The extent":"Reward &amp; punishment";}
+  function build(){
+    const topics = fcTopic==="all" ? ["conditions","extent","punish"] : [fcTopic];
+    let cards=[];
+    topics.forEach(tp=>{
+      const d=FLASHCARDS[tp]; if(!d) return;
+      if(fcType==="terms"){ d.terms.forEach(t=>cards.push({tp,front:t.term,tag:label(tp),back:"<div class='fc-def'>"+esc(t.def)+"</div>"})); }
+      else { d.views.forEach(v=>cards.push({tp,front:v.n,tag:label(tp),back:"<div class='fc-def'>"+esc(v.c)+"</div><div class='fc-sw'><div class='up'><span class='k'>Strength</span><br>"+esc(v.s)+"</div><div class='dn' style='margin-top:6px'><span class='k'>Weakness</span><br>"+esc(v.w)+"</div></div>"})); }
+    });
+    grid.innerHTML=cards.map(c=>
+      '<button class="fc-card '+c.tp+'" data-flipped="false" aria-label="Flashcard: '+esc(c.front)+'. Tap to reveal.">'+
+        '<div class="fc-inner">'+
+          '<div class="fc-face fc-front"><div class="fc-tag">'+c.tag+'</div><div class="fc-term">'+esc(c.front)+'</div><div class="fc-flip">tap to flip ↺</div></div>'+
+          '<div class="fc-face fc-back"><div class="fc-tag">'+c.tag+'</div>'+c.back+'</div>'+
+        '</div>'+
+      '</button>').join("");
+    count.textContent = cards.length + " cards";
+    grid.querySelectorAll(".fc-card").forEach(el=>{
+      el.addEventListener("click",()=>{ el.dataset.flipped = el.dataset.flipped==="true" ? "false":"true"; });
+    });
+  }
+  document.querySelectorAll('#flashcards .fc-tabs .fc-btn').forEach(b=>b.addEventListener("click",()=>{
+    document.querySelectorAll('#flashcards .fc-tabs .fc-btn').forEach(x=>x.setAttribute("aria-selected","false"));
+    b.setAttribute("aria-selected","true"); fcTopic=b.dataset.topic; build();
+  }));
+  document.querySelectorAll('#flashcards .fc-type .fc-btn').forEach(b=>b.addEventListener("click",()=>{
+    document.querySelectorAll('#flashcards .fc-type .fc-btn').forEach(x=>x.setAttribute("aria-selected","false"));
+    b.setAttribute("aria-selected","true"); fcType=b.dataset.type; build();
+  }));
+  build();
+})();
+
+/* =====================================================================
+   TEACHER: paste your YouTube link between the quotes below.
+   Any format works — youtube.com/watch?v=…, youtu.be/…, or an embed URL.
+   Leave it empty ("") and the page shows a "Video not set" placeholder.
+   ===================================================================== */
+const VIDEO_URL = "";
+
+(function wireVideo(){
+  const url=(VIDEO_URL||"").trim();
+  if(!url) return;
+  let id="";
+  const m = url.match(/(?:youtu\.be\/|v=|\/embed\/|\/shorts\/)([A-Za-z0-9_-]{11})/);
+  if(m) id=m[1];
+  else if(/^[A-Za-z0-9_-]{11}$/.test(url)) id=url;
+  const frame=document.getElementById("videoFrame");
+  if(id && frame){
+    frame.innerHTML =
+      '<iframe src="https://www.youtube-nocookie.com/embed/'+id+'?rel=0" '+
+      'title="Free Will &amp; Moral Responsibility — full topic review" '+
+      'allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" '+
+      'allowfullscreen loading="lazy"></iframe>';
+  } else if(frame){
+    frame.innerHTML =
+      '<div class="video-placeholder"><a class="res-btn big" style="background:#fff" href="'+url+'" target="_blank" rel="noopener"><span class="ic">▶</span><span><b>Watch the full topic review</b></span><span class="go">↗</span></a></div>';
+  }
+})();
+
+/* =====================================================================
+   TEACHER: paste your SharePoint share links between the quotes below.
+   Leave a link empty ("") and its button will show "Link not set".
+   Tip: in SharePoint, open the file's ... menu -> Copy link -> paste here.
+   ===================================================================== */
+const LINKS = {
+  conditions_lesson:  "",
+  conditions_booklet: "",
+  conditions_podcast: "",
+  extent_lesson:      "",
+  extent_booklet:     "",
+  extent_podcast:     "",
+  punish_lesson:      "",
+  punish_booklet:     "",
+  punish_podcast:     "",
+  companion:          "",
+  review:             "",
+  overview_podcast:   "",
+  flashcards_pdf:     "",
+  exam_questions:     "",
+  textbook:           ""
+};
+
+(function wireResources(){
+  let anySet=false;
+  document.querySelectorAll(".res-btn").forEach(btn=>{
+    const url=(LINKS[btn.dataset.key]||"").trim();
+    if(url){
+      btn.href=url; btn.target="_blank"; btn.rel="noopener"; anySet=true;
+    }else{
+      btn.classList.add("unset"); btn.removeAttribute("href"); btn.setAttribute("aria-disabled","true");
+    }
+  });
+  if(anySet){ const n=document.getElementById("resNote"); if(n) n.classList.add("hide"); }
+})();
+</script>
+</body>
+</html>

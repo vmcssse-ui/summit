@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Philosophy and Ethics, Christianity — A-level course master page</title>
+<style>
+:root{
+  --navy:#12294D; --navy2:#1B3A6B; --gold:#C9A227; --gold-soft:#E8D9A0;
+  --parch:#FBF7EE; --parch2:#F3ECDD; --ink:#22201C; --muted:#6B6459;
+  --rule:#DED3BC; --white:#fff;
+  --phil:#33658A; --eth:#2F6B4F; --chri:#8E2430;
+  --shadow:0 1px 2px rgba(18,41,77,.06),0 8px 24px rgba(18,41,77,.08);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--parch); color:var(--ink);
+  font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
+  font-size:17px; line-height:1.55; -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+a{color:inherit}
+
+/* ---------- header ---------- */
+header.top{
+  background:var(--navy);
+  background-image:repeating-linear-gradient(180deg,rgba(255,255,255,.045) 0 1px,transparent 1px 26px);
+  color:#F6F1E4; border-bottom:4px solid var(--gold);
+}
+.topbar{display:flex;align-items:center;gap:16px;padding:16px 0 6px}
+.crest{width:52px;height:52px;flex:0 0 52px}
+.brand h1{margin:0;font-size:23px;letter-spacing:.01em;font-weight:600}
+.brand p{margin:2px 0 0;font-size:13.5px;color:#C9D3E4;letter-spacing:.06em;text-transform:uppercase}
+.toggle{margin-left:auto;display:flex;background:rgba(255,255,255,.09);border:1px solid rgba(233,217,160,.35);border-radius:999px;padding:3px}
+.toggle button{
+  font:inherit;font-size:13.5px;letter-spacing:.03em;border:0;background:transparent;color:#DCE4F0;
+  padding:6px 15px;border-radius:999px;cursor:pointer
+}
+.toggle button.on{background:var(--gold);color:#2A2100;font-weight:600}
+.searchrow{display:flex;gap:10px;align-items:center;padding:4px 0 18px;flex-wrap:wrap}
+.searchrow input{
+  font:inherit;font-size:15px;flex:1 1 260px;min-width:0;padding:9px 13px;border-radius:8px;
+  border:1px solid rgba(233,217,160,.4);background:rgba(255,255,255,.08);color:#F6F1E4
+}
+.searchrow input::placeholder{color:#9DAAC0}
+.searchrow input:focus{outline:2px solid var(--gold);outline-offset:1px}
+.crumbs{display:flex;align-items:center;gap:8px;font-size:14px;color:#C9D3E4;flex-wrap:wrap}
+.crumbs a{cursor:pointer;text-decoration:none;border-bottom:1px dotted rgba(233,217,160,.5)}
+.crumbs a:hover{color:var(--gold-soft)}
+.crumbs span.sep{opacity:.5}
+
+/* ---------- generic ---------- */
+main{padding:30px 0 70px;min-height:60vh}
+h2.section{
+  font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);
+  margin:0 0 14px;font-weight:600;display:flex;align-items:center;gap:12px
+}
+h2.section:after{content:"";flex:1;height:1px;background:var(--rule)}
+.lede{font-size:18.5px;line-height:1.6;max-width:66ch;color:#3B382F;margin:0 0 26px}
+.btn{
+  display:inline-flex;align-items:center;gap:7px;font:inherit;font-size:14.5px;cursor:pointer;
+  border-radius:7px;padding:8px 14px;text-decoration:none;border:1px solid var(--navy);
+  background:var(--navy);color:#F6F1E4
+}
+.btn:hover{background:var(--navy2)}
+.btn.ghost{background:transparent;color:var(--navy);border-color:#B9C3D4}
+.btn.ghost:hover{background:#EDE6D6}
+.btn.mini{font-size:13px;padding:5px 10px}
+
+/* ---------- home: year cards ---------- */
+.years{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:22px;margin-bottom:36px}
+.yearcard{
+  position:relative;background:var(--white);border:1px solid var(--rule);border-radius:14px;
+  padding:26px 26px 22px;cursor:pointer;box-shadow:var(--shadow);transition:transform .12s,box-shadow .12s;
+  text-align:left;font:inherit;color:inherit;width:100%
+}
+.yearcard:hover{transform:translateY(-2px);box-shadow:0 4px 10px rgba(18,41,77,.10),0 16px 34px rgba(18,41,77,.12)}
+.yearcard:before{content:"";position:absolute;left:0;top:0;bottom:0;width:6px;border-radius:14px 0 0 14px;background:var(--gold)}
+.yearcard.y13:before{background:var(--navy)}
+.yearcard .yr{font-size:12.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.yearcard h3{margin:6px 0 4px;font-size:30px;font-weight:600;color:var(--navy)}
+.yearcard .sub{color:#4A463D;margin:0 0 16px;font-size:16px}
+.strandline{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.pill{
+  font-size:13px;padding:4px 11px;border-radius:999px;border:1px solid var(--rule);
+  background:var(--parch2);color:#4A463D;white-space:nowrap
+}
+.pill.p{border-color:#C6D5E3;background:#EAF1F7;color:var(--phil)}
+.pill.e{border-color:#C3DACD;background:#E9F3EE;color:var(--eth)}
+.pill.c{border-color:#E6C7CB;background:#F8EDEE;color:var(--chri)}
+.yearcard .go{font-size:14.5px;color:var(--navy);font-weight:600}
+
+/* ---------- strand cards ---------- */
+.strands{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
+.strandcard{
+  background:var(--white);border:1px solid var(--rule);border-top:5px solid var(--acc,var(--navy));
+  border-radius:12px;padding:22px;cursor:pointer;box-shadow:var(--shadow);text-align:left;font:inherit;
+  color:inherit;width:100%;transition:transform .12s,box-shadow .12s
+}
+.strandcard:hover{transform:translateY(-2px);box-shadow:0 4px 10px rgba(18,41,77,.10),0 16px 30px rgba(18,41,77,.12)}
+.strandcard .code{font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--acc)}
+.strandcard h3{margin:5px 0 6px;font-size:23px;color:var(--navy);font-weight:600}
+.strandcard .paper{font-size:13.5px;color:var(--muted);margin:0 0 12px}
+.strandcard ol{margin:0 0 14px;padding-left:20px;font-size:15px;color:#413E36}
+.strandcard ol li{margin:3px 0}
+.count{font-size:14px;color:var(--acc);font-weight:600}
+
+/* ---------- unit cards ---------- */
+.units{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:20px;align-items:start}
+.unit{
+  background:var(--white);border:1px solid var(--rule);border-radius:12px;overflow:hidden;
+  box-shadow:var(--shadow);display:flex;flex-direction:column;scroll-margin-top:130px
+}
+.unit .bar{height:5px;background:var(--acc)}
+.unit .body{padding:20px 20px 0;flex:1}
+.unit .no{font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--acc);font-weight:600}
+.unit h3{margin:5px 0 8px;font-size:21px;line-height:1.25;color:var(--navy);font-weight:600}
+.bq{margin:0 0 14px;font-size:16px;color:#413E36;font-style:italic;border-left:3px solid var(--gold-soft);padding-left:11px}
+.subs{list-style:none;margin:0 0 14px;padding:0}
+.subs li{font-size:14.5px;padding:5px 0 5px 20px;position:relative;border-bottom:1px dotted var(--rule);color:#413E36}
+.subs li:last-child{border-bottom:0}
+.subs li:before{content:"";position:absolute;left:4px;top:12px;width:6px;height:6px;border-radius:50%;background:var(--acc);opacity:.55}
+.res{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 16px}
+.res .r{font-size:12.5px;padding:3px 9px;border-radius:5px;background:var(--parch2);border:1px solid var(--rule);color:#4A463D}
+.res .r b{font-weight:600;color:var(--navy)}
+.res .r.none{opacity:.6;font-style:italic}
+.unit .acts{display:flex;gap:8px;flex-wrap:wrap;padding:0 20px 18px;align-items:center}
+.linkcopy{font:inherit;font-size:12.5px;border:0;background:transparent;color:var(--muted);cursor:pointer;padding:4px;text-decoration:underline dotted}
+.linkcopy:hover{color:var(--navy)}
+.warn{font-size:13px;color:#8a6d1f;background:#FBF3DA;border:1px solid #E8D9A0;border-radius:6px;padding:6px 10px;margin:0 0 14px}
+
+/* ---------- misc blocks ---------- */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:0 0 34px}
+.stat{background:var(--white);border:1px solid var(--rule);border-radius:10px;padding:14px 16px;text-align:center}
+.stat b{display:block;font-size:29px;color:var(--navy);font-weight:600;line-height:1.1}
+.stat span{font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.libs{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.lib{background:var(--white);border:1px solid var(--rule);border-radius:10px;padding:16px 18px;text-decoration:none;display:block}
+.lib:hover{border-color:var(--gold);box-shadow:var(--shadow)}
+.lib b{display:block;color:var(--navy);font-size:17px;margin-bottom:3px}
+.lib span{font-size:14px;color:var(--muted)}
+.note{
+  background:#FBF3DA;border:1px solid #E8D9A0;border-radius:10px;padding:14px 18px;margin:0 0 26px;
+  font-size:14.5px;color:#5C4B14
+}
+footer{border-top:1px solid var(--rule);padding:22px 0 40px;font-size:13.5px;color:var(--muted)}
+.hidden{display:none!important}
+body.student .staff-only{display:none!important}
+body.staff .student-only{display:none!important}
+@media(max-width:640px){
+  body{font-size:16px}
+  .brand h1{font-size:19px}
+  .yearcard h3{font-size:25px}
+  .toggle{margin-left:0;width:100%;justify-content:center}
+  .topbar{flex-wrap:wrap}
+}
+</style>
+</head>
+<body class="student">
+
+<header class="top">
+  <div class="wrap">
+    <div class="topbar">
+      <svg class="crest" viewBox="0 0 64 64" aria-hidden="true">
+        <g fill="none" stroke="#E8D9A0" stroke-width="2.1" stroke-linejoin="round" stroke-linecap="round">
+          <path d="M6 46c7-4 14-4 20 0 6-4 13-4 20 0V22c-7-4-14-4-20 0-6-4-13-4-20 0z" fill="#1B3A6B"/>
+          <path d="M26 22v24"/>
+          <path d="M32 34c-5 0-9-4-9-9s4-9 9-9 9 4 9 9-4 9-9 9z" fill="#12294D" stroke="none"/>
+        </g>
+        <g transform="translate(32,20)">
+          <path d="M-11 4c0-7 5-12 11-12s11 5 11 12c0 8-5 13-11 13S-11 12-11 4z" fill="#12294D" stroke="#E8D9A0" stroke-width="2"/>
+          <circle cx="-4.6" cy="1.5" r="3.6" fill="#FBF7EE"/><circle cx="4.6" cy="1.5" r="3.6" fill="#FBF7EE"/>
+          <circle cx="-4.6" cy="1.5" r="1.7" fill="#12294D"/><circle cx="4.6" cy="1.5" r="1.7" fill="#12294D"/>
+          <path d="M0 4.5l-2.6 3.4h5.2z" fill="#C9A227"/>
+          <path d="M-9.5-4.5l-2.5-5 4.6 1.8M9.5-4.5l2.5-5-4.6 1.8" fill="none" stroke="#E8D9A0" stroke-width="2" stroke-linecap="round"/>
+        </g>
+      </svg>
+      <div class="brand">
+        <h1>Philosophy and Ethics, Christianity</h1>
+        <p>A-level course master page · Harlington School</p>
+      </div>
+      <div class="toggle" role="group" aria-label="View mode">
+        <button id="bStudent" class="on" type="button">Student view</button>
+        <button id="bStaff" type="button">Staff view</button>
+      </div>
+    </div>
+    <div class="searchrow">
+      <div class="crumbs" id="crumbs"></div>
+      <input id="q" type="search" placeholder="Search all 25 units — try &quot;conscience&quot;, &quot;Hume&quot;, &quot;resurrection&quot;" aria-label="Search units">
+    </div>
+  </div>
+</header>
+
+<main><div class="wrap" id="view"></div></main>
+
+<footer><div class="wrap">
+  <span class="staff-only">Master page for the KS5 Philosophy and Ethics ecosystem. Every unit button opens that unit's <b>Unit at a Glance</b> page in the <b>Edu Ai - Philosophy</b> library; nothing else is linked yet. Change <code>ORIGIN</code>/<code>ROOT_REL</code> at the foot of this file if the folder moves or is renamed.</span>
+  <span class="student-only">Everything for A-level Philosophy, Ethics and Christianity in one place. Pick your year, pick a strand, pick a unit.</span>
+</div></footer>
+
+<script>
+/* ============================================================
+   1. WHERE THE FILES LIVE  — edit these two lines if the
+      SharePoint folder is ever moved or renamed.
+   ============================================================ */
+/* PAGES_BASE — leave empty and every unit button points at the copy of that
+   unit's page on SharePoint (which DOWNLOADS the file, because the tenant
+   serves .html as an attachment). Set it to the folder holding the 25 unit
+   pages once they sit beside this file on GitHub Pages — e.g. "units/" — and
+   every button then OPENS the page straight away. Nothing else to change. */
+var PAGES_BASE = "units/";
+
+var ORIGIN   = "https://hs365.sharepoint.com";
+var ROOT_REL = "/sites/HS_Subjects_RE/Year 11/Philosophy/Edu Ai - Philosophy";
+var LIB_VIEW = "/sites/HS_Subjects_RE/Year 11/Forms/AllItems.aspx";
+var VIEWID   = "04142f9d-94f9-4acb-a928-3743c787f045";
+
+function fileUrl(rel){
+  return ORIGIN + (ROOT_REL + "/" + rel).split("/").map(encodeURIComponent).join("/");
+}
+/* filename this unit's page takes inside PAGES_BASE, e.g. y12-phil-1-design-argument.html */
+function pageName(y,s,u){
+  var slug = u.t.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+  return y.key + "-" + s.key + "-" + u.n + "-" + slug + ".html";
+}
+function unitHref(y,s,u){
+  return PAGES_BASE ? PAGES_BASE + pageName(y,s,u) : fileUrl(u.hub);
+}
+function folderUrl(rel){
+  var p = ROOT_REL + (rel ? "/" + rel : "");
+  return ORIGIN + LIB_VIEW.split("/").map(encodeURIComponent).join("/")
+       + "?id=" + encodeURIComponent(p) + "&viewid=" + VIEWID;
+}
+
+/* ============================================================
+   2. THE COURSE — read straight off the SharePoint library.
+      To add a unit: copy one block, edit the fields.
+      folder = the folder that holds the resources
+      hub    = the Unit-at-a-Glance / hub file inside it
+   ============================================================ */
+/* NOTE: each unit below also carries a res:{} count of what is in its folder
+   (lesson decks, booklets, podcasts, flashcards...). Nothing on the page links
+   to those files yet — the counts are held here for when the resources are
+   finished and we decide to surface them. */
+
+var COURSE = [
+ { key:"y12", label:"Year 12", title:"Year 12", sub:"Year one of the A-level — the arguments, the theories and the foundations of Christian belief.",
+   strands:[
+   { key:"phil", name:"Philosophy of Religion", code:"1Ph", paper:"Paper 1 · 7062/1", accent:"var(--phil)", cls:"p",
+     dir:"Year 12/Y12 Philosophy",
+     units:[
+      {n:1,t:"The Design Argument",bq:"Does the order of the universe point to a designer?",
+       subs:["Paley's design argument","Hume's criticisms","Evaluating the argument"],
+       res:{les:3,rev:3,bk:3,comp:1,pod:10,fc:1,exam:2,mod:6},
+       folder:"Year 12/Y12 Philosophy/Unit 1/The Design Argument",
+       hub:"Year 12/Y12 Philosophy/Unit 1/Unit_at_a_Glance (4).html"},
+      {n:2,t:"The Ontological Argument",bq:"Can God's existence be proved by definition alone?",
+       subs:["Anselm and Gaunilo","Kant's criticisms","Proof and value"],
+       res:{les:3,rev:3,bk:3,comp:1,pod:10,fc:1,exam:2,mod:6},
+       folder:"Year 12/Y12 Philosophy/Unit 2/The Ontological Argument",
+       hub:"Year 12/Y12 Philosophy/Unit 2/Unit_at_a_Glance (2).html"},
+      {n:3,t:"The Cosmological Argument",bq:"Does the universe need an explanation beyond itself?",
+       subs:["Aquinas' Third Way: contingency and necessity","Criticisms from Hume and Russell","Proof and faith"],
+       res:{les:3,rev:3,bk:3,comp:1,pod:10,fc:1,exam:2,mod:7},
+       folder:"Year 12/Y12 Philosophy/Unit 3/1Ph_The_Cosmological_Argument",
+       hub:"Year 12/Y12 Philosophy/Unit 3/Cosmological_Argument_Unit_at_a_Glance.html"},
+      {n:4,t:"Evil and Suffering",bq:"Can a good and all-powerful God allow suffering?",
+       subs:["The problem of evil","Hick's soul-making theodicy","The free will defence","Process theodicy (Griffin)"],
+       res:{les:4,rev:4,bk:4,comp:1,pod:12,fc:1},
+       folder:"Year 12/Y12 Philosophy/Unit 4/KS5_Evil_and_Suffering",
+       hub:"Year 12/Y12 Philosophy/Unit 4/Evil_and_Suffering_Hub.html"},
+      {n:5,t:"Religious Experience",bq:"Can experience of God count as evidence for God?",
+       subs:["The nature of religious experience","Verifying religious experience","Swinburne and the value of religious experience"],
+       res:{les:3,rev:3,bk:3,comp:1,pod:10,fc:1},
+       folder:"Year 12/Y12 Philosophy/Unit 5/Religious Experience",
+       hub:"Year 12/Y12 Philosophy/Unit 5/KS5_RelExp_HUB.html"}
+     ]},
+   { key:"eth", name:"Religion and Ethics", code:"1Eth", paper:"Paper 1 · 7062/1", accent:"var(--eth)", cls:"e",
+     dir:"Year 12/Y12 Ethics",
+     units:[
+      {n:1,t:"Natural Moral Law",bq:"Is there a moral law built into human nature?",
+       subs:["Aquinas' natural moral law","Applying natural moral law","Proportionalism and evaluating NML"],
+       res:{les:3,rev:3,bk:3,comp:1,pod:10,fc:1,exam:2,mod:4},
+       folder:"Year 12/Y12 Ethics/Unit 1/1Eth_Natural_Moral_Law",
+       hub:"Year 12/Y12 Ethics/Unit 1/Unit_at_a_Glance (5).html"},
+      {n:2,t:"Situation Ethics",bq:"Can love alone decide what is right?",
+       subs:["The middle way: legalism, antinomianism, situationism","The six propositions and agape in action","Evaluating situation ethics"],
+       res:{les:3,rev:3,bk:3,comp:1,pod:10,fc:1,exam:2,mod:6},
+       folder:"Year 12/Y12 Ethics/Unit 2/1Eth Situation Ethics",
+       hub:"Year 12/Y12 Ethics/Unit 2/Unit_at_a_Glance.html"},
+      {n:3,t:"Virtue Ethics",bq:"Should ethics ask what kind of person to be, rather than what to do?",
+       subs:["Eudaimonia","The doctrine of the mean","Theoria and evaluating virtue ethics"],
+       res:{les:3,rev:3,bk:3,comp:1,pod:10,fc:1,exam:2,mod:20},
+       folder:"Year 12/Y12 Ethics/Unit 3/1Eth_Virtue_Ethics",
+       hub:"Year 12/Y12 Ethics/Unit 3/Unit_at_a_Glance (6).html"},
+      {n:4,t:"Applied Ethics",bq:"What do the theories actually say when a life is at stake?",
+       subs:["Beginning of life","End of life","Non-human life and death","Theft and lying"],
+       res:{les:4,rev:4,bk:4,comp:1,pod:12,fc:1,exam:2,mod:5},
+       folder:"Year 12/Y12 Ethics/Unit 4/1Eth Applied Ethics",
+       hub:"Year 12/Y12 Ethics/Unit 4/1Eth Applied Ethics/SharePoint Hub/Unit_at_a_Glance.html"}
+     ]},
+   { key:"chri", name:"Christianity", code:"1C", paper:"Paper 2 · 7062/2B", accent:"var(--chri)", cls:"c",
+     dir:"Year 12/Y12 Christianity",
+     units:[
+      {n:1,t:"Sources of Wisdom and Authority",bq:"Where does Christian authority actually come from?",
+       subs:["The Bible","The Church","The authority of Jesus"],
+       res:{les:3,rev:3,bk:3,comp:1,pod:10,exam:2},
+       folder:"Year 12/Y12 Christianity/Unit 1",
+       hub:"Year 12/Y12 Christianity/Unit 1/Unit_at_a_Glance_Sources_of_Wisdom_and_Authority (1).html"},
+      {n:2,t:"The Nature of God",bq:"What kind of God does Christianity claim to know?",
+       subs:["The biblical definition of God","Monotheism and ethical monotheism","The importance of the Trinity","Jesus as the Son of God","Personal language: the anthropomorphic tradition","Feminist critique of anthropomorphic language","Process theology"],
+       res:{les:7,rev:7,bk:7,comp:1,fc:1,exam:2},
+       folder:"Year 12/Y12 Christianity/Unit 2 The Nature of God",
+       hub:"Year 12/Y12 Christianity/Unit 2 The Nature of God/Unit_at_a_Glance.html"},
+      {n:3,t:"Self, Death and the Afterlife",bq:"What does Christianity say we are for, and what happens next?",
+       subs:["The meaning and purpose of life","Resurrection","Judgement, heaven, hell and purgatory"],
+       res:{les:3,rev:3,bk:3,comp:1,exam:2},
+       folder:"Year 12/Y12 Christianity/Unit 3/Unit 3",
+       hub:"Year 12/Y12 Christianity/Unit 3/Unit_at_a_Glance (1).html"},
+      {n:4,t:"Good Conduct and Key Moral Principles",bq:"How should a Christian live — and who decides?",
+       subs:["Good conduct: faith, works and predestination","The sanctity of life and just war","Dominion and stewardship"],
+       res:{les:3,rev:3,bk:3,comp:1,exam:1},
+       folder:"Year 12/Y12 Christianity/Unit 4/Unit 4 Good Conduct and Moral Principles",
+       hub:"Year 12/Y12 Christianity/Unit 4/Unit_at_a_Glance (3).html"},
+      {n:5,t:"Expressions of Religious Identity",bq:"How does Christian belief become visible?",
+       subs:["Baptism","Holy Communion","The mission of the Church"],
+       res:{les:3,rev:3,bk:3,comp:2,fc:1,exam:2,mod:4},
+       folder:"Year 12/Y12 Christianity/Unit 5",
+       hub:"Year 12/Y12 Christianity/Unit 5/Unit_at_a_Glance.html"}
+     ]}
+   ]},
+
+ { key:"y13", label:"Year 13", title:"Year 13", sub:"Year two — meaning, mind and freedom, and Christianity in the modern world. This is where the 25-mark dialogues are won.",
+   strands:[
+   { key:"phil", name:"Philosophy of Religion", code:"2Ph", paper:"Paper 1 · 7062/1", accent:"var(--phil)", cls:"p",
+     dir:"Year 13/Y13 Philosophy",
+     units:[
+      {n:1,t:"Religious Language",bq:"Can we say anything meaningful about God?",
+       subs:["Challenges: verification and falsification","Responses: eschatological verification, bliks, language games","Analogy and the via negativa","Symbol and synthesis"],
+       res:{les:4,rev:4,bk:4,comp:1,pod:12,fc:1,exam:2},
+       folder:"Year 13/Y13 Philosophy/Unit 1/Religious Language",
+       hub:"Year 13/Y13 Philosophy/Unit 1/RL_SharePoint_Hub.html"},
+      {n:2,t:"Miracles",bq:"Would a miracle prove anything?",
+       subs:["Understandings of miracle","Hume and Wiles","Significance for religion"],
+       res:{les:3,rev:3,bk:3,comp:1,pod:10,fc:1,exam:2},
+       folder:"Year 13/Y13 Philosophy/Unit 2/KS5_2Ph_Miracles",
+       hub:"Year 13/Y13 Philosophy/Unit 2/2Ph_Miracles_Hub.html"},
+      {n:3,t:"Self, Death and the Afterlife",bq:"Is there a 'me' that could survive death?",
+       subs:["The soul","Body and soul","Life after death"],
+       res:{les:3,rev:3,bk:3,comp:1,pod:10,fc:1,exam:2,mod:4},
+       folder:"Year 13/Y13 Philosophy/Unit 3/2Ph Self Death and the Afterlife",
+       hub:"Year 13/Y13 Philosophy/Unit 3/2Ph_Self_Death_Afterlife_HUB.html"}
+     ]},
+   { key:"eth", name:"Religion and Ethics", code:"2Eth", paper:"Paper 1 · 7062/1", accent:"var(--eth)", cls:"e",
+     dir:"Year 13/Y13 Ethics",
+     units:[
+      {n:1,t:"Meta-ethics",bq:"When we call something good, what are we actually doing?",
+       subs:["The meta-ethical map","Divine command theory","Ethical naturalism: utilitarianism","Non-naturalism, intuitionism and the non-cognitive turn"],
+       res:{les:4,rev:4,bk:4,comp:1,fc:1,exam:2,mod:7},
+       folder:"Year 13/Y13 Ethics/Unit 1/2Eth Meta-ethics",
+       hub:"Year 13/Y13 Ethics/Unit 1/Unit_at_a_Glance (12).html"},
+      {n:2,t:"Free Will and Moral Responsibility",bq:"Are we free enough to be blamed?",
+       subs:["The conditions of free will","The extent of free will","Reward and punishment"],
+       res:{les:3,rev:3,bk:3,comp:1,pod:10,fc:1,exam:2,mod:6},
+       folder:"Year 13/Y13 Ethics/Unit 2/Free Will & Moral Responsibility",
+       hub:"Year 13/Y13 Ethics/Unit 2/Unit_at_a_Glance (7).html"},
+      {n:3,t:"Conscience",bq:"Is conscience the voice of God, of upbringing, or of reason?",
+       subs:["Religious accounts of conscience","Secular accounts of conscience","Conscience applied"],
+       res:{les:3,rev:3,bk:3,comp:1,pod:10,fc:1,exam:2},
+       folder:"Year 13/Y13 Ethics/Unit 3/Unit_2Eth_Conscience",
+       hub:"Year 13/Y13 Ethics/Unit 3/KS5_Conscience_Hub.html"},
+      {n:4,t:"Bentham and Kant",bq:"Consequences or duty — which makes an act right?",
+       subs:["Bentham's act utilitarianism","Kant's categorical imperative","Comparing Bentham and Kant"],
+       res:{les:3,rev:3,bk:3,comp:1,pod:10,fc:1,exam:2,mod:20},
+       folder:"Year 13/Y13 Ethics/Unit 4/Bentham_and_Kant",
+       hub:"Year 13/Y13 Ethics/Unit 4/Bentham_and_Kant_Unit_at_a_Glance.html"}
+     ]},
+   { key:"chri", name:"Christianity", code:"2C", paper:"Paper 2 · 7062/2B", accent:"var(--chri)", cls:"c",
+     dir:"Year 13/Y13 Christianity",
+     units:[
+      {n:1,t:"Gender",bq:"Has Christianity liberated women, or limited them?",
+       subs:["The place of women","Female ordination","Celibacy, marriage, homosexuality and transgender","Hampson and Ruether"],
+       res:{les:4,rev:4,bk:4,comp:2,fc:1,exam:4,mod:5},
+       folder:"Year 13/Y13 Christianity/Unit 1/2C Unit 1 - Gender",
+       hub:"Year 13/Y13 Christianity/Unit 1/Unit_at_a_Glance (8).html"},
+      {n:2,t:"Christianity and Science",bq:"Is science a rival to Christian belief, or a different question altogether?",
+       subs:["The discoveries","The challenge to belief","Evidence and reason","Polkinghorne","Genetic engineering","Science and ethics"],
+       res:{les:6,rev:6,bk:6,comp:1,fc:1,exam:2,mod:8},
+       folder:"Year 13/Y13 Christianity/Unit 2/Unit 2C - Christianity and Science",
+       hub:"Year 13/Y13 Christianity/Unit 2/Unit_at_a_Glance (9).html"},
+      {n:3,t:"Christianity and Secularisation",bq:"Is Christianity in Britain declining, or changing shape?",
+       subs:["The challenge of secularisation","Wealth, materialism and the Dawkins delusion","New expressions and social relevance"],
+       res:{les:3,rev:3,bk:3,comp:1,pod:10,fc:1,exam:2,mod:6},
+       folder:"Year 13/Y13 Christianity/Unit 3/Unit 2C Secularism",
+       hub:"Year 13/Y13 Christianity/Unit 3/Unit_at_a_Glance (10).html"},
+      {n:4,t:"Migration and Religious Pluralism",bq:"How should Christianity meet other faiths?",
+       subs:["Migration and multicultural Britain","Christian attitudes to other faiths","Pluralism and religious freedom"],
+       res:{les:3,rev:3,bk:3,comp:1,pod:4,fc:1,exam:2,mod:5},
+       folder:"Year 13/Y13 Christianity/Unit 4/Unit 2C - Christianity, Migration & Religious Pluralism",
+       hub:"Year 13/Y13 Christianity/Unit 4/Unit_at_a_Glance (11).html"}
+     ]}
+   ]}
+];
+
+/* ============================================================
+   3. RENDERING
+   ============================================================ */
+var view = document.getElementById("view");
+var crumbs = document.getElementById("crumbs");
+var qbox = document.getElementById("q");
+
+function el(tag, cls, txt){ var e=document.createElement(tag); if(cls) e.className=cls; if(txt!=null) e.textContent=txt; return e; }
+function findYear(k){ for(var i=0;i<COURSE.length;i++) if(COURSE[i].key===k) return COURSE[i]; return null; }
+function findStrand(y,k){ for(var i=0;i<y.strands.length;i++) if(y.strands[i].key===k) return y.strands[i]; return null; }
+function allUnits(){
+  var out=[];
+  COURSE.forEach(function(y){ y.strands.forEach(function(s){ s.units.forEach(function(u){
+    out.push({y:y,s:s,u:u});
+  });});});
+  return out;
+}
+function totals(){
+  var t={units:0,les:0,pod:0,bk:0};
+  allUnits().forEach(function(x){ t.units++; t.les+=(x.u.res.les||0); t.pod+=(x.u.res.pod||0); t.bk+=(x.u.res.bk||0); });
+  return t;
+}
+
+function setCrumbs(parts){
+  crumbs.innerHTML="";
+  parts.forEach(function(p,i){
+    if(i){ crumbs.appendChild(el("span","sep","›")); }
+    if(p.hash!=null){ var a=el("a",null,p.label); a.href="#"+p.hash; crumbs.appendChild(a); }
+    else crumbs.appendChild(el("span",null,p.label));
+  });
+}
+
+/* ---- unit card ---- */
+function unitCard(y,s,u){
+  var card = el("div","unit");
+  card.style.setProperty("--acc", s.accent);
+  card.id = y.key+"-"+s.key+"-"+u.n;
+  card.appendChild(el("div","bar"));
+  var b = el("div","body");
+  var no = el("div","no");
+  var codeSpan = el("span","staff-only", s.code + " · ");
+  no.appendChild(codeSpan);
+  no.appendChild(document.createTextNode("Unit " + u.n));
+  b.appendChild(no);
+  b.appendChild(el("h3", null, u.t));
+  b.appendChild(el("p","bq", u.bq));
+
+  var ul = el("ul","subs");
+  u.subs.forEach(function(x){ ul.appendChild(el("li",null,x)); });
+  b.appendChild(ul);
+
+  card.appendChild(b);
+
+  var acts = el("div","acts");
+  var a1 = el("a","btn","Open unit page"); a1.href = unitHref(y,s,u); a1.target="_blank"; a1.rel="noopener";
+  acts.appendChild(a1);
+  var cp = el("button","linkcopy staff-only","Copy link to this unit");
+  cp.type="button";
+  cp.onclick=function(){
+    var url = location.href.split("#")[0] + "#/" + y.key + "/" + s.key + "/" + u.n;
+    try{
+      navigator.clipboard.writeText(url).then(function(){ cp.textContent="Link copied"; setTimeout(function(){cp.textContent="Copy link to this unit";},1600); },
+        function(){ cp.textContent = url; });
+    }catch(e){ cp.textContent = url; }
+  };
+  acts.appendChild(cp);
+  card.appendChild(acts);
+  return card;
+}
+
+/* ---- home ---- */
+function renderHome(){
+  setCrumbs([{label:"Course home"}]);
+  view.innerHTML="";
+  var t = totals();
+
+  var lede = el("p","lede");
+  lede.innerHTML = '<span class="staff-only">Every unit of the A-level course in one place, in the order it is taught. Choose a year, then Philosophy, Ethics or Christianity, then the unit — each unit opens its own hub page or its folder of decks, booklets, podcasts and exam questions.</span>'
+                 + '<span class="student-only">Everything for your A-level in one place. Start with your year, choose Philosophy, Ethics or Christianity, then open the unit you are studying — each unit opens its own page.</span>';
+  view.appendChild(lede);
+
+  var stats = el("div","stats");
+  [[2,"years"],[6,"strands"],[t.units,"units"]].forEach(function(p){
+    var s=el("div","stat"); s.appendChild(el("b",null,String(p[0]))); s.appendChild(el("span",null,p[1])); stats.appendChild(s);
+  });
+  view.appendChild(stats);
+
+  view.appendChild(el("h2","section","Choose a year"));
+  var years = el("div","years");
+  COURSE.forEach(function(y){
+    var c = el("button","yearcard" + (y.key==="y13" ? " y13":""));
+    c.type="button";
+    c.appendChild(el("div","yr", y.key==="y12" ? "First year of the A-level" : "Second year of the A-level"));
+    c.appendChild(el("h3",null,y.title));
+    c.appendChild(el("p","sub", y.sub));
+    var line = el("div","strandline");
+    y.strands.forEach(function(s){
+      line.appendChild(el("span","pill "+s.cls, s.name + " · " + s.units.length + " units"));
+    });
+    c.appendChild(line);
+    c.appendChild(el("div","go","Open " + y.title + " →"));
+    c.onclick=function(){ location.hash = "#/"+y.key; };
+    years.appendChild(c);
+  });
+  view.appendChild(years);
+
+}
+
+/* ---- year ---- */
+function renderYear(y){
+  setCrumbs([{label:"Course home",hash:"/"},{label:y.title}]);
+  view.innerHTML="";
+  var h = el("p","lede", y.sub);
+  view.appendChild(h);
+  view.appendChild(el("h2","section","Choose a strand"));
+  var g = el("div","strands");
+  y.strands.forEach(function(s){
+    var c = el("button","strandcard"); c.type="button"; c.style.setProperty("--acc", s.accent);
+    c.appendChild(el("div","code staff-only", s.code));
+    c.appendChild(el("h3",null,s.name));
+    c.appendChild(el("p","paper staff-only", s.paper));
+    var ol = el("ol");
+    s.units.forEach(function(u){ ol.appendChild(el("li",null,u.t)); });
+    c.appendChild(ol);
+    c.appendChild(el("div","count", s.units.length + " units →"));
+    c.onclick=function(){ location.hash = "#/"+y.key+"/"+s.key; };
+    g.appendChild(c);
+  });
+  view.appendChild(g);
+}
+
+/* ---- strand ---- */
+function renderStrand(y,s,focus){
+  setCrumbs([{label:"Course home",hash:"/"},{label:y.title,hash:"/"+y.key},{label:s.name}]);
+  view.innerHTML="";
+  var lede = el("p","lede");
+  lede.innerHTML = '<b>'+y.title+' · '+s.name+'</b> — '+s.units.length+' units, taught in this order.'
+    + '<span class="staff-only"> Assessed on '+s.paper+'.</span>';
+  view.appendChild(lede);
+  var g = el("div","units");
+  s.units.forEach(function(u){ g.appendChild(unitCard(y,s,u)); });
+  view.appendChild(g);
+  if(focus){
+    var target = document.getElementById(y.key+"-"+s.key+"-"+focus);
+    if(target){ target.style.boxShadow="0 0 0 3px var(--gold)"; target.scrollIntoView({block:"center"}); }
+  }
+}
+
+/* ---- search ---- */
+function renderSearch(term){
+  setCrumbs([{label:"Course home",hash:"/"},{label:'Search: "'+term+'"'}]);
+  view.innerHTML="";
+  var t = term.toLowerCase();
+  var hits = allUnits().filter(function(x){
+    var hay = (x.u.t+" "+x.u.bq+" "+x.u.subs.join(" ")+" "+x.s.name+" "+x.s.code+" "+x.y.title).toLowerCase();
+    return hay.indexOf(t) > -1;
+  });
+  view.appendChild(el("p","lede", hits.length ? hits.length + (hits.length===1?" unit matches ":" units match ") + '"'+term+'".' : 'Nothing matches "'+term+'". Try a philosopher, a key word, or a unit name.'));
+  var g = el("div","units");
+  hits.forEach(function(x){
+    var c = unitCard(x.y,x.s,x.u);
+    var tag = el("div","no");
+    tag.textContent = x.y.title + " · " + x.s.name;
+    tag.style.padding="0 20px"; tag.style.color="var(--muted)";
+    c.insertBefore(tag, c.children[1]);
+    g.appendChild(c);
+  });
+  view.appendChild(g);
+}
+
+/* ---- router ---- */
+function route(){
+  var h = (location.hash||"#/").replace(/^#\/?/,"");
+  var parts = h.split("/").filter(Boolean);
+  if(parts[0]==="search"){ renderSearch(decodeURIComponent(parts.slice(1).join("/"))); return; }
+  if(qbox.value && !parts.length) qbox.value="";
+  if(!parts.length){ renderHome(); window.scrollTo(0,0); return; }
+  var y = findYear(parts[0]);
+  if(!y){ renderHome(); return; }
+  if(parts.length===1){ renderYear(y); window.scrollTo(0,0); return; }
+  var s = findStrand(y,parts[1]);
+  if(!s){ renderYear(y); return; }
+  renderStrand(y,s,parts[2]);
+  if(!parts[2]) window.scrollTo(0,0);
+}
+window.addEventListener("hashchange", route);
+
+/* ---- view toggle ---- */
+var bStaff=document.getElementById("bStaff"), bStudent=document.getElementById("bStudent");
+function mode(m){
+  document.body.className = m;
+  bStaff.classList.toggle("on", m==="staff");
+  bStudent.classList.toggle("on", m==="student");
+}
+bStaff.onclick=function(){ mode("staff"); };
+bStudent.onclick=function(){ mode("student"); };
+
+/* ---- search box ---- */
+var tmr=null;
+qbox.addEventListener("input", function(){
+  clearTimeout(tmr);
+  tmr=setTimeout(function(){
+    var v=qbox.value.trim();
+    if(v.length<2){ if((location.hash||"").indexOf("#/search")===0) location.hash="#/"; return; }
+    location.hash = "#/search/" + encodeURIComponent(v);
+  }, 220);
+});
+
+route();
+</script>
+</body>
+</html>

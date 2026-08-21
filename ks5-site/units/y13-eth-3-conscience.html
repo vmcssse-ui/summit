@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Conscience — Unit at a Glance</title>
+<style>
+  :root{
+    --ink:#12294D;        /* deep manuscript navy */
+    --ink-2:#0C1B33;
+    --parch:#F3ECDD;      /* aged parchment */
+    --parch-2:#EAE0C9;
+    --gold:#C9A227;       /* gold leaf */
+    --gold-soft:#E4CE86;
+    --rubric:#B01C2E;     /* rubrication red */
+    --teal:#00695C;
+    --violet:#6A1B9A;
+    --blue:#1565C0;
+    --green:#2E7D32;
+    --paper:#FBF7EE;
+    --line:rgba(18,41,77,.16);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1060px;margin:0 auto;padding:0 24px}
+  .eyebrow{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;font-weight:700}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    background:
+      radial-gradient(1200px 400px at 80% -10%, rgba(201,162,39,.18), transparent 60%),
+      linear-gradient(180deg,var(--ink) 0%, var(--ink-2) 100%);
+    color:var(--parch);
+    padding:64px 0 72px;
+    position:relative;
+    overflow:hidden;
+    border-bottom:3px solid var(--gold);
+  }
+  .hero::after{
+    content:"";position:absolute;inset:0;pointer-events:none;opacity:.06;
+    background:repeating-linear-gradient(180deg,transparent 0 38px,#fff 38px 39px);
+  }
+  .hero .wrap{position:relative;z-index:2}
+  .crest{display:flex;align-items:center;gap:16px;margin-bottom:34px}
+  .crest svg{width:54px;height:54px;flex:none}
+  .crest .who{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-soft)}
+  .crest .who b{color:var(--parch);display:block;letter-spacing:.14em;font-size:.86rem;margin-top:3px}
+  h1{font-size:clamp(2.4rem,6vw,4.1rem);line-height:1.02;font-weight:700;letter-spacing:-.01em}
+  h1 .amp{color:var(--gold);font-style:italic}
+  .sub{margin-top:20px;max-width:56ch;font-size:1.12rem;color:#E7DFCB}
+  .bigq{
+    margin-top:30px;display:inline-flex;gap:14px;align-items:flex-start;
+    border-left:3px solid var(--gold);padding:8px 0 8px 18px;max-width:60ch;
+  }
+  .bigq .q{font-family:"Trebuchet MS",sans-serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-soft);padding-top:5px}
+  .bigq p{font-size:1.24rem;font-style:italic;color:#fff}
+
+  /* ---------- SECTION SHELL ---------- */
+  section{padding:64px 0}
+  .sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:8px}
+  .sec-head .num{font-family:"Trebuchet MS",sans-serif;color:var(--gold);font-weight:700;font-size:.9rem;letter-spacing:.15em}
+  .sec-head h2{font-size:clamp(1.6rem,3.4vw,2.3rem);letter-spacing:-.01em}
+  .sec-lead{color:#4a4a52;max-width:64ch;margin-bottom:34px;font-size:1.05rem}
+
+  /* ---------- SIGNATURE: authority spectrum ---------- */
+  .spectrum-card{
+    background:linear-gradient(180deg,#fff, var(--paper));
+    border:1px solid var(--line);border-radius:14px;
+    box-shadow:0 18px 40px -28px rgba(18,41,77,.5);
+    padding:28px 26px 34px;
+  }
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:26px}
+  .tab{
+    font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.82rem;letter-spacing:.04em;
+    border:1px solid var(--line);background:#fff;color:var(--ink);
+    padding:9px 16px;border-radius:999px;cursor:pointer;transition:.18s;
+  }
+  .tab[aria-selected="true"]{background:var(--ink);color:var(--parch);border-color:var(--ink)}
+  .tab:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+
+  .axis{position:relative;margin:8px 4px 0}
+  .axis-labels{display:flex;justify-content:space-between;font-family:"Trebuchet MS",sans-serif;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:#6a6a72;margin-bottom:10px}
+  .axis-labels .l{color:var(--rubric);font-weight:700}
+  .axis-labels .r{color:var(--blue);font-weight:700}
+  .bar{height:10px;border-radius:999px;background:linear-gradient(90deg,var(--rubric),#b06a1e 40%,#5a7d3a 66%,var(--blue));position:relative}
+  .ticks{position:relative;height:112px;margin-top:0}
+  .node{position:absolute;top:0;transform:translateX(-50%);width:150px;text-align:center;cursor:pointer}
+  .node .dot{width:20px;height:20px;border-radius:50%;background:#fff;border:3px solid var(--ink);margin:0 auto;position:relative;top:-15px;transition:.18s}
+  .node .nm{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.78rem;margin-top:-6px}
+  .node .sb{font-size:.72rem;color:#6a6a72;font-style:italic;margin-top:2px;line-height:1.25}
+  .node:hover .dot,.node[data-active="true"] .dot{transform:scale(1.25);border-color:var(--gold);box-shadow:0 0 0 5px rgba(201,162,39,.2)}
+  .node:focus-visible{outline:none}
+  .node:focus-visible .dot{outline:3px solid var(--gold);outline-offset:3px}
+
+  .readout{
+    margin-top:14px;background:var(--ink);color:var(--parch);border-radius:12px;padding:20px 22px;
+    min-height:104px;display:flex;gap:18px;align-items:flex-start;
+  }
+  .readout .badge{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;
+    background:var(--gold);color:var(--ink-2);padding:6px 10px;border-radius:6px;white-space:nowrap;margin-top:2px}
+  .readout .body h4{font-size:1.12rem;margin-bottom:4px}
+  .readout .body .auth{color:var(--gold-soft);font-family:"Trebuchet MS",sans-serif;font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+  .readout .body p{color:#E7DFCB;font-size:.98rem}
+  .readout .body .sw{display:flex;gap:22px;margin-top:10px;flex-wrap:wrap}
+  .readout .body .sw div{font-size:.9rem}
+  .readout .body .sw .k{font-family:"Trebuchet MS",sans-serif;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase}
+  .readout .body .sw .up .k{color:#8BD08F}
+  .readout .body .sw .dn .k{color:#F2A0A0}
+  .hint{font-family:"Trebuchet MS",sans-serif;font-size:.76rem;color:#8a8a92;margin-top:14px;text-align:center}
+
+  /* ---------- THREE DEBATES ---------- */
+  .triptych{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .panel{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;display:flex;flex-direction:column}
+  .panel .cap{padding:16px 18px;color:#fff;position:relative}
+  .panel.b1 .cap{background:linear-gradient(135deg,#1F4E79,#12294D)}
+  .panel.b2 .cap{background:linear-gradient(135deg,#00695C,#0C3B34)}
+  .panel.b3 .cap{background:linear-gradient(135deg,#B01C2E,#5C0F19)}
+  .panel .cap .n{font-family:"Trebuchet MS",sans-serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;opacity:.85}
+  .panel .cap h3{font-size:1.24rem;margin-top:3px}
+  .panel .cap .ask{font-style:italic;font-size:.9rem;margin-top:8px;opacity:.95}
+  .panel .body{padding:16px 18px;font-size:.92rem}
+  .panel .body .row{display:flex;gap:9px;padding:7px 0;border-bottom:1px dashed var(--line)}
+  .panel .body .row:last-child{border-bottom:0}
+  .panel .body .row .v{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.8rem;white-space:nowrap;color:var(--ink)}
+  .panel .body .row .d{color:#55555c}
+
+  /* ---------- THREAD ---------- */
+  .thread{background:var(--ink);color:var(--parch);border-radius:14px;padding:34px 30px;position:relative;overflow:hidden}
+  .thread::before{content:"";position:absolute;inset:0;opacity:.07;background:repeating-linear-gradient(180deg,transparent 0 30px,#fff 30px 31px)}
+  .thread .wrap2{position:relative;z-index:2}
+  .thread h2{color:#fff;font-size:clamp(1.5rem,3vw,2.1rem);margin-bottom:8px}
+  .thread .lead{color:#E7DFCB;max-width:62ch;margin-bottom:24px}
+  .threads{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .tcard{border:1px solid rgba(228,206,134,.3);border-radius:10px;padding:16px 16px 18px;background:rgba(255,255,255,.03)}
+  .tcard .t{font-family:"Trebuchet MS",sans-serif;color:var(--gold);font-weight:700;font-size:.82rem;letter-spacing:.05em;margin-bottom:6px}
+  .tcard p{font-size:.9rem;color:#E7DFCB}
+
+  /* ---------- REVISE ---------- */
+  .revise{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:start}
+  .steps{counter-reset:s;display:flex;flex-direction:column;gap:14px}
+  .step{display:flex;gap:16px;align-items:flex-start;border-left:2px solid var(--line);padding:2px 0 2px 18px;position:relative}
+  .step::before{counter-increment:s;content:counter(s);position:absolute;left:-15px;top:-2px;width:28px;height:28px;border-radius:50%;
+    background:var(--gold);color:var(--ink-2);font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.9rem;display:grid;place-items:center}
+  .step h4{font-size:1.02rem}
+  .step p{font-size:.9rem;color:#55555c;margin-top:2px}
+  .ao{border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .ao .h{padding:12px 16px;font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.82rem;letter-spacing:.06em;color:#fff}
+  .ao .ao1 .h,.ao .h.ao1{background:var(--ink)}
+  .ao .h.ao2{background:var(--green)}
+  .ao .c{padding:14px 16px;font-size:.9rem;border-bottom:1px solid var(--line)}
+  .ao .c:last-child{border-bottom:0}
+  .ao .c b{font-family:"Trebuchet MS",sans-serif;font-size:.78rem;letter-spacing:.04em}
+
+  /* ---------- VIDEO ---------- */
+  .video-frame{position:relative;width:100%;aspect-ratio:16/9;border-radius:14px;overflow:hidden;
+    border:1px solid var(--line);box-shadow:0 20px 44px -30px rgba(18,41,77,.55);background:var(--ink)}
+  .video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .video-placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:14px;text-align:center;padding:30px;color:#C9C4B6;
+    background:radial-gradient(700px 300px at 50% 30%,rgba(201,162,39,.14),transparent 60%),linear-gradient(180deg,var(--ink),var(--ink-2))}
+  .video-placeholder .vp-badge{font-family:"Trebuchet MS",Verdana,sans-serif;font-weight:700;font-size:.72rem;letter-spacing:.14em;
+    text-transform:uppercase;background:var(--gold);color:var(--ink-2);padding:6px 12px;border-radius:6px}
+  .video-placeholder p{max-width:52ch;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.92rem;line-height:1.55}
+  .video-placeholder code{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:4px;padding:1px 6px}
+
+  /* ---------- FLASHCARDS ---------- */
+  .fc-controls{display:flex;gap:18px;flex-wrap:wrap;align-items:center;margin-bottom:24px}
+  .fc-tabs,.fc-type{display:flex;gap:8px;flex-wrap:wrap}
+  .fc-btn{font-family:"Trebuchet MS",Verdana,sans-serif;font-weight:700;font-size:.8rem;border:1px solid var(--line);
+    background:#fff;color:var(--ink);padding:8px 15px;border-radius:999px;cursor:pointer;transition:.18s}
+  .fc-btn[aria-selected="true"]{background:var(--ink);color:var(--parch);border-color:var(--ink)}
+  .fc-btn:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+  .fc-hint{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.78rem;color:#8a8a92;margin-left:auto}
+  .fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+  .fc-card{perspective:1200px;height:180px;cursor:pointer;background:none;border:0;padding:0;font-family:inherit;text-align:left}
+  .fc-inner{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+  .fc-card[data-flipped="true"] .fc-inner{transform:rotateY(180deg)}
+  .fc-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+    border-radius:12px;padding:18px;display:flex;flex-direction:column;border:1px solid var(--line);overflow:auto}
+  .fc-front{background:linear-gradient(180deg,#fff,var(--paper))}
+  .fc-back{transform:rotateY(180deg);color:var(--parch)}
+  .fc-card.secular .fc-back{background:linear-gradient(160deg,#1F4E79,#12294D)}
+  .fc-card.religious .fc-back{background:linear-gradient(160deg,#00695C,#0C3B34)}
+  .fc-card.applied .fc-back{background:linear-gradient(160deg,#B01C2E,#5C0F19)}
+  .fc-tag{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--gold);font-weight:700;margin-bottom:8px}
+  .fc-front .fc-tag{color:#9a8028}
+  .fc-term{font-size:1.24rem;font-weight:700;line-height:1.15}
+  .fc-front .fc-flip{margin-top:auto;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.72rem;color:#9a9a9a}
+  .fc-def{font-size:.92rem;line-height:1.4}
+  .fc-back .fc-sw{margin-top:8px;font-size:.82rem}
+  .fc-back .fc-sw .k{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.62rem;letter-spacing:.08em;text-transform:uppercase}
+  .fc-back .up .k{color:#8BD08F}.fc-back .dn .k{color:#F2A0A0}
+  @media(max-width:820px){.fc-grid{grid-template-columns:1fr 1fr}.fc-hint{width:100%;margin-left:0}}
+
+  /* ---------- RESOURCES ---------- */
+  .res-note{background:#FBF0D6;border:1px solid var(--gold);border-left:4px solid var(--gold);
+    border-radius:8px;padding:12px 16px;margin-bottom:22px;font-size:.9rem;color:#5a4a1c;
+    font-family:"Trebuchet MS",Verdana,sans-serif}
+  .res-note code{background:#fff;border:1px solid var(--line);border-radius:4px;padding:1px 6px;font-size:.85em}
+  .res-note.hide{display:none}
+  .res-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:16px}
+  .res-col{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff}
+  .rc-head{padding:14px 16px;color:#fff}
+  .rc1 .rc-head{background:linear-gradient(135deg,#1F4E79,#12294D)}
+  .rc2 .rc-head{background:linear-gradient(135deg,#00695C,#0C3B34)}
+  .rc3 .rc-head{background:linear-gradient(135deg,#B01C2E,#5C0F19)}
+  .rc-head .rc-n{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;opacity:.85}
+  .rc-head h3{font-size:1.16rem;margin-top:2px}
+  .res-btn{display:flex;align-items:center;gap:12px;padding:13px 16px;border-top:1px solid var(--line);
+    font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.92rem;color:var(--ink);text-decoration:none;
+    cursor:pointer;transition:background .15s}
+  .res-col .res-btn:first-of-type{border-top:0}
+  .res-btn:hover{background:var(--parch)}
+  .res-btn .ic{width:26px;height:26px;flex:none;display:grid;place-items:center;border-radius:6px;
+    background:var(--ink);color:var(--gold);font-size:.9rem}
+  .res-btn .go{margin-left:auto;color:var(--gold);font-weight:700;opacity:0;transition:.15s}
+  .res-btn:hover .go{opacity:1}
+  .res-btn:focus-visible{outline:3px solid var(--gold);outline-offset:-3px}
+  .res-btn.unset{opacity:.5;cursor:not-allowed}
+  .res-btn.unset .go{content:"";opacity:0}
+  .res-btn.unset::after{content:"Link not set";margin-left:auto;font-size:.74rem;color:#9a7d2c;
+    background:#FBF0D6;border:1px solid var(--gold-soft);border-radius:5px;padding:2px 7px}
+  .res-wide{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:2px}
+  .res-btn.big{border:1px solid var(--line);border-radius:12px;background:#fff;padding:16px 18px}
+  .res-btn.big:hover{background:var(--parch)}
+  .res-btn.big .ic{width:34px;height:34px;font-size:1.1rem;background:var(--ink)}
+  @media(max-width:820px){.res-grid{grid-template-columns:1fr}.res-wide{grid-template-columns:1fr}}
+
+  footer{background:var(--ink-2);color:#C9C4B6;padding:26px 0;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.8rem}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+  footer .gold{color:var(--gold)}
+
+  @media(max-width:820px){
+    .triptych{grid-template-columns:1fr}
+    .threads{grid-template-columns:1fr}
+    .revise{grid-template-columns:1fr}
+    .node{width:96px}
+    .node .sb{display:none}
+  }
+  @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<!--BACKPILL--><a href="../alevel.html" style="position:fixed;left:14px;bottom:14px;z-index:99999;background:#12294D;color:#F6F1E4;font:600 14px/1 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;padding:10px 15px;border-radius:999px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.28);border:1px solid #C9A227">&#8592; All units</a>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap">
+    <div class="crest">
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <rect x="2" y="2" width="60" height="60" rx="13" fill="#0C1B33" stroke="#C9A227" stroke-width="1.5"/>
+        <g fill="none" stroke="#F3ECDD" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="32" cy="26" r="11"/>
+          <path d="M32 37c-9 0-15 5-15 12v3h30v-3c0-7-6-12-15-12z"/>
+        </g>
+        <path d="M32 20l2.4 4.9 5.4.8-3.9 3.8.9 5.4-4.8-2.5-4.8 2.5.9-5.4-3.9-3.8 5.4-.8z" fill="#C9A227"/>
+      </svg>
+      <div class="who">A-Level Religious Studies · AQA Paper 1 (7062/1)
+        <b>Harlington School · Philosophy &amp; Ethics</b></div>
+    </div>
+    <h1>Conscience</h1>
+    <p class="sub">One unit, one argument — told three times. Where does moral authority really come from: reason, society, the psyche — or God?</p>
+    <div class="bigq">
+      <span class="q">The<br>big<br>question</span>
+      <p>Should conscience always be obeyed — even when, in the end, it is wrong?</p>
+    </div>
+  </div>
+</header>
+
+<!-- SIGNATURE: SPECTRUM -->
+<section id="spectrum">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">01</span><h2>The authority spectrum</h2></div>
+    <p class="sec-lead">Every debate in this unit lines up on the same axis — from a source <b>inside</b> the individual (reason, intuition, God speaking within) to a source <b>outside</b> it (upbringing, society, conditioning). Pick a sub-topic, then tap a position to see what it claims and where it's strong or weak.</p>
+
+    <div class="spectrum-card">
+      <div class="tabs" role="tablist" aria-label="Choose a sub-topic">
+        <button class="tab" role="tab" aria-selected="true"  data-topic="secular">The Secular Conscience</button>
+        <button class="tab" role="tab" aria-selected="false" data-topic="religious">The Religious Conscience</button>
+        <button class="tab" role="tab" aria-selected="false" data-topic="applied">Conscience Applied &amp; Assessed</button>
+      </div>
+
+      <div class="axis">
+        <div class="axis-labels"><span class="l" id="poleL">Left pole</span><span class="r" id="poleR">Right pole</span></div>
+        <div class="bar"></div>
+        <div class="ticks" id="ticks"></div>
+      </div>
+
+      <div class="readout" id="readout" aria-live="polite"></div>
+      <p class="hint">Tap a circle — or use Tab and Enter — to explore each position.</p>
+    </div>
+  </div>
+</section>
+
+<!-- THE THREAD -->
+<section>
+  <div class="wrap">
+    <div class="thread">
+      <div class="wrap2">
+        <h2>The thread that ties it together</h2>
+        <p class="lead">Top answers don't treat the three debates separately. Three ideas run through all of them — spot the thread and you're writing at the top of the mark scheme.</p>
+        <div class="threads">
+          <div class="tcard"><div class="t">Inside or outside?</div><p>Every view sits somewhere between a source wholly INSIDE the individual (reason, intuition) and wholly OUTSIDE it (society, upbringing). The further outside, the weaker its claim to correct us.</p></div>
+          <div class="tcard"><div class="t">The reformer problem</div><p>Durkheim and Freud struggle to explain the prophet, the abolitionist, the whistle-blower — a conscience that condemns the very group or upbringing that shaped it.</p></div>
+          <div class="tcard"><div class="t">The need for an external check</div><p>Butler and Aquinas both say: follow conscience always, even in error. Applied to real cases, the unit asks whether something OUTSIDE conscience is needed to catch its worst mistakes.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THREE DEBATES -->
+<section id="debates">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">02</span><h2>The same question, three times</h2></div>
+    <p class="sec-lead">The unit splits into three debates. They look different, but each is really asking <em>where conscience gets its authority, and whether that authority can be trusted</em>.</p>
+    <div class="triptych">
+      <div class="panel b1">
+        <div class="cap"><div class="n">Sub-topic 1</div><h3>The Secular Conscience</h3><div class="ask">Is it more than <b>upbringing</b>?</div></div>
+        <div class="body">
+          <div class="row"><span class="v">Kohlberg</span><span class="d">Reasoning developed through stages.</span></div>
+          <div class="row"><span class="v">Freud</span><span class="d">The super-ego — parents internalised.</span></div>
+          <div class="row"><span class="v">Durkheim</span><span class="d">Society's sanctions, felt from inside.</span></div>
+          <div class="row"><span class="v">Fromm</span><span class="d">Authoritarian fear vs humanistic flourishing.</span></div>
+        </div>
+      </div>
+      <div class="panel b2">
+        <div class="cap"><div class="n">Sub-topic 2</div><h3>The Religious Conscience</h3><div class="ask">How directly does <b>God</b> speak?</div></div>
+        <div class="body">
+          <div class="row"><span class="v">Augustine &amp; Schleiermacher</span><span class="d">Conscience IS the voice of God.</span></div>
+          <div class="row"><span class="v">Aquinas</span><span class="d">God-given reason — synderesis &amp; conscientia.</span></div>
+          <div class="row"><span class="v">Butler</span><span class="d">God-planted, but operates secularly.</span></div>
+          <div class="row"><span class="v">Fletcher</span><span class="d">No conscience — only agape decides.</span></div>
+        </div>
+      </div>
+      <div class="panel b3">
+        <div class="cap"><div class="n">Sub-topic 3</div><h3>Conscience Applied &amp; Assessed</h3><div class="ask">Does it actually <b>guide</b> us?</div></div>
+        <div class="body">
+          <div class="row"><span class="v">Reason</span><span class="d">Lying &amp; adultery wrong — narrow excuses.</span></div>
+          <div class="row"><span class="v">Social</span><span class="d">Wrong only while society disapproves.</span></div>
+          <div class="row"><span class="v">Psycho</span><span class="d">Quiet wherever upbringing was quiet.</span></div>
+          <div class="row"><span class="v">Agape</span><span class="d">Mrs Bergmeier — nothing wrong in itself.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- YOUR RESOURCES -->
+<section id="resources">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">03</span><h2>Your resources</h2></div>
+    <p class="sec-lead">Everything for the unit, in one place. Open a sub-topic's lesson, booklet and podcast, and use the <b>Philosopher Companion</b> across all three.</p>
+
+    <div class="res-note" id="resNote">
+      <b>Teacher setup:</b> links aren't set yet. Open this file, find the <code>LINKS</code> list near the bottom, and paste each SharePoint share link once. Buttons with no link show as "Link not set".
+    </div>
+
+    <div class="res-grid">
+      <div class="res-col rc1">
+        <div class="rc-head"><span class="rc-n">Sub-topic 1</span><h3>The Secular Conscience</h3></div>
+        <a class="res-btn" data-key="secular_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="secular_booklet"><span class="ic">✎</span><span>Completion booklet</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="secular_podcast"><span class="ic">♪</span><span>Lesson podcast</span><span class="go">↗</span></a>
+      </div>
+      <div class="res-col rc2">
+        <div class="rc-head"><span class="rc-n">Sub-topic 2</span><h3>The Religious Conscience</h3></div>
+        <a class="res-btn" data-key="religious_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="religious_booklet"><span class="ic">✎</span><span>Completion booklet</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="religious_podcast"><span class="ic">♪</span><span>Lesson podcast</span><span class="go">↗</span></a>
+      </div>
+      <div class="res-col rc3">
+        <div class="rc-head"><span class="rc-n">Sub-topic 3</span><h3>Conscience Applied &amp; Assessed</h3></div>
+        <a class="res-btn" data-key="applied_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="applied_booklet"><span class="ic">✎</span><span>Completion booklet</span><span class="go">↗</span></a>
+        <a class="res-btn" data-key="applied_podcast"><span class="ic">♪</span><span>Lesson podcast</span><span class="go">↗</span></a>
+      </div>
+    </div>
+
+    <div class="res-wide">
+      <a class="res-btn big" data-key="companion"><span class="ic">🦉</span><span><b>Philosopher Companion</b> — checklist, AO1 &amp; AO2 planning, key terms &amp; review</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="review"><span class="ic">↻</span><span><b>Review lessons</b> — consolidation decks for all three sub-topics</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="overview_podcast"><span class="ic">♪</span><span><b>Overview podcast</b> — the whole unit as one argument (team teach)</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="flashcards_pdf"><span class="ic">▤</span><span><b>Printable flashcards</b> — fold-over key terms &amp; views to cut out</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="exam_questions"><span class="ic">▦</span><span><b>Exam questions organiser</b> — real AQA questions, 2019–2024</span><span class="go">↗</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- HOW TO REVISE -->
+<section id="revise">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">04</span><h2>How to revise this unit</h2></div>
+    <p class="sec-lead">Use your resources in this order. The <b>Philosopher Companion</b> is where you learn to <em>plan</em> both question types.</p>
+    <div class="revise">
+      <div class="steps">
+        <div class="step"><div><h4>Watch the lesson &amp; listen to the podcast</h4><p>One podcast per sub-topic — a teacher and student talk each view through to a judgement. Annotate as you listen.</p></div></div>
+        <div class="step"><div><h4>Complete the greyscale booklet</h4><p>Read the given text, write the key claims in your own words, then decide the strength and weakness you'd give each view.</p></div></div>
+        <div class="step"><div><h4>Match &amp; apply the key terms</h4><p>In the Companion: match each term to its meaning, then use it in a sentence. RAG-rate the mastery checklist with the three faces.</p></div></div>
+        <div class="step"><div><h4>Plan AO1, then build AO2 on top</h4><p>Use the Companion frameworks and the real AQA questions in the Exam Questions organiser. Never evaluate what you haven't first explained.</p></div></div>
+      </div>
+      <div class="ao">
+        <div class="ao1"><div class="h ao1">AO1 · Examine the views (10)</div></div>
+        <div class="c"><b>What it is —</b> the factual chain: name the accounts the question implies, then set out each in order — Kohlberg's stages, Freud's super-ego, Aquinas's synderesis, whichever the question names.</div>
+        <div class="c"><b>Aim —</b> explain the whole range accurately and neutrally. No named scholars in the specification — teach the "representative cross-section," but don't name them in an exam answer's thesis as if the spec required it.</div>
+        <div class="h ao2">AO2 · Evaluate this claim (15)</div>
+        <div class="c"><b>What it is —</b> a three-paragraph dialectic: view, then evaluation → counter-evaluation → implication; mirror it with a second view; then judge.</div>
+        <div class="c"><b>Aim —</b> weigh the accounts, use one as a lens on another (does Aquinas survive Freud's challenge?), and reach a justified judgement that links back to your thesis.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WATCH: FULL UNIT REVIEW -->
+<section id="watch">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">05</span><h2>Watch: the whole unit in one go</h2></div>
+    <p class="sec-lead">A full review of <b>Conscience</b> — the Secular, the Religious, and Conscience Applied &amp; Assessed. Best watched before you start revising, then again to check your recall.</p>
+    <div class="video-frame" id="videoFrame">
+      <div class="video-placeholder" id="videoPlaceholder">
+        <div class="vp-badge">Video not set</div>
+        <p><b>Teacher:</b> paste the YouTube link in the <code>VIDEO_URL</code> line near the bottom of this file. The player then appears here automatically.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FLASHCARDS -->
+<section id="flashcards">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">06</span><h2>Flashcards — test yourself</h2></div>
+    <p class="sec-lead">Flip a card to check yourself. Switch between <b>key terms</b> (term → meaning) and <b>views</b> (view → claim, strength &amp; weakness), and filter by sub-topic.</p>
+    <div class="fc-controls">
+      <div class="fc-tabs" role="tablist" aria-label="Sub-topic">
+        <button class="fc-btn" role="tab" aria-selected="true"  data-topic="all">All</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-topic="secular">Secular</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-topic="religious">Religious</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-topic="applied">Applied</button>
+      </div>
+      <div class="fc-type" role="tablist" aria-label="Card type">
+        <button class="fc-btn" role="tab" aria-selected="true"  data-type="terms">Key terms</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-type="views">Views</button>
+      </div>
+      <span class="fc-hint">Tap any card to flip · <span id="fcCount"></span></span>
+    </div>
+    <div class="fc-grid" id="fcGrid"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Conscience · Unit at a glance</span>
+    <span class="gold">Harlington School · Philosophy &amp; Ethics</span>
+  </div>
+</footer>
+
+<script>
+const DATA = {"secular": {"poles": ["INSIDE the individual \u00b7 developed reasoning", "OUTSIDE the individual \u00b7 society internalised"], "nodes": [{"x": 8, "nm": "Kohlberg", "sb": "Conscience is moral reasoning, built in stag\u2026", "auth": "EARNED & RATIONAL", "claim": "Moral development runs through six stages in three levels: pre-conventional, conventional, post-conventional. Pre-conventional: right is what gets rewarded, wrong is what gets punished ('punishment and obedience').", "s": "Empirically grounded in tested reasoning; explains why consciences differ (people sit at different stages) and how conscience DEVELOPS through social experience rather than simply appearing.", "w": "Is conscience really reasoning at all? Hume suggests 'gut reaction' leads and reasoning follows; and if comparatively few reach stage 6, most 'conscience' is just conformity by another name."}, {"x": 36, "nm": "Freud", "sb": "The guilty voice is your parents \u2014 internali\u2026", "auth": "NONE of its own", "claim": "The mind has three elements: the instinctive id (eros and thanatos), the rational ego, and the controlling super-ego. The super-ego forms around age 3\u20135 as an 'inner parent': the commands of parents and authority figures, internalised and stored.", "s": "Colossal explanatory power: makes sense of irrational guilt, over- and under-developed consciences, and why guilt persists even when reason \u2014 and everyone else \u2014 says we did nothing wrong.", "w": "If conscience is left-over childhood training, we should logically GROW OUT of it as the mature ego asserts itself \u2014 yet we don't. And Popper objects the whole theory is unfalsifiable. Is this really all that conscience amounts to?"}, {"x": 64, "nm": "Durkheim", "sb": "Conscience is the group's sanctions, felt fr\u2026", "auth": "COLLECTIVE only", "claim": "Conscience is social conditioning \u2014 the sanctions the group brings to bear on the individual. 'God is Society': God does not exist but is a useful idea \u2014 a projection of society's powers that makes its demands unconditional.", "s": "Strong explanatory power, reinforced by evolution: explains why conscience varies across societies and ages, why it feels so compelling, and why groups whose members share a conscience survive better.", "w": "Cannot explain the reformer: prophets, Jesus, abolitionists were driven by conscience to condemn their OWN group's norms \u2014 the very thing the theory says conscience is made of."}, {"x": 92, "nm": "Fromm", "sb": "Two consciences: fear of disobedience \u2014 or t\u2026", "auth": "CONDITIONAL", "claim": "In most social systems the supreme virtue is obedience \u2014 and the supreme sin is disobedience. The AUTHORITARIAN conscience: the internalised voice of a disapproving society, which we are afraid to disobey.", "s": "Explains BOTH faces of conscience: why guilt usually tracks conformity, AND why conscience can rightly command disobedience (resisting Nazism) \u2014 rescuing conscience's moral value without God.", "w": "If even the humanistic conscience is socially shaped, why trust its 'intuitive knowledge'? 'Flourishing' is vague \u2014 what stops a distorted conscience calling destruction flourishing?"}]}, "religious": {"poles": ["DIRECT \u00b7 God speaks within", "INDIRECT \u00b7 no faculty at all"], "nodes": [{"x": 8, "nm": "Augustine & Schleiermacher", "sb": "Conscience is God speaking within \u2014 direct r\u2026", "auth": "MAXIMUM & DIRECT", "claim": "Conscience is innate: God-given knowledge of God's moral laws \u2014 Paul's 'witness to the requirements of the law'. Augustine goes beyond Paul: conscience is literally the VOICE of God \u2014 no soul exists in which God does not speak.", "s": "Takes the experience seriously: conscience FEELS like a command from beyond us, not a habit we trained. Grounds absolute obligation, and stands squarely in Paul and the long Christian tradition.", "w": "The world's evil suggests God speaks selectively \u2014 or is easily ignored; like Divine Command Theory it makes ethical discussion redundant and threatens moral freedom; and Christians appealing to the same voice reach different answers."}, {"x": 36, "nm": "Aquinas", "sb": "Not God's voice \u2014 God-given reason, applying\u2026", "auth": "BINDING but FALLIBLE", "claim": "The synderesis rule: all seek good and avoid evil \u2014 'good is to be pursued, evil avoided' governs all practical reasoning. Practical reason, reflecting on human nature, arrives at the primary precepts of Natural Moral Law.", "s": "Realistic: explains exactly HOW conscience goes astray (apparent goods, missing facts) without surrendering its authority; and keeps moral decisions free and rational \u2014 the essence of being a moral being.", "w": "People act irrationally \u2014 blinded by desire, limited in reasoning; the state of the world suggests many follow self-interest, not synderesis; and 'follow even the erring conscience' can license terrible misdeeds."}, {"x": 64, "nm": "Butler", "sb": "A God-planted magistrate in human nature \u2014 s\u2026", "auth": "SUPREME & SELF-CERTIFYING", "claim": "Two principles govern behaviour: prudence (self-love) and benevolence (love of others) \u2014 a balanced self needs BOTH. Conscience is the judge in the hierarchy of the self, sorting the balance between prudence and benevolence.", "s": "Keeps conscience natural AND authoritative; explains moral dilemmas as conflicts between desires and principles, and why following conscience serves our long-term good \u2014 flourishing comes from obeying the guide God provided.", "w": "Anscombe: Butler assumes a God-given conscience will ALWAYS be good \u2014 he never considers it distorted or evil. And what exactly is a 'faculty'? Nietzsche's jibe at Kant: not discovered (finden) but invented (erfinden)."}, {"x": 92, "nm": "Fletcher", "sb": "'There is no conscience' \u2014 only love making \u2026", "auth": "NONE as a faculty", "claim": "'There is no conscience; \u201cconscience\u201d is merely a word for our attempts to make decisions creatively, constructively, fittingly.' Conscience is a VERB, not a noun \u2014 not something we HAVE but something we DO.", "s": "Dissolves the puzzles at a stroke \u2014 no faculty to err, conflict or be 'invented'; and makes conscience active, situational and loving, which matches how people actually face hard cases.", "w": "If conscience is only a word for deciding, the felt EXPERIENCE of a commanding, judging conscience goes unexplained \u2014 and agape's calculation inherits all of situation ethics' problems: predicting outcomes, and a single value doing all the work."}]}, "applied": {"poles": ["TRUST IT \u00b7 follow conscience", "CHECK IT \u00b7 verify from outside"], "nodes": [{"x": 8, "nm": "Conscience as reason \u2014 applied to the cases", "sb": "Lying, promise-breaking and adultery are con\u2026", "auth": "Conscience condemns the ACT itself", "claim": "Telling lies / breaking promises is not rational: it conflicts with the synderesis rule to seek good and avoid evil. It violates the primary precept of an ordered society \u2014 no property, business or marriage is safe where lies and broken promises are habitual.", "s": "Gives clear, principled guidance on both test cases, and still handles the hard ones honestly \u2014 the evasive truth, and error excused by invincible ignorance.", "w": "Too rigid for many: instinct says LIE to the axe-murderer, and a conscience that can lack the facts is, by Aquinas' own admission, not a sufficient guide on its own."}, {"x": 36, "nm": "Conscience as social conditioning \u2014 applied to the cases", "sb": "Wrongness rises and falls with society's per\u2026", "auth": "Conscience condemns whatever society currently condemns \u2014 no more, and crucially no less.", "claim": "Telling lies / breaking promises is socially DESTRUCTIVE: the stability of society depends on kept promises \u2014 break the banknote's promise and banking fails overnight. Fromm's authoritarian conscience: we keep promises for fear of society's disapproval.", "s": "Explains real moral change \u2014 attitudes to adultery HAVE shifted \u2014 and why promise-keeping feels so obligatory: the whole social order depends on it.", "w": "Surrenders the idea that lying or adultery could be wrong IN ITSELF; a fully tolerant society would leave conscience with nothing to say \u2014 this is a long way from any Christian view."}, {"x": 64, "nm": "Conscience as super-ego \u2014 applied to the cases", "sb": "The conscience only speaks when childhood co\u2026", "auth": "Conscience condemns nothing in itself \u2014 it replays the prohibitions (and the silences) of your upbringing.", "claim": "Guilt after a lie or broken promise is parental (or other authority) conditioning \u2014 commands the individual cannot escape. Lies and broken promises are COMMON \u2014 the super-ego stays quiet where parents saw no problem and made no prohibition.", "s": "Predicts exactly the observed pattern: widespread lying with little guilt, and wildly different guilt-responses to adultery across individuals and upbringings.", "w": "Explains everything and guides nothing: a description of psychological compulsion cannot tell anyone what they OUGHT to do about the axe-murderer or the affair."}, {"x": 92, "nm": "Conscience as agape-love \u2014 applied to the cases", "sb": "Nothing is wrong in itself: love decides \u2014 e\u2026", "auth": "Conscience condemns or permits ACT BY ACT", "claim": "Mrs Bergmeier, held in a Ukraine camp, could be released only if ill \u2014 or PREGNANT; her family in Berlin needed her home. She asked a camp guard to make her pregnant; medically verified, she was sent home \u2014 welcomed with open arms.", "s": "Takes real situations seriously, and explains how a good person's conscience can permit a 'forbidden' act for love's sake \u2014 with the family's own welcome as evidence.", "w": "In principle it permits anything; outcomes must be predicted in advance; and if 'conscience' is only love calculating, its verdict has no authority over anyone who calculates differently."}]}};
+
+const ticks=document.getElementById("ticks");
+const readout=document.getElementById("readout");
+const poleL=document.getElementById("poleL"), poleR=document.getElementById("poleR");
+let topic="secular", active=0;
+
+function renderReadout(n){
+  readout.innerHTML=`
+    <span class="badge">${n.auth}</span>
+    <div class="body">
+      <h4>${n.nm} <span style="opacity:.6;font-style:italic;font-weight:400">· ${n.sb}</span></h4>
+      <p>${n.claim}</p>
+      <div class="sw">
+        <div class="up"><span class="k">Strength</span><br>${n.s}</div>
+        <div class="dn"><span class="k">Weakness</span><br>${n.w}</div>
+      </div>
+    </div>`;
+}
+function renderTopic(){
+  const d=DATA[topic];
+  poleL.textContent=d.poles[0]; poleR.textContent=d.poles[1];
+  ticks.innerHTML="";
+  d.nodes.forEach((n,i)=>{
+    const el=document.createElement("div");
+    el.className="node"; el.style.left=n.x+"%"; el.tabIndex=0;
+    el.setAttribute("role","button");
+    el.setAttribute("aria-label",`${n.nm}: ${n.sb}`);
+    el.dataset.active=(i===active);
+    el.innerHTML=`<div class="dot"></div><div class="nm">${n.nm}</div><div class="sb">${n.sb}</div>`;
+    const pick=()=>{active=i;[...ticks.children].forEach((c,j)=>c.dataset.active=(j===i));renderReadout(n);};
+    el.addEventListener("click",pick);
+    el.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();pick();}});
+    ticks.appendChild(el);
+  });
+  active=Math.min(active,d.nodes.length-1);
+  [...ticks.children].forEach((c,j)=>c.dataset.active=(j===active));
+  renderReadout(d.nodes[active]);
+}
+document.querySelectorAll(".tab").forEach(t=>{
+  t.addEventListener("click",()=>{
+    document.querySelectorAll(".tab").forEach(x=>x.setAttribute("aria-selected","false"));
+    t.setAttribute("aria-selected","true");
+    topic=t.dataset.topic; active=0; renderTopic();
+  });
+});
+renderTopic();
+
+const FLASHCARDS = {"secular": {"terms": [{"term": "Super-ego", "def": "in Freud, the part of the (unconscious) mind that restrains instincts that could damage society; the repository of parental commands, showing itself in guilt, remorse and anxiety."}, {"term": "Eros", "def": "in Freud's analysis of the mind, the life instinct \u2014 the drive for love, sexuality and satisfaction."}, {"term": "Thanatos", "def": "in Freud's analysis of the mind, the instinct for aggression, violence and death."}, {"term": "Collective conscience", "def": "Durkheim's term for the totality of beliefs and sentiments common to the average members of a society."}, {"term": "Authoritarian conscience", "def": "in Fromm, the internalised voice of a disapproving society, which we are afraid to disobey."}, {"term": "Humanistic conscience", "def": "in Fromm, the aspect of conscience with an intuitive knowledge of what makes life flourish and what destroys it."}], "views": [{"n": "Kohlberg: conscience developed through social interaction", "c": "Conscience is moral reasoning, built in stages through dilemmas.", "s": "Empirically grounded in tested reasoning; explains why consciences differ (people sit at different stages) and how conscience DEVELOPS through social experience rather than simply appearing.", "w": "Is conscience really reasoning at all? Hume suggests 'gut reaction' leads and reasoning follows; and if comparatively few reach stage 6, most 'conscience' is just conformity by another name."}, {"n": "Freud: conscience as an aspect of the super-ego", "c": "The guilty voice is your parents \u2014 internalised, and unforgetting.", "s": "Colossal explanatory power: makes sense of irrational guilt, over- and under-developed consciences, and why guilt persists even when reason \u2014 and everyone else \u2014 says we did nothing wrong.", "w": "If conscience is left-over childhood training, we should logically GROW OUT of it as the mature ego asserts itself \u2014 yet we don't. And Popper objects the whole theory is unfalsifiable. Is this really all that conscience amounts to?"}, {"n": "Durkheim: conscience as sanctions & social conditioning", "c": "Conscience is the group's sanctions, felt from the inside.", "s": "Strong explanatory power, reinforced by evolution: explains why conscience varies across societies and ages, why it feels so compelling, and why groups whose members share a conscience survive better.", "w": "Cannot explain the reformer: prophets, Jesus, abolitionists were driven by conscience to condemn their OWN group's norms \u2014 the very thing the theory says conscience is made of."}, {"n": "Fromm: the authoritarian & the humanistic conscience", "c": "Two consciences: fear of disobedience \u2014 or the voice of flourishing.", "s": "Explains BOTH faces of conscience: why guilt usually tracks conformity, AND why conscience can rightly command disobedience (resisting Nazism) \u2014 rescuing conscience's moral value without God.", "w": "If even the humanistic conscience is socially shaped, why trust its 'intuitive knowledge'? 'Flourishing' is vague \u2014 what stops a distorted conscience calling destruction flourishing?"}]}, "religious": {"terms": [{"term": "Innate (conscience)", "def": "inborn conscience \u2014 originating in the mind."}, {"term": "Synderesis", "def": "in Aquinas, a natural disposition of the rational mind by which we apprehend, without inquiry, the basic principles of behaviour."}, {"term": "Conscientia", "def": "in Aquinas, the act of applying the first principles of synderesis to particular situations."}, {"term": "Vincible / invincible ignorance", "def": "vincible: ignorance of the moral law you should have known \u2014 erring through it is sinful; invincible: ignorance of a fact you could not have known \u2014 the error is excused."}, {"term": "Autonomous", "def": "self-directing, independent, self-governing \u2014 as in Butler's view of the conscience."}, {"term": "Agape", "def": "unconditional, self-giving love; for Fletcher, 'conscience' is just the name for agape making decisions fittingly in a situation."}], "views": [{"n": "Augustine & Schleiermacher: the innate voice of God", "c": "Conscience is God speaking within \u2014 direct revelation, prior to everything.", "s": "Takes the experience seriously: conscience FEELS like a command from beyond us, not a habit we trained. Grounds absolute obligation, and stands squarely in Paul and the long Christian tradition.", "w": "The world's evil suggests God speaks selectively \u2014 or is easily ignored; like Divine Command Theory it makes ethical discussion redundant and threatens moral freedom; and Christians appealing to the same voice reach different answers."}, {"n": "Aquinas: the God-given faculty of reason", "c": "Not God's voice \u2014 God-given reason, applying first principles to cases.", "s": "Realistic: explains exactly HOW conscience goes astray (apparent goods, missing facts) without surrendering its authority; and keeps moral decisions free and rational \u2014 the essence of being a moral being.", "w": "People act irrationally \u2014 blinded by desire, limited in reasoning; the state of the world suggests many follow self-interest, not synderesis; and 'follow even the erring conscience' can license terrible misdeeds."}, {"n": "Butler: the reflective, intuitive, autonomous judge", "c": "A God-planted magistrate in human nature \u2014 supreme, and bearing its own authority.", "s": "Keeps conscience natural AND authoritative; explains moral dilemmas as conflicts between desires and principles, and why following conscience serves our long-term good \u2014 flourishing comes from obeying the guide God provided.", "w": "Anscombe: Butler assumes a God-given conscience will ALWAYS be good \u2014 he never considers it distorted or evil. And what exactly is a 'faculty'? Nietzsche's jibe at Kant: not discovered (finden) but invented (erfinden)."}, {"n": "Fletcher: agape-love deciding situationally", "c": "'There is no conscience' \u2014 only love making decisions, fittingly, now.", "s": "Dissolves the puzzles at a stroke \u2014 no faculty to err, conflict or be 'invented'; and makes conscience active, situational and loving, which matches how people actually face hard cases.", "w": "If conscience is only a word for deciding, the felt EXPERIENCE of a commanding, judging conscience goes unexplained \u2014 and agape's calculation inherits all of situation ethics' problems: predicting outcomes, and a single value doing all the work."}]}, "applied": {"terms": [{"term": "Roles of conscience", "def": "to DECIDE what should be done before acting; to INFORM the agent afterwards whether the act was right (felt as guilt); to DEMAND a particular course of action."}, {"term": "The mad axe-murderer", "def": "the case where you have promised a maniac the truth about his victim's whereabouts."}, {"term": "'Sacrificial adultery'", "def": "Fletcher's case: Mrs Bergmeier, held in a prison camp, asks a guard to make her pregnant \u2014 pregnancy meant release to her family in Berlin."}, {"term": "Collective conscience (applied)", "def": "for Durkheim, whether adultery is wrong depends on society's perception \u2014 which has changed as God's authority declined."}, {"term": "Determinism (vs conscience)", "def": "if all behaviour is determined, we are not free to choose \u2014 and no 'guide', conscience included, can guide us."}, {"term": "Subjectivity (of conscience)", "def": "only YOU know what your conscience is telling you \u2014 so as a justification to others it carries little or no weight."}], "views": [{"n": "Conscience as reason \u2014 applied to the cases", "c": "Lying, promise-breaking and adultery are condemned by reason itself \u2014 with honest excuses.", "s": "Gives clear, principled guidance on both test cases, and still handles the hard ones honestly \u2014 the evasive truth, and error excused by invincible ignorance.", "w": "Too rigid for many: instinct says LIE to the axe-murderer, and a conscience that can lack the facts is, by Aquinas' own admission, not a sufficient guide on its own."}, {"n": "Conscience as social conditioning \u2014 applied to the cases", "c": "Wrongness rises and falls with society's perception \u2014 and society's needs.", "s": "Explains real moral change \u2014 attitudes to adultery HAVE shifted \u2014 and why promise-keeping feels so obligatory: the whole social order depends on it.", "w": "Surrenders the idea that lying or adultery could be wrong IN ITSELF; a fully tolerant society would leave conscience with nothing to say \u2014 this is a long way from any Christian view."}, {"n": "Conscience as super-ego \u2014 applied to the cases", "c": "The conscience only speaks when childhood conditioning gave it the words.", "s": "Predicts exactly the observed pattern: widespread lying with little guilt, and wildly different guilt-responses to adultery across individuals and upbringings.", "w": "Explains everything and guides nothing: a description of psychological compulsion cannot tell anyone what they OUGHT to do about the axe-murderer or the affair."}, {"n": "Conscience as agape-love \u2014 applied to the cases", "c": "Nothing is wrong in itself: love decides \u2014 even about adultery.", "s": "Takes real situations seriously, and explains how a good person's conscience can permit a 'forbidden' act for love's sake \u2014 with the family's own welcome as evidence.", "w": "In principle it permits anything; outcomes must be predicted in advance; and if 'conscience' is only love calculating, its verdict has no authority over anyone who calculates differently."}]}};
+(function(){
+  let fcTopic="all", fcType="terms";
+  const grid=document.getElementById("fcGrid"), count=document.getElementById("fcCount");
+  function esc(s){return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+  function build(){
+    const topics = fcTopic==="all" ? ["secular","religious","applied"] : [fcTopic];
+    let cards=[];
+    topics.forEach(tp=>{
+      const d=FLASHCARDS[tp]; if(!d) return;
+      if(fcType==="terms"){ d.terms.forEach(t=>cards.push({tp,front:t.term,tag:label(tp),back:`<div class='fc-def'>${esc(t.def)}</div>`})); }
+      else { d.views.forEach(v=>cards.push({tp,front:v.n,tag:label(tp),back:`<div class='fc-def'>${esc(v.c)}</div><div class='fc-sw'><div class='up'><span class='k'>Strength</span><br>${esc(v.s)}</div><div class='dn' style='margin-top:6px'><span class='k'>Weakness</span><br>${esc(v.w)}</div></div>`})); }
+    });
+    grid.innerHTML=cards.map(c=>`
+      <button class="fc-card ${c.tp}" data-flipped="false" aria-label="Flashcard: ${esc(c.front)}. Tap to reveal.">
+        <div class="fc-inner">
+          <div class="fc-face fc-front"><div class="fc-tag">${c.tag}</div><div class="fc-term">${esc(c.front)}</div><div class="fc-flip">tap to flip ↺</div></div>
+          <div class="fc-face fc-back"><div class="fc-tag">${c.tag}</div>${c.back}</div>
+        </div>
+      </button>`).join("");
+    count.textContent = cards.length + " cards";
+    grid.querySelectorAll(".fc-card").forEach(el=>{
+      const flip=()=>el.dataset.flipped = el.dataset.flipped==="true" ? "false":"true";
+      el.addEventListener("click",flip);
+    });
+  }
+  function label(tp){return tp==="secular"?"Secular":tp==="religious"?"Religious":"Applied";}
+  document.querySelectorAll('#flashcards .fc-tabs .fc-btn').forEach(b=>b.addEventListener("click",()=>{
+    document.querySelectorAll('#flashcards .fc-tabs .fc-btn').forEach(x=>x.setAttribute("aria-selected","false"));
+    b.setAttribute("aria-selected","true"); fcTopic=b.dataset.topic; build();
+  }));
+  document.querySelectorAll('#flashcards .fc-type .fc-btn').forEach(b=>b.addEventListener("click",()=>{
+    document.querySelectorAll('#flashcards .fc-type .fc-btn').forEach(x=>x.setAttribute("aria-selected","false"));
+    b.setAttribute("aria-selected","true"); fcType=b.dataset.type; build();
+  }));
+  build();
+})();
+
+/* =====================================================================
+   TEACHER: paste your YouTube link between the quotes below.
+   Any format works — youtube.com/watch?v=…, youtu.be/…, or an embed URL.
+   Leave it empty ("") and the page shows a "Video not set" placeholder.
+   ===================================================================== */
+const VIDEO_URL = "";
+
+(function wireVideo(){
+  const url=(VIDEO_URL||"").trim();
+  if(!url) return;
+  let id="";
+  const m = url.match(/(?:youtu\.be\/|v=|\/embed\/|\/shorts\/)([A-Za-z0-9_-]{11})/);
+  if(m) id=m[1];
+  else if(/^[A-Za-z0-9_-]{11}$/.test(url)) id=url;
+  const frame=document.getElementById("videoFrame");
+  if(id && frame){
+    frame.innerHTML =
+      '<iframe src="https://www.youtube-nocookie.com/embed/'+id+'?rel=0" '+
+      'title="Conscience — full unit review" '+
+      'allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" '+
+      'allowfullscreen loading="lazy"></iframe>';
+  } else if(frame){
+    frame.innerHTML =
+      '<div class="video-placeholder"><a class="res-btn big" style="background:#fff" href="'+url+'" target="_blank" rel="noopener"><span class="ic">▶</span><span><b>Watch the full unit review</b></span><span class="go">↗</span></a></div>';
+  }
+})();
+
+/* =====================================================================
+   TEACHER: paste your SharePoint share links between the quotes below.
+   Leave a link empty ("") and its button will show "Link not set".
+   Tip: in SharePoint, open the file's ... menu -> Copy link -> paste here.
+   ===================================================================== */
+const LINKS = {
+  secular_lesson:    "",
+  secular_booklet:   "",
+  secular_podcast:   "",
+  religious_lesson:  "",
+  religious_booklet: "",
+  religious_podcast: "",
+  applied_lesson:    "",
+  applied_booklet:   "",
+  applied_podcast:   "",
+  companion:         "",
+  review:            "",
+  overview_podcast:  "",
+  flashcards_pdf:    "",
+  exam_questions:    ""
+};
+
+(function wireResources(){
+  let anySet=false;
+  document.querySelectorAll(".res-btn").forEach(btn=>{
+    const url=(LINKS[btn.dataset.key]||"").trim();
+    if(url){
+      btn.href=url; btn.target="_blank"; btn.rel="noopener"; anySet=true;
+    }else{
+      btn.classList.add("unset"); btn.removeAttribute("href"); btn.setAttribute("aria-disabled","true");
+    }
+  });
+  if(anySet){ const n=document.getElementById("resNote"); if(n) n.classList.add("hide"); }
+})();
+</script>
+</body>
+</html>
