@@ -1027,7 +1027,7 @@ const LINKS = {
   (function selfCheck(){
     var first=document.querySelector(".pod audio");
     if(!first || !first.getAttribute("src")) return;
-    var probe=new Audio(); var settled=false;
+    var settled=false;
     function pill(ok){
       if(settled) return; settled=true;
       var el=document.createElement("div");
@@ -1042,10 +1042,13 @@ const LINKS = {
       document.body.appendChild(el);
       if(ok) setTimeout(function(){ el.classList.add("fade"); },4000);
     }
-    probe.addEventListener("loadedmetadata",function(){ pill(true); });
-    probe.addEventListener("error",function(){ pill(false); });
-    setTimeout(function(){ pill(false); },9000);
-    probe.preload="metadata"; probe.src=first.getAttribute("src");
+    /* the podcasts live beside this page now, so a plain network check is the
+       honest probe — an <audio> element is throttled in background tabs and
+       used to show a false red pill here */
+    fetch(first.getAttribute("src"),{method:"HEAD"})
+      .then(function(r){ pill(r.ok); })
+      .catch(function(){ pill(false); });
+    setTimeout(function(){ pill(false); },12000);
   })();
 
   /* ---- 9. flash the week a shared link points at ---- */
