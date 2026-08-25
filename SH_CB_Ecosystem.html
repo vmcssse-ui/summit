@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Christian Beliefs — Grade 9 Summit · Unit at a Glance</title>
+<style>
+  :root{
+    --ink:#3E1163;       /* unit family colour */
+    --ink-2:#2A0B45;
+    --mint:#F0E9F8;
+    --mint-2:#E4D8F1;
+    --amber:#F2B705;      /* summit amber */
+    --amber-soft:#FFD95C;
+    --rubric:#B01C2E;
+    --teal:#0E8A7B;
+    --blue:#1565C0;
+    --green:#2E7D32;
+    --paper:#F8F5FC;
+    --line:rgba(62,17,99,.16);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--paper);color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;line-height:1.5;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1060px;margin:0 auto;padding:0 24px}
+  .eyebrow{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;font-weight:700}
+  .hero{background:
+      radial-gradient(1200px 400px at 80% -10%, rgba(242,183,5,.16), transparent 60%),
+      linear-gradient(180deg,var(--ink) 0%, var(--ink-2) 100%);
+    color:var(--mint);padding:64px 0 72px;position:relative;overflow:hidden;border-bottom:3px solid var(--amber)}
+  .hero::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.06;
+    background:repeating-linear-gradient(180deg,transparent 0 38px,#fff 38px 39px)}
+  .hero .wrap{position:relative;z-index:2}
+  .crest{display:flex;align-items:center;gap:16px;margin-bottom:34px}
+  .crest svg{width:54px;height:54px;flex:none}
+  .crest .who{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;color:var(--amber-soft)}
+  .crest .who b{color:var(--mint);display:block;letter-spacing:.14em;font-size:.86rem;margin-top:3px}
+  h1{font-size:clamp(2.2rem,5.6vw,3.8rem);line-height:1.04;font-weight:700;letter-spacing:-.01em}
+  h1 .amp{color:var(--amber);font-style:italic}
+  .sub{margin-top:20px;max-width:58ch;font-size:1.12rem;color:#E3D8F2}
+  .bigq{margin-top:30px;display:inline-flex;gap:14px;align-items:flex-start;border-left:3px solid var(--amber);padding:8px 0 8px 18px;max-width:62ch}
+  .bigq .q{font-family:"Trebuchet MS",sans-serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--amber-soft);padding-top:5px}
+  .bigq p{font-size:1.22rem;font-style:italic;color:#fff}
+  section{padding:64px 0}
+  .sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:8px}
+  .sec-head .num{font-family:"Trebuchet MS",sans-serif;color:var(--amber);font-weight:700;font-size:.9rem;letter-spacing:.15em}
+  .sec-head h2{font-size:clamp(1.6rem,3.4vw,2.3rem);letter-spacing:-.01em}
+  .sec-lead{color:#4d4458;max-width:66ch;margin-bottom:34px;font-size:1.05rem}
+  .spectrum-card{background:linear-gradient(180deg,#fff, var(--paper));border:1px solid var(--line);border-radius:14px;
+    box-shadow:0 18px 40px -28px rgba(62,17,99,.5);padding:28px 26px 34px}
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:26px}
+  .tab{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.8rem;letter-spacing:.03em;
+    border:1px solid var(--line);background:#fff;color:var(--ink);padding:8px 14px;border-radius:999px;cursor:pointer;transition:.18s}
+  .tab[aria-selected="true"]{background:var(--ink);color:var(--mint);border-color:var(--ink)}
+  .tab:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+  .axis{position:relative;margin:8px 4px 0}
+  .axis-labels{display:flex;justify-content:space-between;font-family:"Trebuchet MS",sans-serif;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:#6d6278;margin-bottom:10px}
+  .axis-labels .l{color:var(--rubric);font-weight:700}
+  .axis-labels .r{color:var(--blue);font-weight:700}
+  .bar{height:10px;border-radius:999px;background:linear-gradient(90deg,var(--rubric),#b06a1e 40%,#5a7d3a 66%,var(--blue));position:relative}
+  .ticks{position:relative;height:118px;margin-top:0}
+  .node{position:absolute;top:0;transform:translateX(-50%);width:150px;text-align:center;cursor:pointer}
+  .node .dot{width:20px;height:20px;border-radius:50%;background:#fff;border:3px solid var(--ink);margin:0 auto;position:relative;top:-15px;transition:.18s}
+  .node .nm{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.8rem;margin-top:-6px;line-height:1.2}
+  .node .sb{font-size:.74rem;color:#6d6278;font-style:italic;margin-top:2px;line-height:1.25}
+  .node:hover .dot,.node[data-active="true"] .dot{transform:scale(1.25);border-color:var(--amber);box-shadow:0 0 0 5px rgba(242,183,5,.22)}
+  .node:focus-visible{outline:none}
+  .node:focus-visible .dot{outline:3px solid var(--amber);outline-offset:3px}
+  .readout{margin-top:14px;background:var(--ink);color:var(--mint);border-radius:12px;padding:20px 22px;min-height:112px;display:flex;gap:18px;align-items:flex-start}
+  .readout .badge{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;
+    background:var(--amber);color:var(--ink-2);padding:6px 10px;border-radius:6px;white-space:nowrap;margin-top:2px}
+  .readout .body h4{font-size:1.12rem;margin-bottom:4px}
+  .readout .body p{color:#E3D8F2;font-size:.98rem}
+  .readout .body .g9{margin-top:10px;font-size:.88rem}
+  .readout .body .g9 .k{font-family:"Trebuchet MS",sans-serif;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--amber-soft)}
+  .hint{font-family:"Trebuchet MS",sans-serif;font-size:.76rem;color:#847a91;margin-top:14px;text-align:center}
+  .thread{background:var(--ink);color:var(--mint);border-radius:14px;padding:34px 30px;position:relative;overflow:hidden}
+  .thread::before{content:"";position:absolute;inset:0;opacity:.07;background:repeating-linear-gradient(180deg,transparent 0 30px,#fff 30px 31px)}
+  .thread .wrap2{position:relative;z-index:2}
+  .thread h2{color:#fff;font-size:clamp(1.5rem,3vw,2.1rem);margin-bottom:8px}
+  .thread .lead{color:#E3D8F2;max-width:64ch;margin-bottom:24px}
+  .threads{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .tcard{border:1px solid rgba(255,217,92,.32);border-radius:10px;padding:16px 16px 18px;background:rgba(255,255,255,.03)}
+  .tcard .t{font-family:"Trebuchet MS",sans-serif;color:var(--amber);font-weight:700;font-size:.82rem;letter-spacing:.05em;margin-bottom:6px}
+  .tcard p{font-size:.9rem;color:#E3D8F2}
+  .triptych{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
+  .panel{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;display:flex;flex-direction:column}
+  .panel .cap{padding:16px 18px;color:#fff;position:relative}
+  .panel .cap .n{font-family:"Trebuchet MS",sans-serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;opacity:.85}
+  .panel .cap h3{font-size:1.22rem;margin-top:3px}
+  .panel .cap .ask{font-style:italic;font-size:.88rem;margin-top:8px;opacity:.95}
+  .panel .body{padding:16px 18px;font-size:.92rem}
+  .panel .body .row{display:flex;gap:9px;padding:7px 0;border-bottom:1px dashed var(--line)}
+  .panel .body .row:last-child{border-bottom:0}
+  .panel .body .row .v{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.74rem;white-space:normal;color:var(--ink);min-width:118px;max-width:118px}
+  .panel .body .row .d{color:#4d4458}
+  .revise{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:start}
+  .steps{counter-reset:s;display:flex;flex-direction:column;gap:14px}
+  .step{display:flex;gap:16px;align-items:flex-start;border-left:2px solid var(--line);padding:2px 0 2px 18px;position:relative}
+  .step::before{counter-increment:s;content:counter(s);position:absolute;left:-15px;top:-2px;width:28px;height:28px;border-radius:50%;
+    background:var(--amber);color:var(--ink-2);font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.9rem;display:grid;place-items:center}
+  .step h4{font-size:1.02rem}
+  .step p{font-size:.9rem;color:#4d4458;margin-top:2px}
+  .ao{border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .ao .h{padding:12px 16px;font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.82rem;letter-spacing:.06em;color:#fff}
+  .ao .h.ao1{background:var(--ink)}
+  .ao .h.ao2{background:var(--rubric)}
+  .ao .c{padding:14px 16px;font-size:.9rem;border-bottom:1px solid var(--line)}
+  .ao .c:last-child{border-bottom:0}
+  .ao .c b{font-family:"Trebuchet MS",sans-serif;font-size:.78rem;letter-spacing:.04em}
+  .video-frame{position:relative;width:100%;aspect-ratio:16/9;border-radius:14px;overflow:hidden;
+    border:1px solid var(--line);box-shadow:0 20px 44px -30px rgba(62,17,99,.5);background:var(--ink)}
+  .video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .video-placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:14px;text-align:center;padding:30px;color:#C9BCDA;
+    background:radial-gradient(700px 300px at 50% 30%,rgba(242,183,5,.14),transparent 60%),linear-gradient(180deg,var(--ink),var(--ink-2))}
+  .video-placeholder .vp-badge{font-family:"Trebuchet MS",Verdana,sans-serif;font-weight:700;font-size:.72rem;letter-spacing:.14em;
+    text-transform:uppercase;background:var(--amber);color:var(--ink-2);padding:6px 12px;border-radius:6px}
+  .video-placeholder p{max-width:52ch;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.92rem;line-height:1.55}
+  .video-placeholder code{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:4px;padding:1px 6px}
+  .fc-controls{display:flex;gap:18px;flex-wrap:wrap;align-items:center;margin-bottom:24px}
+  .fc-tabs,.fc-type{display:flex;gap:8px;flex-wrap:wrap}
+  .fc-btn{font-family:"Trebuchet MS",Verdana,sans-serif;font-weight:700;font-size:.78rem;border:1px solid var(--line);
+    background:#fff;color:var(--ink);padding:8px 13px;border-radius:999px;cursor:pointer;transition:.18s}
+  .fc-btn[aria-selected="true"]{background:var(--ink);color:var(--mint);border-color:var(--ink)}
+  .fc-btn:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+  .fc-hint{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.78rem;color:#847a91;margin-left:auto}
+  .fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+  .fc-card{perspective:1200px;height:190px;cursor:pointer;background:none;border:0;padding:0;font-family:inherit;text-align:left}
+  .fc-inner{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+  .fc-card[data-flipped="true"] .fc-inner{transform:rotateY(180deg)}
+  .fc-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+    border-radius:12px;padding:18px;display:flex;flex-direction:column;border:1px solid var(--line);overflow:auto}
+  .fc-front{background:linear-gradient(180deg,#fff,var(--paper))}
+  .fc-back{transform:rotateY(180deg);color:var(--mint)}
+  .fc-tag{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--amber);font-weight:700;margin-bottom:8px}
+  .fc-front .fc-tag{color:#94741a}
+  .fc-term{font-size:1.18rem;font-weight:700;line-height:1.16}
+  .fc-front .fc-flip{margin-top:auto;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.72rem;color:#847a91}
+  .fc-def{font-size:.9rem;line-height:1.4}
+  .res-note{background:#FCF3D6;border:1px solid var(--amber);border-left:4px solid var(--amber);
+    border-radius:8px;padding:12px 16px;margin-bottom:22px;font-size:.9rem;color:#5a4a10;
+    font-family:"Trebuchet MS",Verdana,sans-serif}
+  .res-note code{background:#fff;border:1px solid var(--line);border-radius:4px;padding:1px 6px;font-size:.85em}
+  .res-note.hide{display:none}
+  .res-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;margin-bottom:16px}
+  .res-col{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff}
+  .rc-head{padding:14px 16px;color:#fff}
+  .rc-head .rc-n{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;opacity:.85}
+  .rc-head h3{font-size:1.12rem;margin-top:2px}
+  .res-btn{display:flex;align-items:center;gap:12px;padding:13px 16px;border-top:1px solid var(--line);
+    font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.92rem;color:var(--ink);text-decoration:none;cursor:pointer;transition:background .15s}
+  .res-col .res-btn:first-of-type{border-top:0}
+  .res-btn:hover{background:var(--mint)}
+  .res-btn .ic{width:26px;height:26px;flex:none;display:grid;place-items:center;border-radius:6px;background:var(--ink);color:var(--amber);font-size:.9rem}
+  .res-btn .go{margin-left:auto;color:var(--amber);font-weight:700;opacity:0;transition:.15s}
+  .res-btn:hover .go{opacity:1}
+  .res-btn:focus-visible{outline:3px solid var(--amber);outline-offset:-3px}
+  .res-btn.unset{opacity:.5;cursor:not-allowed}
+  .res-btn.unset::after{content:"Link not set";margin-left:auto;font-size:.74rem;color:#94741a;
+    background:#FCF3D6;border:1px solid var(--amber-soft);border-radius:5px;padding:2px 7px}
+  .res-wide{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:2px}
+  .res-btn.big{border:1px solid var(--line);border-radius:12px;background:#fff;padding:16px 18px}
+  .res-btn.big:hover{background:var(--mint)}
+  .res-btn.big .ic{width:34px;height:34px;font-size:1.1rem}
+  footer{background:var(--ink-2);color:#C9BCDA;padding:26px 0;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.8rem}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+  footer .amber{color:var(--amber)}
+  @media(max-width:820px){
+    .threads{grid-template-columns:1fr}
+    .revise{grid-template-columns:1fr}
+    .node{width:104px}
+    .node .sb{display:none}
+    .res-wide{grid-template-columns:1fr}
+    .fc-grid{grid-template-columns:1fr 1fr}
+    .fc-hint{width:100%;margin-left:0}
+  }
+  @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+.panel.a1 .cap{background:linear-gradient(135deg,#1F4E79,#12294D)}
+.rc1 .rc-head{background:linear-gradient(135deg,#1F4E79,#12294D)}
+.fc-card.t1 .fc-back{background:linear-gradient(160deg,#1F4E79,#12294D)}
+.panel.a2 .cap{background:linear-gradient(135deg,#1565C0,#12447A)}
+.rc2 .rc-head{background:linear-gradient(135deg,#1565C0,#12447A)}
+.fc-card.t2 .fc-back{background:linear-gradient(160deg,#1565C0,#12447A)}
+.panel.a3 .cap{background:linear-gradient(135deg,#8E24AA,#6A1B9A)}
+.rc3 .rc-head{background:linear-gradient(135deg,#8E24AA,#6A1B9A)}
+.fc-card.t3 .fc-back{background:linear-gradient(160deg,#8E24AA,#6A1B9A)}
+.panel.a4 .cap{background:linear-gradient(135deg,#00897B,#00695C)}
+.rc4 .rc-head{background:linear-gradient(135deg,#00897B,#00695C)}
+.fc-card.t4 .fc-back{background:linear-gradient(160deg,#00897B,#00695C)}
+.panel.a5 .cap{background:linear-gradient(135deg,#B8860B,#8A6D1B)}
+.rc5 .rc-head{background:linear-gradient(135deg,#B8860B,#8A6D1B)}
+.fc-card.t5 .fc-back{background:linear-gradient(160deg,#B8860B,#8A6D1B)}
+.panel.a6 .cap{background:linear-gradient(135deg,#D33648,#B01C2E)}
+.rc6 .rc-head{background:linear-gradient(135deg,#D33648,#B01C2E)}
+.fc-card.t6 .fc-back{background:linear-gradient(160deg,#D33648,#B01C2E)}
+.panel.a7 .cap{background:linear-gradient(135deg,#43A047,#2E7D32)}
+.rc7 .rc-head{background:linear-gradient(135deg,#43A047,#2E7D32)}
+.fc-card.t7 .fc-back{background:linear-gradient(160deg,#43A047,#2E7D32)}
+.panel.a8 .cap{background:linear-gradient(135deg,#E8425F,#B71C3A)}
+.rc8 .rc-head{background:linear-gradient(135deg,#E8425F,#B71C3A)}
+.fc-card.t8 .fc-back{background:linear-gradient(160deg,#E8425F,#B71C3A)}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <div class="crest">
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <rect x="2" y="2" width="60" height="60" rx="13" fill="#2A0B45" stroke="#F2B705" stroke-width="1.5"/>
+        <g fill="none" stroke="#E9F4EE" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M32 12 L14 46 h36 z"/>
+          <path d="M25 33 l7-8 7 8"/>
+        </g>
+        <circle cx="32" cy="20" r="3" fill="#F2B705"/>
+      </svg>
+      <div class="who">Edexcel GCSE (9–1) Religious Studies B · Paper 1, Question 1 · Christianity
+        <b>Harlington School · Grade 9 Summit</b></div>
+    </div>
+    <h1>Christian Beliefs</h1>
+    <p class="sub">Eight topics, one summit. The divergent views set side by side, the key ideas connected, and the (d) evaluated the Level-4 way — everything for the top of the mark scheme, in one place.</p>
+    <div class="bigq">
+      <span class="q">The<br>big<br>question</span>
+      <p>What do Christians believe about God, Jesus and salvation — and why don’t all Christians agree?</p>
+    </div>
+  </div>
+</header>
+<section id="spectrum">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">01</span><h2>The divergent views explorer</h2></div>
+    <p class="sec-lead">Every (d) in this unit turns on the <b>divergent views</b> — set side by side, exactly as the examiner wants. Pick a topic, then tap a position to see what it claims. The Grade 9 move and the 7-minute discussion question travel with each topic.</p>
+    <div class="spectrum-card">
+      <div class="tabs" role="tablist" aria-label="Choose a topic">
+<button class="tab" role="tab" aria-selected="true" data-topic="t1">Trinity</button>
+<button class="tab" role="tab" aria-selected="false" data-topic="t2">Creation</button>
+<button class="tab" role="tab" aria-selected="false" data-topic="t3">Incarnation</button>
+<button class="tab" role="tab" aria-selected="false" data-topic="t4">Last days</button>
+<button class="tab" role="tab" aria-selected="false" data-topic="t5">Salvation</button>
+<button class="tab" role="tab" aria-selected="false" data-topic="t6">Eschatology</button>
+<button class="tab" role="tab" aria-selected="false" data-topic="t7">Problem of evil</button>
+<button class="tab" role="tab" aria-selected="false" data-topic="t8">Solutions</button>
+      </div>
+      <div class="axis">
+        <div class="axis-labels"><span class="l" id="poleL"></span><span class="r" id="poleR"></span></div>
+        <div class="bar"></div>
+        <div class="ticks" id="ticks"></div>
+      </div>
+      <div class="readout" id="readout" aria-live="polite"></div>
+      <p class="hint">Tap a circle — or use Tab and Enter — to explore each position.</p>
+    </div>
+  </div>
+</section>
+<section>
+  <div class="wrap">
+    <div class="thread">
+      <div class="wrap2">
+        <h2>The thread that ties it together</h2>
+        <p class="lead">Grade 9 is not more content — it is three habits applied to every topic. Spot them and every (d) in this unit opens the same way.</p>
+        <div class="threads">
+          <div class="tcard"><div class="t">Divergent views, side by side</div><p>Never one view at a time. Set them against each other — where they agree, and the exact point they part. That comparison IS the analysis.</p></div>
+          <div class="tcard"><div class="t">The (d) regulation</div><p>Chain each point (claim → because → this means → therefore), steelman the other side, weigh BOTH arguments — a strength AND a limit — then justify the conclusion.</p></div>
+          <div class="tcard"><div class="t">Textbook-first accuracy</div><p>A correctly named source beats a vague paraphrase. One learned line from each source, placed precisely, is worth more than a paragraph of drift.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="topics">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">02</span><h2>Eight topics, one summit</h2></div>
+    <p class="sec-lead">Each panel is a topic’s <b>key idea</b> — the connective explanation that links the key words into one argument. Learn the chain, not the list.</p>
+    <div class="triptych">
+<div class="panel a1"><div class="cap"><div class="n">Topic 1 · C01</div><h3>Trinity</h3><div class="ask">What do Christians mean by one God in three persons — and why don’t all Christians agree?</div></div><div class="body"><div class="row"><span class="v">ONE SUBSTANCE</span><span class="d">One God, one Being — three persons, co-equal and eternal, not three separate gods; worship one is worship of all.</span></div><div class="row"><span class="v">FATHER — creates</span><span class="d">The Father is the maker and preserver of all things (the Creeds, Genesis) — creation still depends on him.</span></div><div class="row"><span class="v">SON — saves</span><span class="d">The Son became human in Jesus to save people from sin, acting from inside the human condition he came to rescue.</span></div><div class="row"><span class="v">SPIRIT — empowers</span><span class="d">The Holy Spirit is God at work in the world today, giving life, strength and guidance to believers now.</span></div></div></div>
+<div class="panel a2"><div class="cap"><div class="n">Topic 2 · C02</div><h3>Creation</h3><div class="ask">How do Christians read Genesis — and can that reading survive modern science?</div></div><div class="body"><div class="row"><span class="v">TWO ACCOUNTS</span><span class="d">Genesis 1 is the broad six-day picture; Genesis 2–3 zooms into day 6 — the Fall — so the two complement, not repeat.</span></div><div class="row"><span class="v">LITERALIST</span><span class="d">Every word is fact; the two accounts agree; science that conflicts, like the Big Bang or evolution, is rejected outright.</span></div><div class="row"><span class="v">CONSERVATIVE</span><span class="d">Inspired by God but in human words — days as eras, Genesis 2 poetic; accepts the Big Bang as God’s chosen method.</span></div><div class="row"><span class="v">LIBERAL</span><span class="d">Genesis is a metaphor — the truth is THAT God created and it was good, not HOW it took place.</span></div></div></div>
+<div class="panel a3"><div class="cap"><div class="n">Topic 3 · C03</div><h3>Incarnation</h3><div class="ask">What do Christians mean by the incarnation, and how important is it?</div></div><div class="body"><div class="row"><span class="v">BREAK</span><span class="d">Adam and Eve’s disobedience broke the perfect relationship between God and humanity, letting sin enter the world.</span></div><div class="row"><span class="v">PARTIAL</span><span class="d">After that, only a partial relationship with God was possible, since sin now stood between humans and their creator.</span></div><div class="row"><span class="v">INCARNATION</span><span class="d">God became fully human in Jesus — two natures, fully God AND fully human — so he could save from inside our condition.</span></div><div class="row"><span class="v">CANCELLED</span><span class="d">Jesus’ life, death and resurrection cancelled sin’s power, restoring the full relationship sin had broken.</span></div></div></div>
+<div class="panel a4"><div class="cap"><div class="n">Topic 4 · C04</div><h3>Last days</h3><div class="ask">Why do Christians read the death of Jesus as a victory, not a defeat?</div></div><div class="body"><div class="row"><span class="v">LAST SUPPER</span><span class="d">Institutes the Eucharist — still the central act of Christian worship, repeated in churches every week.</span></div><div class="row"><span class="v">CRUCIFIXION</span><span class="d">Jesus’ death brings salvation from sin — the cross is the atonement that restores the broken relationship.</span></div><div class="row"><span class="v">RESURRECTION</span><span class="d">Proves the cross worked and founds the hope of life after death (1 Corinthians 15) for every believer.</span></div><div class="row"><span class="v">ASCENSION</span><span class="d">Frees Christ from time and space so he can be with believers everywhere, not tied to one place.</span></div></div></div>
+<div class="panel a5"><div class="cap"><div class="n">Topic 5 · C05</div><h3>Salvation</h3><div class="ask">How are people saved — through the Church’s sacraments, or through personal faith?</div></div><div class="body"><div class="row"><span class="v">LAW</span><span class="d">God gives humans his law — the standard for how to live — so people can know right from wrong.</span></div><div class="row"><span class="v">SIN</span><span class="d">Breaking that law is sin, which separates people from God and leaves the relationship damaged.</span></div><div class="row"><span class="v">GRACE</span><span class="d">Grace is God’s free, undeserved gift, restoring the relationship through Christ’s death, not earned by effort.</span></div><div class="row"><span class="v">SPIRIT</span><span class="d">The Spirit gives the strength to live the new, good Christian life once grace has restored the relationship.</span></div></div></div>
+<div class="panel a6"><div class="cap"><div class="n">Topic 6 · C06</div><h3>Eschatology</h3><div class="ask">What do Christians believe happens after death — and why do the teachings diverge?</div></div><div class="body"><div class="row"><span class="v">THE HINGE</span><span class="d">How you live → judgement → your eternal destiny (heaven or hell) — so choices now carry eternal weight.</span></div><div class="row"><span class="v">RESURRECTION</span><span class="d">The soul “sleeps” until the Last Day, when the whole person, body and soul together, is raised for judgement.</span></div><div class="row"><span class="v">IMMORTALITY</span><span class="d">The soul goes straight to God at death and is judged at once, without waiting for a future Last Day.</span></div><div class="row"><span class="v">PURGATORY</span><span class="d">Catholics add a purification before heaven; Protestants reject it as unbiblical and unnecessary after Christ.</span></div></div></div>
+<div class="panel a7"><div class="cap"><div class="n">Topic 7 · C07</div><h3>Problem of evil</h3><div class="ask">Can an all-powerful, all-good God and a world full of suffering both be real?</div></div><div class="body"><div class="row"><span class="v">OMNIPOTENT + GOOD</span><span class="d">If God is all-powerful AND all-good, he could remove suffering and would want to — so logically he should.</span></div><div class="row"><span class="v">SO NO EVIL</span><span class="d">It logically follows there should be no evil or suffering in the world, if both beliefs hold true together.</span></div><div class="row"><span class="v">BUT EVIL EXISTS</span><span class="d">Yet suffering is real — moral and natural — so at least one of the first two beliefs must give way.</span></div><div class="row"><span class="v">THE FORK</span><span class="d">Either God is not all-powerful, or not all-good, or he does not exist — the triad forces one to fall.</span></div></div></div>
+<div class="panel a8"><div class="cap"><div class="n">Topic 8 · C08</div><h3>Solutions</h3><div class="ask">Do the Christian responses actually answer the problem of evil, or only soften it?</div></div><div class="body"><div class="row"><span class="v">FREEDOM</span><span class="d">God wanted people free to choose whether to believe in and love him, not to be forced into faith.</span></div><div class="row"><span class="v">THE COST</span><span class="d">To be truly free means being able to choose evil as well as good, or the choice would not be real.</span></div><div class="row"><span class="v">NOT GOD’S FAULT</span><span class="d">Moral evil is the price of that freedom — humans misusing it, not God, who only gave the gift.</span></div><div class="row"><span class="v">SOUL-MAKING</span><span class="d">Suffering is also the setting where souls grow good, developing virtues later rewarded in heaven.</span></div></div></div>
+    </div>
+  </div>
+</section>
+<section id="resources">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">03</span><h2>Your resources</h2></div>
+    <p class="sec-lead">Everything for the unit, in one place: each topic’s lesson, booklet pages and podcast episode — plus the unit-wide booklet editions, schemes of work and the guide.</p>
+    <div class="res-note" id="resNote">
+      <b>Teacher setup:</b> links aren't set yet. Open this file, find the <code>LINKS</code> list near the bottom, and paste each SharePoint share link once. Buttons with no link show as "Link not set".
+    </div>
+    <div class="res-grid">
+<div class="res-col rc1"><div class="rc-head"><span class="rc-n">Topic 1 · C01</span><h3>Trinity</h3></div><a class="res-btn" data-key="t1_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a><a class="res-btn" data-key="t1_booklet"><span class="ic">✎</span><span>Booklet pages</span><span class="go">↗</span></a><a class="res-btn" data-key="t1_podcast"><span class="ic">♪</span><span>Podcast · C01</span><span class="go">↗</span></a></div>
+<div class="res-col rc2"><div class="rc-head"><span class="rc-n">Topic 2 · C02</span><h3>Creation</h3></div><a class="res-btn" data-key="t2_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a><a class="res-btn" data-key="t2_booklet"><span class="ic">✎</span><span>Booklet pages</span><span class="go">↗</span></a><a class="res-btn" data-key="t2_podcast"><span class="ic">♪</span><span>Podcast · C02</span><span class="go">↗</span></a></div>
+<div class="res-col rc3"><div class="rc-head"><span class="rc-n">Topic 3 · C03</span><h3>Incarnation</h3></div><a class="res-btn" data-key="t3_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a><a class="res-btn" data-key="t3_booklet"><span class="ic">✎</span><span>Booklet pages</span><span class="go">↗</span></a><a class="res-btn" data-key="t3_podcast"><span class="ic">♪</span><span>Podcast · C03</span><span class="go">↗</span></a></div>
+<div class="res-col rc4"><div class="rc-head"><span class="rc-n">Topic 4 · C04</span><h3>Last days</h3></div><a class="res-btn" data-key="t4_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a><a class="res-btn" data-key="t4_booklet"><span class="ic">✎</span><span>Booklet pages</span><span class="go">↗</span></a><a class="res-btn" data-key="t4_podcast"><span class="ic">♪</span><span>Podcast · C04</span><span class="go">↗</span></a></div>
+<div class="res-col rc5"><div class="rc-head"><span class="rc-n">Topic 5 · C05</span><h3>Salvation</h3></div><a class="res-btn" data-key="t5_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a><a class="res-btn" data-key="t5_booklet"><span class="ic">✎</span><span>Booklet pages</span><span class="go">↗</span></a><a class="res-btn" data-key="t5_podcast"><span class="ic">♪</span><span>Podcast · C05</span><span class="go">↗</span></a></div>
+<div class="res-col rc6"><div class="rc-head"><span class="rc-n">Topic 6 · C06</span><h3>Eschatology</h3></div><a class="res-btn" data-key="t6_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a><a class="res-btn" data-key="t6_booklet"><span class="ic">✎</span><span>Booklet pages</span><span class="go">↗</span></a><a class="res-btn" data-key="t6_podcast"><span class="ic">♪</span><span>Podcast · C06</span><span class="go">↗</span></a></div>
+<div class="res-col rc7"><div class="rc-head"><span class="rc-n">Topic 7 · C07</span><h3>Problem of evil</h3></div><a class="res-btn" data-key="t7_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a><a class="res-btn" data-key="t7_booklet"><span class="ic">✎</span><span>Booklet pages</span><span class="go">↗</span></a><a class="res-btn" data-key="t7_podcast"><span class="ic">♪</span><span>Podcast · C07</span><span class="go">↗</span></a></div>
+<div class="res-col rc8"><div class="rc-head"><span class="rc-n">Topic 8 · C08</span><h3>Solutions</h3></div><a class="res-btn" data-key="t8_lesson"><span class="ic">▣</span><span>Lesson deck</span><span class="go">↗</span></a><a class="res-btn" data-key="t8_booklet"><span class="ic">✎</span><span>Booklet pages</span><span class="go">↗</span></a><a class="res-btn" data-key="t8_podcast"><span class="ic">♪</span><span>Podcast · C08</span><span class="go">↗</span></a></div>
+    </div>
+    <div class="res-wide">
+      <a class="res-btn big" data-key="booklet"><span class="ic">✎</span><span><b>Unit booklet</b> — the close-reading companion, four pages per topic</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="booklet_keyidea"><span class="ic">◈</span><span><b>Key Idea edition</b> — the booklet with the key-idea panels and 7-minute discussions</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="sow"><span class="ic">▤</span><span><b>Schemes of work</b> — one planning document per lesson</span><span class="go">↗</span></a>
+      <a class="res-btn big" data-key="guide"><span class="ic">🏔</span><span><b>How to use the lessons</b> — the Grade 9 Summit teacher guide</span><span class="go">↗</span></a>
+    </div>
+  </div>
+</section>
+<section id="revise">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">04</span><h2>How to revise this unit</h2></div>
+    <p class="sec-lead">Use the resources in this order — the same loop as the lessons, so revision feels like coming home.</p>
+    <div class="revise">
+      <div class="steps">
+        <div class="step"><div><h4>Bell work first — retrieve before you re-read</h4><p>Five recall questions from memory, self-scored /5. Then the come-back tracker: the same five at +1 week and +1 month.</p></div></div>
+        <div class="step"><div><h4>Listen along to the episode</h4><p>One six-minute podcast per topic. Capture the six mind-map branches as it plays — the episode does the exposition so you can do the thinking.</p></div></div>
+        <div class="step"><div><h4>Work the booklet pages</h4><p>Four pages per topic: the key idea, two scripture quotes, the divergent views side by side, and the full (d). The Key Idea edition adds the 7-minute discussion.</p></div></div>
+        <div class="step"><div><h4>Write the (d) the Level-4 way</h4><p>Chain · steelman · weigh both (strength AND limit) · justify. Check yourself against the Level 3-vs-Level 4 models on lessons 3 and 6.</p></div></div>
+      </div>
+      <div class="ao">
+        <div class="h ao1">The marks map · (a) (b) (c) — 12 marks</div>
+        <div class="c"><b>(a) 3 marks —</b> outline three. Three crisp sentences, no development needed.</div>
+        <div class="c"><b>(b) 4 marks —</b> explain two. Each point + one development.</div>
+        <div class="c"><b>(c) 5 marks —</b> explain two WITH a named source — one learned line, placed exactly.</div>
+        <div class="h ao2">The (d) · 12 marks — half the question</div>
+        <div class="c"><b>What it is —</b> a full evaluation: agree and disagree developed, the non-religious voice engaged where the question invites it.</div>
+        <div class="c"><b>The grade 9 gap —</b> Level 3 asserts its judgement; Level 4 chains, weighs both sides, and justifies a conclusion that survives the strongest counter.</div>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="watch">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">05</span><h2>Watch: the whole unit in one go</h2></div>
+    <p class="sec-lead">A full review of <b>Christian Beliefs</b> — all eight topics as one argument. Best watched before you revise, then again to check recall.</p>
+    <div class="video-frame" id="videoFrame">
+      <div class="video-placeholder" id="videoPlaceholder">
+        <div class="vp-badge">Video not set</div>
+        <p><b>Teacher:</b> paste the YouTube link in the <code>VIDEO_URL</code> line near the bottom of this file. The player then appears here automatically.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="flashcards">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">06</span><h2>Flashcards — test yourself</h2></div>
+    <p class="sec-lead">Flip a card to check yourself. Switch between <b>key terms</b> (term → meaning) and <b>divergent views</b> (view → what it claims), and filter by topic.</p>
+    <div class="fc-controls">
+      <div class="fc-tabs" role="tablist" aria-label="Topic">
+<button class="fc-btn" role="tab" aria-selected="true" data-topic="all">All</button>
+<button class="fc-btn" role="tab" aria-selected="false" data-topic="t1">Trinity</button>
+<button class="fc-btn" role="tab" aria-selected="false" data-topic="t2">Creation</button>
+<button class="fc-btn" role="tab" aria-selected="false" data-topic="t3">Incarnation</button>
+<button class="fc-btn" role="tab" aria-selected="false" data-topic="t4">Last days</button>
+<button class="fc-btn" role="tab" aria-selected="false" data-topic="t5">Salvation</button>
+<button class="fc-btn" role="tab" aria-selected="false" data-topic="t6">Eschatology</button>
+<button class="fc-btn" role="tab" aria-selected="false" data-topic="t7">Problem of evil</button>
+<button class="fc-btn" role="tab" aria-selected="false" data-topic="t8">Solutions</button>
+      </div>
+      <div class="fc-type" role="tablist" aria-label="Card type">
+        <button class="fc-btn" role="tab" aria-selected="true"  data-type="terms">Key terms</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-type="views">Divergent views</button>
+      </div>
+      <span class="fc-hint">Tap any card to flip · <span id="fcCount"></span></span>
+    </div>
+    <div class="fc-grid" id="fcGrid"></div>
+  </div>
+</section>
+<footer>
+  <div class="wrap">
+    <span>Christian Beliefs · Grade 9 Summit · unit at a glance</span>
+    <span class="amber">Harlington School · Edexcel GCSE (9–1) RS Spec B</span>
+  </div>
+</footer>
+<script>
+const DATA = {"t1":{"poles":["Mainstream (Nicene Creed)","Unitarians"],"punch":"Christians reach the Trinity not from maths but from experiencing the one God as Father, Son and Spirit.","discuss":"If the Trinity can’t be explained, only experienced, can a belief that resists explanation still unite a faith?","nodes":[{"x":10,"nm":"Mainstream (Nicene Creed)","sb":"Catholic · Orthodox · Protestant","auth":"Catholic · Orthodox · Protestant","claim":"One Being — God — experienced as three persons: Father, Son and Holy Spirit, who are all equal and all eternal. Believed because of Christians’ experience of God as Father, Son and Spirit."},{"x":37,"nm":"Latter-day Saints (Mormons)","sb":"Non-Trinitarian","auth":"Non-Trinitarian","claim":"The Father, Son and Holy Ghost are NOT one in substance. They are three separate beings, united in will and purpose, acting as one God."},{"x":64,"nm":"Jehovah’s Witnesses","sb":"Non-Trinitarian","auth":"Non-Trinitarian","claim":"Jehovah is the only true God. Jesus was created by God and so is God’s Son, not God. The Holy Spirit is God’s power applied to the world — not a person."},{"x":90,"nm":"Unitarians","sb":"Non-Trinitarian","auth":"Non-Trinitarian","claim":"There is only one God. Jesus was a man whose teaching and life give him moral authority, but not divinity. No distinction between God and the Holy Spirit."}]},"t2":{"poles":["Literalist Christians","The shared belief"],"punch":"The argument is never about God the creator — all three affirm that — only about how the words carry the truth.","discuss":"Can a Christian accept evolution and still call Genesis true — or does one have to give way to the other?","nodes":[{"x":12,"nm":"Literalist Christians","sb":"Genesis as fact","auth":"Genesis as fact","claim":"Genesis is the literal word of God. God created the universe in six 24-hour days, exactly as described. They reject the scientific theories of the Big Bang and evolution where these conflict with the text."},{"x":50,"nm":"Liberal Christians","sb":"Genesis as meaning","auth":"Genesis as meaning","claim":"Genesis is a symbolic account teaching WHO created and WHY, not the scientific how. They accept the Big Bang and evolution as the method God used, and read the “days” as stages or poetry."},{"x":88,"nm":"The shared belief","sb":"What both hold","auth":"What both hold","claim":"Both agree God is the ultimate cause (ex nihilo), that creation is GOOD, that humans are made in God’s image with dignity and free will, and are given stewardship of the earth."}]},"t3":{"poles":["Most Christians","Unitarians"],"punch":"Jesus had to be God (able to save) and human (saving from inside our condition) — remove either and the chain breaks.","discuss":"Could Jesus have saved humanity as only human, or only God — or does the incarnation need both to work?","nodes":[{"x":12,"nm":"Most Christians","sb":"Fully God and fully human","auth":"Fully God and fully human","claim":"Jesus is the incarnate Son of God — the Word made flesh. Being both God and human, he could restore the relationship between God and humanity that sin had broken, making salvation possible."},{"x":50,"nm":"Jehovah’s Witnesses","sb":"Jesus is created","auth":"Jesus is created","claim":"Jesus is God’s Son but was CREATED by God — so he is not God himself. The incarnation, on this view, is not God becoming human but God’s first creation living among us."},{"x":88,"nm":"Unitarians","sb":"Jesus is a man","auth":"Jesus is a man","claim":"Jesus was a man of great moral authority, but not divine. There is no incarnation in the mainstream sense — the value of Jesus is his teaching and example, not his being God."}]},"t4":{"poles":["Bodily resurrection","Why it matters (shared)"],"punch":"Each day is load-bearing — remove one event and a belief Christians hold today loses its foundation.","discuss":"Of the Last Supper, crucifixion, resurrection and ascension, which could Christianity least afford to lose?","nodes":[{"x":12,"nm":"Bodily resurrection","sb":"Most Christians","auth":"Most Christians","claim":"Jesus physically rose from the dead — the tomb was empty and the disciples met the risen Christ. His resurrection is the guarantee of the believer’s own resurrection to eternal life."},{"x":50,"nm":"Spiritual / symbolic view","sb":"Some liberal Christians","auth":"Some liberal Christians","claim":"What was raised was Jesus’ spirit or presence, or the disciples’ experience of him living on. The truth of Easter is the triumph of love and hope over death, whether or not the tomb was literally empty."},{"x":88,"nm":"Why it matters (shared)","sb":"Significance","auth":"Significance","claim":"For all, the resurrection makes the cross a victory, not a defeat: it proves Jesus’ death achieved atonement, defeats death, and gives Christians hope of life after death."}]},"t5":{"poles":["Catholic & Orthodox","The shared belief"],"punch":"A definitions slide lists these four words; the story of salvation is how each one leads to the next.","discuss":"Which link — law, sin, grace or spirit — could a Christian least afford to lose, and why?","nodes":[{"x":12,"nm":"Catholic & Orthodox","sb":"Faith AND the sacraments","auth":"Faith AND the sacraments","claim":"Salvation comes through God’s grace, received through faith AND the sacraments of the Church — baptism, confirmation, reconciliation and the Eucharist. Grace is given through these ceremonies."},{"x":50,"nm":"Protestant / Evangelical","sb":"Personal faith in Christ","auth":"Personal faith in Christ","claim":"Salvation comes through a personal acceptance of Jesus as Lord and Saviour. Grace is received directly by faith; good works follow as the FRUIT of salvation, not its cause."},{"x":88,"nm":"The shared belief","sb":"What both hold","auth":"What both hold","claim":"Both agree humans cannot save themselves, that Christ’s death and resurrection make salvation possible, and that grace — God’s free gift — is essential. The divergence is over HOW that grace reaches the believer."}]},"t6":{"poles":["Resurrection of the body","Heaven & hell as states"],"punch":"The models disagree on WHEN and WHAT is judged, but all agree the afterlife is decided by how this life was lived.","discuss":"If Christians disagree on WHEN judgement happens, does that weaken or strengthen the shared hope of an afterlife?","nodes":[{"x":12,"nm":"Resurrection of the body","sb":"Some Protestants","auth":"Some Protestants","claim":"At death the soul “sleeps” in the grave until the end of the world, when God will raise the whole person — body and soul together — for judgement, as Jesus was raised."},{"x":50,"nm":"Immortality of the soul","sb":"Catholic & others","auth":"Catholic & others","claim":"At death the soul separates from the body and goes at once to God for judgement — to heaven, hell, or (for Catholics) purgatory first, a state of purification before heaven."},{"x":88,"nm":"Heaven & hell as states","sb":"Many Christians","auth":"Many Christians","claim":"Heaven and hell are less literal places than states of being: heaven is eternal life in God’s presence, hell is eternal separation from God. What matters is relationship with God, not geography."}]},"t7":{"poles":["1 · God is OMNIPOTENT","3 · Yet EVIL EXISTS"],"punch":"It is a LOGICAL problem, not just an emotional one — that is why it bites and why consistency must be defended.","discuss":"Faced with the triad, is it more honest to give up God’s power, his goodness, or his existence — or none of these?","nodes":[{"x":12,"nm":"1 · God is OMNIPOTENT","sb":"all-powerful","auth":"all-powerful","claim":"If God is all-powerful, then he MUST be able to remove evil and suffering from the world. Nothing could stop him."},{"x":50,"nm":"2 · God is OMNIBENEVOLENT","sb":"all-good","auth":"all-good","claim":"If God is all-good, then he MUST want to remove evil and suffering, because they cause so much unhappiness to the people he loves."},{"x":88,"nm":"3 · Yet EVIL EXISTS","sb":"the world we see","auth":"the world we see","claim":"Moral suffering (from human free will) and natural suffering (from nature) are real and everywhere. So one of the first two beliefs seems to have to give way."}]},"t8":{"poles":["Biblical response","Practical response"],"punch":"The defence protects God’s goodness for MORAL evil — but the standing objection is that it cannot explain NATURAL suffering.","discuss":"Do the free will and soul-making defences actually clear God of blame, or just explain suffering without excusing it?","nodes":[{"x":12,"nm":"Biblical response","sb":"Job & the Psalms","auth":"Job & the Psalms","claim":"Do not worry about explaining evil, because humans cannot understand God’s reasons (Job). Trust that God is compassionate (Psalm 103) and shares in suffering through Jesus on the cross."},{"x":50,"nm":"Theoretical response","sb":"Free will & soul-making","auth":"Free will & soul-making","claim":"Moral evil is the price of genuine free will — love and goodness are only real if freely chosen. Suffering can also be the setting in which people grow into mature, compassionate souls."},{"x":88,"nm":"Practical response","sb":"Prayer & action","auth":"Prayer & action","claim":"Christians respond by DOING: praying for sufferers, giving to charity, and following Jesus’ example of caring for the poor and sick — fighting evil rather than only explaining it."}]}};
+const LABELS = {"t1":"Trinity","t2":"Creation","t3":"Incarnation","t4":"Last days","t5":"Salvation","t6":"Eschatology","t7":"Problem of evil","t8":"Solutions"};
+const ticks=document.getElementById("ticks");
+const readout=document.getElementById("readout");
+const poleL=document.getElementById("poleL"), poleR=document.getElementById("poleR");
+const firstKey=Object.keys(DATA)[0];
+let topic=firstKey, active=0;
+function esc2(s){return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+function renderReadout(n){
+  const d=DATA[topic];
+  let html='<span class="badge">'+esc2(n.auth)+'</span><div class="body">'+
+    '<h4>'+esc2(n.nm)+' <span style="opacity:.6;font-style:italic;font-weight:400">· '+esc2(n.sb)+'</span></h4>'+
+    '<p>'+esc2(n.claim)+'</p>';
+  if(d.punch) html+='<div class="g9"><span class="k">The grade 9 move</span><br>'+esc2(d.punch)+'</div>';
+  if(d.discuss) html+='<div class="g9"><span class="k">Discuss · 7 min</span><br>'+esc2(d.discuss)+'</div>';
+  html+='</div>';
+  readout.innerHTML=html;
+}
+function renderTopic(){
+  const d=DATA[topic];
+  poleL.textContent=d.poles[0]; poleR.textContent=d.poles[1];
+  ticks.innerHTML="";
+  d.nodes.forEach(function(n,i){
+    const el=document.createElement("div");
+    el.className="node"; el.style.left=n.x+"%"; el.tabIndex=0;
+    el.setAttribute("role","button");
+    el.setAttribute("aria-label",n.nm+": "+n.sb);
+    el.dataset.active=(i===active);
+    el.innerHTML='<div class="dot"></div><div class="nm">'+esc2(n.nm)+'</div><div class="sb">'+esc2(n.sb)+'</div>';
+    const pick=function(){active=i;[].slice.call(ticks.children).forEach(function(c,j){c.dataset.active=(j===i)});renderReadout(n);};
+    el.addEventListener("click",pick);
+    el.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();pick();}});
+    ticks.appendChild(el);
+  });
+  active=Math.min(active,d.nodes.length-1);
+  [].slice.call(ticks.children).forEach(function(c,j){c.dataset.active=(j===active)});
+  renderReadout(d.nodes[active]);
+}
+document.querySelectorAll(".tab").forEach(function(t){
+  t.addEventListener("click",function(){
+    document.querySelectorAll(".tab").forEach(function(x){x.setAttribute("aria-selected","false")});
+    t.setAttribute("aria-selected","true");
+    topic=t.dataset.topic; active=0; renderTopic();
+  });
+});
+renderTopic();
+const FLASHCARDS = {"t1":{"terms":[{"term":"Trinity","def":"One God experienced as three persons — Father, Son and Holy Spirit."},{"term":"Monotheism","def":"Belief in one God."},{"term":"Creed","def":"A statement of Christian beliefs."},{"term":"Non-Trinitarian","def":"A Christian group that rejects the Trinity of the Nicene Creed."}],"views":[{"n":"Mainstream (Nicene Creed)","tag":"Catholic · Orthodox · Protestant","c":"One Being — God — experienced as three persons: Father, Son and Holy Spirit, who are all equal and all eternal. Believed because of Christians’ experience of God as Father, Son and Spirit."},{"n":"Latter-day Saints (Mormons)","tag":"Non-Trinitarian","c":"The Father, Son and Holy Ghost are NOT one in substance. They are three separate beings, united in will and purpose, acting as one God."},{"n":"Jehovah’s Witnesses","tag":"Non-Trinitarian","c":"Jehovah is the only true God. Jesus was created by God and so is God’s Son, not God. The Holy Spirit is God’s power applied to the world — not a person."},{"n":"Unitarians","tag":"Non-Trinitarian","c":"There is only one God. Jesus was a man whose teaching and life give him moral authority, but not divinity. No distinction between God and the Holy Spirit."}]},"t2":{"terms":[{"term":"Ex nihilo","def":"Out of nothing — God created without pre-existing matter."},{"term":"Stewardship","def":"Looking after creation so it can be passed to the next generation."},{"term":"Human dignity","def":"Humans are persons made in God’s image, with self-knowledge and free will."},{"term":"Literalist","def":"A Christian who reads Genesis as literal, historical fact."}],"views":[{"n":"Literalist Christians","tag":"Genesis as fact","c":"Genesis is the literal word of God. God created the universe in six 24-hour days, exactly as described. They reject the scientific theories of the Big Bang and evolution where these conflict with the text."},{"n":"Liberal Christians","tag":"Genesis as meaning","c":"Genesis is a symbolic account teaching WHO created and WHY, not the scientific how. They accept the Big Bang and evolution as the method God used, and read the “days” as stages or poetry."},{"n":"The shared belief","tag":"What both hold","c":"Both agree God is the ultimate cause (ex nihilo), that creation is GOOD, that humans are made in God’s image with dignity and free will, and are given stewardship of the earth."}]},"t3":{"terms":[{"term":"Incarnation","def":"God becoming a human being in Jesus."},{"term":"Son of God","def":"A title for Jesus as the incarnate second person of the Trinity."},{"term":"The Word","def":"John’s title for the pre-existent Son through whom all was made."},{"term":"Sin","def":"An action that breaks God’s law and separates people from God."}],"views":[{"n":"Most Christians","tag":"Fully God and fully human","c":"Jesus is the incarnate Son of God — the Word made flesh. Being both God and human, he could restore the relationship between God and humanity that sin had broken, making salvation possible."},{"n":"Jehovah’s Witnesses","tag":"Jesus is created","c":"Jesus is God’s Son but was CREATED by God — so he is not God himself. The incarnation, on this view, is not God becoming human but God’s first creation living among us."},{"n":"Unitarians","tag":"Jesus is a man","c":"Jesus was a man of great moral authority, but not divine. There is no incarnation in the mainstream sense — the value of Jesus is his teaching and example, not his being God."}]},"t4":{"terms":[{"term":"Last Supper","def":"Jesus’ final meal with the disciples, where he instituted the Eucharist."},{"term":"Resurrection","def":"Jesus rising from the dead on the third day."},{"term":"Ascension","def":"Jesus returning to heaven forty days after the resurrection."},{"term":"Salvation","def":"Being delivered from sin through Jesus’ death and resurrection."}],"views":[{"n":"Bodily resurrection","tag":"Most Christians","c":"Jesus physically rose from the dead — the tomb was empty and the disciples met the risen Christ. His resurrection is the guarantee of the believer’s own resurrection to eternal life."},{"n":"Spiritual / symbolic view","tag":"Some liberal Christians","c":"What was raised was Jesus’ spirit or presence, or the disciples’ experience of him living on. The truth of Easter is the triumph of love and hope over death, whether or not the tomb was literally empty."},{"n":"Why it matters (shared)","tag":"Significance","c":"For all, the resurrection makes the cross a victory, not a defeat: it proves Jesus’ death achieved atonement, defeats death, and gives Christians hope of life after death."}]},"t5":{"terms":[{"term":"Salvation","def":"Being delivered from sin and its consequences."},{"term":"Grace","def":"God’s free gift giving the strength to be good and holy."},{"term":"Atonement","def":"Reconciliation — the healing of the relationship between God and humans."},{"term":"Original sin","def":"The sinful nature inherited from Adam and Eve."}],"views":[{"n":"Catholic & Orthodox","tag":"Faith AND the sacraments","c":"Salvation comes through God’s grace, received through faith AND the sacraments of the Church — baptism, confirmation, reconciliation and the Eucharist. Grace is given through these ceremonies."},{"n":"Protestant / Evangelical","tag":"Personal faith in Christ","c":"Salvation comes through a personal acceptance of Jesus as Lord and Saviour. Grace is received directly by faith; good works follow as the FRUIT of salvation, not its cause."},{"n":"The shared belief","tag":"What both hold","c":"Both agree humans cannot save themselves, that Christ’s death and resurrection make salvation possible, and that grace — God’s free gift — is essential. The divergence is over HOW that grace reaches the believer."}]},"t6":{"terms":[{"term":"Resurrection of the body","def":"The whole person raised to life by God."},{"term":"Immortality of the soul","def":"The soul surviving death and going to God."},{"term":"Purgatory","def":"A state of purification before heaven (a Catholic belief)."},{"term":"Judgement","def":"God’s assessment of a person’s life, deciding their eternal destiny."}],"views":[{"n":"Resurrection of the body","tag":"Some Protestants","c":"At death the soul “sleeps” in the grave until the end of the world, when God will raise the whole person — body and soul together — for judgement, as Jesus was raised."},{"n":"Immortality of the soul","tag":"Catholic & others","c":"At death the soul separates from the body and goes at once to God for judgement — to heaven, hell, or (for Catholics) purgatory first, a state of purification before heaven."},{"n":"Heaven & hell as states","tag":"Many Christians","c":"Heaven and hell are less literal places than states of being: heaven is eternal life in God’s presence, hell is eternal separation from God. What matters is relationship with God, not geography."}]},"t7":{"terms":[{"term":"Omnipotent","def":"All-powerful — God can do anything."},{"term":"Omnibenevolent","def":"All-good — God is completely loving."},{"term":"Moral suffering","def":"Suffering caused by humans misusing free will (e.g. war)."},{"term":"Natural suffering","def":"Suffering caused by nature (e.g. earthquake, disease)."}],"views":[{"n":"1 · God is OMNIPOTENT","tag":"all-powerful","c":"If God is all-powerful, then he MUST be able to remove evil and suffering from the world. Nothing could stop him."},{"n":"2 · God is OMNIBENEVOLENT","tag":"all-good","c":"If God is all-good, then he MUST want to remove evil and suffering, because they cause so much unhappiness to the people he loves."},{"n":"3 · Yet EVIL EXISTS","tag":"the world we see","c":"Moral suffering (from human free will) and natural suffering (from nature) are real and everywhere. So one of the first two beliefs seems to have to give way."}]},"t8":{"terms":[{"term":"Free will","def":"The human ability to choose between good and evil."},{"term":"Theodicy","def":"A defence of God’s goodness and power in the face of evil."},{"term":"Vale of soul-making","def":"The idea that suffering is the setting in which people grow morally."},{"term":"Practical response","def":"Fighting evil through prayer, charity and action."}],"views":[{"n":"Biblical response","tag":"Job & the Psalms","c":"Do not worry about explaining evil, because humans cannot understand God’s reasons (Job). Trust that God is compassionate (Psalm 103) and shares in suffering through Jesus on the cross."},{"n":"Theoretical response","tag":"Free will & soul-making","c":"Moral evil is the price of genuine free will — love and goodness are only real if freely chosen. Suffering can also be the setting in which people grow into mature, compassionate souls."},{"n":"Practical response","tag":"Prayer & action","c":"Christians respond by DOING: praying for sufferers, giving to charity, and following Jesus’ example of caring for the poor and sick — fighting evil rather than only explaining it."}]}};
+(function(){
+  let fcTopic="all", fcType="terms";
+  const grid=document.getElementById("fcGrid"), count=document.getElementById("fcCount");
+  function build(){
+    const all=Object.keys(FLASHCARDS);
+    const topics = fcTopic==="all" ? all : [fcTopic];
+    let cards=[];
+    topics.forEach(function(tp){
+      const d=FLASHCARDS[tp]; if(!d) return;
+      if(fcType==="terms"){ d.terms.forEach(function(t){cards.push({tp:tp,front:t.term,tag:LABELS[tp],back:'<div class="fc-def">'+esc2(t.def)+'</div>'})}); }
+      else { d.views.forEach(function(v){cards.push({tp:tp,front:v.n,tag:LABELS[tp]+(v.tag?' · '+v.tag:''),back:'<div class="fc-def">'+esc2(v.c)+'</div>'})}); }
+    });
+    grid.innerHTML=cards.map(function(c){return '<button class="fc-card '+c.tp+'" data-flipped="false" aria-label="Flashcard: '+esc2(c.front)+'. Tap to reveal.">'+
+      '<div class="fc-inner">'+
+      '<div class="fc-face fc-front"><div class="fc-tag">'+esc2(c.tag)+'</div><div class="fc-term">'+esc2(c.front)+'</div><div class="fc-flip">tap to flip ↺</div></div>'+
+      '<div class="fc-face fc-back"><div class="fc-tag">'+esc2(c.tag)+'</div>'+c.back+'</div>'+
+      '</div></button>';}).join("");
+    count.textContent = cards.length + " cards";
+    grid.querySelectorAll(".fc-card").forEach(function(el){
+      el.addEventListener("click",function(){el.dataset.flipped = el.dataset.flipped==="true" ? "false":"true";});
+    });
+  }
+  document.querySelectorAll('#flashcards .fc-tabs .fc-btn').forEach(function(b){b.addEventListener("click",function(){
+    document.querySelectorAll('#flashcards .fc-tabs .fc-btn').forEach(function(x){x.setAttribute("aria-selected","false")});
+    b.setAttribute("aria-selected","true"); fcTopic=b.dataset.topic; build();
+  })});
+  document.querySelectorAll('#flashcards .fc-type .fc-btn').forEach(function(b){b.addEventListener("click",function(){
+    document.querySelectorAll('#flashcards .fc-type .fc-btn').forEach(function(x){x.setAttribute("aria-selected","false")});
+    b.setAttribute("aria-selected","true"); fcType=b.dataset.type; build();
+  })});
+  build();
+})();
+/* =====================================================================
+   TEACHER: paste your YouTube link between the quotes below.
+   Any format works — youtube.com/watch?v=..., youtu.be/..., or an embed URL.
+   Leave it empty ("") and the page shows a "Video not set" placeholder.
+   ===================================================================== */
+const VIDEO_URL = "https://www.youtube.com/watch?v=QX6peqIdo0I";
+(function wireVideo(){
+  const url=(VIDEO_URL||"").trim();
+  if(!url) return;
+  let id="";
+  const m = url.match(/(?:youtu\.be\/|v=|\/embed\/|\/shorts\/)([A-Za-z0-9_-]{11})/);
+  if(m) id=m[1];
+  else if(/^[A-Za-z0-9_-]{11}$/.test(url)) id=url;
+  const frame=document.getElementById("videoFrame");
+  if(id && frame){
+    frame.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+id+'?rel=0" title="Unit review" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>';
+  } else if(frame){
+    frame.innerHTML='<div class="video-placeholder"><a class="res-btn big" style="background:#fff" href="'+url+'" target="_blank" rel="noopener"><span class="ic">▶</span><span><b>Watch the full unit review</b></span><span class="go">↗</span></a></div>';
+  }
+})();
+/* =====================================================================
+   TEACHER: paste your SharePoint share links between the quotes below.
+   Leave a link empty ("") and its button will show "Link not set".
+   Tip: in SharePoint, open the file's ... menu -> Copy link -> paste here.
+   ===================================================================== */
+const LINKS = {
+  t1_lesson: "",
+  t1_booklet: "",
+  t1_podcast: "https://hs365.sharepoint.com/sites/HS_Subjects_RE/Year%2010/Autumn%20Ecosystem/Podcast%20Christianity/C01_The_Trinity.mp3",
+  t2_lesson: "",
+  t2_booklet: "",
+  t2_podcast: "https://hs365.sharepoint.com/sites/HS_Subjects_RE/Year%2010/Autumn%20Ecosystem/Podcast%20Christianity/C02_Creation.mp3",
+  t3_lesson: "",
+  t3_booklet: "",
+  t3_podcast: "https://hs365.sharepoint.com/sites/HS_Subjects_RE/Year%2010/Autumn%20Ecosystem/Podcast%20Christianity/C03_Incarnation.mp3",
+  t4_lesson: "",
+  t4_booklet: "",
+  t4_podcast: "https://hs365.sharepoint.com/sites/HS_Subjects_RE/Year%2010/Autumn%20Ecosystem/Podcast%20Christianity/C04_Last_Days_of_Jesus.mp3",
+  t5_lesson: "",
+  t5_booklet: "",
+  t5_podcast: "https://hs365.sharepoint.com/sites/HS_Subjects_RE/Year%2010/Autumn%20Ecosystem/Podcast%20Christianity/C05_Salvation.mp3",
+  t6_lesson: "",
+  t6_booklet: "",
+  t6_podcast: "https://hs365.sharepoint.com/sites/HS_Subjects_RE/Year%2010/Autumn%20Ecosystem/Podcast%20Christianity/C06_Eschatology.mp3",
+  t7_lesson: "",
+  t7_booklet: "",
+  t7_podcast: "https://hs365.sharepoint.com/sites/HS_Subjects_RE/Year%2010/Autumn%20Ecosystem/Podcast%20Christianity/C07_Problem_of_Evil.mp3",
+  t8_lesson: "",
+  t8_booklet: "",
+  t8_podcast: "https://hs365.sharepoint.com/sites/HS_Subjects_RE/Year%2010/Autumn%20Ecosystem/Podcast%20Christianity/C08_Solutions_to_Evil.mp3",
+  booklet: "",
+  booklet_keyidea: "",
+  sow: "",
+  guide: ""
+};
+(function wireResources(){
+  let anySet=false;
+  document.querySelectorAll(".res-btn").forEach(function(btn){
+    const url=(LINKS[btn.dataset.key]||"").trim();
+    if(url){ btn.href=url; btn.target="_blank"; btn.rel="noopener"; anySet=true; }
+    else{ btn.classList.add("unset"); btn.removeAttribute("href"); btn.setAttribute("aria-disabled","true"); }
+  });
+  if(anySet){ const n=document.getElementById("resNote"); if(n) n.classList.add("hide"); }
+})();
+</script>
+</body>
+</html>
