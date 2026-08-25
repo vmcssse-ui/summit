@@ -210,9 +210,24 @@
   .home-link:hover{background:rgba(242,183,5,.14);border-color:#F2B705}
   .crest{flex-wrap:wrap}
   @media(max-width:560px){.home-link{margin-left:0;margin-top:10px}}
+
+  .cnav{position:sticky;top:0;z-index:90;background:#14101f;border-bottom:2px solid #F2B705}
+  .cnav-wrap{max-width:1120px;margin:0 auto;padding:9px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+    font-family:"Trebuchet MS",Verdana,sans-serif}
+  .cnav-home{color:#FFD95C;text-decoration:none;font-size:.82rem;letter-spacing:.06em;white-space:nowrap}
+  .cnav-home b{color:#fff}
+  .cnav-home:hover{color:#fff}
+  .cnav-units{display:flex;gap:6px;margin-left:auto;flex-wrap:wrap}
+  .cnav-u{width:30px;height:30px;display:grid;place-items:center;border-radius:7px;color:#EEF0F7;
+    text-decoration:none;font-size:.8rem;font-weight:700;border:1px solid rgba(255,255,255,.22);transition:background .12s}
+  .cnav-u:hover{background:rgba(255,255,255,.16)}
+  .cnav-u.is{background:#F2B705;color:#14101f;border-color:#F2B705;pointer-events:none}
+  @media(max-width:640px){.cnav-units{margin-left:0}}
+  @media print{.cnav{display:none}}
 </style>
 </head>
 <body>
+<nav class="cnav" aria-label="Grade 9 Summit course navigation"><div class="cnav-wrap"><a class="cnav-home" href="index.html#summit">◂ <b>The RE Course</b> · Grade 9 Summit</a><div class="cnav-units"><a class="cnav-u is" href="G9_CB_Ecosystem.html" title="Christian Beliefs" aria-label="Unit 1 — Christian Beliefs">1</a><a class="cnav-u" href="G9_MR_Ecosystem.html" title="Marriage & the Family" aria-label="Unit 2 — Marriage & the Family">2</a><a class="cnav-u" href="G9_LCL_Ecosystem.html" title="Living the Christian Life" aria-label="Unit 3 — Living the Christian Life">3</a><a class="cnav-u" href="G9_MOLD_Ecosystem.html" title="Matters of Life & Death" aria-label="Unit 4 — Matters of Life & Death">4</a><a class="cnav-u" href="G9_MB_Ecosystem.html" title="Muslim Beliefs" aria-label="Unit 5 — Muslim Beliefs">5</a><a class="cnav-u" href="G9_CP_Ecosystem.html" title="Crime & Punishment" aria-label="Unit 6 — Crime & Punishment">6</a><a class="cnav-u" href="G9_LML_Ecosystem.html" title="Living the Muslim Life" aria-label="Unit 7 — Living the Muslim Life">7</a><a class="cnav-u" href="G9_PC_Ecosystem.html" title="Peace & Conflict" aria-label="Unit 8 — Peace & Conflict">8</a></div></div></nav>
 <header class="hero">
   <div class="wrap">
     <div class="crest">
