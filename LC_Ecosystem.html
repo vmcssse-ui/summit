@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Living the Christian Life — Unit 03 · Unit at a Glance</title>
+<style>
+  :root{
+    --ink:#3E1163; --ink-2:#280A42; --mint:#F1E7FA; --mint-2:#E2D2F1;
+    --amber:#F2B705; --amber-soft:#FFD95C; --amber-ink:#94741a; --note-bg:#FCF3D6;
+    --rubric:#B01C2E; --blue:#1565C0; --paper:#F9F5FD; --line:rgba(62,17,99,.16); --lead:#4d4458; --muted:#7a6f86;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--paper);color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;line-height:1.5;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1060px;margin:0 auto;padding:0 24px}
+  .hero{background:
+      radial-gradient(1200px 400px at 80% -10%, rgba(255,255,255,.14), transparent 60%),
+      linear-gradient(180deg,var(--ink) 0%, var(--ink-2) 100%);
+    color:var(--mint);padding:64px 0 72px;position:relative;overflow:hidden;border-bottom:3px solid var(--amber)}
+  .hero::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.06;
+    background:repeating-linear-gradient(180deg,transparent 0 38px,#fff 38px 39px)}
+  .hero .wrap{position:relative;z-index:2}
+  .crest{display:flex;align-items:center;gap:16px;margin-bottom:34px}
+  .crest svg{width:54px;height:54px;flex:none}
+  .crest .who{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;color:var(--amber-soft)}
+  .crest .who b{color:var(--mint);display:block;letter-spacing:.12em;font-size:.86rem;margin-top:3px}
+  .homelink{margin-left:auto;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.78rem;font-weight:700;
+    letter-spacing:.04em;text-decoration:none;color:var(--ink-2);background:var(--amber);
+    padding:9px 15px;border-radius:8px;white-space:nowrap;transition:filter .15s}
+  .homelink:hover{filter:brightness(1.1)}
+  .unitnav{background:var(--ink-2);border-bottom:1px solid rgba(255,255,255,.12);
+    position:sticky;top:0;z-index:20;overflow-x:auto}
+  .unitnav .wrap{display:flex;gap:4px;padding-top:8px;padding-bottom:8px;min-width:max-content}
+  .unitnav a{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.74rem;font-weight:700;
+    letter-spacing:.03em;text-decoration:none;color:var(--mint-2);padding:7px 11px;border-radius:7px;
+    white-space:nowrap;transition:background .15s,color .15s;display:flex;gap:6px;align-items:baseline}
+  .unitnav a span{opacity:.55;font-size:.68rem}
+  .unitnav a:hover{background:rgba(255,255,255,.12);color:#fff}
+  .unitnav a.here{background:var(--amber);color:var(--ink-2)}
+  .unitnav a.here span{opacity:.75}
+  .unitnav a.home{color:var(--amber)}
+  .unitnav a.p1::before{content:"";width:7px;height:7px;border-radius:50%;background:#8D53C2;align-self:center}
+  .unitnav a.p2::before{content:"";width:7px;height:7px;border-radius:50%;background:#1E9A70;align-self:center}
+  .unitnav a.here::before{background:var(--ink-2)!important}
+  h1{font-size:clamp(2.2rem,5.6vw,3.8rem);line-height:1.04;font-weight:700;letter-spacing:-.01em}
+  .unitpill{display:inline-block;font-family:"Trebuchet MS",sans-serif;font-size:.7rem;letter-spacing:.22em;
+    text-transform:uppercase;font-weight:700;background:var(--amber);color:var(--ink-2);padding:6px 12px;border-radius:6px;margin-bottom:14px}
+  .sub{margin-top:20px;max-width:58ch;font-size:1.12rem;color:var(--mint-2)}
+  .bigq{margin-top:30px;display:inline-flex;gap:14px;align-items:flex-start;border-left:3px solid var(--amber);padding:8px 0 8px 18px;max-width:62ch}
+  .bigq .q{font-family:"Trebuchet MS",sans-serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--amber-soft);padding-top:5px}
+  .bigq p{font-size:1.22rem;font-style:italic;color:#fff}
+  section{padding:64px 0}
+  .sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:8px}
+  .sec-head .num{font-family:"Trebuchet MS",sans-serif;color:var(--amber);font-weight:700;font-size:.9rem;letter-spacing:.15em}
+  .sec-head h2{font-size:clamp(1.6rem,3.4vw,2.3rem);letter-spacing:-.01em}
+  .sec-lead{color:var(--lead);max-width:68ch;margin-bottom:34px;font-size:1.05rem}
+  .spectrum-card{background:linear-gradient(180deg,#fff, var(--paper));border:1px solid var(--line);border-radius:14px;
+    box-shadow:0 18px 40px -28px rgba(0,0,0,.5);padding:28px 26px 34px}
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:26px}
+  .tab{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.8rem;
+    border:1px solid var(--line);background:#fff;color:var(--ink);padding:8px 14px;border-radius:999px;cursor:pointer;transition:.18s}
+  .tab[aria-selected="true"]{background:var(--ink);color:var(--mint);border-color:var(--ink)}
+  .tab:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+  .axis{position:relative;margin:8px 4px 0}
+  .axis-labels{display:flex;justify-content:space-between;gap:20px;font-family:"Trebuchet MS",sans-serif;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+  .axis-labels .l{color:var(--rubric);font-weight:700}
+  .axis-labels .r{color:var(--blue);font-weight:700;text-align:right}
+  .bar{height:10px;border-radius:999px;background:linear-gradient(90deg,var(--rubric),#b06a1e 40%,#5a7d3a 66%,var(--blue));position:relative}
+  .ticks{position:relative;height:124px}
+  .node{position:absolute;top:0;transform:translateX(-50%);width:150px;text-align:center;cursor:pointer}
+  .node .dot{width:20px;height:20px;border-radius:50%;background:#fff;border:3px solid var(--ink);margin:0 auto;position:relative;top:-15px;transition:.18s}
+  .node .nm{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.8rem;margin-top:-6px;line-height:1.2}
+  .node .sb{font-size:.74rem;color:var(--muted);font-style:italic;margin-top:2px;line-height:1.25}
+  .node:hover .dot,.node[data-active="true"] .dot{transform:scale(1.25);border-color:var(--amber);box-shadow:0 0 0 5px rgba(0,0,0,.08)}
+  .node:focus-visible{outline:none}
+  .node:focus-visible .dot{outline:3px solid var(--amber);outline-offset:3px}
+  .readout{margin-top:14px;background:var(--ink);color:var(--mint);border-radius:12px;padding:20px 22px;min-height:112px;display:flex;gap:18px;align-items:flex-start}
+  .readout .badge{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;
+    background:var(--amber);color:var(--ink-2);padding:6px 10px;border-radius:6px;margin-top:2px;max-width:160px}
+  .readout .body h4{font-size:1.12rem;margin-bottom:4px}
+  .readout .body p{color:var(--mint-2);font-size:.98rem}
+  .readout .body .g9{margin-top:10px;font-size:.88rem}
+  .readout .body .g9 .k{font-family:"Trebuchet MS",sans-serif;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--amber-soft)}
+  .hint{font-family:"Trebuchet MS",sans-serif;font-size:.76rem;color:var(--muted);margin-top:14px;text-align:center}
+  .thread{background:var(--ink);color:var(--mint);border-radius:14px;padding:34px 30px;position:relative;overflow:hidden}
+  .thread::before{content:"";position:absolute;inset:0;opacity:.07;background:repeating-linear-gradient(180deg,transparent 0 30px,#fff 30px 31px)}
+  .thread .wrap2{position:relative;z-index:2}
+  .thread h2{color:#fff;font-size:clamp(1.5rem,3vw,2.1rem);margin-bottom:8px}
+  .thread .lead{color:var(--mint-2);max-width:64ch;margin-bottom:24px}
+  .threads{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .tcard{border:1px solid rgba(255,255,255,.28);border-radius:10px;padding:16px 16px 18px;background:rgba(255,255,255,.04)}
+  .tcard .t{font-family:"Trebuchet MS",sans-serif;color:var(--amber);font-weight:700;font-size:.82rem;margin-bottom:6px}
+  .tcard p{font-size:.9rem;color:var(--mint-2)}
+  .triptych{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
+  .panel{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;display:flex;flex-direction:column}
+  .panel .cap{padding:16px 18px;color:#fff}
+  .panel .cap .n{font-family:"Trebuchet MS",sans-serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;opacity:.85}
+  .panel .cap h3{font-size:1.22rem;margin-top:3px}
+  .panel .cap .ask{font-style:italic;font-size:.88rem;margin-top:8px;opacity:.95}
+  .panel .body{padding:16px 18px;font-size:.92rem;display:flex;flex-direction:column;flex:1}
+  .panel .body .row{display:flex;gap:9px;padding:7px 0;border-bottom:1px dashed var(--line)}
+  .panel .body .row .v{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.74rem;color:var(--ink);min-width:118px;max-width:118px}
+  .panel .body .row .d{color:var(--lead)}
+  .panel .body .src{margin-top:auto;padding-top:12px;font-size:.84rem;color:var(--ink);font-style:italic}
+  .panel .body .src .k{display:block;font-family:"Trebuchet MS",sans-serif;font-style:normal;font-size:.62rem;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--amber-ink);font-weight:700;margin-bottom:2px}
+  .revise{display:grid;grid-template-columns:1.05fr .95fr;gap:24px;align-items:start}
+  .steps{counter-reset:s;display:flex;flex-direction:column;gap:14px}
+  .step{display:flex;gap:16px;align-items:flex-start;border-left:2px solid var(--line);padding:2px 0 2px 18px;position:relative}
+  .step::before{counter-increment:s;content:counter(s);position:absolute;left:-15px;top:-2px;width:28px;height:28px;border-radius:50%;
+    background:var(--amber);color:var(--ink-2);font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.9rem;display:grid;place-items:center}
+  .step h4{font-size:1.02rem}
+  .step p{font-size:.9rem;color:var(--lead);margin-top:2px}
+  .ao{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff}
+  .ao .h{padding:12px 16px;font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.82rem;color:#fff}
+  .ao .h.ao1{background:var(--ink)}
+  .ao .h.ao2{background:var(--rubric)}
+  .ao .c{padding:12px 16px;font-size:.9rem;border-bottom:1px solid var(--line)}
+  .ao .c:last-child{border-bottom:0}
+  .ao .c b{font-family:"Trebuchet MS",sans-serif;font-size:.78rem}
+  .video-frame{position:relative;width:100%;aspect-ratio:16/9;border-radius:14px;overflow:hidden;
+    border:1px solid var(--line);box-shadow:0 20px 44px -30px rgba(0,0,0,.5);background:var(--ink)}
+  .video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .video-placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:14px;text-align:center;padding:30px;color:var(--mint-2);
+    background:radial-gradient(700px 300px at 50% 30%,rgba(255,255,255,.12),transparent 60%),linear-gradient(180deg,var(--ink),var(--ink-2))}
+  .video-placeholder .vp-badge{font-family:"Trebuchet MS",Verdana,sans-serif;font-weight:700;font-size:.72rem;letter-spacing:.14em;
+    text-transform:uppercase;background:var(--amber);color:var(--ink-2);padding:6px 12px;border-radius:6px}
+  .video-placeholder p{max-width:52ch;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.92rem;line-height:1.55}
+  .video-placeholder code{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.24);border-radius:4px;padding:1px 6px}
+  .fc-controls{display:flex;gap:18px;flex-wrap:wrap;align-items:center;margin-bottom:24px}
+  .fc-tabs,.fc-type{display:flex;gap:8px;flex-wrap:wrap}
+  .fc-btn{font-family:"Trebuchet MS",Verdana,sans-serif;font-weight:700;font-size:.78rem;border:1px solid var(--line);
+    background:#fff;color:var(--ink);padding:8px 13px;border-radius:999px;cursor:pointer;transition:.18s}
+  .fc-btn[aria-selected="true"]{background:var(--ink);color:var(--mint);border-color:var(--ink)}
+  .fc-btn:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+  .fc-hint{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.78rem;color:var(--muted);margin-left:auto}
+  .fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+  .fc-card{perspective:1200px;height:200px;cursor:pointer;background:none;border:0;padding:0;font-family:inherit;text-align:left}
+  .fc-inner{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+  .fc-card[data-flipped="true"] .fc-inner{transform:rotateY(180deg)}
+  .fc-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+    border-radius:12px;padding:18px;display:flex;flex-direction:column;border:1px solid var(--line);overflow:auto}
+  .fc-front{background:linear-gradient(180deg,#fff,var(--paper))}
+  .fc-back{transform:rotateY(180deg);color:var(--mint)}
+  .fc-tag{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--amber-soft);font-weight:700;margin-bottom:8px}
+  .fc-front .fc-tag{color:var(--amber-ink)}
+  .fc-term{font-size:1.18rem;font-weight:700;line-height:1.16}
+  .fc-front .fc-flip{margin-top:auto;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.72rem;color:var(--muted)}
+  .fc-def{font-size:.9rem;line-height:1.4}
+  .res-note{background:var(--note-bg);border:1px solid var(--amber);border-left:4px solid var(--amber);
+    border-radius:8px;padding:12px 16px;margin-bottom:22px;font-size:.9rem;color:var(--amber-ink);
+    font-family:"Trebuchet MS",Verdana,sans-serif}
+  .res-note code{background:#fff;border:1px solid var(--line);border-radius:4px;padding:1px 6px;font-size:.85em}
+  .res-note.hide{display:none}
+  .res-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px;margin-bottom:16px}
+  .res-col{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff}
+  .rc-head{padding:14px 16px;color:#fff}
+  .rc-head .rc-n{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;opacity:.85}
+  .rc-head h3{font-size:1.08rem;margin-top:2px}
+  .res-btn{display:flex;align-items:center;gap:12px;padding:13px 16px;border-top:1px solid var(--line);
+    font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.9rem;color:var(--ink);text-decoration:none;cursor:pointer;transition:background .15s}
+  .res-btn em{display:block;font-style:normal;font-size:.72rem;color:var(--muted);margin-top:2px;word-break:break-word}
+  .res-col .res-btn:first-of-type{border-top:0}
+  .res-btn:hover{background:var(--mint)}
+  .res-btn .ic{width:26px;height:26px;flex:none;display:grid;place-items:center;border-radius:6px;background:var(--ink);color:var(--amber);font-size:.9rem}
+  .res-btn .go{margin-left:auto;color:var(--amber);font-weight:700;opacity:0;transition:.15s}
+  .res-btn:hover .go{opacity:1}
+  .res-btn:focus-visible{outline:3px solid var(--amber);outline-offset:-3px}
+  .res-btn.unset{opacity:.55;cursor:not-allowed}
+  .res-btn.unset .go{display:none}
+  .res-btn.unset::after{content:"Link not set";margin-left:auto;font-size:.72rem;color:var(--amber-ink);
+    background:var(--note-bg);border:1px solid var(--amber-soft);border-radius:5px;padding:2px 7px;white-space:nowrap}
+  .res-wide{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:2px}
+  .res-btn.big{border:1px solid var(--line);border-radius:12px;background:#fff;padding:16px 18px}
+  .res-btn.big:hover{background:var(--mint)}
+  .res-btn.big .ic{width:34px;height:34px;font-size:1.1rem}
+  .res-folder{margin-top:16px}
+  .res-btn.big.folder{background:linear-gradient(120deg,var(--ink),var(--ink-2));color:var(--mint);border-color:var(--ink)}
+  .res-btn.big.folder:hover{filter:brightness(1.12);background:linear-gradient(120deg,var(--ink),var(--ink-2))}
+  .res-btn.big.folder .ic{background:var(--amber);color:var(--ink-2)}
+  .res-btn.big.folder b{color:#fff}
+  footer{background:var(--ink-2);color:var(--mint-2);padding:26px 0;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.8rem}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+  footer .amber{color:var(--amber)}
+  @media(max-width:820px){
+    .threads{grid-template-columns:1fr}
+    .revise{grid-template-columns:1fr}
+    .node{width:104px}
+    .node .sb{display:none}
+    .res-wide{grid-template-columns:1fr}
+    .fc-grid{grid-template-columns:1fr 1fr}
+    .fc-hint{width:100%;margin-left:0}
+    .readout{flex-direction:column;gap:10px}
+  }
+  @media print{
+    .hero{padding:24px 0} .tabs,.fc-controls,.hint,.res-note{display:none}
+    section{padding:20px 0;break-inside:avoid} .panel{break-inside:avoid}
+  }
+  @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+.panel.a1 .cap{background:linear-gradient(135deg,#2E0A48,#1F0630)}
+.rc1 .rc-head{background:linear-gradient(135deg,#2E0A48,#1F0630)}
+.fc-card.t1 .fc-back{background:linear-gradient(160deg,#2E0A48,#1F0630)}
+.panel.a2 .cap{background:linear-gradient(135deg,#3B1060,#280A41)}
+.rc2 .rc-head{background:linear-gradient(135deg,#3B1060,#280A41)}
+.fc-card.t2 .fc-back{background:linear-gradient(160deg,#3B1060,#280A41)}
+.panel.a3 .cap{background:linear-gradient(135deg,#481777,#300F50)}
+.rc3 .rc-head{background:linear-gradient(135deg,#481777,#300F50)}
+.fc-card.t3 .fc-back{background:linear-gradient(160deg,#481777,#300F50)}
+.panel.a4 .cap{background:linear-gradient(135deg,#551E8C,#39145F)}
+.rc4 .rc-head{background:linear-gradient(135deg,#551E8C,#39145F)}
+.fc-card.t4 .fc-back{background:linear-gradient(160deg,#551E8C,#39145F)}
+.panel.a5 .cap{background:linear-gradient(135deg,#63269D,#43196A)}
+.rc5 .rc-head{background:linear-gradient(135deg,#63269D,#43196A)}
+.fc-card.t5 .fc-back{background:linear-gradient(160deg,#63269D,#43196A)}
+.panel.a6 .cap{background:linear-gradient(135deg,#7132AC,#4C2274)}
+.rc6 .rc-head{background:linear-gradient(135deg,#7132AC,#4C2274)}
+.fc-card.t6 .fc-back{background:linear-gradient(160deg,#7132AC,#4C2274)}
+.panel.a7 .cap{background:linear-gradient(135deg,#7F41B8,#562C7D)}
+.rc7 .rc-head{background:linear-gradient(135deg,#7F41B8,#562C7D)}
+.fc-card.t7 .fc-back{background:linear-gradient(160deg,#7F41B8,#562C7D)}
+.panel.a8 .cap{background:linear-gradient(135deg,#8D53C2,#5F3883)}
+.rc8 .rc-head{background:linear-gradient(135deg,#8D53C2,#5F3883)}
+.fc-card.t8 .fc-back{background:linear-gradient(160deg,#8D53C2,#5F3883)}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <div class="crest">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><rect x="2" y="2" width="60" height="60" rx="13" fill="#280A42" stroke="#F2B705" stroke-width="1.5"/>
+      <g fill="none" stroke="#F1E7FA" stroke-width="3" stroke-linecap="round"><path d="M32 14v36"/><path d="M18 27h28"/></g>
+      <circle cx="32" cy="14" r="3" fill="#F2B705"/></svg>
+      <div class="who">Edexcel GCSE (9–1) Religious Studies B · Paper 1 · Area of study 3 · Living the Christian Life
+        <b>Harlington School · RE Course — Support Grade</b></div>
+      <a class="homelink" href="RE_Course_Support_Grade.html">⌂ Home</a>
+    </div>
+    <span class="unitpill">Unit 03</span>
+    <h1>Living the Christian Life</h1>
+    <p class="sub">Eight topics, one unit. The divergent Christian practices set side by side, the key ideas connected, and every source of wisdom and authority the examiner expects — all in one place.</p>
+    <div class="bigq">
+      <span class="q">The<br>big<br>question</span>
+      <p>How do Christians actually live their faith — in worship, sacrament, prayer and service — and why does that look so different from one church to the next?</p>
+    </div>
+  </div>
+</header>
+
+<nav class="unitnav" aria-label="All units">
+  <div class="wrap">
+    <a class="home" href="RE_Course_Support_Grade.html">⌂ All units</a>
+    <a class="p1" href="CB_Ecosystem.html"><span>01</span>Christian Beliefs</a>
+    <a class="p1" href="MR_Ecosystem.html"><span>05</span>Marriage &amp; Relationships</a>
+    <a class="p1 here" href="LC_Ecosystem.html"><span>03</span>Living the Christian Life</a>
+    <a class="p1" href="MLD_Ecosystem.html"><span>07</span>Matters of Life and Death</a>
+    <a class="p2" href="MB_Ecosystem.html"><span>02</span>Muslim Beliefs</a>
+    <a class="p2" href="CP_Ecosystem.html"><span>06</span>Crime and Punishment</a>
+    <a class="p2" href="LM_Ecosystem.html"><span>04</span>Living the Muslim Life</a>
+    <a class="p2" href="PAC_Ecosystem.html"><span>08</span>Peace and Conflict</a>
+  </div>
+</nav>
+
+<section id="spectrum">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">01</span><h2>The divergent views explorer</h2></div>
+    <p class="sec-lead">Every (d) in this unit turns on the <b>divergent Christian practices</b> — Catholic beside Protestant beside Quaker, set side by side exactly as the examiner wants. Pick a topic, then tap a position to see what it claims. The top-marks move and a 7-minute discussion question travel with each topic.</p>
+    <div class="spectrum-card">
+      <div class="tabs" role="tablist" aria-label="Choose a topic">
+<button class="tab" role="tab" aria-selected="true" data-topic="t1">Worship</button>
+<button class="tab" role="tab" aria-selected="false" data-topic="t2">Sacraments</button>
+<button class="tab" role="tab" aria-selected="false" data-topic="t3">Prayer</button>
+<button class="tab" role="tab" aria-selected="false" data-topic="t4">Pilgrimage</button>
+<button class="tab" role="tab" aria-selected="false" data-topic="t5">Celebrations</button>
+<button class="tab" role="tab" aria-selected="false" data-topic="t6">Future of Church</button>
+<button class="tab" role="tab" aria-selected="false" data-topic="t7">Local church</button>
+<button class="tab" role="tab" aria-selected="false" data-topic="t8">Worldwide Church</button>
+      </div>
+      <div class="axis">
+        <div class="axis-labels"><span class="l" id="poleL"></span><span class="r" id="poleR"></span></div>
+        <div class="bar"></div>
+        <div class="ticks" id="ticks"></div>
+      </div>
+      <div class="readout" id="readout" aria-live="polite"></div>
+      <p class="hint">Tap a circle — or use Tab and Enter — to explore each position.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="thread">
+      <div class="wrap2">
+        <h2>The thread that ties it together</h2>
+        <p class="lead">Top marks are not more content — they are three habits applied to every topic. Spot them and every (d) in this unit opens the same way.</p>
+        <div class="threads"><div class="tcard"><div class="t">Divergent views, side by side</div><p>Never one practice at a time. Set Catholic beside Protestant beside Quaker — where they agree, and the exact point they part. That comparison IS the analysis the (d) is marked on.</p></div><div class="tcard"><div class="t">The (d) regulation</div><p>Chain each point (claim → because → this means → therefore), steelman the other side, weigh BOTH arguments — a strength AND a limit — then justify the conclusion.</p></div><div class="tcard"><div class="t">Source-first accuracy</div><p>A correctly named source beats a vague paraphrase — the Great Commission (Matthew 28:19), not &#x27;Jesus told them to spread the word&#x27;. One learned line, placed precisely, is what turns a (c) from 3 marks into 5.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="topics">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">02</span><h2>8 topics, one unit</h2></div>
+    <p class="sec-lead">Each panel is a topic's <b>key idea</b> — the connective explanation that links the key words into one argument, with the source of wisdom and authority the (c) question expects. Learn the chain, not the list.</p>
+    <div class="triptych">
+<div class="panel a1"><div class="cap"><div class="n">Topic 1 · LC01</div><h3>Worship</h3><div class="ask">Why do Christians worship in such different ways?</div></div><div class="body"><div class="row"><span class="v">WORSHIP = RESPONSE</span><span class="d">Worship is showing love and respect to God — a response to who God is, not a performance staged for the people watching.</span></div><div class="row"><span class="v">LITURGICAL</span><span class="d">Liturgical worship follows a set order from a service book, centred on the Eucharist, so the same words are used in every church every Sunday.</span></div><div class="row"><span class="v">NON-LITURGICAL</span><span class="d">Non-liturgical worship has no fixed order: Bible reading, preaching and spontaneous prayer, shaped by the congregation and the Spirit on the day.</span></div><div class="row"><span class="v">ONE PURPOSE</span><span class="d">Both aim at worship &#x27;in spirit and truth&#x27; (John 4:24), so the argument is over which form best carries the same devotion.</span></div><div class="src"><span class="k">Source of wisdom &amp; authority</span>John 4:23–24 · Two styles, one purpose</div></div></div>
+<div class="panel a2"><div class="cap"><div class="n">Topic 2 · LC02</div><h3>The role of the sacraments</h3><div class="ask">Why do physical rituals matter to faith?</div></div><div class="body"><div class="row"><span class="v">OUTWARD SIGN</span><span class="d">A sacrament is an outward, physical sign — water, bread, wine, oil — of an inward and invisible grace that God gives through it.</span></div><div class="row"><span class="v">SEVEN</span><span class="d">Catholics and Orthodox keep seven: baptism, confirmation, Eucharist, reconciliation, anointing of the sick, marriage and holy orders — grace at every stage of life.</span></div><div class="row"><span class="v">TWO</span><span class="d">Most Protestants keep only baptism and the Eucharist, the two Jesus himself commanded, though Lutherans and Baptists then disagree sharply about what the bread is.</span></div><div class="row"><span class="v">NONE</span><span class="d">Quakers and the Salvation Army practise no sacraments at all, holding that God&#x27;s grace is inward and constant, so no ritual is needed to deliver it.</span></div><div class="src"><span class="k">Source of wisdom &amp; authority</span>Acts 2:38–39 · Believers&#x27; baptism vs infant baptism</div></div></div>
+<div class="panel a3"><div class="cap"><div class="n">Topic 3 · LC03</div><h3>The nature and purpose of prayer</h3><div class="ask">What is prayer actually FOR?</div></div><div class="body"><div class="row"><span class="v">COMMUNICATION</span><span class="d">Prayer is communicating with God — listening as much as speaking — so it is a relationship being kept up, not a request form being filed.</span></div><div class="row"><span class="v">ADORE, THEN CONFESS</span><span class="d">The Lord&#x27;s Prayer starts with praise (&#x27;hallowed be your name&#x27;) and confession (&#x27;forgive us our sins&#x27;), putting God first and the self second.</span></div><div class="row"><span class="v">THANK, THEN ASK</span><span class="d">Only then comes supplication — &#x27;give us today our daily bread&#x27; — asking for one&#x27;s own needs and interceding for the needs of others.</span></div><div class="row"><span class="v">FORMAL OR INFORMAL</span><span class="d">That set form is the pattern Jesus taught; informal prayer is spontaneous and personal. Most Christians use both, in church and alone.</span></div><div class="src"><span class="k">Source of wisdom &amp; authority</span>Matthew 6:9–13 · The Lord&#x27;s Prayer</div></div></div>
+<div class="panel a4"><div class="cap"><div class="n">Topic 4 · LC04</div><h3>Pilgrimage</h3><div class="ask">Why travel somewhere to grow your faith?</div></div><div class="body"><div class="row"><span class="v">A JOURNEY, A PURPOSE</span><span class="d">Pilgrimage is a religious journey to a holy place, made to deepen faith — the destination matters, but so does the effort of getting there.</span></div><div class="row"><span class="v">LOURDES</span><span class="d">At Lourdes, where Catholics believe Mary appeared to Bernadette in 1858, pilgrims bathe in the spring water and pray for healing of body or spirit.</span></div><div class="row"><span class="v">IONA</span><span class="d">On Iona, the Scottish island where Columba founded a monastery, an ecumenical community draws pilgrims for silence, worship and study rather than miracles.</span></div><div class="row"><span class="v">THE EFFECT</span><span class="d">Pilgrims come home changed: sins reflected on, prayer renewed, and a felt sense of belonging to a Church far bigger than their own congregation.</span></div><div class="src"><span class="k">Source of wisdom &amp; authority</span>Luke 2:41–42 · Why Lourdes matters</div></div></div>
+<div class="panel a5"><div class="cap"><div class="n">Topic 5 · LC05</div><h3>Christian religious celebrations</h3><div class="ask">Why do Christians celebrate the same events every year?</div></div><div class="body"><div class="row"><span class="v">THE YEAR TEACHES</span><span class="d">The Church year retells the life of Christ annually, so beliefs are lived through time rather than only read about in a book.</span></div><div class="row"><span class="v">ADVENT → CHRISTMAS</span><span class="d">Advent is the season of preparation, waiting and hope; Christmas then celebrates the incarnation — God becoming human in Jesus.</span></div><div class="row"><span class="v">LENT → EASTER</span><span class="d">Lent prepares for Easter with forty days of fasting and self-denial, echoing Jesus&#x27; forty days of temptation in the wilderness.</span></div><div class="row"><span class="v">EASTER IS CENTRAL</span><span class="d">Easter celebrates the resurrection, and because the resurrection turns the cross from defeat into victory, most Christians call it the greatest festival.</span></div><div class="src"><span class="k">Source of wisdom &amp; authority</span>Luke 2:10–11 · Christmas and Easter compared</div></div></div>
+<div class="panel a6"><div class="cap"><div class="n">Topic 6 · LC06</div><h3>The future of the Church</h3><div class="ask">Is the Christian Church growing or shrinking?</div></div><div class="body"><div class="row"><span class="v">THE COMMAND</span><span class="d">The Great Commission tells the Church to go and make disciples of all nations, so growth is not an option but the job Jesus left behind.</span></div><div class="row"><span class="v">UK DECLINE</span><span class="d">Yet British attendance keeps falling: secularism, science, scandal and everything else Sunday now offers have loosened the Church&#x27;s hold on national life.</span></div><div class="row"><span class="v">GLOBAL GROWTH</span><span class="d">Globally the picture reverses. The Church is growing fastest in Africa, Asia and Latin America, often where Christians face real persecution.</span></div><div class="row"><span class="v">SO WHAT NOW</span><span class="d">Its future therefore rests on evangelism and adaptation: church plants, online worship, and social action that makes the faith visible again.</span></div><div class="src"><span class="k">Source of wisdom &amp; authority</span>Matthew 28:19–20 · Why is UK church attendance falling?</div></div></div>
+<div class="panel a7"><div class="cap"><div class="n">Topic 7 · LC07</div><h3>The importance of the local church</h3><div class="ask">What does a local church actually DO for its community?</div></div><div class="body"><div class="row"><span class="v">WORSHIP FIRST</span><span class="d">The local church exists first to worship: the weekly gathering is where a scattered set of individuals becomes one body before God.</span></div><div class="row"><span class="v">THEN FELLOWSHIP</span><span class="d">It then builds community — baptisms, weddings, funerals, youth groups — carrying its members through the whole shape of a life.</span></div><div class="row"><span class="v">THEN OUTREACH</span><span class="d">Love of neighbour pushes that outwards: food banks, street pastors, night shelters, debt advice and warm spaces, open to believer and unbeliever alike.</span></div><div class="row"><span class="v">CREDIBILITY</span><span class="d">That makes belief visible. Agape shown in action is the argument for Christianity a community can actually see rather than be told.</span></div><div class="src"><span class="k">Source of wisdom &amp; authority</span>Mark 12:31 · Loving your neighbour in action</div></div></div>
+<div class="panel a8"><div class="cap"><div class="n">Topic 8 · LC08</div><h3>The worldwide Church</h3><div class="ask">How can one faith look so different around the world?</div></div><div class="body"><div class="row"><span class="v">ONE BODY</span><span class="d">Paul calls the Church one body with many parts, so difference is designed into it rather than being a failure to agree.</span></div><div class="row"><span class="v">MISSION SPREADS IT</span><span class="d">The Great Commission carried the faith across the world, and every culture received it in its own language, music, art and architecture.</span></div><div class="row"><span class="v">SO IT DIVERGES</span><span class="d">A Nigerian Pentecostal service and a Russian Orthodox liturgy look nothing alike, yet both confess the same creed and the same risen Christ.</span></div><div class="row"><span class="v">RECONCILIATION</span><span class="d">Ecumenism then works to turn diversity back into unity — the World Council of Churches, and reconciliation work like Corrymeela in Northern Ireland.</span></div><div class="src"><span class="k">Source of wisdom &amp; authority</span>1 Corinthians 12:12–13 · One faith, many expressions</div></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="resources">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">03</span><h2>Your resources</h2></div>
+    <p class="sec-lead">Everything for the unit, in one place: each topic's lesson deck and workbook pages, plus the unit-wide documents. The file each button points to is named underneath it.</p>
+    <div class="res-note" id="resNote">
+      <b>Teacher setup:</b> links aren't set yet. Open this file in a text editor, find the <code>LINKS</code> list near the bottom, and paste each SharePoint or OneDrive share link once. Buttons with no link show as "Link not set".
+    </div>
+    <div class="res-grid">
+<div class="res-col rc1"><div class="rc-head"><span class="rc-n">Topic 1 · LC01</span><h3>Worship</h3></div><a class="res-btn" data-key="t1_lesson"><span class="ic">▣</span><span>Lesson deck<em>LC_L01_Worship.pptx</em></span><span class="go">↗</span></a><a class="res-btn" data-key="t1_booklet"><span class="ic">✎</span><span>Workbook pages<em>Topic 1</em></span><span class="go">↗</span></a><a class="res-btn" data-key="t1_podcast"><span class="ic">♪</span><span>Podcast · C17<em>C17_Worship.mp3</em></span><span class="go">↗</span></a></div>
+<div class="res-col rc2"><div class="rc-head"><span class="rc-n">Topic 2 · LC02</span><h3>Sacraments</h3></div><a class="res-btn" data-key="t2_lesson"><span class="ic">▣</span><span>Lesson deck<em>LC_L02_The_role_of_the_sacraments.pptx</em></span><span class="go">↗</span></a><a class="res-btn" data-key="t2_booklet"><span class="ic">✎</span><span>Workbook pages<em>Topic 2</em></span><span class="go">↗</span></a><a class="res-btn" data-key="t2_podcast"><span class="ic">♪</span><span>Podcast · C18<em>C18_Sacraments.mp3</em></span><span class="go">↗</span></a></div>
+<div class="res-col rc3"><div class="rc-head"><span class="rc-n">Topic 3 · LC03</span><h3>Prayer</h3></div><a class="res-btn" data-key="t3_lesson"><span class="ic">▣</span><span>Lesson deck<em>LC_L03_The_nature_and_purpose_of_prayer.pptx</em></span><span class="go">↗</span></a><a class="res-btn" data-key="t3_booklet"><span class="ic">✎</span><span>Workbook pages<em>Topic 3</em></span><span class="go">↗</span></a><a class="res-btn" data-key="t3_podcast"><span class="ic">♪</span><span>Podcast · C19<em>C19_Prayer.mp3</em></span><span class="go">↗</span></a></div>
+<div class="res-col rc4"><div class="rc-head"><span class="rc-n">Topic 4 · LC04</span><h3>Pilgrimage</h3></div><a class="res-btn" data-key="t4_lesson"><span class="ic">▣</span><span>Lesson deck<em>LC_L04_Pilgrimage.pptx</em></span><span class="go">↗</span></a><a class="res-btn" data-key="t4_booklet"><span class="ic">✎</span><span>Workbook pages<em>Topic 4</em></span><span class="go">↗</span></a><a class="res-btn" data-key="t4_podcast"><span class="ic">♪</span><span>Podcast · C20<em>C20_Pilgrimage.mp3</em></span><span class="go">↗</span></a></div>
+<div class="res-col rc5"><div class="rc-head"><span class="rc-n">Topic 5 · LC05</span><h3>Celebrations</h3></div><a class="res-btn" data-key="t5_lesson"><span class="ic">▣</span><span>Lesson deck<em>LC_L05_Christian_religious_celebrations.pptx</em></span><span class="go">↗</span></a><a class="res-btn" data-key="t5_booklet"><span class="ic">✎</span><span>Workbook pages<em>Topic 5</em></span><span class="go">↗</span></a><a class="res-btn" data-key="t5_podcast"><span class="ic">♪</span><span>Podcast · C21<em>C21_Celebrations.mp3</em></span><span class="go">↗</span></a></div>
+<div class="res-col rc6"><div class="rc-head"><span class="rc-n">Topic 6 · LC06</span><h3>Future of Church</h3></div><a class="res-btn" data-key="t6_lesson"><span class="ic">▣</span><span>Lesson deck<em>LC_L06_The_future_of_the_Church.pptx</em></span><span class="go">↗</span></a><a class="res-btn" data-key="t6_booklet"><span class="ic">✎</span><span>Workbook pages<em>Topic 6</em></span><span class="go">↗</span></a><a class="res-btn" data-key="t6_podcast"><span class="ic">♪</span><span>Podcast · C22<em>C22_Future_of_Church.mp3</em></span><span class="go">↗</span></a></div>
+<div class="res-col rc7"><div class="rc-head"><span class="rc-n">Topic 7 · LC07</span><h3>Local church</h3></div><a class="res-btn" data-key="t7_lesson"><span class="ic">▣</span><span>Lesson deck<em>LC_L07_The_importance_of_the_local_church.pptx</em></span><span class="go">↗</span></a><a class="res-btn" data-key="t7_booklet"><span class="ic">✎</span><span>Workbook pages<em>Topic 7</em></span><span class="go">↗</span></a><a class="res-btn" data-key="t7_podcast"><span class="ic">♪</span><span>Podcast · C23<em>C23_Local_Church.mp3</em></span><span class="go">↗</span></a></div>
+<div class="res-col rc8"><div class="rc-head"><span class="rc-n">Topic 8 · LC08</span><h3>Worldwide Church</h3></div><a class="res-btn" data-key="t8_lesson"><span class="ic">▣</span><span>Lesson deck<em>LC_L08_The_worldwide_Church.pptx</em></span><span class="go">↗</span></a><a class="res-btn" data-key="t8_booklet"><span class="ic">✎</span><span>Workbook pages<em>Topic 8</em></span><span class="go">↗</span></a><a class="res-btn" data-key="t8_podcast"><span class="ic">♪</span><span>Podcast · C24<em>C24_Worldwide_Church.mp3</em></span><span class="go">↗</span></a></div>
+    </div>
+    <div class="res-wide">
+<a class="res-btn big" data-key="booklet"><span class="ic">✎</span><span><b>Unit workbook</b> — Unit3_Living_the_Christian_Life_Workbook.docx — the lesson companion, task numbers matched to the board</span><span class="go">↗</span></a><a class="res-btn big" data-key="assessment"><span class="ic">◈</span><span><b>Summative assessment</b> — LC_L09_Summative_Assessment.pptx — the end-of-unit test</span><span class="go">↗</span></a><a class="res-btn big" data-key="modelbank"><span class="ic">▤</span><span><b>Model Answer Bank</b> — Model_Answer_Bank.docx — worked (a)(b)(c)(d) answers at Level 3 and Level 4</span><span class="go">↗</span></a><a class="res-btn big" data-key="revision"><span class="ic">▣</span><span><b>Revision RE</b> — Revision RE.pptx — the whole-course revision deck</span><span class="go">↗</span></a>
+    </div>
+    <div class="res-folder">
+      <a class="res-btn big folder" data-key="resfolder">
+        <span class="ic">▤</span>
+        <span><b>All Support-Grade resources</b> — the whole folder in SharePoint: lessons, workbooks, assessments and podcasts</span>
+        <span class="go">↗</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section id="revise">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">04</span><h2>How to revise this unit</h2></div>
+    <p class="sec-lead">Use the resources in this order — the same loop as the lessons, so revision feels like coming home.</p>
+    <div class="revise">
+      <div class="steps"><div class="step"><div><h4>Retrieve before you re-read</h4><p>Five recall questions from memory — naming the denomination that holds each practice — self-scored /5 before opening any notes. Then the same five at +1 week and +1 month.</p></div></div><div class="step"><div><h4>Re-walk the lesson deck</h4><p>One deck per topic, LC_L01 to LC_L08. Cover the definitions, say them aloud, then reveal. The deck is the shortest route back into the topic.</p></div></div><div class="step"><div><h4>Work the workbook pages</h4><p>The Lesson Companion has the same task numbers as the board. Redo Task 3 (the key source) and Task 5 (the sacraments debate) from memory.</p></div></div><div class="step"><div><h4>Write the (d) the Level 4 way</h4><p>Chain · steelman · weigh both (a strength AND a limit) · justify. Check yourself against the Model Answer Bank before you look at any mark scheme.</p></div></div></div>
+      <div class="ao">
+        <div class="h ao1">The marks map · (a) (b) (c) — 12 marks · AO1</div>
+        <div class="c"><b>(a) 3 marks —</b> outline three. Three crisp sentences; no development needed.</div>
+        <div class="c"><b>(b) 4 marks —</b> explain two. Each point plus one development ("this means that…").</div>
+        <div class="c"><b>(c) 5 marks —</b> explain two <b>and</b> use a source of wisdom and authority — one learned line, placed exactly.</div>
+        <div class="h ao2">The (d) · 12 marks (+3 SPaG on two of them) · AO2</div>
+        <div class="c"><b>What it is —</b> a full evaluation: arguments for, arguments against, both developed, with religious teaching used on each side.</div>
+        <div class="c"><b>Level 3 (7–9) —</b> logical reasoning across different viewpoints, accurate understanding, a <i>partially</i> justified conclusion.</div>
+        <div class="c"><b>Level 4 (10–12) —</b> critical deconstruction, sustained and thorough accuracy, and a conclusion <i>fully</i> justified against the strongest counter-argument.</div>
+        <div class="c"><b>SPaG —</b> 3 extra marks are awarded on two (d) questions per paper. Spell the key words correctly and use them accurately.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="watch">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">05</span><h2>Watch: the whole unit in one go</h2></div>
+    <p class="sec-lead">A full review of <b>Living the Christian Life</b> — all eight topics as one argument. Best watched before you revise, then again to check recall.</p>
+    <div class="video-frame" id="videoFrame">
+      <div class="video-placeholder" id="videoPlaceholder">
+        <div class="vp-badge">Video not set</div>
+        <p><b>Teacher:</b> paste the YouTube link in the <code>VIDEO_URL</code> line near the bottom of this file. The player then appears here automatically.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="flashcards">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">06</span><h2>Flashcards — test yourself</h2></div>
+    <p class="sec-lead">Flip a card to check yourself. Switch between <b>key terms</b> (term → meaning) and <b>divergent views</b> (view → what it claims), and filter by topic.</p>
+    <div class="fc-controls">
+      <div class="fc-tabs" role="tablist" aria-label="Topic">
+<button class="fc-btn" role="tab" aria-selected="true" data-topic="all">All</button>
+<button class="fc-btn" role="tab" aria-selected="false" data-topic="t1">Worship</button>
+<button class="fc-btn" role="tab" aria-selected="false" data-topic="t2">Sacraments</button>
+<button class="fc-btn" role="tab" aria-selected="false" data-topic="t3">Prayer</button>
+<button class="fc-btn" role="tab" aria-selected="false" data-topic="t4">Pilgrimage</button>
+<button class="fc-btn" role="tab" aria-selected="false" data-topic="t5">Celebrations</button>
+<button class="fc-btn" role="tab" aria-selected="false" data-topic="t6">Future of Church</button>
+<button class="fc-btn" role="tab" aria-selected="false" data-topic="t7">Local church</button>
+<button class="fc-btn" role="tab" aria-selected="false" data-topic="t8">Worldwide Church</button>
+      </div>
+      <div class="fc-type" role="tablist" aria-label="Card type">
+        <button class="fc-btn" role="tab" aria-selected="true"  data-type="terms">Key terms</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-type="views">Divergent views</button>
+      </div>
+      <span class="fc-hint">Tap any card to flip · <span id="fcCount"></span></span>
+    </div>
+    <div class="fc-grid" id="fcGrid"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Living the Christian Life · Unit 03 · unit at a glance</span>
+    <span class="amber">Harlington School · RE Course — Support Grade</span>
+  </div>
+</footer>
+
+<script>
+const DATA = {"t1": {"poles": ["Liturgical worship", "Private worship"], "punch": "The divergence is about form, not about God. Ask what each style protects — liturgy guards unity and continuity, spontaneity guards freshness and the Spirit's freedom — and the (d) has both sides.", "discuss": "Is worship that never changes more likely to hold a church together, or more likely to lose the people it is meant to reach?", "nodes": [{"x": 10, "nm": "Liturgical worship", "sb": "Catholic · Orthodox · Anglican", "claim": "Worship follows a set liturgy from a service book, built round the Eucharist. Identical words in every church across the world and across the centuries unite believers, and protect worship from one leader's mood or opinions."}, {"x": 38, "nm": "Non-liturgical worship", "sb": "Baptist · Pentecostal · Evangelical", "claim": "There is no fixed order. The service is built round Bible reading and preaching, with spontaneous prayer, testimony and contemporary worship songs, so the Holy Spirit can lead the congregation freely rather than a printed text."}, {"x": 64, "nm": "Silent worship", "sb": "Quakers", "claim": "Quakers meet in stillness with no minister, no liturgy and no sacraments, waiting on the inner light. Anyone may speak if moved by the Spirit; set forms are seen as obstacles between the worshipper and God."}, {"x": 88, "nm": "Private worship", "sb": "All denominations", "claim": "Every tradition also expects worship alone — personal prayer, Bible study, icons, a daily quiet time. What matters is whether the whole of life is offered to God, not which style fills the Sunday hour."}]}, "t2": {"poles": ["Seven sacraments", "No sacraments"], "punch": "Every position agrees grace comes from God; they divide over whether it travels THROUGH the ritual, alongside it, or without it entirely. Name that question and the comparison writes itself.", "discuss": "If God's grace can reach a person directly, do sacraments add anything — or are they what stops faith becoming purely private?", "nodes": [{"x": 10, "nm": "Seven sacraments", "sb": "Catholic · Orthodox", "claim": "The seven sacraments are real channels of grace, not just symbols. In the Eucharist the bread and wine truly become Christ's body and blood — transubstantiation — so the sacrament does something rather than merely picturing it."}, {"x": 38, "nm": "Two sacraments", "sb": "Anglican · Lutheran · Methodist", "claim": "Only baptism and the Eucharist were instituted by Jesus, so only these two are sacraments. They are genuine means of grace — Lutherans hold Christ is truly present in and with the bread — but grace is received by faith."}, {"x": 64, "nm": "Two memorial ordinances", "sb": "Baptist · Evangelical", "claim": "Baptism and communion are ordinances: commands to obey that publicly declare a faith already held. The bread and wine stay bread and wine, a memorial of the cross; nothing is changed by the minister's words."}, {"x": 88, "nm": "No sacraments", "sb": "Quakers · Salvation Army", "claim": "The whole of life is sacramental, so no ceremony is required. God's grace reaches people directly and continually, and outward rituals risk becoming a substitute for the inward reality they were meant to point to."}]}, "t3": {"poles": ["Set, formal prayer", "Why it matters"], "punch": "Asking is the easiest purpose to name and the weakest to defend. The stronger line is that prayer re-forms the person praying — which is why 'unanswered' prayer does not disprove it.", "discuss": "If prayer changes the person praying rather than the situation, is it still worth calling prayer — or is that only reflection?", "nodes": [{"x": 10, "nm": "Set, formal prayer", "sb": "Catholic · Orthodox · Anglican", "claim": "Prayer uses words the Church has given: the Lord's Prayer, the rosary, the daily offices. Learned words carry a believer when their own words fail, and join them to millions praying exactly the same thing."}, {"x": 40, "nm": "Informal, spontaneous prayer", "sb": "Evangelical · Pentecostal", "claim": "Prayer should be personal conversation in your own words, as a child speaks to a father. Repeated formulas risk becoming the empty phrases Jesus warned against in the verses immediately before the Lord's Prayer."}, {"x": 66, "nm": "Silent, contemplative prayer", "sb": "Quakers · monastic traditions", "claim": "The most important part of prayer is listening. In Quaker meeting or monastic contemplation the believer stops talking altogether, on the grounds that God cannot be heard over the sound of our own requests."}, {"x": 88, "nm": "Why it matters", "sb": "What all Christians share", "claim": "All hold that prayer is real communication with a God who listens, that Jesus both commanded and modelled it, and that an unanswered prayer means God answering differently, not God ignoring."}]}, "t4": {"poles": ["Pilgrimage as devotion", "Why it can still matter"], "punch": "The real question is whether holiness belongs to a place or only to God. Settle that first and both the case for Lourdes and the case against it follow automatically.", "discuss": "Is a pilgrimage to Lourdes a better use of a Christian's money and time than giving the same amount to a food bank?", "nodes": [{"x": 10, "nm": "Pilgrimage as devotion", "sb": "Catholic · Orthodox", "claim": "Travelling to a holy place is itself an act of devotion. At Lourdes pilgrims seek healing, do penance and push the wheelchairs of the sick — physical effort expressing what words alone cannot say."}, {"x": 40, "nm": "Pilgrimage as retreat", "sb": "Anglican · ecumenical (Iona)", "claim": "The value lies in time apart, not in any power in the ground. Iona offers silence, community and worship; the journey clears space to hear God, with no claim that the island works miracles."}, {"x": 66, "nm": "Pilgrimage as unnecessary", "sb": "Most Protestants · Evangelicals", "claim": "God is equally present everywhere, so no journey is required. Money spent travelling would serve God better given to the poor, and relying on holy places and relics edges towards superstition."}, {"x": 88, "nm": "Why it can still matter", "sb": "What many Christians share", "claim": "Even critics accept that breaking routine, giving days to God and standing where Christians have prayed for centuries can strengthen faith — whether or not the site itself heals anybody."}]}, "t5": {"poles": ["Easter is greatest", "No special days"], "punch": "Advent and Lent are the argument, not the decoration. Preparation is what turns a date into a belief rehearsed — and a festival that loses its fast quietly becomes a holiday.", "discuss": "Has Christmas become so secular that Christians would honour the incarnation better by not celebrating it at all?", "nodes": [{"x": 10, "nm": "Easter is greatest", "sb": "Orthodox · Catholic · most churches", "claim": "Easter is the chief festival: Paul writes that without the resurrection, faith is useless. Christmas only matters because of what that child came to do, so Holy Week outranks December."}, {"x": 40, "nm": "Christmas as outreach", "sb": "Many Anglicans · Evangelicals", "claim": "Christmas is when people who never normally attend come to church. Carol services, midnight Mass and nativity plays make the incarnation accessible, so it is the year's greatest evangelistic opportunity."}, {"x": 66, "nm": "The festivals are being lost", "sb": "A common Christian criticism", "claim": "Presents, food and shopping have crowded out the meaning, and Easter has become chocolate. Keeping Advent and Lent seriously — real waiting, real fasting — is the only way to rescue the festivals."}, {"x": 88, "nm": "No special days", "sb": "Quakers · some Puritan traditions", "claim": "Quakers keep no festival calendar, holding that every day is equally holy. Marking particular dates risks implying God is nearer at Christmas than on an ordinary Tuesday in March."}]}, "t6": {"poles": ["Decline is real", "Faith without membership"], "punch": "'The Church' is ambiguous. The institution in Britain is shrinking while the worldwide body grows fast — define which one you mean and the apparent contradiction disappears.", "discuss": "If people still believe but stop attending, is the Church really declining — or only changing shape?", "nodes": [{"x": 10, "nm": "Decline is real", "sb": "The pessimist reading", "claim": "Congregations are ageing, buildings are closing and a majority of British adults now record no religion. Without serious change, the institutional Church in Britain becomes a minority interest within a generation."}, {"x": 38, "nm": "Decline is only Western", "sb": "Global optimists", "claim": "Christianity is growing rapidly in sub-Saharan Africa, China and Latin America. The Church is not dying, its centre of gravity is moving south — and missionaries are now sent to Europe, not from it."}, {"x": 64, "nm": "Renewal through evangelism", "sb": "Evangelical · Pentecostal", "claim": "The Great Commission is the answer to decline, not a rebuke about it. Alpha courses, church plants, student work and online worship are already filling churches where traditional parishes emptied."}, {"x": 88, "nm": "Faith without membership", "sb": "Sociologists · liberal Christians", "claim": "Attendance is not the same as belief. Many still pray, tick 'Christian' and turn to churches for weddings, funerals and food banks — believing without belonging, so what is declining may be institutions rather than faith."}]}, "t7": {"poles": ["Worship is the core", "Is this the Church's job?"], "punch": "Worship and service are not rivals but one chain: the Sunday service sends the congregation out, and the Monday food bank is what that prayer looked like once it had legs.", "discuss": "Should a local church spend its money on keeping its building open, or give it away to the community outside the door?", "nodes": [{"x": 10, "nm": "Worship is the core", "sb": "Catholic · Orthodox · traditional", "claim": "The church is first a place of worship and sacrament. Social work matters, but a church that becomes a charity with a steeple has given away the one thing no other organisation can offer."}, {"x": 38, "nm": "Service is the core", "sb": "Liberal · social-gospel Christians", "claim": "Faith is proved by action. Feeding the hungry and housing the homeless is what loving your neighbour actually means, and Jesus said people would be judged on what they did for the least."}, {"x": 64, "nm": "Outreach and evangelism", "sb": "Evangelical churches", "claim": "Practical help opens the door to the gospel. Food banks, youth work and Alpha meet genuine need while making the reason for that love explicit — service and evangelism working as one thing."}, {"x": 88, "nm": "Is this the Church's job?", "sb": "A common secular challenge", "claim": "Critics reply that food banks are the state's failure rather than the Church's success, and that help from a church can come with strings. Many Christians answer that they act because nobody else did."}]}, "t8": {"poles": ["Unity through structure", "Division is the scandal"], "punch": "Diversity and division are not the same thing. Diversity is one gospel in many cultures; division is the same gospel refusing to share a table — and only the second needs defending.", "discuss": "Is a Church split into thousands of denominations a sign of healthy diversity, or proof that Christians cannot practise the reconciliation they preach?", "nodes": [{"x": 10, "nm": "Unity through structure", "sb": "Catholic", "claim": "The Church is visibly one, under the Pope and the bishops in communion with him. Real unity means returning to that one Church; without a shared authority, 'unity' means only agreeing to differ."}, {"x": 38, "nm": "Unity through the Spirit", "sb": "Protestant · Evangelical", "claim": "The true Church is every believer everywhere, whatever the label on the door. Institutional union is unnecessary because shared faith in Christ already makes Christians one, so denominations are variety, not division."}, {"x": 64, "nm": "Ecumenism in practice", "sb": "World Council of Churches · Iona", "claim": "Churches cooperate where they can: joint worship, shared relief work through Christian Aid and CAFOD, and peace-building. Progress is genuine, but sharing the Eucharist remains the point where unity still stops."}, {"x": 88, "nm": "Division is the scandal", "sb": "A common criticism", "claim": "Tens of thousands of denominations undermine the claim that Christians love one another, and division has fed conflict from Northern Ireland onwards. A divided Church, critics say, cannot credibly preach reconciliation."}]}};
+const LABELS = {"t1": "Worship", "t2": "Sacraments", "t3": "Prayer", "t4": "Pilgrimage", "t5": "Celebrations", "t6": "Future of Church", "t7": "Local church", "t8": "Worldwide Church"};
+const ticks=document.getElementById("ticks");
+const readout=document.getElementById("readout");
+const poleL=document.getElementById("poleL"), poleR=document.getElementById("poleR");
+let topic=Object.keys(DATA)[0], active=0;
+function esc2(s){return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+function renderReadout(n){
+  const d=DATA[topic];
+  let html='<span class="badge">'+esc2(n.sb)+'</span><div class="body">'+
+    '<h4>'+esc2(n.nm)+'</h4><p>'+esc2(n.claim)+'</p>';
+  if(d.punch) html+='<div class="g9"><span class="k">The top-marks move</span><br>'+esc2(d.punch)+'</div>';
+  if(d.discuss) html+='<div class="g9"><span class="k">Discuss · 7 min</span><br>'+esc2(d.discuss)+'</div>';
+  html+='</div>';
+  readout.innerHTML=html;
+}
+function renderTopic(){
+  const d=DATA[topic];
+  poleL.textContent=d.poles[0]; poleR.textContent=d.poles[1];
+  ticks.innerHTML="";
+  active=Math.min(active,d.nodes.length-1);
+  d.nodes.forEach(function(n,i){
+    const el=document.createElement("div");
+    el.className="node"; el.style.left=n.x+"%"; el.tabIndex=0;
+    el.setAttribute("role","button");
+    el.setAttribute("aria-label",n.nm+": "+n.sb);
+    el.dataset.active=(i===active);
+    el.innerHTML='<div class="dot"></div><div class="nm">'+esc2(n.nm)+'</div><div class="sb">'+esc2(n.sb)+'</div>';
+    const pick=function(){active=i;[].slice.call(ticks.children).forEach(function(c,j){c.dataset.active=(j===i)});renderReadout(n);};
+    el.addEventListener("click",pick);
+    el.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();pick();}});
+    ticks.appendChild(el);
+  });
+  renderReadout(d.nodes[active]);
+}
+document.querySelectorAll(".tab").forEach(function(t){
+  t.addEventListener("click",function(){
+    document.querySelectorAll(".tab").forEach(function(x){x.setAttribute("aria-selected","false")});
+    t.setAttribute("aria-selected","true");
+    topic=t.dataset.topic; active=0; renderTopic();
+  });
+});
+renderTopic();
+
+const FLASHCARDS = {"t1": {"terms": [{"term": "Liturgical", "def": "Worship with a set order, from a service book."}, {"term": "Non-liturgical", "def": "Worship with no set order; often spontaneous."}, {"term": "Denomination", "def": "A distinct group within Christianity, such as Catholic, Anglican or Baptist."}, {"term": "Private worship", "def": "Worshipping God alone at home, through prayer, Bible study or reflection."}], "views": [{"n": "Liturgical worship", "tag": "Catholic · Orthodox · Anglican", "c": "Worship follows a set liturgy from a service book, built round the Eucharist. Identical words in every church across the world and across the centuries unite believers, and protect worship from one leader's mood or opinions."}, {"n": "Non-liturgical worship", "tag": "Baptist · Pentecostal · Evangelical", "c": "There is no fixed order. The service is built round Bible reading and preaching, with spontaneous prayer, testimony and contemporary worship songs, so the Holy Spirit can lead the congregation freely rather than a printed text."}, {"n": "Silent worship", "tag": "Quakers", "c": "Quakers meet in stillness with no minister, no liturgy and no sacraments, waiting on the inner light. Anyone may speak if moved by the Spirit; set forms are seen as obstacles between the worshipper and God."}, {"n": "Private worship", "tag": "All denominations", "c": "Every tradition also expects worship alone — personal prayer, Bible study, icons, a daily quiet time. What matters is whether the whole of life is offered to God, not which style fills the Sunday hour."}]}, "t2": {"terms": [{"term": "Sacrament", "def": "An outward sign of an inward, invisible grace."}, {"term": "Transubstantiation", "def": "Catholic belief that the bread and wine become Jesus' body and blood."}, {"term": "Infant baptism", "def": "Baptising babies, whose parents and godparents promise to bring them up in the faith."}, {"term": "Believers' baptism", "def": "Baptism by full immersion of someone old enough to choose faith for themselves."}], "views": [{"n": "Seven sacraments", "tag": "Catholic · Orthodox", "c": "The seven sacraments are real channels of grace, not just symbols. In the Eucharist the bread and wine truly become Christ's body and blood — transubstantiation — so the sacrament does something rather than merely picturing it."}, {"n": "Two sacraments", "tag": "Anglican · Lutheran · Methodist", "c": "Only baptism and the Eucharist were instituted by Jesus, so only these two are sacraments. They are genuine means of grace — Lutherans hold Christ is truly present in and with the bread — but grace is received by faith."}, {"n": "Two memorial ordinances", "tag": "Baptist · Evangelical", "c": "Baptism and communion are ordinances: commands to obey that publicly declare a faith already held. The bread and wine stay bread and wine, a memorial of the cross; nothing is changed by the minister's words."}, {"n": "No sacraments", "tag": "Quakers · Salvation Army", "c": "The whole of life is sacramental, so no ceremony is required. God's grace reaches people directly and continually, and outward rituals risk becoming a substitute for the inward reality they were meant to point to."}]}, "t3": {"terms": [{"term": "Prayer", "def": "Communicating with God."}, {"term": "Supplication", "def": "Asking God for something in prayer."}, {"term": "Adoration", "def": "Praising and worshipping God for who he is."}, {"term": "Informal prayer", "def": "Prayer in a person's own words, with no set form."}], "views": [{"n": "Set, formal prayer", "tag": "Catholic · Orthodox · Anglican", "c": "Prayer uses words the Church has given: the Lord's Prayer, the rosary, the daily offices. Learned words carry a believer when their own words fail, and join them to millions praying exactly the same thing."}, {"n": "Informal, spontaneous prayer", "tag": "Evangelical · Pentecostal", "c": "Prayer should be personal conversation in your own words, as a child speaks to a father. Repeated formulas risk becoming the empty phrases Jesus warned against in the verses immediately before the Lord's Prayer."}, {"n": "Silent, contemplative prayer", "tag": "Quakers · monastic traditions", "c": "The most important part of prayer is listening. In Quaker meeting or monastic contemplation the believer stops talking altogether, on the grounds that God cannot be heard over the sound of our own requests."}, {"n": "Why it matters", "tag": "What all Christians share", "c": "All hold that prayer is real communication with a God who listens, that Jesus both commanded and modelled it, and that an unanswered prayer means God answering differently, not God ignoring."}]}, "t4": {"terms": [{"term": "Pilgrimage", "def": "A religious journey to a holy place."}, {"term": "Lourdes", "def": "French pilgrimage site associated with healing."}, {"term": "Iona", "def": "A Scottish island with an ecumenical Christian community and Celtic Christian roots."}, {"term": "Retreat", "def": "Time spent away from ordinary life in prayer and reflection."}], "views": [{"n": "Pilgrimage as devotion", "tag": "Catholic · Orthodox", "c": "Travelling to a holy place is itself an act of devotion. At Lourdes pilgrims seek healing, do penance and push the wheelchairs of the sick — physical effort expressing what words alone cannot say."}, {"n": "Pilgrimage as retreat", "tag": "Anglican · ecumenical (Iona)", "c": "The value lies in time apart, not in any power in the ground. Iona offers silence, community and worship; the journey clears space to hear God, with no claim that the island works miracles."}, {"n": "Pilgrimage as unnecessary", "tag": "Most Protestants · Evangelicals", "c": "God is equally present everywhere, so no journey is required. Money spent travelling would serve God better given to the poor, and relying on holy places and relics edges towards superstition."}, {"n": "Why it can still matter", "tag": "What many Christians share", "c": "Even critics accept that breaking routine, giving days to God and standing where Christians have prayed for centuries can strengthen faith — whether or not the site itself heals anybody."}]}, "t5": {"terms": [{"term": "Advent", "def": "The season of preparation before Christmas."}, {"term": "Lent", "def": "The season of preparation before Easter."}, {"term": "Christmas", "def": "The festival celebrating the birth of Jesus — the incarnation."}, {"term": "Easter", "def": "The festival celebrating Jesus' resurrection; for most Christians the most important of all."}], "views": [{"n": "Easter is greatest", "tag": "Orthodox · Catholic · most churches", "c": "Easter is the chief festival: Paul writes that without the resurrection, faith is useless. Christmas only matters because of what that child came to do, so Holy Week outranks December."}, {"n": "Christmas as outreach", "tag": "Many Anglicans · Evangelicals", "c": "Christmas is when people who never normally attend come to church. Carol services, midnight Mass and nativity plays make the incarnation accessible, so it is the year's greatest evangelistic opportunity."}, {"n": "The festivals are being lost", "tag": "A common Christian criticism", "c": "Presents, food and shopping have crowded out the meaning, and Easter has become chocolate. Keeping Advent and Lent seriously — real waiting, real fasting — is the only way to rescue the festivals."}, {"n": "No special days", "tag": "Quakers · some Puritan traditions", "c": "Quakers keep no festival calendar, holding that every day is equally holy. Marking particular dates risks implying God is nearer at Christmas than on an ordinary Tuesday in March."}]}, "t6": {"terms": [{"term": "Great Commission", "def": "Jesus' command to make disciples of all nations."}, {"term": "Evangelism", "def": "Spreading the Christian faith."}, {"term": "Secularism", "def": "The view that religion should have no place in public life."}, {"term": "Mission", "def": "The Church's work of spreading the gospel and serving others."}], "views": [{"n": "Decline is real", "tag": "The pessimist reading", "c": "Congregations are ageing, buildings are closing and a majority of British adults now record no religion. Without serious change, the institutional Church in Britain becomes a minority interest within a generation."}, {"n": "Decline is only Western", "tag": "Global optimists", "c": "Christianity is growing rapidly in sub-Saharan Africa, China and Latin America. The Church is not dying, its centre of gravity is moving south — and missionaries are now sent to Europe, not from it."}, {"n": "Renewal through evangelism", "tag": "Evangelical · Pentecostal", "c": "The Great Commission is the answer to decline, not a rebuke about it. Alpha courses, church plants, student work and online worship are already filling churches where traditional parishes emptied."}, {"n": "Faith without membership", "tag": "Sociologists · liberal Christians", "c": "Attendance is not the same as belief. Many still pray, tick 'Christian' and turn to churches for weddings, funerals and food banks — believing without belonging, so what is declining may be institutions rather than faith."}]}, "t7": {"terms": [{"term": "Worship", "def": "Showing love and respect to God."}, {"term": "Agape", "def": "Selfless Christian love, shown in action."}, {"term": "Outreach", "def": "Work a church does to serve and reach people beyond its own members."}, {"term": "Food bank", "def": "A charity project giving emergency food parcels to people in crisis."}], "views": [{"n": "Worship is the core", "tag": "Catholic · Orthodox · traditional", "c": "The church is first a place of worship and sacrament. Social work matters, but a church that becomes a charity with a steeple has given away the one thing no other organisation can offer."}, {"n": "Service is the core", "tag": "Liberal · social-gospel Christians", "c": "Faith is proved by action. Feeding the hungry and housing the homeless is what loving your neighbour actually means, and Jesus said people would be judged on what they did for the least."}, {"n": "Outreach and evangelism", "tag": "Evangelical churches", "c": "Practical help opens the door to the gospel. Food banks, youth work and Alpha meet genuine need while making the reason for that love explicit — service and evangelism working as one thing."}, {"n": "Is this the Church's job?", "tag": "A common secular challenge", "c": "Critics reply that food banks are the state's failure rather than the Church's success, and that help from a church can come with strings. Many Christians answer that they act because nobody else did."}]}, "t8": {"terms": [{"term": "Ecumenism", "def": "Working for unity between Christian denominations."}, {"term": "Eucharist", "def": "The sacrament of bread and wine; also called Mass or Holy Communion."}, {"term": "World Council of Churches", "def": "An international body working for unity and cooperation between denominations."}, {"term": "Reconciliation", "def": "Restoring a broken relationship — between people, communities, or with God."}], "views": [{"n": "Unity through structure", "tag": "Catholic", "c": "The Church is visibly one, under the Pope and the bishops in communion with him. Real unity means returning to that one Church; without a shared authority, 'unity' means only agreeing to differ."}, {"n": "Unity through the Spirit", "tag": "Protestant · Evangelical", "c": "The true Church is every believer everywhere, whatever the label on the door. Institutional union is unnecessary because shared faith in Christ already makes Christians one, so denominations are variety, not division."}, {"n": "Ecumenism in practice", "tag": "World Council of Churches · Iona", "c": "Churches cooperate where they can: joint worship, shared relief work through Christian Aid and CAFOD, and peace-building. Progress is genuine, but sharing the Eucharist remains the point where unity still stops."}, {"n": "Division is the scandal", "tag": "A common criticism", "c": "Tens of thousands of denominations undermine the claim that Christians love one another, and division has fed conflict from Northern Ireland onwards. A divided Church, critics say, cannot credibly preach reconciliation."}]}};
+(function(){
+  let fcTopic="all", fcType="terms";
+  const grid=document.getElementById("fcGrid"), count=document.getElementById("fcCount");
+  function build(){
+    const topics = fcTopic==="all" ? Object.keys(FLASHCARDS) : [fcTopic];
+    let cards=[];
+    topics.forEach(function(tp){
+      const d=FLASHCARDS[tp]; if(!d) return;
+      if(fcType==="terms"){ d.terms.forEach(function(t){cards.push({tp:tp,front:t.term,tag:LABELS[tp],back:'<div class="fc-def">'+esc2(t.def)+'</div>'})}); }
+      else { d.views.forEach(function(v){cards.push({tp:tp,front:v.n,tag:LABELS[tp]+(v.tag?' · '+v.tag:''),back:'<div class="fc-def">'+esc2(v.c)+'</div>'})}); }
+    });
+    grid.innerHTML=cards.map(function(c){return '<button class="fc-card '+c.tp+'" data-flipped="false" aria-label="Flashcard: '+esc2(c.front)+'. Tap to reveal.">'+
+      '<div class="fc-inner">'+
+      '<div class="fc-face fc-front"><div class="fc-tag">'+esc2(c.tag)+'</div><div class="fc-term">'+esc2(c.front)+'</div><div class="fc-flip">tap to flip ↺</div></div>'+
+      '<div class="fc-face fc-back"><div class="fc-tag">'+esc2(c.tag)+'</div>'+c.back+'</div>'+
+      '</div></button>';}).join("");
+    count.textContent = cards.length + " cards";
+    grid.querySelectorAll(".fc-card").forEach(function(el){
+      el.addEventListener("click",function(){el.dataset.flipped = el.dataset.flipped==="true" ? "false":"true";});
+    });
+  }
+  document.querySelectorAll('#flashcards .fc-tabs .fc-btn').forEach(function(b){b.addEventListener("click",function(){
+    document.querySelectorAll('#flashcards .fc-tabs .fc-btn').forEach(function(x){x.setAttribute("aria-selected","false")});
+    b.setAttribute("aria-selected","true"); fcTopic=b.dataset.topic; build();
+  })});
+  document.querySelectorAll('#flashcards .fc-type .fc-btn').forEach(function(b){b.addEventListener("click",function(){
+    document.querySelectorAll('#flashcards .fc-type .fc-btn').forEach(function(x){x.setAttribute("aria-selected","false")});
+    b.setAttribute("aria-selected","true"); fcType=b.dataset.type; build();
+  })});
+  build();
+})();
+
+/* =====================================================================
+   TEACHER: paste your YouTube link between the quotes below.
+   Any format works — youtube.com/watch?v=..., youtu.be/..., or an embed URL.
+   Leave it empty ("") and the page shows a "Video not set" placeholder.
+   ===================================================================== */
+const VIDEO_URL = "";
+(function wireVideo(){
+  const url=(VIDEO_URL||"").trim();
+  if(!url) return;
+  let id="";
+  const m = url.match(/(?:youtu\.be\/|v=|\/embed\/|\/shorts\/)([A-Za-z0-9_-]{11})/);
+  if(m) id=m[1];
+  else if(/^[A-Za-z0-9_-]{11}$/.test(url)) id=url;
+  const frame=document.getElementById("videoFrame");
+  if(id && frame){
+    frame.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+id+'?rel=0" title="Unit review" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>';
+  } else if(frame){
+    frame.innerHTML='<div class="video-placeholder"><a class="res-btn big" style="background:#fff" href="'+url+'" target="_blank" rel="noopener"><span class="ic">▶</span><span><b>Watch the full unit review</b></span><span class="go">↗</span></a></div>';
+  }
+})();
+
+/* =====================================================================
+   TEACHER — every link below is already live.
+
+   SP  is the Support-Grade folder in SharePoint. Every lesson deck,
+       workbook and podcast on this page is built from it, so if the
+       folder is ever moved you change this ONE line and the whole
+       page follows.
+
+   PODCAST_BASE streams the audio from that same folder. To play the
+       audio sitting next to this file instead, change it to
+       "../Podcast_Audio/".
+
+   All resources require a school login. Any link left as "" simply
+   shows "Link not set" — nothing breaks.
+   ===================================================================== */
+const SP  = "https://hs365.sharepoint.com/sites/HS_Subjects_RE/Year%2011/Philosophy/Edu%20Ai%20-%20GCSE/KS4%20Edexcel%20RS%20-%20Full%20Scheme%20of%20Work%203%20(1)/Support%20-%20Grade/";
+const SPP = "https://hs365.sharepoint.com/sites/HS_Subjects_RE/Year%2011/Philosophy/Edu%20Ai%20-%20GCSE/KS4%20Edexcel%20RS%20-%20Full%20Scheme%20of%20Work%203%20(1)/";
+/* Podcasts open via download.aspx — this tenant refuses in-browser mp3 playback,
+   but download.aspx returns the clean file. */
+const PODCAST_BASE = "https://hs365.sharepoint.com/sites/HS_Subjects_RE/_layouts/15/download.aspx?SourceUrl=/sites/HS_Subjects_RE/Year%2011/Philosophy/Edu%20Ai%20-%20GCSE/KS4%20Edexcel%20RS%20-%20Full%20Scheme%20of%20Work%203%20%281%29/Support%20-%20Grade/Podcast_Audio/";
+const RESOURCES_FOLDER = "https://hs365.sharepoint.com/:f:/s/HS_Subjects_RE/IgCPACLmKiqoQpNvB2QcYSoxAdtZd0yxpUHe6QBEgccrBk4?e=IUkxRb";
+
+const LINKS = {
+  t1_lesson:  SP + "Unit%203%20-%20Living%20the%20Christian%20Life/LC_L01_Worship.pptx",
+  t1_booklet: SP + "Unit%203%20-%20Living%20the%20Christian%20Life/Unit3_Living_the_Christian_Life_Workbook.docx",
+  t1_podcast: PODCAST_BASE + "Christianity/C17_Worship.mp3",
+  t2_lesson:  SP + "Unit%203%20-%20Living%20the%20Christian%20Life/LC_L02_The_role_of_the_sacraments.pptx",
+  t2_booklet: SP + "Unit%203%20-%20Living%20the%20Christian%20Life/Unit3_Living_the_Christian_Life_Workbook.docx",
+  t2_podcast: PODCAST_BASE + "Christianity/C18_Sacraments.mp3",
+  t3_lesson:  SP + "Unit%203%20-%20Living%20the%20Christian%20Life/LC_L03_The_nature_and_purpose_of_prayer.pptx",
+  t3_booklet: SP + "Unit%203%20-%20Living%20the%20Christian%20Life/Unit3_Living_the_Christian_Life_Workbook.docx",
+  t3_podcast: PODCAST_BASE + "Christianity/C19_Prayer.mp3",
+  t4_lesson:  SP + "Unit%203%20-%20Living%20the%20Christian%20Life/LC_L04_Pilgrimage.pptx",
+  t4_booklet: SP + "Unit%203%20-%20Living%20the%20Christian%20Life/Unit3_Living_the_Christian_Life_Workbook.docx",
+  t4_podcast: PODCAST_BASE + "Christianity/C20_Pilgrimage.mp3",
+  t5_lesson:  SP + "Unit%203%20-%20Living%20the%20Christian%20Life/LC_L05_Christian_religious_celebrations.pptx",
+  t5_booklet: SP + "Unit%203%20-%20Living%20the%20Christian%20Life/Unit3_Living_the_Christian_Life_Workbook.docx",
+  t5_podcast: PODCAST_BASE + "Christianity/C21_Celebrations.mp3",
+  t6_lesson:  SP + "Unit%203%20-%20Living%20the%20Christian%20Life/LC_L06_The_future_of_the_Church.pptx",
+  t6_booklet: SP + "Unit%203%20-%20Living%20the%20Christian%20Life/Unit3_Living_the_Christian_Life_Workbook.docx",
+  t6_podcast: PODCAST_BASE + "Christianity/C22_Future_of_Church.mp3",
+  t7_lesson:  SP + "Unit%203%20-%20Living%20the%20Christian%20Life/LC_L07_The_importance_of_the_local_church.pptx",
+  t7_booklet: SP + "Unit%203%20-%20Living%20the%20Christian%20Life/Unit3_Living_the_Christian_Life_Workbook.docx",
+  t7_podcast: PODCAST_BASE + "Christianity/C23_Local_Church.mp3",
+  t8_lesson:  SP + "Unit%203%20-%20Living%20the%20Christian%20Life/LC_L08_The_worldwide_Church.pptx",
+  t8_booklet: SP + "Unit%203%20-%20Living%20the%20Christian%20Life/Unit3_Living_the_Christian_Life_Workbook.docx",
+  t8_podcast: PODCAST_BASE + "Christianity/C24_Worldwide_Church.mp3",
+  booklet: SP + "Unit%203%20-%20Living%20the%20Christian%20Life/Unit3_Living_the_Christian_Life_Workbook.docx",
+  assessment: SP + "Unit%203%20-%20Living%20the%20Christian%20Life/LC_L09_Summative_Assessment.pptx",
+  modelbank: SPP + "Model_Answer_Bank.docx",
+  revision: SPP + "Revision%20RE.pptx",
+  resfolder: RESOURCES_FOLDER
+};
+(function wireResources(){
+  let anySet=false;
+  document.querySelectorAll(".res-btn").forEach(function(btn){
+    const url=(LINKS[btn.dataset.key]||"").trim();
+    if(url){ btn.href=url; btn.target="_blank"; btn.rel="noopener"; anySet=true; }
+    else{ btn.classList.add("unset"); btn.removeAttribute("href"); btn.setAttribute("aria-disabled","true"); }
+  });
+  if(anySet){ const n=document.getElementById("resNote"); if(n) n.classList.add("hide"); }
+})();
+</script>
+</body>
+</html>

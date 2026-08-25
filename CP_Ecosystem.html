@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crime and Punishment — Unit 06 · Unit at a Glance</title>
+<style>
+  :root{
+    --ink:#0A5638; --ink-2:#053526; --mint:#E6F3EC; --mint-2:#CFE6DA;
+    --amber:#E0A400; --amber-soft:#FFCE45; --amber-ink:#8a6300; --note-bg:#FCF4DA;
+    --rubric:#B01C2E; --blue:#1565C0; --paper:#F4FAF6; --line:rgba(10,86,56,.18); --lead:#3f4d46; --muted:#6b7a72;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--paper);color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;line-height:1.5;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1060px;margin:0 auto;padding:0 24px}
+  .hero{background:
+      radial-gradient(1200px 400px at 80% -10%, rgba(255,255,255,.14), transparent 60%),
+      linear-gradient(180deg,var(--ink) 0%, var(--ink-2) 100%);
+    color:var(--mint);padding:64px 0 72px;position:relative;overflow:hidden;border-bottom:3px solid var(--amber)}
+  .hero::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.06;
+    background:repeating-linear-gradient(180deg,transparent 0 38px,#fff 38px 39px)}
+  .hero .wrap{position:relative;z-index:2}
+  .crest{display:flex;align-items:center;gap:16px;margin-bottom:34px}
+  .crest svg{width:54px;height:54px;flex:none}
+  .crest .who{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;color:var(--amber-soft)}
+  .crest .who b{color:var(--mint);display:block;letter-spacing:.12em;font-size:.86rem;margin-top:3px}
+  .homelink{margin-left:auto;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.78rem;font-weight:700;
+    letter-spacing:.04em;text-decoration:none;color:var(--ink-2);background:var(--amber);
+    padding:9px 15px;border-radius:8px;white-space:nowrap;transition:filter .15s}
+  .homelink:hover{filter:brightness(1.1)}
+  .unitnav{background:var(--ink-2);border-bottom:1px solid rgba(255,255,255,.12);
+    position:sticky;top:0;z-index:20;overflow-x:auto}
+  .unitnav .wrap{display:flex;gap:4px;padding-top:8px;padding-bottom:8px;min-width:max-content}
+  .unitnav a{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.74rem;font-weight:700;
+    letter-spacing:.03em;text-decoration:none;color:var(--mint-2);padding:7px 11px;border-radius:7px;
+    white-space:nowrap;transition:background .15s,color .15s;display:flex;gap:6px;align-items:baseline}
+  .unitnav a span{opacity:.55;font-size:.68rem}
+  .unitnav a:hover{background:rgba(255,255,255,.12);color:#fff}
+  .unitnav a.here{background:var(--amber);color:var(--ink-2)}
+  .unitnav a.here span{opacity:.75}
+  .unitnav a.home{color:var(--amber)}
+  .unitnav a.p1::before{content:"";width:7px;height:7px;border-radius:50%;background:#8D53C2;align-self:center}
+  .unitnav a.p2::before{content:"";width:7px;height:7px;border-radius:50%;background:#1E9A70;align-self:center}
+  .unitnav a.here::before{background:var(--ink-2)!important}
+  h1{font-size:clamp(2.2rem,5.6vw,3.8rem);line-height:1.04;font-weight:700;letter-spacing:-.01em}
+  .unitpill{display:inline-block;font-family:"Trebuchet MS",sans-serif;font-size:.7rem;letter-spacing:.22em;
+    text-transform:uppercase;font-weight:700;background:var(--amber);color:var(--ink-2);padding:6px 12px;border-radius:6px;margin-bottom:14px}
+  .sub{margin-top:20px;max-width:58ch;font-size:1.12rem;color:var(--mint-2)}
+  .bigq{margin-top:30px;display:inline-flex;gap:14px;align-items:flex-start;border-left:3px solid var(--amber);padding:8px 0 8px 18px;max-width:62ch}
+  .bigq .q{font-family:"Trebuchet MS",sans-serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--amber-soft);padding-top:5px}
+  .bigq p{font-size:1.22rem;font-style:italic;color:#fff}
+  section{padding:64px 0}
+  .sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:8px}
+  .sec-head .num{font-family:"Trebuchet MS",sans-serif;color:var(--amber);font-weight:700;font-size:.9rem;letter-spacing:.15em}
+  .sec-head h2{font-size:clamp(1.6rem,3.4vw,2.3rem);letter-spacing:-.01em}
+  .sec-lead{color:var(--lead);max-width:68ch;margin-bottom:34px;font-size:1.05rem}
+  .spectrum-card{background:linear-gradient(180deg,#fff, var(--paper));border:1px solid var(--line);border-radius:14px;
+    box-shadow:0 18px 40px -28px rgba(0,0,0,.5);padding:28px 26px 34px}
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:26px}
+  .tab{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.8rem;
+    border:1px solid var(--line);background:#fff;color:var(--ink);padding:8px 14px;border-radius:999px;cursor:pointer;transition:.18s}
+  .tab[aria-selected="true"]{background:var(--ink);color:var(--mint);border-color:var(--ink)}
+  .tab:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+  .axis{position:relative;margin:8px 4px 0}
+  .axis-labels{display:flex;justify-content:space-between;gap:20px;font-family:"Trebuchet MS",sans-serif;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+  .axis-labels .l{color:var(--rubric);font-weight:700}
+  .axis-labels .r{color:var(--blue);font-weight:700;text-align:right}
+  .bar{height:10px;border-radius:999px;background:linear-gradient(90deg,var(--rubric),#b06a1e 40%,#5a7d3a 66%,var(--blue));position:relative}
+  .ticks{position:relative;height:124px}
+  .node{position:absolute;top:0;transform:translateX(-50%);width:150px;text-align:center;cursor:pointer}
+  .node .dot{width:20px;height:20px;border-radius:50%;background:#fff;border:3px solid var(--ink);margin:0 auto;position:relative;top:-15px;transition:.18s}
+  .node .nm{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.8rem;margin-top:-6px;line-height:1.2}
+  .node .sb{font-size:.74rem;color:var(--muted);font-style:italic;margin-top:2px;line-height:1.25}
+  .node:hover .dot,.node[data-active="true"] .dot{transform:scale(1.25);border-color:var(--amber);box-shadow:0 0 0 5px rgba(0,0,0,.08)}
+  .node:focus-visible{outline:none}
+  .node:focus-visible .dot{outline:3px solid var(--amber);outline-offset:3px}
+  .readout{margin-top:14px;background:var(--ink);color:var(--mint);border-radius:12px;padding:20px 22px;min-height:112px;display:flex;gap:18px;align-items:flex-start}
+  .readout .badge{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;
+    background:var(--amber);color:var(--ink-2);padding:6px 10px;border-radius:6px;margin-top:2px;max-width:160px}
+  .readout .body h4{font-size:1.12rem;margin-bottom:4px}
+  .readout .body p{color:var(--mint-2);font-size:.98rem}
+  .readout .body .g9{margin-top:10px;font-size:.88rem}
+  .readout .body .g9 .k{font-family:"Trebuchet MS",sans-serif;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--amber-soft)}
+  .hint{font-family:"Trebuchet MS",sans-serif;font-size:.76rem;color:var(--muted);margin-top:14px;text-align:center}
+  .thread{background:var(--ink);color:var(--mint);border-radius:14px;padding:34px 30px;position:relative;overflow:hidden}
+  .thread::before{content:"";position:absolute;inset:0;opacity:.07;background:repeating-linear-gradient(180deg,transparent 0 30px,#fff 30px 31px)}
+  .thread .wrap2{position:relative;z-index:2}
+  .thread h2{color:#fff;font-size:clamp(1.5rem,3vw,2.1rem);margin-bottom:8px}
+  .thread .lead{color:var(--mint-2);max-width:64ch;margin-bottom:24px}
+  .threads{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .tcard{border:1px solid rgba(255,255,255,.28);border-radius:10px;padding:16px 16px 18px;background:rgba(255,255,255,.04)}
+  .tcard .t{font-family:"Trebuchet MS",sans-serif;color:var(--amber);font-weight:700;font-size:.82rem;margin-bottom:6px}
+  .tcard p{font-size:.9rem;color:var(--mint-2)}
+  .triptych{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
+  .panel{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;display:flex;flex-direction:column}
+  .panel .cap{padding:16px 18px;color:#fff}
+  .panel .cap .n{font-family:"Trebuchet MS",sans-serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;opacity:.85}
+  .panel .cap h3{font-size:1.22rem;margin-top:3px}
+  .panel .cap .ask{font-style:italic;font-size:.88rem;margin-top:8px;opacity:.95}
+  .panel .body{padding:16px 18px;font-size:.92rem;display:flex;flex-direction:column;flex:1}
+  .panel .body .row{display:flex;gap:9px;padding:7px 0;border-bottom:1px dashed var(--line)}
+  .panel .body .row .v{font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.74rem;color:var(--ink);min-width:118px;max-width:118px}
+  .panel .body .row .d{color:var(--lead)}
+  .panel .body .src{margin-top:auto;padding-top:12px;font-size:.84rem;color:var(--ink);font-style:italic}
+  .panel .body .src .k{display:block;font-family:"Trebuchet MS",sans-serif;font-style:normal;font-size:.62rem;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--amber-ink);font-weight:700;margin-bottom:2px}
+  .revise{display:grid;grid-template-columns:1.05fr .95fr;gap:24px;align-items:start}
+  .steps{counter-reset:s;display:flex;flex-direction:column;gap:14px}
+  .step{display:flex;gap:16px;align-items:flex-start;border-left:2px solid var(--line);padding:2px 0 2px 18px;position:relative}
+  .step::before{counter-increment:s;content:counter(s);position:absolute;left:-15px;top:-2px;width:28px;height:28px;border-radius:50%;
+    background:var(--amber);color:var(--ink-2);font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.9rem;display:grid;place-items:center}
+  .step h4{font-size:1.02rem}
+  .step p{font-size:.9rem;color:var(--lead);margin-top:2px}
+  .ao{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff}
+  .ao .h{padding:12px 16px;font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.82rem;color:#fff}
+  .ao .h.ao1{background:var(--ink)}
+  .ao .h.ao2{background:var(--rubric)}
+  .ao .c{padding:12px 16px;font-size:.9rem;border-bottom:1px solid var(--line)}
+  .ao .c:last-child{border-bottom:0}
+  .ao .c b{font-family:"Trebuchet MS",sans-serif;font-size:.78rem}
+  .video-frame{position:relative;width:100%;aspect-ratio:16/9;border-radius:14px;overflow:hidden;
+    border:1px solid var(--line);box-shadow:0 20px 44px -30px rgba(0,0,0,.5);background:var(--ink)}
+  .video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .video-placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:14px;text-align:center;padding:30px;color:var(--mint-2);
+    background:radial-gradient(700px 300px at 50% 30%,rgba(255,255,255,.12),transparent 60%),linear-gradient(180deg,var(--ink),var(--ink-2))}
+  .video-placeholder .vp-badge{font-family:"Trebuchet MS",Verdana,sans-serif;font-weight:700;font-size:.72rem;letter-spacing:.14em;
+    text-transform:uppercase;background:var(--amber);color:var(--ink-2);padding:6px 12px;border-radius:6px}
+  .video-placeholder p{max-width:52ch;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.92rem;line-height:1.55}
+  .video-placeholder code{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.24);border-radius:4px;padding:1px 6px}
+  .fc-controls{display:flex;gap:18px;flex-wrap:wrap;align-items:center;margin-bottom:24px}
+  .fc-tabs,.fc-type{display:flex;gap:8px;flex-wrap:wrap}
+  .fc-btn{font-family:"Trebuchet MS",Verdana,sans-serif;font-weight:700;font-size:.78rem;border:1px solid var(--line);
+    background:#fff;color:var(--ink);padding:8px 13px;border-radius:999px;cursor:pointer;transition:.18s}
+  .fc-btn[aria-selected="true"]{background:var(--ink);color:var(--mint);border-color:var(--ink)}
+  .fc-btn:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+  .fc-hint{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.78rem;color:var(--muted);margin-left:auto}
+  .fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+  .fc-card{perspective:1200px;height:200px;cursor:pointer;background:none;border:0;padding:0;font-family:inherit;text-align:left}
+  .fc-inner{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+  .fc-card[data-flipped="true"] .fc-inner{transform:rotateY(180deg)}
+  .fc-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+    border-radius:12px;padding:18px;display:flex;flex-direction:column;border:1px solid var(--line);overflow:auto}
+  .fc-front{background:linear-gradient(180deg,#fff,var(--paper))}
+  .fc-back{transform:rotateY(180deg);color:var(--mint)}
+  .fc-tag{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--amber-soft);font-weight:700;margin-bottom:8px}
+  .fc-front .fc-tag{color:var(--amber-ink)}
+  .fc-term{font-size:1.18rem;font-weight:700;line-height:1.16}
+  .fc-front .fc-flip{margin-top:auto;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.72rem;color:var(--muted)}
+  .fc-def{font-size:.9rem;line-height:1.4}
+  .res-note{background:var(--note-bg);border:1px solid var(--amber);border-left:4px solid var(--amber);
+    border-radius:8px;padding:12px 16px;margin-bottom:22px;font-size:.9rem;color:var(--amber-ink);
+    font-family:"Trebuchet MS",Verdana,sans-serif}
+  .res-note code{background:#fff;border:1px solid var(--line);border-radius:4px;padding:1px 6px;font-size:.85em}
+  .res-note.hide{display:none}
+  .res-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px;margin-bottom:16px}
+  .res-col{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff}
+  .rc-head{padding:14px 16px;color:#fff}
+  .rc-head .rc-n{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;opacity:.85}
+  .rc-head h3{font-size:1.08rem;margin-top:2px}
+  .res-btn{display:flex;align-items:center;gap:12px;padding:13px 16px;border-top:1px solid var(--line);
+    font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.9rem;color:var(--ink);text-decoration:none;cursor:pointer;transition:background .15s}
+  .res-btn em{display:block;font-style:normal;font-size:.72rem;color:var(--muted);margin-top:2px;word-break:break-word}
+  .res-col .res-btn:first-of-type{border-top:0}
+  .res-btn:hover{background:var(--mint)}
+  .res-btn .ic{width:26px;height:26px;flex:none;display:grid;place-items:center;border-radius:6px;background:var(--ink);color:var(--amber);font-size:.9rem}
+  .res-btn .go{margin-left:auto;color:var(--amber);font-weight:700;opacity:0;transition:.15s}
+  .res-btn:hover .go{opacity:1}
+  .res-btn:focus-visible{outline:3px solid var(--amber);outline-offset:-3px}
+  .res-btn.unset{opacity:.55;cursor:not-allowed}
+  .res-btn.unset .go{display:none}
+  .res-btn.unset::after{content:"Link not set";margin-left:auto;font-size:.72rem;color:var(--amber-ink);
+    background:var(--note-bg);border:1px solid var(--amber-soft);border-radius:5px;padding:2px 7px;white-space:nowrap}
+  .res-wide{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:2px}
+  .res-btn.big{border:1px solid var(--line);border-radius:12px;background:#fff;padding:16px 18px}
+  .res-btn.big:hover{background:var(--mint)}
+  .res-btn.big .ic{width:34px;height:34px;font-size:1.1rem}
+  .res-folder{margin-top:16px}
+  .res-btn.big.folder{background:linear-gradient(120deg,var(--ink),var(--ink-2));color:var(--mint);border-color:var(--ink)}
+  .res-btn.big.folder:hover{filter:brightness(1.12);background:linear-gradient(120deg,var(--ink),var(--ink-2))}
+  .res-btn.big.folder .ic{background:var(--amber);color:var(--ink-2)}
+  .res-btn.big.folder b{color:#fff}
+  footer{background:var(--ink-2);color:var(--mint-2);padding:26px 0;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.8rem}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+  footer .amber{color:var(--amber)}
+  @media(max-width:820px){
+    .threads{grid-template-columns:1fr}
+    .revise{grid-template-columns:1fr}
+    .node{width:104px}
+    .node .sb{display:none}
+    .res-wide{grid-template-columns:1fr}
+    .fc-grid{grid-template-columns:1fr 1fr}
+    .fc-hint{width:100%;margin-left:0}
+    .readout{flex-direction:column;gap:10px}
+  }
+  @media print{
+    .hero{padding:24px 0} .tabs,.fc-controls,.hint,.res-note{display:none}
+    section{padding:20px 0;break-inside:avoid} .panel{break-inside:avoid}
+  }
+  @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+.panel.a1 .cap{background:linear-gradient(135deg,#04301F,#022015)}
+.rc1 .rc-head{background:linear-gradient(135deg,#04301F,#022015)}
+.fc-card.t1 .fc-back{background:linear-gradient(160deg,#04301F,#022015)}
+.panel.a2 .cap{background:linear-gradient(135deg,#063E29,#042A1B)}
+.rc2 .rc-head{background:linear-gradient(135deg,#063E29,#042A1B)}
+.fc-card.t2 .fc-back{background:linear-gradient(160deg,#063E29,#042A1B)}
+.panel.a3 .cap{background:linear-gradient(135deg,#084C33,#053322)}
+.rc3 .rc-head{background:linear-gradient(135deg,#084C33,#053322)}
+.fc-card.t3 .fc-back{background:linear-gradient(160deg,#084C33,#053322)}
+.panel.a4 .cap{background:linear-gradient(135deg,#0A5B3E,#063D2A)}
+.rc4 .rc-head{background:linear-gradient(135deg,#0A5B3E,#063D2A)}
+.fc-card.t4 .fc-back{background:linear-gradient(160deg,#0A5B3E,#063D2A)}
+.panel.a5 .cap{background:linear-gradient(135deg,#0C6A49,#084831)}
+.rc5 .rc-head{background:linear-gradient(135deg,#0C6A49,#084831)}
+.fc-card.t5 .fc-back{background:linear-gradient(160deg,#0C6A49,#084831)}
+.panel.a6 .cap{background:linear-gradient(135deg,#0F7A55,#0A5239)}
+.rc6 .rc-head{background:linear-gradient(135deg,#0F7A55,#0A5239)}
+.fc-card.t6 .fc-back{background:linear-gradient(160deg,#0F7A55,#0A5239)}
+.panel.a7 .cap{background:linear-gradient(135deg,#158A62,#0E5D42)}
+.rc7 .rc-head{background:linear-gradient(135deg,#158A62,#0E5D42)}
+.fc-card.t7 .fc-back{background:linear-gradient(160deg,#158A62,#0E5D42)}
+.panel.a8 .cap{background:linear-gradient(135deg,#1E9A70,#14684C)}
+.rc8 .rc-head{background:linear-gradient(135deg,#1E9A70,#14684C)}
+.fc-card.t8 .fc-back{background:linear-gradient(160deg,#1E9A70,#14684C)}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <div class="crest">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><rect x="2" y="2" width="60" height="60" rx="13" fill="#053526" stroke="#E0A400" stroke-width="1.5"/>
+      <path d="M40 18a15 15 0 1 0 0 28 18 18 0 1 1 0-28z" fill="none" stroke="#E6F3EC" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M45 26l2.2 4.6 5 .7-3.6 3.5.9 5-4.5-2.4-4.5 2.4.9-5-3.6-3.5 5-.7z" fill="#E0A400"/></svg>
+      <div class="who">Edexcel GCSE (9–1) Religious Studies B · Paper 2 · Area of study 2 · Crime and Punishment
+        <b>Harlington School · RE Course — Support Grade</b></div>
+      <a class="homelink" href="RE_Course_Support_Grade.html">⌂ Home</a>
+    </div>
+    <span class="unitpill">Unit 06</span>
+    <h1>Crime and Punishment</h1>
+    <p class="sub">Eight topics, one unit. The divergent Muslim views — and the non-religious ones the examiner expects here — set side by side, the key ideas connected, and every source of wisdom and authority in one place.</p>
+    <div class="bigq">
+      <span class="q">The<br>big<br>question</span>
+      <p>What does Islam teach about crime, punishment and forgiveness — and where do Muslims, and their non-religious neighbours, part company?</p>
+    </div>
+  </div>
+</header>
+
+<nav class="unitnav" aria-label="All units">
+  <div class="wrap">
+    <a class="home" href="RE_Course_Support_Grade.html">⌂ All units</a>
+    <a class="p1" href="CB_Ecosystem.html"><span>01</span>Christian Beliefs</a>
+    <a class="p1" href="MR_Ecosystem.html"><span>05</span>Marriage &amp; Relationships</a>
+    <a class="p1" href="LC_Ecosystem.html"><span>03</span>Living the Christian Life</a>
+    <a class="p1" href="MLD_Ecosystem.html"><span>07</span>Matters of Life and Death</a>
+    <a class="p2" href="MB_Ecosystem.html"><span>02</span>Muslim Beliefs</a>
+    <a class="p2 here" href="CP_Ecosystem.html"><span>06</span>Crime and Punishment</a>
+    <a class="p2" href="LM_Ecosystem.html"><span>04</span>Living the Muslim Life</a>
+    <a class="p2" href="PAC_Ecosystem.html"><span>08</span>Peace and Conflict</a>
+  </div>
+</nav>
+
+<section id="spectrum">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">01</span><h2>The divergent views explorer</h2></div>
+    <p class="sec-lead">Every (d) in this unit turns on the <b>divergent views</b> — traditional beside reformist Muslim, beside Muslims living under UK law, and beside the <b>non-religious voice</b> this paper expects. Pick a topic, then tap a position to see what it claims. The top-marks move and a 7-minute discussion question travel with each topic.</p>
+    <div class="spectrum-card">
+      <div class="tabs" role="tablist" aria-label="Choose a topic">
+<button class="tab" role="tab" aria-selected="true" data-topic="t1">Justice</button>
+<button class="tab" role="tab" aria-selected="false" data-topic="t2">Crime</button>
+<button class="tab" role="tab" aria-selected="false" data-topic="t3">Good &amp; evil</button>
+<button class="tab" role="tab" aria-selected="false" data-topic="t4">Punishment</button>
+<button class="tab" role="tab" aria-selected="false" data-topic="t5">Aims</button>
+<button class="tab" role="tab" aria-selected="false" data-topic="t6">Forgiveness</button>
+<button class="tab" role="tab" aria-selected="false" data-topic="t7">Treatment</button>
+<button class="tab" role="tab" aria-selected="false" data-topic="t8">Death penalty</button>
+      </div>
+      <div class="axis">
+        <div class="axis-labels"><span class="l" id="poleL"></span><span class="r" id="poleR"></span></div>
+        <div class="bar"></div>
+        <div class="ticks" id="ticks"></div>
+      </div>
+      <div class="readout" id="readout" aria-live="polite"></div>
+      <p class="hint">Tap a circle — or use Tab and Enter — to explore each position.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="thread">
+      <div class="wrap2">
+        <h2>The thread that ties it together</h2>
+        <p class="lead">Top marks are not more content — they are three habits applied to every topic. Spot them and every (d) in this unit opens the same way.</p>
+        <div class="threads"><div class="tcard"><div class="t">Divergent views, side by side</div><p>Never one view at a time. Set the traditional application of Shari&#x27;ah beside the reformist reading, beside Muslims who accept the law of the land — and on this unit beside the humanist, Amnesty or UK legal view too. That comparison IS the analysis the (d) is marked on.</p></div><div class="tcard"><div class="t">The (d) regulation</div><p>Chain each point (claim → because → this means → therefore), steelman the other side, weigh BOTH arguments — a strength AND a limit — then justify the conclusion.</p></div><div class="tcard"><div class="t">Source-first accuracy</div><p>A correctly named source beats a vague paraphrase — &#x27;uphold justice&#x27; (Surah 4:135), not &#x27;the Qur&#x27;an says be fair&#x27;; the Human Rights Act 1998, not &#x27;human rights law&#x27;. One learned line, placed precisely, is what turns a (c) from 3 marks into 5.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="topics">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">02</span><h2>8 topics, one unit</h2></div>
+    <p class="sec-lead">Each panel is a topic's <b>key idea</b> — the connective explanation that links the key words into one argument, with the source of wisdom and authority the (c) question expects. Learn the chain, not the list.</p>
+    <div class="triptych">
+<div class="panel a1"><div class="cap"><div class="n">Topic 1 · CP01</div><h3>Justice</h3><div class="ask">Why is justice at the heart of Islam?</div></div><div class="body"><div class="row"><span class="v">ALLAH IS AL-&#x27;ADL</span><span class="d">Justice is not simply a rule Allah gives; Al-&#x27;Adl, the Just, is one of the 99 names, so justice is part of who God is.</span></div><div class="row"><span class="v">SO MUSLIMS MUST</span><span class="d">Surah 4:135 tells believers to uphold justice as witnesses to God, even when the evidence goes against themselves, their parents or their own relatives.</span></div><div class="row"><span class="v">JUSTICE IN ACTION</span><span class="d">So justice is something done, not felt: Zakah moves wealth to those in need, courts must judge impartially, and the wronged must be put right.</span></div><div class="row"><span class="v">PEACE NEEDS IT</span><span class="d">Injustice breeds resentment and conflict, so Muslims argue that lasting peace, inside the ummah and beyond it, is impossible until justice is done first.</span></div><div class="src"><span class="k">Source of wisdom &amp; authority</span>Surah 4:135 · &#x27;Uphold justice&#x27;</div></div></div>
+<div class="panel a2"><div class="cap"><div class="n">Topic 2 · CP02</div><h3>Crime</h3><div class="ask">Why do people commit crimes at all?</div></div><div class="body"><div class="row"><span class="v">GOD COMMANDS IT</span><span class="d">Surah 16:90-91 says God commands justice, doing good and generosity and forbids what is wrong, so crime disobeys Allah as well as harming people.</span></div><div class="row"><span class="v">THREE CATEGORIES</span><span class="d">Islamic law sorts crime by who is wronged: Hudud against God, Qisas against a person, and Ta&#x27;zir left to a judge&#x27;s discretion.</span></div><div class="row"><span class="v">WHY PEOPLE OFFEND</span><span class="d">Muslims point to poverty, drugs, upbringing, low self-esteem and the whispering of Shaytan — causes that explain an offence without ever excusing it.</span></div><div class="row"><span class="v">REMOVE THE CAUSES</span><span class="d">If need and neglect push people towards crime, then Zakah, education and strong families are crime prevention as much as they are charity.</span></div><div class="src"><span class="k">Source of wisdom &amp; authority</span>Surah 16:90-91 · &#x27;God commands justice&#x27;</div></div></div>
+<div class="panel a3"><div class="cap"><div class="n">Topic 3 · CP03</div><h3>Good, evil and suffering</h3><div class="ask">Why do good people do bad things?</div></div><div class="body"><div class="row"><span class="v">BORN WITH FITRAH</span><span class="d">Islam teaches that every person is born with fitrah, a natural leaning towards good and towards belief in one God, so nobody arrives evil.</span></div><div class="row"><span class="v">BUT FREE TO CHOOSE</span><span class="d">Free will is what makes obedience worth anything, but the same freedom lets a person override conscience, reason and revelation whenever they choose.</span></div><div class="row"><span class="v">SO EVIL IS CHOSEN</span><span class="d">Evil is what humans do with that freedom, prompted by Shaytan&#x27;s whispering but never forced, which is why offenders can fairly be held responsible.</span></div><div class="row"><span class="v">AND CAN BE UNDONE</span><span class="d">Because fitrah is damaged rather than destroyed, an offender can still be turned back, which is why reformation matters in Islam as much as punishment.</span></div><div class="src"><span class="k">Source of wisdom &amp; authority</span>Surah 76:11-12 · &#x27;God will reward them&#x27;</div></div></div>
+<div class="panel a4"><div class="cap"><div class="n">Topic 4 · CP04</div><h3>Punishment</h3><div class="ask">What gives anyone the right to punish?</div></div><div class="body"><div class="row"><span class="v">LAWFUL AUTHORITY</span><span class="d">Only a lawful authority may punish. Private revenge is forbidden, which is why a court stands between the victim&#x27;s family and the offender.</span></div><div class="row"><span class="v">FAIR RETRIBUTION</span><span class="d">Surah 2:178 permits Qisas, retribution equal to the harm done; the response may not exceed the injury, which caps revenge rather than encouraging it.</span></div><div class="row"><span class="v">THE FAMILY CHOOSES</span><span class="d">In Qisas the victim&#x27;s family may take retribution, accept blood money (diyya), or forgive — and the same verse treats forgiveness as the better path.</span></div><div class="row"><span class="v">PROOF FIRST</span><span class="d">There is no punishment without proof: guilt must be established before an impartial court, and Surah 4:135 binds the judge to be fair even against himself.</span></div><div class="src"><span class="k">Source of wisdom &amp; authority</span>Surah 2:178 · &#x27;Fair retribution&#x27;</div></div></div>
+<div class="panel a5"><div class="cap"><div class="n">Topic 5 · CP05</div><h3>Aims of punishment</h3><div class="ask">Which aim of punishment matters most?</div></div><div class="body"><div class="row"><span class="v">FOUR AIMS</span><span class="d">Punishment aims at deterrence (putting others off), retribution (paying for the harm), reformation (changing the offender) and protection (keeping the public safe).</span></div><div class="row"><span class="v">THEY PULL APART</span><span class="d">The aims compete: a long sentence protects the public but rarely reforms anyone, and a fine may deter without repairing any of the harm done.</span></div><div class="row"><span class="v">ALL FOUR AT ONCE</span><span class="d">Muslim teaching pursues each one: public deterrence, the proportionate retribution of Qisas, repentance that reforms, and a community kept safe from further harm.</span></div><div class="row"><span class="v">MERCY QUALIFIES</span><span class="d">But Surah 4:26-31 ends with God wishing to lighten the burden and turn towards people in mercy, so punishment is a means and never the point.</span></div><div class="src"><span class="k">Source of wisdom &amp; authority</span>Surah 4:26-31 · &#x27;Mercy&#x27;</div></div></div>
+<div class="panel a6"><div class="cap"><div class="n">Topic 6 · CP06</div><h3>Forgiveness</h3><div class="ask">Can forgiveness and justice live together?</div></div><div class="body"><div class="row"><span class="v">PARDON AND FORGIVE</span><span class="d">Surah 64:14 tells believers that if they pardon, overlook and forgive, God is Most Forgiving and Merciful — Muslims forgive because Allah forgives them.</span></div><div class="row"><span class="v">MAKKAH</span><span class="d">Entering Makkah in victory, Muhammad pardoned those who had persecuted the Muslims and driven them out — the model case of power used to forgive.</span></div><div class="row"><span class="v">AFTER REPENTANCE</span><span class="d">Forgiveness is not pretending nothing happened: repentance means admitting the wrong, being sorry, putting right what can be put right, and not repeating it.</span></div><div class="row"><span class="v">RESTORATIVE JUSTICE</span><span class="d">In restorative justice the offender and victim meet, the harm is faced and amends are made — close in spirit to the Qisas options of pardon or diyya.</span></div><div class="src"><span class="k">Source of wisdom &amp; authority</span>Surah 64:14 · &#x27;Forgive them&#x27;</div></div></div>
+<div class="panel a7"><div class="cap"><div class="n">Topic 7 · CP07</div><h3>Treatment of criminals</h3><div class="ask">Do the guilty deserve rights at all?</div></div><div class="body"><div class="row"><span class="v">FEED THE CAPTIVE</span><span class="d">Surah 76:8 praises those who feed the needy, the orphan and the captive — the prisoner named alongside the people most deserving of care.</span></div><div class="row"><span class="v">NO TORTURE</span><span class="d">Islam forbids torture and mutilation and forbids punishing anyone before guilt is proved; a confession forced out of a frightened person proves nothing.</span></div><div class="row"><span class="v">FAIR TRIAL</span><span class="d">Everyone is innocent until proven guilty before an impartial court — required both by Islamic rules of evidence and by Article 6 of the Human Rights Act.</span></div><div class="row"><span class="v">HUMANE CONDITIONS</span><span class="d">The UN&#x27;s Mandela Rules set minimum prison standards — health care, family contact, no degrading treatment — defended by Muslim and secular campaigners alike.</span></div><div class="src"><span class="k">Source of wisdom &amp; authority</span>Surah 76:8 · &#x27;They feed the captive&#x27;</div></div></div>
+<div class="panel a8"><div class="cap"><div class="n">Topic 8 · CP08</div><h3>Capital punishment</h3><div class="ask">Should any state hold the power of life and death?</div></div><div class="body"><div class="row"><span class="v">ONE HADITH</span><span class="d">A well-known Hadith permits execution only in narrowly defined cases — &#x27;a life for a life&#x27; and two others that scholars define strictly and dispute today.</span></div><div class="row"><span class="v">THREE READINGS</span><span class="d">Muslims read it differently: as a duty, as a permission a family&#x27;s forgiveness can set aside, or as a rule for a very different society.</span></div><div class="row"><span class="v">QISAS QUALIFIES IT</span><span class="d">Even for murder, Surah 2:178 leaves the family the choice of retribution, diyya or pardon, so execution is never automatic in Islamic law.</span></div><div class="row"><span class="v">THE UK POSITION</span><span class="d">Britain abolished the death penalty for murder in 1965 and for all remaining offences by 1998, and the Human Rights Act protects the right to life.</span></div><div class="src"><span class="k">Source of wisdom &amp; authority</span>One Hadith, three readings</div></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="resources">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">03</span><h2>Your resources</h2></div>
+    <p class="sec-lead">Everything for the unit, in one place: each topic's lesson deck and workbook pages, plus the unit-wide documents. The file each button points to is named underneath it.</p>
+    <div class="res-note" id="resNote">
+      <b>Teacher setup:</b> links aren't set yet. Open this file in a text editor, find the <code>LINKS</code> list near the bottom, and paste each SharePoint or OneDrive share link once. Buttons with no link show as "Link not set".
+    </div>
+    <div class="res-grid">
+<div class="res-col rc1"><div class="rc-head"><span class="rc-n">Topic 1 · CP01</span><h3>Justice</h3></div><a class="res-btn" data-key="t1_lesson"><span class="ic">▣</span><span>Lesson deck<em>CP_L01_Justice.pptx</em></span><span class="go">↗</span></a><a class="res-btn" data-key="t1_booklet"><span class="ic">✎</span><span>Workbook pages<em>Topic 1</em></span><span class="go">↗</span></a><a class="res-btn" data-key="t1_podcast"><span class="ic">♪</span><span>Podcast · I09<em>I09_Justice.mp3</em></span><span class="go">↗</span></a></div>
+<div class="res-col rc2"><div class="rc-head"><span class="rc-n">Topic 2 · CP02</span><h3>Crime</h3></div><a class="res-btn" data-key="t2_lesson"><span class="ic">▣</span><span>Lesson deck<em>CP_L02_Crime.pptx</em></span><span class="go">↗</span></a><a class="res-btn" data-key="t2_booklet"><span class="ic">✎</span><span>Workbook pages<em>Topic 2</em></span><span class="go">↗</span></a><a class="res-btn" data-key="t2_podcast"><span class="ic">♪</span><span>Podcast · I10<em>I10_Crime.mp3</em></span><span class="go">↗</span></a></div>
+<div class="res-col rc3"><div class="rc-head"><span class="rc-n">Topic 3 · CP03</span><h3>Good &amp; evil</h3></div><a class="res-btn" data-key="t3_lesson"><span class="ic">▣</span><span>Lesson deck<em>CP_L03_Good_evil_and_suffering.pptx</em></span><span class="go">↗</span></a><a class="res-btn" data-key="t3_booklet"><span class="ic">✎</span><span>Workbook pages<em>Topic 3</em></span><span class="go">↗</span></a><a class="res-btn" data-key="t3_podcast"><span class="ic">♪</span><span>Podcast · I11<em>I11_Muslim_Evil_Suffering.mp3</em></span><span class="go">↗</span></a></div>
+<div class="res-col rc4"><div class="rc-head"><span class="rc-n">Topic 4 · CP04</span><h3>Punishment</h3></div><a class="res-btn" data-key="t4_lesson"><span class="ic">▣</span><span>Lesson deck<em>CP_L04_Punishment.pptx</em></span><span class="go">↗</span></a><a class="res-btn" data-key="t4_booklet"><span class="ic">✎</span><span>Workbook pages<em>Topic 4</em></span><span class="go">↗</span></a><a class="res-btn" data-key="t4_podcast"><span class="ic">♪</span><span>Podcast · I12<em>I12_Punishment_Attitudes.mp3</em></span><span class="go">↗</span></a></div>
+<div class="res-col rc5"><div class="rc-head"><span class="rc-n">Topic 5 · CP05</span><h3>Aims</h3></div><a class="res-btn" data-key="t5_lesson"><span class="ic">▣</span><span>Lesson deck<em>CP_L05_Aims_of_punishment.pptx</em></span><span class="go">↗</span></a><a class="res-btn" data-key="t5_booklet"><span class="ic">✎</span><span>Workbook pages<em>Topic 5</em></span><span class="go">↗</span></a><a class="res-btn" data-key="t5_podcast"><span class="ic">♪</span><span>Podcast · I13<em>I13_Aims_of_Punishment.mp3</em></span><span class="go">↗</span></a></div>
+<div class="res-col rc6"><div class="rc-head"><span class="rc-n">Topic 6 · CP06</span><h3>Forgiveness</h3></div><a class="res-btn" data-key="t6_lesson"><span class="ic">▣</span><span>Lesson deck<em>CP_L06_Forgiveness.pptx</em></span><span class="go">↗</span></a><a class="res-btn" data-key="t6_booklet"><span class="ic">✎</span><span>Workbook pages<em>Topic 6</em></span><span class="go">↗</span></a><a class="res-btn" data-key="t6_podcast"><span class="ic">♪</span><span>Podcast · I14<em>I14_Forgiveness.mp3</em></span><span class="go">↗</span></a></div>
+<div class="res-col rc7"><div class="rc-head"><span class="rc-n">Topic 7 · CP07</span><h3>Treatment</h3></div><a class="res-btn" data-key="t7_lesson"><span class="ic">▣</span><span>Lesson deck<em>CP_L07_Treatment_of_criminals.pptx</em></span><span class="go">↗</span></a><a class="res-btn" data-key="t7_booklet"><span class="ic">✎</span><span>Workbook pages<em>Topic 7</em></span><span class="go">↗</span></a><a class="res-btn" data-key="t7_podcast"><span class="ic">♪</span><span>Podcast · I15<em>I15_Treatment_of_Criminals.mp3</em></span><span class="go">↗</span></a></div>
+<div class="res-col rc8"><div class="rc-head"><span class="rc-n">Topic 8 · CP08</span><h3>Death penalty</h3></div><a class="res-btn" data-key="t8_lesson"><span class="ic">▣</span><span>Lesson deck<em>CP_L08_Capital_punishment.pptx</em></span><span class="go">↗</span></a><a class="res-btn" data-key="t8_booklet"><span class="ic">✎</span><span>Workbook pages<em>Topic 8</em></span><span class="go">↗</span></a><a class="res-btn" data-key="t8_podcast"><span class="ic">♪</span><span>Podcast · I16<em>I16_Death_Penalty.mp3</em></span><span class="go">↗</span></a></div>
+    </div>
+    <div class="res-wide">
+<a class="res-btn big" data-key="booklet"><span class="ic">✎</span><span><b>Unit workbook</b> — Unit6_Crime_and_Punishment_Workbook.docx — the lesson companion, task numbers matched to the board</span><span class="go">↗</span></a><a class="res-btn big" data-key="assessment"><span class="ic">◈</span><span><b>Summative assessment</b> — CP_L09_Summative_Assessment.pptx — the end-of-unit test</span><span class="go">↗</span></a><a class="res-btn big" data-key="modelbank"><span class="ic">▤</span><span><b>Model Answer Bank</b> — Model_Answer_Bank.docx — worked (a)(b)(c)(d) answers at Level 3 and Level 4</span><span class="go">↗</span></a><a class="res-btn big" data-key="revision"><span class="ic">▣</span><span><b>Revision RE</b> — Revision RE.pptx — the whole-course revision deck</span><span class="go">↗</span></a>
+    </div>
+    <div class="res-folder">
+      <a class="res-btn big folder" data-key="resfolder">
+        <span class="ic">▤</span>
+        <span><b>All Support-Grade resources</b> — the whole folder in SharePoint: lessons, workbooks, assessments and podcasts</span>
+        <span class="go">↗</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section id="revise">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">04</span><h2>How to revise this unit</h2></div>
+    <p class="sec-lead">Use the resources in this order — the same loop as the lessons, so revision feels like coming home.</p>
+    <div class="revise">
+      <div class="steps"><div class="step"><div><h4>Retrieve before you re-read</h4><p>Five recall questions from memory — spelling Hudud, Qisas and Ta&#x27;zir in full, and naming who holds each position — self-scored /5 before opening any notes. Then the same five at +1 week and +1 month.</p></div></div><div class="step"><div><h4>Re-walk the lesson deck</h4><p>One deck per topic, CP_L01 to CP_L08. Cover the definitions, say them aloud, then reveal. The deck is the shortest route back into the topic.</p></div></div><div class="step"><div><h4>Work the workbook pages</h4><p>The Lesson Companion has the same task numbers as the board. Redo Task 3 (the key surah) and Task 5 (the capital punishment debate) from memory.</p></div></div><div class="step"><div><h4>Write the (d) the Level 4 way</h4><p>Chain · steelman · weigh both (a strength AND a limit) · justify. Check yourself against the Model Answer Bank before you look at any mark scheme.</p></div></div></div>
+      <div class="ao">
+        <div class="h ao1">The marks map · (a) (b) (c) — 12 marks · AO1</div>
+        <div class="c"><b>(a) 3 marks —</b> outline three. Three crisp sentences; no development needed.</div>
+        <div class="c"><b>(b) 4 marks —</b> explain two. Each point plus one development ("this means that…").</div>
+        <div class="c"><b>(c) 5 marks —</b> explain two <b>and</b> use a source of wisdom and authority — one learned line, placed exactly.</div>
+        <div class="h ao2">The (d) · 12 marks (+3 SPaG on two of them) · AO2</div>
+        <div class="c"><b>What it is —</b> a full evaluation: arguments for, arguments against, both developed, with religious teaching used on each side.</div>
+        <div class="c"><b>Level 3 (7–9) —</b> logical reasoning across different viewpoints, accurate understanding, a <i>partially</i> justified conclusion.</div>
+        <div class="c"><b>Level 4 (10–12) —</b> critical deconstruction, sustained and thorough accuracy, and a conclusion <i>fully</i> justified against the strongest counter-argument.</div>
+        <div class="c"><b>SPaG —</b> 3 extra marks are awarded on two (d) questions per paper. Spell the key words correctly and use them accurately.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="watch">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">05</span><h2>Watch: the whole unit in one go</h2></div>
+    <p class="sec-lead">A full review of <b>Crime and Punishment</b> — all eight topics as one argument. Best watched before you revise, then again to check recall.</p>
+    <div class="video-frame" id="videoFrame">
+      <div class="video-placeholder" id="videoPlaceholder">
+        <div class="vp-badge">Video not set</div>
+        <p><b>Teacher:</b> paste the YouTube link in the <code>VIDEO_URL</code> line near the bottom of this file. The player then appears here automatically.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="flashcards">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">06</span><h2>Flashcards — test yourself</h2></div>
+    <p class="sec-lead">Flip a card to check yourself. Switch between <b>key terms</b> (term → meaning) and <b>divergent views</b> (view → what it claims), and filter by topic.</p>
+    <div class="fc-controls">
+      <div class="fc-tabs" role="tablist" aria-label="Topic">
+<button class="fc-btn" role="tab" aria-selected="true" data-topic="all">All</button>
+<button class="fc-btn" role="tab" aria-selected="false" data-topic="t1">Justice</button>
+<button class="fc-btn" role="tab" aria-selected="false" data-topic="t2">Crime</button>
+<button class="fc-btn" role="tab" aria-selected="false" data-topic="t3">Good &amp; evil</button>
+<button class="fc-btn" role="tab" aria-selected="false" data-topic="t4">Punishment</button>
+<button class="fc-btn" role="tab" aria-selected="false" data-topic="t5">Aims</button>
+<button class="fc-btn" role="tab" aria-selected="false" data-topic="t6">Forgiveness</button>
+<button class="fc-btn" role="tab" aria-selected="false" data-topic="t7">Treatment</button>
+<button class="fc-btn" role="tab" aria-selected="false" data-topic="t8">Death penalty</button>
+      </div>
+      <div class="fc-type" role="tablist" aria-label="Card type">
+        <button class="fc-btn" role="tab" aria-selected="true"  data-type="terms">Key terms</button>
+        <button class="fc-btn" role="tab" aria-selected="false" data-type="views">Divergent views</button>
+      </div>
+      <span class="fc-hint">Tap any card to flip · <span id="fcCount"></span></span>
+    </div>
+    <div class="fc-grid" id="fcGrid"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Crime and Punishment · Unit 06 · unit at a glance</span>
+    <span class="amber">Harlington School · RE Course — Support Grade</span>
+  </div>
+</footer>
+
+<script>
+const DATA = {"t1": {"poles": ["Justice as Shari'ah", "Justice as human rights"], "punch": "Justice in Islam is not a policy but an attribute of Allah — Al-'Adl. That is why 4:135 can outrank loyalty to your own family: injustice contradicts who God is.", "discuss": "If justice comes from God, can a society without religion ever be fully just — or does justice need only reason and agreement?", "nodes": [{"x": 10, "nm": "Justice as Shari'ah", "sb": "Traditional Muslim view", "claim": "Allah has already revealed what is fair. A society is just when it is governed by Shari'ah, drawn from the Qur'an and the Sunnah, because human opinion cannot improve on divine law or agree on a standard."}, {"x": 38, "nm": "Justice as a duty to act", "sb": "Many Muslims worldwide", "claim": "Justice is a personal obligation, not just a system. Paying Zakah, giving sadaqah, speaking up for the wronged and supporting charities such as Islamic Relief are how 4:135 is obeyed in ordinary life."}, {"x": 64, "nm": "Justice through national law", "sb": "Muslims in secular states", "claim": "Many British Muslims hold that justice here is delivered through UK courts and the law of the land, which Muslims are taught to obey. Islamic principles shape conscience and charity, not the criminal code."}, {"x": 88, "nm": "Justice as human rights", "sb": "Humanists · UN Declaration", "claim": "Non-religious thinkers argue justice needs no God: it comes from reason and shared human dignity, and is set out in agreed human rights. A law is just when it treats people equally, whoever wrote it."}]}, "t2": {"poles": ["Crime as sin", "Crime as harm"], "punch": "The three categories decide everything that follows, because who is wronged decides who may forgive: a family can pardon a Qisas offence, while Hudud offences are traditionally held to be God's alone.", "discuss": "If poverty and upbringing push people towards crime, how much of the blame belongs to the offender — and how much to the society around them?", "nodes": [{"x": 10, "nm": "Crime as sin", "sb": "Traditional Muslim view", "claim": "The gravest crimes are those the Qur'an itself names, the Hudud offences, because they break Allah's own limits. On this view an act is criminal because God forbade it, not because a parliament voted."}, {"x": 38, "nm": "Crime as social failure", "sb": "Many Muslims · social causes", "claim": "Poverty, addiction, neglect and low self-esteem drive most offending, so the ummah shares responsibility. Zakah exists partly for this reason: a community that lets people go without has helped create its own crime."}, {"x": 64, "nm": "Crime is what the law says", "sb": "Muslims in secular states", "claim": "In Britain crime is defined by Parliament, and Muslims are taught to obey the law of the land. Some things Islam treats as sins — alcohol, gambling — are not crimes here, and Muslims accept that distinction."}, {"x": 88, "nm": "Crime as harm", "sb": "Humanists · secular criminology", "claim": "Non-religious thinkers argue an act is criminal because of the harm it causes to real people, not because a god forbids it. Studying causes — deprivation, opportunity, addiction — does more to cut crime than naming sin."}]}, "t3": {"poles": ["Evil is misused free will", "No devil, no test"], "punch": "Fitrah and free will do opposite jobs in one argument: fitrah means nobody is beyond reform, free will means nobody is beyond blame. Level 4 answers hold both at once.", "discuss": "If suffering is a test set by Allah, does that make it easier to bear — or harder to call unfair suffering unjust?", "nodes": [{"x": 10, "nm": "Evil is misused free will", "sb": "Mainstream Muslim view", "claim": "Allah made humans free so that faith and goodness would mean something. Moral evil is that freedom misused, encouraged by Shaytan but never compelled, so the offender — not God — carries the responsibility."}, {"x": 38, "nm": "Suffering is a test", "sb": "Many Muslims", "claim": "This life is a test. Surah 76:11-12 promises that those who are steadfast will be rewarded with a garden, so suffering is not proof of guilt and enduring it patiently is itself an act of faith."}, {"x": 64, "nm": "Evil is largely learned", "sb": "Muslim reformers · criminologists", "claim": "Some Muslim reformers accept the research: abuse, poverty, addiction and bad company shape who offends. Fitrah is still there, but it can be buried by circumstance, so society must change conditions as well as punish."}, {"x": 88, "nm": "No devil, no test", "sb": "Humanists", "claim": "Humanists argue behaviour is explained by upbringing, brain, opportunity and circumstance. Calling an act 'evil' or blaming Shaytan explains nothing, and a world with this much suffering is poor evidence for a just, all-powerful God."}]}, "t4": {"poles": ["Punishment under Shari'ah", "The state's right, limited by rights"], "punch": "Surah 2:178 is usually read as a limit rather than a licence: it caps the response at the harm actually done, replacing feuds in which one death could be answered by many.", "discuss": "Should the victim's family have any say in the punishment — or does justice have to be taken out of their hands to stay fair?", "nodes": [{"x": 10, "nm": "Punishment under Shari'ah", "sb": "Traditional Muslim view", "claim": "For the most serious offences Allah has already set the penalty, so a qualified judge applies it rather than inventing one. Punishment is legitimate because it is God's, not because a government finds it useful."}, {"x": 36, "nm": "The conditions are rarely met", "sb": "Reformist Muslims", "claim": "Traditional scholarship attaches conditions so strict that Hudud penalties can almost never apply: multiple adult eyewitnesses to the act itself, a confession that may be withdrawn at any time, and the rule that doubt removes the penalty."}, {"x": 62, "nm": "The law of the land", "sb": "Muslims in secular states", "claim": "British Muslims are punished under UK criminal law, and most accept that as right. Shari'ah councils here deal only with religious matters such as marriage and divorce; they have no criminal powers whatsoever."}, {"x": 88, "nm": "The state's right, limited by rights", "sb": "UK law · Human Rights Act 1998", "claim": "Punishment is legitimate only through due process. Article 6 guarantees a fair and public hearing before an independent court, and the Human Rights Act 1998 sets limits no state may cross, however guilty the accused."}]}, "t5": {"poles": ["Deterrence first", "Judge aims by what works"], "punch": "Naming four aims is (b)-level work. Level 4 shows they compete: every sentence buys one aim at another's expense, and choosing which to buy is the whole moral question.", "discuss": "Is a punishment that changes the offender worth more than one that satisfies the victim — and who should decide?", "nodes": [{"x": 10, "nm": "Deterrence first", "sb": "Traditional Muslim view", "claim": "Punishments in the Qur'an are known publicly so that people are warned before they offend. A society where the penalty is clear, certain and feared has fewer victims in the first place."}, {"x": 36, "nm": "Retribution and vindication", "sb": "Many Muslims · victims' families", "claim": "Qisas exists because a wrong must be paid for. Punishment vindicates the law, shows the victim that their suffering counted, and stops families taking revenge into their own hands."}, {"x": 62, "nm": "Reformation first", "sb": "Many Muslims · prison chaplaincy", "claim": "Allah forgives whoever genuinely repents, so the aim is to return a changed person to the community. Muslim prison chaplains work for exactly this, arguing a punishment that leaves someone worse has failed."}, {"x": 88, "nm": "Judge aims by what works", "sb": "Humanists · penal reformers", "claim": "Non-religious reformers say aims should be tested against evidence: being caught deters more than being punished harshly, so prisons should protect the public and rehabilitate rather than satisfy a desire to see suffering."}]}, "t6": {"poles": ["Forgiveness is the higher road", "Restorative justice works"], "punch": "Forgiveness in Islam is not the opposite of justice but a choice made inside it: the family may pardon only because the right to retribution was genuinely theirs to give up.", "discuss": "Is forgiving a serious offender an act of strength or an injustice to the victim — and does it matter whether they are sorry?", "nodes": [{"x": 10, "nm": "Forgiveness is the higher road", "sb": "Mainstream Muslim view", "claim": "Allah is Ar-Rahman, the Merciful, and Surah 64:14 asks believers to pardon and overlook. The Prophet's pardon at Makkah shows forgiveness is the stronger choice, not the weaker one, when you hold the power."}, {"x": 38, "nm": "Only after repentance", "sb": "Many Muslims", "claim": "Mercy in the Qur'an is tied to turning back. Forgiving an unrepentant offender who will simply do it again is not mercy but a failure to protect the next victim, so repentance comes first."}, {"x": 64, "nm": "The victim's right, not the state's", "sb": "Qisas · reformist reading", "claim": "Only the wronged person or their family may pardon a Qisas offence; no judge or government can forgive on a victim's behalf. Hudud offences, being against God, are traditionally held not to be the community's to pardon at all."}, {"x": 88, "nm": "Restorative justice works", "sb": "Humanists · UK restorative justice", "claim": "Non-religious supporters point to results: victims who meet their offender report feeling better served than by court alone, and reoffending falls. Forgiveness needs no religion, only honesty about the harm done."}]}, "t7": {"poles": ["Prisoners keep their rights", "Rights are universal or nothing"], "punch": "The stronger argument is not that offenders deserve rights, but that rights which can be deserved are not rights at all — a point Surah 76:8 and Article 3 reach by different routes.", "discuss": "Should someone who ignored another person's rights keep their own — or is that exactly when rights have to hold?", "nodes": [{"x": 10, "nm": "Prisoners keep their rights", "sb": "Mainstream Muslim view", "claim": "Every person is created by Allah with dignity, so a prisoner keeps the right to food, shelter, medical care, family contact and worship. Surah 76:8 names the captive as someone believers should actively look after."}, {"x": 38, "nm": "Rights, but the sentence stands", "sb": "Traditional Muslim view", "claim": "Humane treatment does not mean softening the penalty. A prisoner must be fed, protected and never tortured, but the punishment set by law is still carried out — mercy in conditions, firmness in sentence."}, {"x": 64, "nm": "Rights are guaranteed by law", "sb": "UK law · Human Rights Act 1998", "claim": "In UK law rights do not depend on deserving them. The Human Rights Act 1998 applies inside prison, and Article 3's ban on torture and inhuman or degrading treatment is absolute, with no exceptions for the guilty."}, {"x": 88, "nm": "Rights are universal or nothing", "sb": "Amnesty International · humanists", "claim": "Amnesty argues rights cannot be earned or forfeited: a state that will torture the guilty will eventually torture the innocent, and how a country treats its prisoners is the real test of its values."}]}, "t8": {"poles": ["Permitted for the gravest crimes", "Abolition"], "punch": "The strongest abolitionist argument is not that execution is cruel but that courts are fallible: every other sentence can be corrected when new evidence appears, and this one cannot.", "discuss": "If the evidence behind a conviction can never be perfect, should any state keep a punishment it can never take back?", "nodes": [{"x": 10, "nm": "Permitted for the gravest crimes", "sb": "Traditional Muslim view", "claim": "The Qur'an and Sunnah permit execution for murder and a very small number of other offences. Life is sacred, which is exactly why taking it is answered so gravely — and the standard of proof required is extremely high."}, {"x": 36, "nm": "Permitted, but rarely applicable", "sb": "Reformist Muslims", "claim": "Reformists argue the conditions of proof are so demanding, and pardon so strongly encouraged, that the penalty should almost never be carried out. A number of Muslim-majority countries have abolished it or no longer use it."}, {"x": 62, "nm": "Muslims against it", "sb": "Ahmadiyya Muslims · abolitionists", "claim": "Ahmadiyya Muslims and other Muslim abolitionists argue that the Qur'an permits rather than commands, that it nowhere requires execution for religious offences, and that mercy and pardon are always described as the better course."}, {"x": 88, "nm": "Abolition", "sb": "Amnesty International · UK law", "claim": "Amnesty argues the right to life is the most basic right of all, that execution is irreversible so a miscarriage of justice can never be put right, and that there is no clear evidence it deters better than long imprisonment."}]}};
+const LABELS = {"t1": "Justice", "t2": "Crime", "t3": "Good & evil", "t4": "Punishment", "t5": "Aims", "t6": "Forgiveness", "t7": "Treatment", "t8": "Death penalty"};
+const ticks=document.getElementById("ticks");
+const readout=document.getElementById("readout");
+const poleL=document.getElementById("poleL"), poleR=document.getElementById("poleR");
+let topic=Object.keys(DATA)[0], active=0;
+function esc2(s){return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+function renderReadout(n){
+  const d=DATA[topic];
+  let html='<span class="badge">'+esc2(n.sb)+'</span><div class="body">'+
+    '<h4>'+esc2(n.nm)+'</h4><p>'+esc2(n.claim)+'</p>';
+  if(d.punch) html+='<div class="g9"><span class="k">The top-marks move</span><br>'+esc2(d.punch)+'</div>';
+  if(d.discuss) html+='<div class="g9"><span class="k">Discuss · 7 min</span><br>'+esc2(d.discuss)+'</div>';
+  html+='</div>';
+  readout.innerHTML=html;
+}
+function renderTopic(){
+  const d=DATA[topic];
+  poleL.textContent=d.poles[0]; poleR.textContent=d.poles[1];
+  ticks.innerHTML="";
+  active=Math.min(active,d.nodes.length-1);
+  d.nodes.forEach(function(n,i){
+    const el=document.createElement("div");
+    el.className="node"; el.style.left=n.x+"%"; el.tabIndex=0;
+    el.setAttribute("role","button");
+    el.setAttribute("aria-label",n.nm+": "+n.sb);
+    el.dataset.active=(i===active);
+    el.innerHTML='<div class="dot"></div><div class="nm">'+esc2(n.nm)+'</div><div class="sb">'+esc2(n.sb)+'</div>';
+    const pick=function(){active=i;[].slice.call(ticks.children).forEach(function(c,j){c.dataset.active=(j===i)});renderReadout(n);};
+    el.addEventListener("click",pick);
+    el.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();pick();}});
+    ticks.appendChild(el);
+  });
+  renderReadout(d.nodes[active]);
+}
+document.querySelectorAll(".tab").forEach(function(t){
+  t.addEventListener("click",function(){
+    document.querySelectorAll(".tab").forEach(function(x){x.setAttribute("aria-selected","false")});
+    t.setAttribute("aria-selected","true");
+    topic=t.dataset.topic; active=0; renderTopic();
+  });
+});
+renderTopic();
+
+const FLASHCARDS = {"t1": {"terms": [{"term": "Justice", "def": "Giving each person what is right and fair."}, {"term": "Al-'Adl", "def": "The Just — one of the 99 names of Allah."}, {"term": "Shari'ah", "def": "Islamic law, drawn from the Qur'an and the Sunnah, guiding how Muslims should live."}, {"term": "Zakah", "def": "The yearly payment of 2.5% of savings to those in need; a Muslim's duty of justice with wealth."}], "views": [{"n": "Justice as Shari'ah", "tag": "Traditional Muslim view", "c": "Allah has already revealed what is fair. A society is just when it is governed by Shari'ah, drawn from the Qur'an and the Sunnah, because human opinion cannot improve on divine law or agree on a standard."}, {"n": "Justice as a duty to act", "tag": "Many Muslims worldwide", "c": "Justice is a personal obligation, not just a system. Paying Zakah, giving sadaqah, speaking up for the wronged and supporting charities such as Islamic Relief are how 4:135 is obeyed in ordinary life."}, {"n": "Justice through national law", "tag": "Muslims in secular states", "c": "Many British Muslims hold that justice here is delivered through UK courts and the law of the land, which Muslims are taught to obey. Islamic principles shape conscience and charity, not the criminal code."}, {"n": "Justice as human rights", "tag": "Humanists · UN Declaration", "c": "Non-religious thinkers argue justice needs no God: it comes from reason and shared human dignity, and is set out in agreed human rights. A law is just when it treats people equally, whoever wrote it."}]}, "t2": {"terms": [{"term": "Crime", "def": "An act that breaks the law."}, {"term": "Punishment", "def": "The penalty imposed for breaking the law."}, {"term": "Hudud", "def": "Crimes against God with fixed punishments named in the Qur'an."}, {"term": "Ta'zir", "def": "Lesser offences where the punishment is left to the judge's discretion."}], "views": [{"n": "Crime as sin", "tag": "Traditional Muslim view", "c": "The gravest crimes are those the Qur'an itself names, the Hudud offences, because they break Allah's own limits. On this view an act is criminal because God forbade it, not because a parliament voted."}, {"n": "Crime as social failure", "tag": "Many Muslims · social causes", "c": "Poverty, addiction, neglect and low self-esteem drive most offending, so the ummah shares responsibility. Zakah exists partly for this reason: a community that lets people go without has helped create its own crime."}, {"n": "Crime is what the law says", "tag": "Muslims in secular states", "c": "In Britain crime is defined by Parliament, and Muslims are taught to obey the law of the land. Some things Islam treats as sins — alcohol, gambling — are not crimes here, and Muslims accept that distinction."}, {"n": "Crime as harm", "tag": "Humanists · secular criminology", "c": "Non-religious thinkers argue an act is criminal because of the harm it causes to real people, not because a god forbids it. Studying causes — deprivation, opportunity, addiction — does more to cut crime than naming sin."}]}, "t3": {"terms": [{"term": "Reformation", "def": "Changing the offender for the better."}, {"term": "Protection", "def": "Keeping the public safe from offenders."}, {"term": "Fitrah", "def": "The natural inclination towards good and towards God that every person is born with."}, {"term": "Free will", "def": "The ability to choose freely between right and wrong, which makes a person responsible."}], "views": [{"n": "Evil is misused free will", "tag": "Mainstream Muslim view", "c": "Allah made humans free so that faith and goodness would mean something. Moral evil is that freedom misused, encouraged by Shaytan but never compelled, so the offender — not God — carries the responsibility."}, {"n": "Suffering is a test", "tag": "Many Muslims", "c": "This life is a test. Surah 76:11-12 promises that those who are steadfast will be rewarded with a garden, so suffering is not proof of guilt and enduring it patiently is itself an act of faith."}, {"n": "Evil is largely learned", "tag": "Muslim reformers · criminologists", "c": "Some Muslim reformers accept the research: abuse, poverty, addiction and bad company shape who offends. Fitrah is still there, but it can be buried by circumstance, so society must change conditions as well as punish."}, {"n": "No devil, no test", "tag": "Humanists", "c": "Humanists argue behaviour is explained by upbringing, brain, opportunity and circumstance. Calling an act 'evil' or blaming Shaytan explains nothing, and a world with this much suffering is poor evidence for a just, all-powerful God."}]}, "t4": {"terms": [{"term": "Qisas", "def": "Fair retribution — the victim's family chooses the response."}, {"term": "Fair trial", "def": "Innocent until proven guilty, before an impartial court."}, {"term": "Diyya", "def": "Blood money — compensation accepted by a victim's family instead of retribution."}, {"term": "Proportionate", "def": "A punishment that matches the seriousness of the crime and goes no further."}], "views": [{"n": "Punishment under Shari'ah", "tag": "Traditional Muslim view", "c": "For the most serious offences Allah has already set the penalty, so a qualified judge applies it rather than inventing one. Punishment is legitimate because it is God's, not because a government finds it useful."}, {"n": "The conditions are rarely met", "tag": "Reformist Muslims", "c": "Traditional scholarship attaches conditions so strict that Hudud penalties can almost never apply: multiple adult eyewitnesses to the act itself, a confession that may be withdrawn at any time, and the rule that doubt removes the penalty."}, {"n": "The law of the land", "tag": "Muslims in secular states", "c": "British Muslims are punished under UK criminal law, and most accept that as right. Shari'ah councils here deal only with religious matters such as marriage and divorce; they have no criminal powers whatsoever."}, {"n": "The state's right, limited by rights", "tag": "UK law · Human Rights Act 1998", "c": "Punishment is legitimate only through due process. Article 6 guarantees a fair and public hearing before an independent court, and the Human Rights Act 1998 sets limits no state may cross, however guilty the accused."}]}, "t5": {"terms": [{"term": "Deterrence", "def": "Punishing to put others off crime."}, {"term": "Retribution", "def": "The offender pays fairly for the harm done."}, {"term": "Vindication", "def": "Punishment showing that the law is serious and must be respected."}, {"term": "Mercy", "def": "Treating someone with more compassion than strict justice requires."}], "views": [{"n": "Deterrence first", "tag": "Traditional Muslim view", "c": "Punishments in the Qur'an are known publicly so that people are warned before they offend. A society where the penalty is clear, certain and feared has fewer victims in the first place."}, {"n": "Retribution and vindication", "tag": "Many Muslims · victims' families", "c": "Qisas exists because a wrong must be paid for. Punishment vindicates the law, shows the victim that their suffering counted, and stops families taking revenge into their own hands."}, {"n": "Reformation first", "tag": "Many Muslims · prison chaplaincy", "c": "Allah forgives whoever genuinely repents, so the aim is to return a changed person to the community. Muslim prison chaplains work for exactly this, arguing a punishment that leaves someone worse has failed."}, {"n": "Judge aims by what works", "tag": "Humanists · penal reformers", "c": "Non-religious reformers say aims should be tested against evidence: being caught deters more than being punished harshly, so prisons should protect the public and rehabilitate rather than satisfy a desire to see suffering."}]}, "t6": {"terms": [{"term": "Forgiveness", "def": "Letting go of resentment towards a wrongdoer."}, {"term": "Restorative justice", "def": "Offender and victim meet; harm faced, amends made."}, {"term": "Repentance", "def": "Being genuinely sorry, putting things right and resolving not to repeat the wrong."}, {"term": "Reconciliation", "def": "Restoring a broken relationship between people after a wrong."}], "views": [{"n": "Forgiveness is the higher road", "tag": "Mainstream Muslim view", "c": "Allah is Ar-Rahman, the Merciful, and Surah 64:14 asks believers to pardon and overlook. The Prophet's pardon at Makkah shows forgiveness is the stronger choice, not the weaker one, when you hold the power."}, {"n": "Only after repentance", "tag": "Many Muslims", "c": "Mercy in the Qur'an is tied to turning back. Forgiving an unrepentant offender who will simply do it again is not mercy but a failure to protect the next victim, so repentance comes first."}, {"n": "The victim's right, not the state's", "tag": "Qisas · reformist reading", "c": "Only the wronged person or their family may pardon a Qisas offence; no judge or government can forgive on a victim's behalf. Hudud offences, being against God, are traditionally held not to be the community's to pardon at all."}, {"n": "Restorative justice works", "tag": "Humanists · UK restorative justice", "c": "Non-religious supporters point to results: victims who meet their offender report feeling better served than by court alone, and reoffending falls. Forgiveness needs no religion, only honesty about the harm done."}]}, "t7": {"terms": [{"term": "Human rights", "def": "The basic rights of every person — kept even in prison."}, {"term": "Human Rights Act", "def": "The 1998 UK law protecting basic rights."}, {"term": "Torture", "def": "Deliberately inflicting severe pain to punish or to force a confession; banned absolutely."}, {"term": "Mandela Rules", "def": "The UN's minimum standards for the humane treatment of prisoners."}], "views": [{"n": "Prisoners keep their rights", "tag": "Mainstream Muslim view", "c": "Every person is created by Allah with dignity, so a prisoner keeps the right to food, shelter, medical care, family contact and worship. Surah 76:8 names the captive as someone believers should actively look after."}, {"n": "Rights, but the sentence stands", "tag": "Traditional Muslim view", "c": "Humane treatment does not mean softening the penalty. A prisoner must be fed, protected and never tortured, but the punishment set by law is still carried out — mercy in conditions, firmness in sentence."}, {"n": "Rights are guaranteed by law", "tag": "UK law · Human Rights Act 1998", "c": "In UK law rights do not depend on deserving them. The Human Rights Act 1998 applies inside prison, and Article 3's ban on torture and inhuman or degrading treatment is absolute, with no exceptions for the guilty."}, {"n": "Rights are universal or nothing", "tag": "Amnesty International · humanists", "c": "Amnesty argues rights cannot be earned or forfeited: a state that will torture the guilty will eventually torture the innocent, and how a country treats its prisoners is the real test of its values."}]}, "t8": {"terms": [{"term": "Capital punishment", "def": "The death penalty — execution by the state."}, {"term": "Right to life", "def": "The most basic human right — bars execution in the UK."}, {"term": "Hadith", "def": "A recorded saying or action of the Prophet Muhammad, a source of authority for Muslims."}, {"term": "Miscarriage of justice", "def": "A wrongful conviction — an innocent person found guilty and punished."}], "views": [{"n": "Permitted for the gravest crimes", "tag": "Traditional Muslim view", "c": "The Qur'an and Sunnah permit execution for murder and a very small number of other offences. Life is sacred, which is exactly why taking it is answered so gravely — and the standard of proof required is extremely high."}, {"n": "Permitted, but rarely applicable", "tag": "Reformist Muslims", "c": "Reformists argue the conditions of proof are so demanding, and pardon so strongly encouraged, that the penalty should almost never be carried out. A number of Muslim-majority countries have abolished it or no longer use it."}, {"n": "Muslims against it", "tag": "Ahmadiyya Muslims · abolitionists", "c": "Ahmadiyya Muslims and other Muslim abolitionists argue that the Qur'an permits rather than commands, that it nowhere requires execution for religious offences, and that mercy and pardon are always described as the better course."}, {"n": "Abolition", "tag": "Amnesty International · UK law", "c": "Amnesty argues the right to life is the most basic right of all, that execution is irreversible so a miscarriage of justice can never be put right, and that there is no clear evidence it deters better than long imprisonment."}]}};
+(function(){
+  let fcTopic="all", fcType="terms";
+  const grid=document.getElementById("fcGrid"), count=document.getElementById("fcCount");
+  function build(){
+    const topics = fcTopic==="all" ? Object.keys(FLASHCARDS) : [fcTopic];
+    let cards=[];
+    topics.forEach(function(tp){
+      const d=FLASHCARDS[tp]; if(!d) return;
+      if(fcType==="terms"){ d.terms.forEach(function(t){cards.push({tp:tp,front:t.term,tag:LABELS[tp],back:'<div class="fc-def">'+esc2(t.def)+'</div>'})}); }
+      else { d.views.forEach(function(v){cards.push({tp:tp,front:v.n,tag:LABELS[tp]+(v.tag?' · '+v.tag:''),back:'<div class="fc-def">'+esc2(v.c)+'</div>'})}); }
+    });
+    grid.innerHTML=cards.map(function(c){return '<button class="fc-card '+c.tp+'" data-flipped="false" aria-label="Flashcard: '+esc2(c.front)+'. Tap to reveal.">'+
+      '<div class="fc-inner">'+
+      '<div class="fc-face fc-front"><div class="fc-tag">'+esc2(c.tag)+'</div><div class="fc-term">'+esc2(c.front)+'</div><div class="fc-flip">tap to flip ↺</div></div>'+
+      '<div class="fc-face fc-back"><div class="fc-tag">'+esc2(c.tag)+'</div>'+c.back+'</div>'+
+      '</div></button>';}).join("");
+    count.textContent = cards.length + " cards";
+    grid.querySelectorAll(".fc-card").forEach(function(el){
+      el.addEventListener("click",function(){el.dataset.flipped = el.dataset.flipped==="true" ? "false":"true";});
+    });
+  }
+  document.querySelectorAll('#flashcards .fc-tabs .fc-btn').forEach(function(b){b.addEventListener("click",function(){
+    document.querySelectorAll('#flashcards .fc-tabs .fc-btn').forEach(function(x){x.setAttribute("aria-selected","false")});
+    b.setAttribute("aria-selected","true"); fcTopic=b.dataset.topic; build();
+  })});
+  document.querySelectorAll('#flashcards .fc-type .fc-btn').forEach(function(b){b.addEventListener("click",function(){
+    document.querySelectorAll('#flashcards .fc-type .fc-btn').forEach(function(x){x.setAttribute("aria-selected","false")});
+    b.setAttribute("aria-selected","true"); fcType=b.dataset.type; build();
+  })});
+  build();
+})();
+
+/* =====================================================================
+   TEACHER: paste your YouTube link between the quotes below.
+   Any format works — youtube.com/watch?v=..., youtu.be/..., or an embed URL.
+   Leave it empty ("") and the page shows a "Video not set" placeholder.
+   ===================================================================== */
+const VIDEO_URL = "";
+(function wireVideo(){
+  const url=(VIDEO_URL||"").trim();
+  if(!url) return;
+  let id="";
+  const m = url.match(/(?:youtu\.be\/|v=|\/embed\/|\/shorts\/)([A-Za-z0-9_-]{11})/);
+  if(m) id=m[1];
+  else if(/^[A-Za-z0-9_-]{11}$/.test(url)) id=url;
+  const frame=document.getElementById("videoFrame");
+  if(id && frame){
+    frame.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+id+'?rel=0" title="Unit review" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>';
+  } else if(frame){
+    frame.innerHTML='<div class="video-placeholder"><a class="res-btn big" style="background:#fff" href="'+url+'" target="_blank" rel="noopener"><span class="ic">▶</span><span><b>Watch the full unit review</b></span><span class="go">↗</span></a></div>';
+  }
+})();
+
+/* =====================================================================
+   TEACHER — every link below is already live.
+
+   SP  is the Support-Grade folder in SharePoint. Every lesson deck,
+       workbook and podcast on this page is built from it, so if the
+       folder is ever moved you change this ONE line and the whole
+       page follows.
+
+   PODCAST_BASE streams the audio from that same folder. To play the
+       audio sitting next to this file instead, change it to
+       "../Podcast_Audio/".
+
+   All resources require a school login. Any link left as "" simply
+   shows "Link not set" — nothing breaks.
+   ===================================================================== */
+const SP  = "https://hs365.sharepoint.com/sites/HS_Subjects_RE/Year%2011/Philosophy/Edu%20Ai%20-%20GCSE/KS4%20Edexcel%20RS%20-%20Full%20Scheme%20of%20Work%203%20(1)/Support%20-%20Grade/";
+const SPP = "https://hs365.sharepoint.com/sites/HS_Subjects_RE/Year%2011/Philosophy/Edu%20Ai%20-%20GCSE/KS4%20Edexcel%20RS%20-%20Full%20Scheme%20of%20Work%203%20(1)/";
+/* Podcasts open via download.aspx — this tenant refuses in-browser mp3 playback,
+   but download.aspx returns the clean file. */
+const PODCAST_BASE = "https://hs365.sharepoint.com/sites/HS_Subjects_RE/_layouts/15/download.aspx?SourceUrl=/sites/HS_Subjects_RE/Year%2011/Philosophy/Edu%20Ai%20-%20GCSE/KS4%20Edexcel%20RS%20-%20Full%20Scheme%20of%20Work%203%20%281%29/Support%20-%20Grade/Podcast_Audio/";
+const RESOURCES_FOLDER = "https://hs365.sharepoint.com/:f:/s/HS_Subjects_RE/IgCPACLmKiqoQpNvB2QcYSoxAdtZd0yxpUHe6QBEgccrBk4?e=IUkxRb";
+
+const LINKS = {
+  t1_lesson:  SP + "Unit%206%20-%20Crime%20and%20Punishment/CP_L01_Justice.pptx",
+  t1_booklet: SP + "Unit%206%20-%20Crime%20and%20Punishment/Unit6_Crime_and_Punishment_Workbook.docx",
+  t1_podcast: PODCAST_BASE + "Islam/I09_Justice.mp3",
+  t2_lesson:  SP + "Unit%206%20-%20Crime%20and%20Punishment/CP_L02_Crime.pptx",
+  t2_booklet: SP + "Unit%206%20-%20Crime%20and%20Punishment/Unit6_Crime_and_Punishment_Workbook.docx",
+  t2_podcast: PODCAST_BASE + "Islam/I10_Crime.mp3",
+  t3_lesson:  SP + "Unit%206%20-%20Crime%20and%20Punishment/CP_L03_Good_evil_and_suffering.pptx",
+  t3_booklet: SP + "Unit%206%20-%20Crime%20and%20Punishment/Unit6_Crime_and_Punishment_Workbook.docx",
+  t3_podcast: PODCAST_BASE + "Islam/I11_Muslim_Evil_Suffering.mp3",
+  t4_lesson:  SP + "Unit%206%20-%20Crime%20and%20Punishment/CP_L04_Punishment.pptx",
+  t4_booklet: SP + "Unit%206%20-%20Crime%20and%20Punishment/Unit6_Crime_and_Punishment_Workbook.docx",
+  t4_podcast: PODCAST_BASE + "Islam/I12_Punishment_Attitudes.mp3",
+  t5_lesson:  SP + "Unit%206%20-%20Crime%20and%20Punishment/CP_L05_Aims_of_punishment.pptx",
+  t5_booklet: SP + "Unit%206%20-%20Crime%20and%20Punishment/Unit6_Crime_and_Punishment_Workbook.docx",
+  t5_podcast: PODCAST_BASE + "Islam/I13_Aims_of_Punishment.mp3",
+  t6_lesson:  SP + "Unit%206%20-%20Crime%20and%20Punishment/CP_L06_Forgiveness.pptx",
+  t6_booklet: SP + "Unit%206%20-%20Crime%20and%20Punishment/Unit6_Crime_and_Punishment_Workbook.docx",
+  t6_podcast: PODCAST_BASE + "Islam/I14_Forgiveness.mp3",
+  t7_lesson:  SP + "Unit%206%20-%20Crime%20and%20Punishment/CP_L07_Treatment_of_criminals.pptx",
+  t7_booklet: SP + "Unit%206%20-%20Crime%20and%20Punishment/Unit6_Crime_and_Punishment_Workbook.docx",
+  t7_podcast: PODCAST_BASE + "Islam/I15_Treatment_of_Criminals.mp3",
+  t8_lesson:  SP + "Unit%206%20-%20Crime%20and%20Punishment/CP_L08_Capital_punishment.pptx",
+  t8_booklet: SP + "Unit%206%20-%20Crime%20and%20Punishment/Unit6_Crime_and_Punishment_Workbook.docx",
+  t8_podcast: PODCAST_BASE + "Islam/I16_Death_Penalty.mp3",
+  booklet: SP + "Unit%206%20-%20Crime%20and%20Punishment/Unit6_Crime_and_Punishment_Workbook.docx",
+  assessment: SP + "Unit%206%20-%20Crime%20and%20Punishment/CP_L09_Summative_Assessment.pptx",
+  modelbank: SPP + "Model_Answer_Bank.docx",
+  revision: SPP + "Revision%20RE.pptx",
+  resfolder: RESOURCES_FOLDER
+};
+(function wireResources(){
+  let anySet=false;
+  document.querySelectorAll(".res-btn").forEach(function(btn){
+    const url=(LINKS[btn.dataset.key]||"").trim();
+    if(url){ btn.href=url; btn.target="_blank"; btn.rel="noopener"; anySet=true; }
+    else{ btn.classList.add("unset"); btn.removeAttribute("href"); btn.setAttribute("aria-disabled","true"); }
+  });
+  if(anySet){ const n=document.getElementById("resNote"); if(n) n.classList.add("hide"); }
+})();
+</script>
+</body>
+</html>

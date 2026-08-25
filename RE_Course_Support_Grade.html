@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RE Course — Support Grade · Harlington RE</title>
+<style>
+  :root{--amber:#F2B705;--amber-soft:#FFD95C;--purple:#3E1163;--purple2:#2A0B45;
+        --emerald:#0B3D36;--emerald2:#062A25;--paper:#F7F6FA;--ink:#1c1430}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--paper);color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;line-height:1.5;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1000px;margin:0 auto;padding:0 24px}
+  header{background:linear-gradient(120deg,var(--purple) 0%,var(--purple2) 46%,var(--emerald2) 54%,var(--emerald) 100%);
+    color:#F1ECF7;padding:58px 0 62px;border-bottom:3px solid var(--amber);position:relative;overflow:hidden}
+  header::after{content:"";position:absolute;inset:0;opacity:.06;
+    background:repeating-linear-gradient(180deg,transparent 0 38px,#fff 38px 39px);pointer-events:none}
+  .crest{display:flex;align-items:center;gap:16px;margin-bottom:30px;position:relative;z-index:2}
+  .crest svg{width:52px;height:52px;flex:none}
+  .who{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;color:var(--amber-soft)}
+  .who b{display:block;color:#fff;letter-spacing:.14em;font-size:.86rem;margin-top:3px}
+  h1{font-size:clamp(2.2rem,5.5vw,3.6rem);line-height:1.05;position:relative;z-index:2}
+  .tier{position:relative;z-index:2;display:block;margin-top:10px;
+    font-family:"Trebuchet MS",Verdana,sans-serif;font-size:clamp(1rem,2.4vw,1.4rem);font-weight:700;
+    letter-spacing:.22em;text-transform:uppercase;color:var(--amber)}
+  .sub{margin-top:18px;max-width:62ch;font-size:1.08rem;color:#E4DCEE;position:relative;z-index:2}
+  main{padding:56px 0 30px}
+  .paper-label{font-family:"Trebuchet MS",Verdana,sans-serif;font-weight:700;font-size:.78rem;
+    letter-spacing:.2em;text-transform:uppercase;margin:26px 0 14px}
+  .paper-label:first-child{margin-top:0}
+  .paper-label.p1{color:var(--purple)}
+  .paper-label.p2{color:var(--emerald)}
+  .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  @media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:560px){.grid{grid-template-columns:1fr}}
+  a.card{display:block;text-decoration:none;border-radius:12px;padding:18px 18px 34px;color:#fff;
+    position:relative;overflow:hidden;transition:transform .15s, box-shadow .15s}
+  a.card:hover{transform:translateY(-3px);box-shadow:0 16px 30px -18px rgba(28,20,48,.55)}
+  a.card:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+  a.card .n{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;opacity:.85}
+  a.card h3{font-size:1.18rem;margin-top:4px;line-height:1.2}
+  a.card .go{position:absolute;right:14px;bottom:12px;color:var(--amber);font-weight:700;font-family:"Trebuchet MS",Verdana,sans-serif}
+  .p1 a.card{background:linear-gradient(140deg,#552087,var(--purple))}
+  .p2 a.card{background:linear-gradient(140deg,#11594F,var(--emerald))}
+  .allres{display:flex;align-items:center;gap:14px;margin-top:34px;padding:18px 20px;border-radius:12px;
+    text-decoration:none;color:#F1ECF7;background:linear-gradient(120deg,#241a3d,#14101f);
+    font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.92rem;transition:filter .15s}
+  .allres:hover{filter:brightness(1.14)}
+  .allres .ic{width:34px;height:34px;flex:none;display:grid;place-items:center;border-radius:8px;
+    background:var(--amber);color:#14101f;font-size:1.05rem}
+  .allres b{color:#fff}
+  .allres em{display:block;font-style:normal;font-size:.78rem;color:#b6acc9;margin-top:2px}
+  .allres .go{margin-left:auto;color:var(--amber);font-weight:700}
+  footer{padding:28px 0 40px;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.78rem;color:#786e8a}
+  @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="crest">
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <rect x="2" y="2" width="60" height="60" rx="13" fill="#1c1430" stroke="#F2B705" stroke-width="1.5"/>
+        <path d="M20 46V22a2 2 0 0 1 2-2h9v26z" fill="#552087"/>
+        <path d="M44 46V22a2 2 0 0 0-2-2h-9v26z" fill="#11594F"/>
+        <path d="M32 15v33" stroke="#F2B705" stroke-width="2.4" stroke-linecap="round"/>
+        <circle cx="32" cy="13" r="3" fill="#F2B705"/>
+      </svg>
+      <div class="who">Edexcel GCSE (9–1) Religious Studies B<b>Harlington School · Support Grade</b></div>
+    </div>
+    <h1>The RE Course</h1>
+    <span class="tier">Support Grade</span>
+    <p class="sub">Eight units, two papers. Pick your unit — each page holds the divergent-views explorer, the key ideas, every lesson, workbook and podcast, and the flashcards.</p>
+  </div>
+</header>
+<main>
+  <div class="wrap">
+    <div class="paper-label p1">Paper 1 · Religion and Ethics — Christianity</div>
+    <div class="grid p1">
+      <a class="card" href="CB_Ecosystem.html"><span class="n">Unit 01 · Question 1</span><h3>Christian Beliefs</h3><span class="go">↗</span></a>
+      <a class="card" href="MR_Ecosystem.html"><span class="n">Unit 05 · Question 2</span><h3>Marriage &amp; Relationships</h3><span class="go">↗</span></a>
+      <a class="card" href="LC_Ecosystem.html"><span class="n">Unit 03 · Question 3</span><h3>Living the Christian Life</h3><span class="go">↗</span></a>
+      <a class="card" href="MLD_Ecosystem.html"><span class="n">Unit 07 · Question 4</span><h3>Matters of Life &amp; Death</h3><span class="go">↗</span></a>
+    </div>
+    <div class="paper-label p2">Paper 2 · Religion, Peace and Conflict — Islam</div>
+    <div class="grid p2">
+      <a class="card" href="MB_Ecosystem.html"><span class="n">Unit 02 · Question 1</span><h3>Muslim Beliefs</h3><span class="go">↗</span></a>
+      <a class="card" href="CP_Ecosystem.html"><span class="n">Unit 06 · Question 2</span><h3>Crime &amp; Punishment</h3><span class="go">↗</span></a>
+      <a class="card" href="LM_Ecosystem.html"><span class="n">Unit 04 · Question 3</span><h3>Living the Muslim Life</h3><span class="go">↗</span></a>
+      <a class="card" href="PAC_Ecosystem.html"><span class="n">Unit 08 · Question 4</span><h3>Peace &amp; Conflict</h3><span class="go">↗</span></a>
+    </div>
+    <a class="allres" href="https://hs365.sharepoint.com/:f:/s/HS_Subjects_RE/IgCPACLmKiqoQpNvB2QcYSoxAdtZd0yxpUHe6QBEgccrBk4?e=IUkxRb" target="_blank" rel="noopener">
+      <span class="ic">▤</span>
+      <span><b>All Support-Grade resources</b><em>The whole folder in SharePoint — lessons, workbooks, assessments and podcasts</em></span>
+      <span class="go">↗</span>
+    </a>
+  </div>
+</main>
+<footer>
+  <div class="wrap">The RE Course · Support Grade · Harlington School RE — lessons, workbooks and podcasts open from SharePoint and require a school login</div>
+</footer>
+</body>
+</html>
