@@ -569,7 +569,9 @@ const LINKS = {
 (function wireResources(){
   let anySet=false;
   document.querySelectorAll(".res-btn").forEach(function(btn){
-    const url=(LINKS[btn.dataset.key]||"").trim();
+    let url=(LINKS[btn.dataset.key]||"").trim();
+    /* Office files open in the browser (Office Online) rather than downloading */
+    if(url && /\.(pptx|docx|xlsx|ppt|doc|xls)$/i.test(url) && url.indexOf("download.aspx")<0) url+="?web=1";
     if(url){ btn.href=url; btn.target="_blank"; btn.rel="noopener"; anySet=true; }
     else{ btn.classList.add("unset"); btn.removeAttribute("href"); btn.setAttribute("aria-disabled","true"); }
   });
