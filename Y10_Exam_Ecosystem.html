@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The End-of-Year Exam · Ecosystem</title>
+<style>
+  :root{--ink:#1F2233;--ink-2:#12141f;--mint:#EEF0F7;--mint-2:#D9DCE8;--amber:#F2B705;--amber-soft:#FFD95C;
+    --p1:#3E1163;--p2:#0A5638;--paper:#F7F7FA;--line:rgba(31,34,51,.15);--lead:#4a4d5c;--muted:#7b7e8f}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--paper);color:var(--ink);font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;line-height:1.5;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1060px;margin:0 auto;padding:0 24px}
+  .hero{background:
+      radial-gradient(900px 360px at 15% -10%, rgba(62,17,99,.55), transparent 60%),
+      radial-gradient(900px 360px at 85% -10%, rgba(10,86,56,.5), transparent 60%),
+      linear-gradient(180deg,var(--ink) 0%, var(--ink-2) 100%);
+    color:var(--mint);padding:60px 0 66px;position:relative;overflow:hidden;border-bottom:3px solid var(--amber)}
+  .hero::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.05;background:repeating-linear-gradient(180deg,transparent 0 38px,#fff 38px 39px)}
+  .hero .wrap{position:relative;z-index:2}
+  .crest{display:flex;align-items:center;gap:16px;margin-bottom:30px}
+  .crest svg{width:54px;height:54px;flex:none}
+  .crest .who{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;color:var(--amber-soft)}
+  .crest .who b{color:var(--mint);display:block;letter-spacing:.12em;font-size:.86rem;margin-top:3px}
+  .pill{display:inline-block;font-family:"Trebuchet MS",sans-serif;font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;font-weight:700;background:var(--amber);color:var(--ink-2);padding:6px 12px;border-radius:6px;margin-bottom:14px}
+  h1{font-size:clamp(2rem,5vw,3.4rem);line-height:1.06;font-weight:700;letter-spacing:-.01em}
+  .tagline{margin-top:8px;font-family:"Trebuchet MS",sans-serif;font-size:.86rem;letter-spacing:.24em;text-transform:uppercase;color:var(--amber-soft)}
+  .sub{margin-top:18px;max-width:62ch;font-size:1.1rem;color:var(--mint-2)}
+  section{padding:56px 0}
+  .sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:8px}
+  .sec-head .num{font-family:"Trebuchet MS",sans-serif;color:var(--amber);font-weight:700;font-size:.9rem;letter-spacing:.15em}
+  .sec-head h2{font-size:clamp(1.5rem,3.2vw,2.1rem);letter-spacing:-.01em}
+  .sec-lead{color:var(--lead);max-width:68ch;margin-bottom:30px;font-size:1.03rem}
+  .tablecard{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:auto;box-shadow:0 18px 40px -30px rgba(0,0,0,.4)}
+  table{width:100%;border-collapse:collapse;font-size:.92rem;min-width:640px}
+  thead th{font-family:"Trebuchet MS",sans-serif;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;text-align:left;
+    background:var(--ink);color:var(--mint);padding:11px 14px}
+  tbody td{padding:11px 14px;border-top:1px solid var(--line);vertical-align:top}
+  tbody tr:nth-child(even){background:#fafafc}
+  td.wk{font-family:"Trebuchet MS",sans-serif;font-weight:700;color:var(--ink);width:44px}
+  td.wb{white-space:nowrap;color:var(--muted);font-family:"Trebuchet MS",sans-serif;font-size:.82rem;width:70px}
+  td.pg{white-space:nowrap;font-family:"Trebuchet MS",sans-serif;font-size:.84rem}
+  td.pod{font-family:"Trebuchet MS",sans-serif;font-size:.84rem;color:var(--lead)}
+  .chip{display:inline-block;font-family:"Trebuchet MS",sans-serif;font-size:.62rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+    color:#fff;border-radius:5px;padding:2px 8px;margin-right:8px;vertical-align:1px}
+  .chip.p1{background:var(--p1)} .chip.p2{background:var(--p2)}
+  .chip.p3{background:linear-gradient(90deg,var(--p1),var(--p2))}
+  .duo{display:grid;grid-template-columns:1.05fr .95fr;gap:24px;align-items:start}
+  .steps{counter-reset:s;display:flex;flex-direction:column;gap:14px}
+  .step{display:flex;gap:16px;align-items:flex-start;border-left:2px solid var(--line);padding:2px 0 2px 18px;position:relative}
+  .step::before{counter-increment:s;content:counter(s);position:absolute;left:-15px;top:-2px;width:28px;height:28px;border-radius:50%;
+    background:var(--amber);color:var(--ink-2);font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.9rem;display:grid;place-items:center}
+  .step h4{font-size:1.02rem}
+  .step p{font-size:.9rem;color:var(--lead);margin-top:2px}
+  .step .why{display:block;margin-top:3px;font-style:italic;color:var(--muted);font-size:.84rem}
+  .ecards{display:flex;flex-direction:column;gap:14px}
+  .ecard{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff}
+  .ecard .eh{padding:11px 16px;font-family:"Trebuchet MS",sans-serif;font-weight:700;font-size:.82rem;color:#fff}
+  .ecard.e1 .eh{background:var(--p1)} .ecard.e2 .eh{background:var(--p2)}
+  .ecard .eb{padding:12px 16px;font-size:.9rem;display:flex;flex-direction:column;gap:7px}
+  .ecard .eb p{border-bottom:1px dashed var(--line);padding-bottom:7px}
+  .ecard .eb p:last-child{border-bottom:0;padding-bottom:0}
+  .res-note{background:#FCF3D6;border:1px solid var(--amber);border-left:4px solid var(--amber);border-radius:8px;
+    padding:12px 16px;margin-bottom:22px;font-size:.9rem;color:#5a4a10;font-family:"Trebuchet MS",Verdana,sans-serif}
+  .res-note code{background:#fff;border:1px solid var(--line);border-radius:4px;padding:1px 6px;font-size:.85em}
+  .res-note.hide{display:none}
+  .res-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:18px}
+  .res-col{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff}
+  .rc-head{padding:14px 16px;color:#fff}
+  .res-col.g1 .rc-head{background:linear-gradient(135deg,var(--p1),#2A0B45)}
+  .res-col.g2 .rc-head{background:linear-gradient(135deg,var(--p2),#053526)}
+  .res-col.g3 .rc-head{background:linear-gradient(135deg,var(--ink),var(--ink-2))}
+  .rc-head .rc-n{font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;opacity:.85}
+  .rc-head h3{font-size:1.08rem;margin-top:2px}
+  .res-btn{display:flex;align-items:center;gap:12px;padding:13px 16px;border-top:1px solid var(--line);
+    font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.9rem;color:var(--ink);text-decoration:none;cursor:pointer;transition:background .15s}
+  .res-btn em{display:block;font-style:normal;font-size:.72rem;color:var(--muted);margin-top:2px;word-break:break-word}
+  .res-col .res-btn:first-of-type{border-top:0}
+  .res-btn:hover{background:var(--mint)}
+  .res-btn .ic{width:26px;height:26px;flex:none;display:grid;place-items:center;border-radius:6px;background:var(--ink);color:var(--amber);font-size:.9rem}
+  .res-btn .go{margin-left:auto;color:var(--amber);font-weight:700;opacity:0;transition:.15s}
+  .res-btn:hover .go{opacity:1}
+  .res-btn.unset{opacity:.55;cursor:not-allowed}
+  .res-btn.unset .go{display:none}
+  .res-btn.unset::after{content:"Link not set";margin-left:auto;font-size:.72rem;color:#94741a;background:#FCF3D6;border:1px solid var(--amber-soft);border-radius:5px;padding:2px 7px;white-space:nowrap}
+  footer{background:var(--ink-2);color:var(--mint-2);padding:24px 0;font-family:"Trebuchet MS",Verdana,sans-serif;font-size:.8rem}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+  footer .amber{color:var(--amber)}
+  @media(max-width:820px){.duo{grid-template-columns:1fr}}
+  @media print{.hero{padding:22px 0} section{padding:18px 0;break-inside:avoid} .res-note{display:none}}
+  @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <div class="crest">
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <rect x="2" y="2" width="60" height="60" rx="13" fill="#12141f" stroke="#F2B705" stroke-width="1.5"/>
+        <g fill="none" stroke="#EEF0F7" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M32 12 L14 46 h36 z"/><path d="M25 33 l7-8 7 8"/>
+        </g>
+        <circle cx="32" cy="20" r="3" fill="#F2B705"/>
+      </svg>
+      <div class="who">Edexcel GCSE (9–1) Religious Studies B · Papers 1 &amp; 2 · Units 1–4<b>Harlington School · Year 10</b></div>
+    </div>
+    <span class="pill">Year 10 · Summer exam</span>
+    <h1>The End-of-Year Exam</h1>
+    <div class="tagline">listen · recall · check · come back</div>
+    <p class="sub">Five weeks, four units, one exam. The week-by-week plan below is the same one printed in your Exam Companion — this page adds the exam map and every resource in one place.</p>
+  </div>
+</header>
+
+<section id="plan"><div class="wrap">
+    <div class="sec-head"><span class="num">01</span><h2>The five-week plan</h2></div>
+    <p class="sec-lead">One unit a week, then everything shuffled in exam week. The companion pages and the podcast episode named for each week are your set homework.</p>
+    <div class="tablecard"><table>
+      <thead><tr><th>Wk</th><th>w/b</th><th>Revising</th><th>Companion pages</th><th>Podcast of the week</th></tr></thead>
+      <tbody><tr><td class="wk">1</td><td class="wb"></td><td><span class="chip p1">Paper 1 · Christianity</span>Christian Beliefs — revision</td><td class="pg">pages 2–3</td><td class="pod">E07 Countdown · then C01–C08</td></tr><tr><td class="wk">2</td><td class="wb"></td><td><span class="chip p1">Paper 1 · Christianity</span>Living the Christian Life — revision</td><td class="pg">pages 4–5</td><td class="pod">E08 Countdown · then C17–C24</td></tr><tr><td class="wk">3</td><td class="wb"></td><td><span class="chip p2">Paper 2 · Islam</span>Muslim Beliefs — revision</td><td class="pg">pages 6–7</td><td class="pod">E09 Countdown · then I01–I08</td></tr><tr><td class="wk">4</td><td class="wb"></td><td><span class="chip p2">Paper 2 · Islam</span>Living the Muslim Life — revision</td><td class="pg">pages 8–9</td><td class="pod">E10 Countdown · then I17–I24</td></tr><tr><td class="wk">5</td><td class="wb"></td><td><span class="chip p3">Both papers</span>EXAM WEEK — everything, shuffled</td><td class="pg">pages 10–11</td><td class="pod">Re-listen to your weakest two</td></tr></tbody></table></div>
+  </div></section>
+
+<section id="loop">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">02</span><h2>The revision loop</h2></div>
+    <p class="sec-lead">Every companion page runs the same six moves, in the same order — because each one is built on how memory actually works.</p>
+    <div class="duo">
+      <div class="steps"><div class="step"><div><h4>Listen first</h4><p>Play the episode. Tick it off. Write the one thing you are taking from it. <span class="why">Active listening beats background noise.</span></p></div></div><div class="step"><div><h4>Brain dump</h4><p>Close everything. Write down every single thing you remember, then re-listen and add what you missed in a different colour. <span class="why">Free recall — the single strongest revision method there is.</span></p></div></div><div class="step"><div><h4>Listen and answer</h4><p>Five questions from the episodes. Answer them, then mark yourself from the answers at the back. <span class="why">The testing effect. Marking your own work is half the gain.</span></p></div></div><div class="step"><div><h4>Cover and write</h4><p>Nine key words. Cover the meanings, write them from memory, then check. <span class="why">Retrieval, not recognition. Recognising a word is not knowing it.</span></p></div></div><div class="step"><div><h4>Link it up</h4><p>Explain WHY one thing leads to another, and connect it to a topic from earlier in the year. <span class="why">Elaboration — this is what separates a grade 5 from a grade 8.</span></p></div></div><div class="step"><div><h4>Come back</h4><p>Re-do the quiz a week later, then a month later. Track your score. <span class="why">Spacing. Forgetting a little, then retrieving, is what makes it stick.</span></p></div></div></div>
+      <div>
+        <div class="sec-head" style="margin-bottom:14px"><span class="num">03</span><h2 style="font-size:1.3rem">The exam map</h2></div>
+        <div class="ecards"><div class="ecard e1"><div class="eh">Section 1 · Christianity (Paper 1 practice)</div><div class="eb"><p>Christian Beliefs and Living the Christian Life — Questions 1 and 3 of the real Paper 1</p><p>Every question: (a) 3 · (b) 4 · (c) 5 + a source · (d) 12 evaluation</p><p>SPaG (+3) on the (d) questions</p></div></div><div class="ecard e2"><div class="eh">Section 2 · Islam (Paper 2 practice)</div><div class="eb"><p>Muslim Beliefs and Living the Muslim Life — Questions 1 and 3 of the real Paper 2</p><p>Every question: (a) 3 · (b) 4 · (c) 5 + a source · (d) 12 evaluation</p><p>SPaG (+3) on the (d) questions</p></div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="resources">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">04</span><h2>Your resources</h2></div>
+    <p class="sec-lead">Everything in the End-of-Year Exam folder: the two revision lesson decks, their answer sheets, and the Exam Companion in both editions.</p>
+    <div class="res-note" id="resNote">
+      <b>Teacher setup:</b> links aren't set yet. Open this file in a text editor, find the <code>LINKS</code> list near the bottom, and paste each SharePoint or OneDrive share link once. Buttons with no link show as "Link not set".
+    </div>
+    <div class="res-grid">
+<div class="res-col g1"><div class="rc-head"><span class="rc-n">Section 1 · Christianity</span><h3>Paper 1 revision</h3></div><a class="res-btn" data-key="s1_deck"><span class="ic">▣</span><span>Revision lesson — Christian Beliefs &amp; LCL<em>Y10_REV_S1_Christian_Beliefs_LCL.pptx</em></span><span class="go">↗</span></a><a class="res-btn" data-key="s1_sheet"><span class="ic">✎</span><span>Paper 1 practice sheet<em>Y10_A3_S1_Paper1_Sheet.docx</em></span><span class="go">↗</span></a></div>
+<div class="res-col g2"><div class="rc-head"><span class="rc-n">Section 2 · Islam</span><h3>Paper 2 revision</h3></div><a class="res-btn" data-key="s2_deck"><span class="ic">▣</span><span>Revision lesson — Muslim Beliefs &amp; LML<em>Y10_REV_S2_Muslim_Beliefs_LML.pptx</em></span><span class="go">↗</span></a><a class="res-btn" data-key="s2_sheet"><span class="ic">✎</span><span>Paper 2 practice sheet<em>Y10_A3_S2_Paper2_Sheet.docx</em></span><span class="go">↗</span></a></div>
+<div class="res-col g3"><div class="rc-head"><span class="rc-n">The companion</span><h3>Exam Companion</h3></div><a class="res-btn" data-key="comp_he"><span class="ic">◈</span><span>Exam Companion — HE<em>Y10_Exam_Companion_HE.docx</em></span><span class="go">↗</span></a><a class="res-btn" data-key="comp_fe"><span class="ic">◈</span><span>Exam Companion — FE<em>Y10_Exam_Companion_FE.docx</em></span><span class="go">↗</span></a></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>The End-of-Year Exam · ecosystem</span>
+    <span class="amber">Harlington School · Edexcel GCSE (9–1) Religious Studies B</span>
+  </div>
+</footer>
+
+<script>
+/* =====================================================================
+   TEACHER: paste your SharePoint / OneDrive share links between the quotes.
+   Leave a link empty ("") and its button shows "Link not set".
+   ===================================================================== */
+const LINKS = {
+  s1_deck: "",
+  s1_sheet: "",
+  s2_deck: "",
+  s2_sheet: "",
+  comp_he: "",
+  comp_fe: ""
+};
+(function wireResources(){
+  let anySet=false;
+  document.querySelectorAll(".res-btn").forEach(function(btn){
+    const url=(LINKS[btn.dataset.key]||"").trim();
+    if(url){ btn.href=url; btn.target="_blank"; btn.rel="noopener"; anySet=true; }
+    else{ btn.classList.add("unset"); btn.removeAttribute("href"); btn.setAttribute("aria-disabled","true"); }
+  });
+  if(anySet){ const n=document.getElementById("resNote"); if(n) n.classList.add("hide"); }
+})();
+</script>
+</body>
+</html>
