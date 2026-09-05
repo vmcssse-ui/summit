@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0E5F55">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Ccircle cx=%2732%27 cy=%2732%27 r=%2732%27 fill=%27%230E5F55%27/%3E%3Ctext x=%2732%27 y=%2742%27 font-size=%2730%27 text-anchor=%27middle%27 fill=%27%23E4C25A%27 font-family=%27Georgia%27 font-weight=%27700%27%3EB%3C/text%3E%3C/svg%3E">
+<title>Believers' Arcade</title>
+</head>
+<body>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700;9..144,900&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<style>
+:root{
+  color-scheme: light;
+  --navy:#123F4D; --ink:#152A31; --gold:#0E8A78; --gold-2:#5FD3BE; --parch:#FBF7EE; --paper:#FFFFFF;
+  --rule:#E6DCC6; --rule-2:#F1EADA; --muted:#6B6F80; --soft:#F4EFE3;
+  --ph:#8E2430; --eth:#1F6B54; --chr:#2F6B8A;
+  --ok:#3C7A5A; --warn:#C9A227; --bad:#B0413E;
+  --t0:#F2D06B; --t1:#9FCB7A; --t2:#86B3E8; --t3:#B58BD9;
+  --display:"Fraunces",Georgia,"Times New Roman",serif;
+  --body:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --r:14px; --shadow:0 10px 30px rgba(18,41,77,.10);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--parch);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.45;
+  background-image:repeating-linear-gradient(0deg,transparent 0 31px,rgba(18,41,77,.045) 31px 32px);}
+button{font-family:inherit;font-size:inherit;cursor:pointer}
+button:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+h1,h2,h3{font-family:var(--display);font-weight:700;line-height:1.1;margin:0;text-wrap:balance}
+p{margin:0}
+[hidden]{display:none!important}
+#app{max-width:920px;margin:0 auto;padding:12px 16px 56px}
+
+/* ---------- top bar ---------- */
+.top{display:flex;align-items:center;gap:12px;padding:8px 0 14px}
+.iconbtn{border:1.5px solid var(--rule);background:var(--paper);color:var(--ink);border-radius:999px;width:40px;height:40px;display:inline-flex;align-items:center;justify-content:center;font-size:18px;flex:0 0 auto}
+.iconbtn:hover{border-color:var(--navy)}
+.brand{display:flex;align-items:center;gap:10px;flex:1;min-width:0}
+.crest{width:42px;height:42px;border-radius:50%;background:var(--navy);display:grid;place-items:center;flex:0 0 auto}
+.crest svg{width:26px;height:26px}
+.brand b{font-family:var(--display);font-size:20px;font-weight:900;display:block;line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brand small{color:var(--muted);font-size:12.5px;letter-spacing:.02em;display:block}
+.xp{display:inline-flex;align-items:center;gap:6px;background:var(--navy);color:#fff;border-radius:999px;padding:7px 13px;font-weight:700;font-size:14px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.xp .coin{width:16px;height:16px;border-radius:50%;background:var(--gold);box-shadow:inset 0 0 0 3px var(--gold-2);display:inline-block}
+.xp.bump{animation:bump .4s ease}
+@keyframes bump{40%{transform:scale(1.12)}}
+.top-right{display:flex;align-items:center;gap:8px}
+
+/* ---------- screens ---------- */
+.screen{animation:fade .25s ease}
+@keyframes fade{from{opacity:.001;transform:translateY(4px)}}
+
+/* ---------- hub ---------- */
+.hero{background:var(--navy);color:#fff;border-radius:20px;padding:26px 26px 22px;position:relative;overflow:hidden;box-shadow:var(--shadow)}
+.hero:before{content:"";position:absolute;inset:0;background:
+  radial-gradient(circle at 88% 18%,rgba(201,162,39,.35),transparent 42%),
+  repeating-linear-gradient(0deg,transparent 0 23px,rgba(255,255,255,.06) 23px 24px);}
+.hero>*{position:relative}
+.hero .eyebrow{font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-2);font-weight:700}
+.hero h1{font-size:clamp(30px,5.4vw,46px);font-weight:900;margin:6px 0 8px;letter-spacing:-.01em}
+.hero h1 em{font-style:italic;font-weight:500;color:var(--gold-2)}
+.hero p{max-width:60ch;color:rgba(255,255,255,.86);font-size:16px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px}
+.stat{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:10px 12px}
+.stat b{font-family:var(--display);font-size:26px;font-weight:700;display:block;line-height:1;font-variant-numeric:tabular-nums}
+.stat span{font-size:12px;color:rgba(255,255,255,.7);letter-spacing:.04em;text-transform:uppercase}
+.rank{margin-top:14px}
+.rank .bar{height:8px;border-radius:99px;background:rgba(255,255,255,.14);overflow:hidden}
+.rank .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-2));border-radius:99px;transition:width .6s ease}
+.rank small{display:flex;justify-content:space-between;color:rgba(255,255,255,.75);font-size:12.5px;margin-top:6px}
+
+.section-h{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:26px 0 12px}
+.section-h h2{font-size:22px}
+.section-h small{color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1.5px solid var(--rule);background:var(--paper);border-radius:999px;padding:6px 13px;font-size:14px;font-weight:700;color:var(--ink);display:inline-flex;align-items:center;gap:7px}
+.chip i{width:9px;height:9px;border-radius:50%;background:var(--c,var(--navy));display:inline-block}
+.chip.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.chip.on i{box-shadow:0 0 0 2px rgba(255,255,255,.5)}
+
+.games{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.game{background:var(--paper);border:1.5px solid var(--rule);border-radius:18px;padding:18px;text-align:left;display:grid;grid-template-columns:64px 1fr;gap:14px;align-items:start;color:var(--ink);transition:transform .15s ease,box-shadow .15s ease,border-color .15s}
+.game:hover{transform:translateY(-2px);box-shadow:var(--shadow);border-color:var(--navy)}
+.game .glyph{width:64px;height:64px;border-radius:16px;display:grid;place-items:center;background:var(--g,var(--navy));color:#fff}
+.game .glyph svg{width:40px;height:40px}
+.game h3{font-size:20px;font-weight:700}
+.game h3 small{display:block;font-family:var(--body);font-weight:700;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
+.game p{color:var(--muted);font-size:14px;margin-top:5px;line-height:1.4}
+.game .meta{margin-top:9px;font-size:12.5px;color:var(--navy);font-weight:700;display:flex;gap:10px;flex-wrap:wrap}
+.game .meta span{background:var(--soft);border-radius:6px;padding:2px 7px}
+
+.how{margin-top:26px;background:var(--paper);border:1.5px dashed var(--rule);border-radius:16px;padding:16px 18px;color:var(--muted);font-size:14px}
+.how b{color:var(--ink)}
+.how ol{margin:8px 0 0;padding-left:20px}
+.how li{margin:3px 0}
+.foot{margin-top:22px;color:var(--muted);font-size:12.5px;text-align:center}
+
+/* ---------- shared game chrome ---------- */
+.gbar{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.gbar h2{font-size:24px}
+.gbar .sub{color:var(--muted);font-size:13.5px}
+.btn{border:1.5px solid var(--navy);background:var(--navy);color:#fff;border-radius:10px;padding:9px 16px;font-weight:700;display:inline-flex;align-items:center;gap:8px;line-height:1.1}
+.btn:hover{background:#0B2F3A}
+.btn.ghost{background:var(--paper);color:var(--navy)}
+.btn.ghost:hover{background:var(--soft)}
+.btn.gold{background:var(--gold);border-color:var(--gold);color:var(--ink)}
+.btn.gold:hover{background:var(--gold-2)}
+.btn.sm{padding:6px 11px;font-size:14px;border-radius:8px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.panel{background:var(--paper);border:1.5px solid var(--rule);border-radius:16px;padding:16px}
+.list{display:grid;gap:8px}
+.row{display:flex;align-items:center;gap:12px;background:var(--paper);border:1.5px solid var(--rule);border-radius:12px;padding:12px 14px;text-align:left;color:var(--ink);width:100%}
+.row:hover{border-color:var(--navy)}
+.row .tag{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:var(--c,var(--navy));border-radius:6px;padding:3px 7px;white-space:nowrap}
+.row b{flex:1;font-size:15.5px}
+.row .done{color:var(--ok);font-weight:700;font-size:14px;white-space:nowrap}
+.row .best{color:var(--muted);font-size:13px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.hud{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.hud .pill{background:var(--paper);border:1.5px solid var(--rule);border-radius:999px;padding:6px 12px;font-size:14px;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+.hud .pill em{font-style:normal;color:var(--muted);font-weight:400;margin-right:4px}
+.hearts{letter-spacing:2px;color:var(--bad)}
+.center{text-align:center}
+.help{color:var(--muted);font-size:13.5px}
+
+/* ---------- toast + modal + confetti ---------- */
+#toast{position:fixed;left:50%;top:18px;transform:translateX(-50%) translateY(-20px);background:var(--ink);color:#fff;padding:10px 16px;border-radius:10px;font-weight:700;opacity:0;pointer-events:none;transition:.25s;z-index:60;max-width:92vw;text-align:center}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+#toast.good{background:var(--ok)} #toast.bad{background:var(--bad)} #toast.gold{background:var(--gold);color:var(--ink)}
+#modal{position:fixed;inset:0;background:rgba(18,41,77,.55);display:grid;place-items:center;z-index:50;padding:16px}
+#modal .box{background:var(--paper);border-radius:20px;padding:24px 22px;max-width:460px;width:100%;box-shadow:0 30px 60px rgba(0,0,0,.3);animation:pop .25s ease}
+@keyframes pop{from{transform:scale(.94);opacity:0}}
+#modal h3{font-size:26px;margin-bottom:8px}
+#modal .body{color:var(--ink);font-size:15.5px}
+#modal .body .term{font-family:var(--display);font-size:30px;font-weight:900;letter-spacing:.06em;color:var(--navy);margin:6px 0 4px}
+#modal .body .why{background:var(--soft);border-left:4px solid var(--gold);border-radius:8px;padding:10px 12px;margin-top:10px;font-size:14.5px}
+#modal .body .kv{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;margin-top:10px;font-size:14px}
+#modal .body .kv span{color:var(--muted)}
+#modal .acts{display:flex;gap:10px;justify-content:flex-end;margin-top:18px;flex-wrap:wrap}
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:70}
+
+/* ---------- WORDLE ---------- */
+.w-wrap{max-width:520px;margin:0 auto}
+.w-modes{display:inline-flex;background:var(--soft);border-radius:999px;padding:3px}
+.w-modes button{border:0;background:transparent;border-radius:999px;padding:6px 14px;font-weight:700;color:var(--muted)}
+.w-modes button.on{background:var(--navy);color:#fff}
+.clue{background:var(--paper);border:1.5px solid var(--rule);border-left:5px solid var(--gold);border-radius:12px;padding:12px 14px;margin:12px 0}
+.clue .lab{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.clue p{font-size:16px;margin-top:3px}
+.clue .hints{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;align-items:center}
+.clue .hints span{font-size:13px;color:var(--navy);font-weight:700;background:var(--soft);padding:3px 9px;border-radius:6px}
+.w-grid{display:grid;gap:6px;justify-content:center;margin:14px auto}
+.w-row{display:grid;gap:6px}
+.w-row.shake{animation:shake .4s}
+@keyframes shake{20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+.cell{aspect-ratio:1;border:2px solid var(--rule);border-radius:8px;display:grid;place-items:center;font-weight:700;font-size:clamp(18px,4.4vw,26px);text-transform:uppercase;background:var(--paper);transition:transform .12s}
+.cell.filled{border-color:var(--navy);animation:tick .1s}
+@keyframes tick{50%{transform:scale(1.08)}}
+.cell.correct{background:var(--ok);border-color:var(--ok);color:#fff}
+.cell.present{background:var(--gold);border-color:var(--gold);color:var(--ink)}
+.cell.absent{background:#8B8F9C;border-color:#8B8F9C;color:#fff}
+.cell.flip{animation:flip .5s ease}
+@keyframes flip{0%{transform:rotateX(0)}50%{transform:rotateX(90deg)}100%{transform:rotateX(0)}}
+.kbd{display:grid;gap:6px;margin-top:10px;user-select:none}
+.kbd .krow{display:flex;gap:5px;justify-content:center}
+.key{border:0;background:#DCD5C4;border-radius:7px;min-width:30px;flex:1 1 30px;max-width:44px;height:50px;font-weight:700;font-size:15px;color:var(--ink);text-transform:uppercase;padding:0}
+.key.wide{flex:1.6 1 48px;max-width:70px;font-size:12.5px}
+.key.correct{background:var(--ok);color:#fff} .key.present{background:var(--gold)} .key.absent{background:#8B8F9C;color:#fff}
+.w-foot{display:flex;justify-content:space-between;gap:8px;margin-top:14px;flex-wrap:wrap}
+.dist{display:grid;gap:5px;margin-top:8px}
+.dist div{display:grid;grid-template-columns:18px 1fr;gap:8px;align-items:center;font-size:13px;font-variant-numeric:tabular-nums}
+.dist i{display:block;height:18px;background:var(--navy);border-radius:4px;color:#fff;font-style:normal;font-size:12px;padding:0 6px;line-height:18px;text-align:right;min-width:22px}
+
+/* ---------- CONNECTIONS ---------- */
+.cn-wrap{max-width:560px;margin:0 auto}
+.cn-solved{display:grid;gap:8px;margin-bottom:8px}
+.cn-group{border-radius:10px;padding:10px 12px;text-align:center;animation:pop .3s ease;color:var(--ink)}
+.cn-group b{display:block;font-size:15px;text-transform:uppercase;letter-spacing:.04em}
+.cn-group span{font-size:14px}
+.cn-group small{display:block;margin-top:3px;font-size:12.5px;opacity:.85}
+.cn-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.tile{aspect-ratio:1.35;border:0;border-radius:10px;background:var(--soft);color:var(--ink);font-weight:700;font-size:14px;line-height:1.15;padding:6px 4px;display:grid;place-items:center;text-align:center;overflow:hidden;transition:transform .1s,background .1s}
+.tile.long{font-size:12.5px}.tile.xlong{font-size:11px}
+.tile:active{transform:scale(.96)}
+.tile.sel{background:var(--navy);color:#fff}
+.tile.bounce{animation:bounce .35s ease}
+@keyframes bounce{40%{transform:translateY(-6px)}}
+.cn-bar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:14px;flex-wrap:wrap}
+.lives{display:flex;gap:6px;align-items:center;font-size:14px;color:var(--muted)}
+.lives i{width:12px;height:12px;border-radius:50%;background:var(--navy);display:inline-block}
+.lives i.off{background:var(--rule)}
+.cn-acts{display:flex;gap:8px;flex-wrap:wrap}
+
+/* ---------- DROP ---------- */
+.dr-wrap{max-width:560px;margin:0 auto}
+.dr-cols{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-bottom:4px}
+.dr-cols div{background:var(--navy);color:#fff;font-weight:700;font-size:12.5px;text-align:center;padding:7px 4px;border-radius:8px 8px 0 0;line-height:1.15;min-height:40px;display:grid;place-items:center}
+.dr-cols div.hit{background:var(--ok)} .dr-cols div.miss{background:var(--bad)}
+#dr-canvas{display:block;width:100%;border-radius:0 0 12px 12px;background:var(--paper);border:1.5px solid var(--rule);touch-action:none}
+.dr-ctl{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}
+.dr-ctl button{border:1.5px solid var(--rule);background:var(--paper);border-radius:12px;padding:12px 0;font-size:20px;font-weight:700;color:var(--navy);touch-action:manipulation}
+.dr-ctl button:active{background:var(--soft)}
+.dr-next{margin-top:8px;font-size:14px;color:var(--muted)}
+.dr-next b{color:var(--ink)}
+
+/* ---------- KNOCK-OUT ---------- */
+.ko-wrap{max-width:760px;margin:0 auto}
+#ko-canvas{display:block;width:100%;border-radius:14px;background:linear-gradient(#EAF1F8,#FBF7EE 70%);border:1.5px solid var(--rule);touch-action:none;cursor:grab}
+.ko-list{display:grid;gap:6px;margin-top:12px}
+@media(min-width:640px){.ko-list{grid-template-columns:1fr 1fr}}
+.ko-item{display:flex;gap:10px;align-items:flex-start;background:var(--paper);border:1.5px solid var(--rule);border-radius:10px;padding:8px 10px;font-size:14px;line-height:1.3}
+.ko-item .n{width:26px;height:26px;border-radius:50%;background:var(--navy);color:#fff;font-weight:700;display:grid;place-items:center;flex:0 0 auto;font-size:13px}
+.ko-item.false-hit{border-color:var(--ok);background:#EEF6F0}.ko-item.false-hit .n{background:var(--ok)}
+.ko-item.true-hit{border-color:var(--bad);background:#FBEDEC}.ko-item.true-hit .n{background:var(--bad)}
+.ko-item.reveal{border-color:var(--gold)}
+.ko-item small{display:block;color:var(--muted);margin-top:3px;font-size:12.5px}
+.ko-item.false-hit small{color:var(--ok)}
+
+@media(max-width:560px){
+  .games{grid-template-columns:1fr}
+  .stats{grid-template-columns:repeat(3,1fr)}
+  .stat b{font-size:22px}
+  .hero{padding:20px 18px 18px}
+  #app{padding:10px 12px 40px}
+  .brand small{display:none}
+  .xp{font-size:13px;padding:6px 10px}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<div id="app">
+  <header class="top">
+    <button id="backBtn" class="iconbtn" aria-label="Back to the arcade" hidden>←</button>
+    <div class="brand">
+      <div class="crest" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#5FD3BE" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18V6c2.6-1.4 5.4-1.4 8 0v12c-2.6-1.4-5.4-1.4-8 0z"/><path d="M21 18V6c-2.6-1.4-5.4-1.4-8 0v12c2.6-1.4 5.4-1.4 8 0z"/><path d="M12 6.6v11.6"/><circle cx="12" cy="3.4" r="1.5" fill="#5FD3BE" stroke="none"/></svg></div>
+      <div><b id="topTitle">Believers' Arcade</b><small id="topSub">GCSE Religious Studies · Edexcel B</small></div>
+    </div>
+    <div class="top-right">
+      <div class="xp" id="xpPill" title="Experience points"><span class="coin"></span><span id="xpVal">0</span> XP</div>
+      <button id="soundBtn" class="iconbtn" aria-label="Toggle sound">🔊</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- ================= HUB ================= -->
+    <section id="scr-hub" class="screen">
+      <div class="hero">
+        <div class="eyebrow">Key concepts · four games · eight units</div>
+        <h1>Revise like it's <em>a game</em>.</h1>
+        <p>Every term, belief and teaching in these games comes straight from the Edexcel B course — Christianity for Paper 1, Islam for Paper 2. Play a round when you have five minutes; the arcade keeps your score.</p>
+        <div class="stats">
+          <div class="stat"><b id="stStreak">0</b><span>Day streak</span></div>
+          <div class="stat"><b id="stPlayed">0</b><span>Rounds played</span></div>
+          <div class="stat"><b id="stSolved">0</b><span>Puzzles solved</span></div>
+        </div>
+        <div class="rank">
+          <div class="bar"><i id="rankBar" style="width:0%"></i></div>
+          <small><span id="rankName">Novice</span><span id="rankNext">200 XP to Apprentice</span></small>
+        </div>
+      </div>
+
+      <div class="section-h"><h2>Pick a paper</h2><small>Filters every game's questions</small></div>
+      <div class="chips" id="paperChips"></div>
+
+      <div class="section-h"><h2>Choose a game</h2><small id="poolNote"></small></div>
+      <div class="games">
+        <button class="game" data-go="wordle" style="--g:var(--ph)">
+          <div class="glyph"><svg viewBox="0 0 40 40" fill="none"><rect x="4" y="4" width="9" height="9" rx="2" fill="#fff" opacity=".35"/><rect x="15.5" y="4" width="9" height="9" rx="2" fill="#fff"/><rect x="27" y="4" width="9" height="9" rx="2" fill="#fff" opacity=".35"/><rect x="4" y="15.5" width="9" height="9" rx="2" fill="#E4C25A"/><rect x="15.5" y="15.5" width="9" height="9" rx="2" fill="#fff" opacity=".35"/><rect x="27" y="15.5" width="9" height="9" rx="2" fill="#fff"/><rect x="4" y="27" width="9" height="9" rx="2" fill="#fff"/><rect x="15.5" y="27" width="9" height="9" rx="2" fill="#fff"/><rect x="27" y="27" width="9" height="9" rx="2" fill="#E4C25A"/></svg></div>
+          <div><h3><small>Wordle-style</small>Key Term</h3><p>Six guesses to find the key word from its definition. A new daily word, or practise as many as you like.</p><div class="meta"><span id="mWordle"></span><span>2 min</span></div></div>
+        </button>
+        <button class="game" data-go="connect" style="--g:var(--eth)">
+          <div class="glyph"><svg viewBox="0 0 40 40" fill="none"><rect x="4" y="5" width="32" height="6" rx="2" fill="#F2D06B"/><rect x="4" y="13.5" width="32" height="6" rx="2" fill="#9FCB7A"/><rect x="4" y="22" width="32" height="6" rx="2" fill="#86B3E8"/><rect x="4" y="30.5" width="32" height="6" rx="2" fill="#B58BD9"/></svg></div>
+          <div><h3><small>Connections-style</small>Sort Sixteen</h3><p>Sixteen beliefs, practices and key words hide four groups of four. Find them before your four mistakes run out.</p><div class="meta"><span id="mConnect"></span><span>4 min</span></div></div>
+        </button>
+        <button class="game" data-go="drop" style="--g:var(--chr)">
+          <div class="glyph"><svg viewBox="0 0 40 40" fill="none"><rect x="15" y="3" width="10" height="10" rx="2" fill="#E4C25A"/><path d="M20 15v6" stroke="#fff" stroke-width="2" stroke-linecap="round"/><path d="M16.5 19.5L20 23l3.5-3.5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><rect x="4" y="27" width="10" height="10" rx="2" fill="#fff" opacity=".5"/><rect x="4" y="16" width="10" height="10" rx="2" fill="#fff" opacity=".5"/><rect x="26" y="27" width="10" height="10" rx="2" fill="#fff" opacity=".5"/><rect x="15" y="27" width="10" height="10" rx="2" fill="#fff"/></svg></div>
+          <div><h3><small>Tetris-style</small>Concept Drop</h3><p>Concepts fall from the top. Steer each one into the column it belongs to before the wrong ones pile up.</p><div class="meta"><span id="mDrop"></span><span>3 min</span></div></div>
+        </button>
+        <button class="game" data-go="knock" style="--g:#B5761F">
+          <div class="glyph"><svg viewBox="0 0 40 40" fill="none"><path d="M8 34V20M8 20L4 12M8 20l4-8" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/><circle cx="14" cy="14" r="4" fill="#E4C25A"/><rect x="24" y="8" width="12" height="8" rx="1.5" fill="#fff"/><rect x="24" y="17" width="12" height="8" rx="1.5" fill="#fff" opacity=".55"/><rect x="24" y="26" width="12" height="8" rx="1.5" fill="#fff"/></svg></div>
+          <div><h3><small>Angry-Birds-style</small>Knock-out</h3><p>Aim, pull, release. Knock down the statements that are wrong — and leave the true ones standing.</p><div class="meta"><span id="mKnock"></span><span>3 min</span></div></div>
+        </button>
+      </div>
+
+      <div class="how"><b>How to use this in revision.</b>
+        <ol>
+          <li><b>Daily Key Term</b> first — one word a day keeps the vocabulary alive between lessons.</li>
+          <li><b>Sort Sixteen</b> after a lesson: it tests whether you can see how a topic fits together, not just the words.</li>
+          <li><b>Concept Drop</b> and <b>Knock-out</b> are for the week before an assessment: fast recall, and spotting the muddles that cost marks — Id-ul-Fitr for Id-ul-Adha, deterrence for reformation.</li>
+        </ol>
+      </div>
+      <div class="foot">Harlington School · Religious Education · Edu.Ai SV Digital · Progress is saved on this device.</div>
+    </section>
+
+    <!-- ================= WORDLE ================= -->
+    <section id="scr-wordle" class="screen" hidden>
+      <div class="w-wrap">
+        <div class="gbar">
+          <div><h2>Key Term</h2><div class="sub" id="w-sub"></div></div>
+          <div class="w-modes"><button id="w-daily" class="on">Daily</button><button id="w-practice">Practice</button></div>
+        </div>
+        <div class="clue"><div class="lab">Definition</div><p id="w-clue"></p>
+          <div class="hints"><span id="w-paper"></span><span id="w-topic" hidden></span><button id="w-hint" class="btn ghost sm">Hint (−5 XP)</button></div></div>
+        <div class="w-grid" id="w-grid"></div>
+        <div class="kbd" id="w-kbd"></div>
+        <div class="w-foot"><button id="w-new" class="btn ghost sm" hidden>New word ↻</button><button id="w-stats" class="btn ghost sm">My stats</button></div>
+      </div>
+    </section>
+
+    <!-- ================= CONNECTIONS ================= -->
+    <section id="scr-connect" class="screen" hidden>
+      <div class="cn-wrap">
+        <div id="cn-pick">
+          <div class="gbar"><div><h2>Sort Sixteen</h2><div class="sub">Find four groups of four. Yellow is the easiest group, purple the trickiest.</div></div><button id="cn-random" class="btn gold">Random puzzle ▶</button></div>
+          <div class="list" id="cn-list"></div>
+        </div>
+        <div id="cn-board" hidden>
+          <div class="gbar"><div><h2 id="cn-title"></h2><div class="sub" id="cn-sub"></div></div><button id="cn-back" class="btn ghost sm">All puzzles</button></div>
+          <div class="cn-solved" id="cn-solved"></div>
+          <div class="cn-grid" id="cn-grid"></div>
+          <div class="cn-bar">
+            <div class="lives" id="cn-lives">Mistakes remaining: <i></i><i></i><i></i><i></i></div>
+            <div class="cn-acts"><button id="cn-shuffle" class="btn ghost sm">Shuffle</button><button id="cn-clear" class="btn ghost sm">Deselect</button><button id="cn-submit" class="btn sm" disabled>Submit</button></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CONCEPT DROP ================= -->
+    <section id="scr-drop" class="screen" hidden>
+      <div class="dr-wrap">
+        <div id="dr-pick">
+          <div class="gbar"><div><h2>Concept Drop</h2><div class="sub">Each concept belongs in one column. ◀ ▶ to steer, ▼ to speed up, ⤓ to drop. Five in a row clears a mistake.</div></div></div>
+          <div class="list" id="dr-list"></div>
+        </div>
+        <div id="dr-game" hidden>
+          <div class="gbar"><div><h2 id="dr-title"></h2></div>
+            <div class="hud"><div class="pill"><em>Score</em><span id="dr-score">0</span></div><div class="pill"><em>Level</em><span id="dr-level">1</span></div><div class="pill"><em>Streak</em><span id="dr-streak">0</span></div><button id="dr-pause" class="btn ghost sm">Pause</button></div></div>
+          <div class="dr-cols" id="dr-cols"></div>
+          <canvas id="dr-canvas" width="520" height="440"></canvas>
+          <div class="dr-ctl"><button data-k="left" aria-label="Move left">◀</button><button data-k="down" aria-label="Soft drop">▼</button><button data-k="right" aria-label="Move right">▶</button><button data-k="drop" aria-label="Hard drop">⤓</button></div>
+          <div class="dr-next">Next up: <b id="dr-next">—</b></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= KNOCK-OUT ================= -->
+    <section id="scr-knock" class="screen" hidden>
+      <div class="ko-wrap">
+        <div id="ko-pick">
+          <div class="gbar"><div><h2>Knock-out</h2><div class="sub">Eight statements on the tower. Four of them are wrong — knock those out and leave the true ones standing. Three lives, seven shots.</div></div></div>
+          <div class="list" id="ko-list"></div>
+        </div>
+        <div id="ko-game" hidden>
+          <div class="gbar"><div><h2 id="ko-title"></h2></div>
+            <div class="hud"><div class="pill"><em>Targets</em><span id="ko-left">4</span></div><div class="pill"><em>Shots</em><span id="ko-shots">7</span></div><div class="pill"><em>Score</em><span id="ko-score">0</span></div><div class="pill hearts" id="ko-hearts">♥♥♥</div><button id="ko-retry" class="btn ghost sm">Restart</button></div></div>
+          <canvas id="ko-canvas" width="720" height="380"></canvas>
+          <p class="help center" style="margin-top:6px">Drag the ball back from the slingshot, then let go. Numbers on the crates match the statements below.</p>
+          <div class="ko-list" id="ko-items"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" role="status"></div>
+  <div id="modal" hidden><div class="box"><h3 id="m-title"></h3><div class="body" id="m-body"></div><div class="acts" id="m-acts"></div></div></div>
+  <canvas id="confetti"></canvas>
+</div>
+
+<script>
+// ============================================================
+//  REVISION ARCADE — CONTENT PACK: GCSE Religious Studies (Edexcel B, 1RB0)
+//  Papers: aos1 = Paper 1 Religion and Ethics (Christianity)
+//          aos2 = Paper 2 Religion, Peace and Conflict (Islam)
+//  Edit freely: every game reads only from this object.
+// ============================================================
+const COURSE = {
+  id: "gcse", name: "GCSE Religious Studies", spec: "Edexcel B", short: "GCSE RS",
+  papers: [
+    { id: "aos1", label: "Paper 1 · Christianity", col: "#8E2430" },
+    { id: "aos2", label: "Paper 2 · Islam",        col: "#1F6B54" }
+  ],
+
+  // ---------- WORDLE · KEY TERM  (4–9 letters, single word) ----------
+  terms: [
+    // ===== Paper 1 · Christianity =====
+    // 1. Christian Beliefs
+    { t:"TRINITY", p:"aos1", topic:"Christian Beliefs", clue:"One God in three persons: Father, Son and Holy Spirit" },
+    { t:"NICENE", p:"aos1", topic:"Christian Beliefs", clue:"The ___ Creed, agreed by the bishops at Nicaea in 325, states what Christians believe" },
+    { t:"CREED", p:"aos1", topic:"Christian Beliefs", clue:"A statement of belief said together in worship" },
+    { t:"ETERNAL", p:"aos1", topic:"Christian Beliefs", clue:"God has no beginning and no end" },
+    { t:"CREATOR", p:"aos1", topic:"Christian Beliefs", clue:"Genesis 1:1 — 'In the beginning God created' makes God this" },
+    { t:"GENESIS", p:"aos1", topic:"Christian Beliefs", clue:"The first book of the Bible, where the creation accounts are found" },
+    { t:"LITERAL", p:"aos1", topic:"Christian Beliefs", clue:"Reading Genesis as word-for-word history — the opposite of a metaphorical reading" },
+    { t:"WORD", p:"aos1", topic:"Christian Beliefs", clue:"John 1 calls Jesus the divine ___, present with God at creation" },
+    { t:"MESSIAH", p:"aos1", topic:"Christian Beliefs", clue:"The anointed one Jews awaited; Christians believe Jesus is him" },
+    { t:"SUPPER", p:"aos1", topic:"Christian Beliefs", clue:"The Last ___ — Jesus shares bread and wine on the night before he dies" },
+    { t:"BETRAYAL", p:"aos1", topic:"Christian Beliefs", clue:"What Judas did in the Garden of Gethsemane" },
+    { t:"ASCENSION", p:"aos1", topic:"Christian Beliefs", clue:"Forty days after Easter, Jesus returns to the Father in heaven" },
+    { t:"SALVATION", p:"aos1", topic:"Christian Beliefs", clue:"Being saved from sin and its consequences" },
+    { t:"ATONEMENT", p:"aos1", topic:"Christian Beliefs", clue:"Christ's death restoring the relationship between God and humanity — 'at-one-ment'" },
+    { t:"REDEEM", p:"aos1", topic:"Christian Beliefs", clue:"To buy back — what Christians believe Christ did for humanity on the cross" },
+    { t:"GRACE", p:"aos1", topic:"Christian Beliefs", clue:"The undeserved love and mercy God gives to humanity" },
+    { t:"ORIGINAL", p:"aos1", topic:"Christian Beliefs", clue:"___ sin — the fallen human nature inherited from Adam and Eve" },
+    { t:"SPIRIT", p:"aos1", topic:"Christian Beliefs", clue:"The third person of the Trinity, given to the Church at Pentecost" },
+    { t:"JUDGEMENT", p:"aos1", topic:"Christian Beliefs", clue:"The final trial of the living and the dead at the end of the world" },
+    { t:"HEAVEN", p:"aos1", topic:"Christian Beliefs", clue:"The resting place of saved souls, in God's presence" },
+    { t:"HELL", p:"aos1", topic:"Christian Beliefs", clue:"Eternal separation from God" },
+    { t:"PURGATORY", p:"aos1", topic:"Christian Beliefs", clue:"Catholic belief in a state of purification before heaven — rejected by most Protestants" },
+    { t:"FREEWILL", p:"aos1", topic:"Christian Beliefs", clue:"God's gift allowing humans to choose — used to explain moral evil" },
+    { t:"MERCY", p:"aos1", topic:"Christian Beliefs", clue:"Compassion shown to someone who does not deserve it — a quality of God" },
+    { t:"VALE", p:"aos1", topic:"Christian Beliefs", clue:"The ___ of soul-making — suffering has a purpose because it develops character" },
+    // 2. Marriage and the Family
+    { t:"MARRIAGE", p:"aos1", topic:"Marriage and the Family", clue:"A lifelong union blessed by God — Mark 10:9, 'let no one separate'" },
+    { t:"VOWS", p:"aos1", topic:"Marriage and the Family", clue:"The promises made before God in a wedding ceremony" },
+    { t:"CHASTITY", p:"aos1", topic:"Marriage and the Family", clue:"Abstaining from sex outside marriage" },
+    { t:"ADULTERY", p:"aos1", topic:"Marriage and the Family", clue:"Sex with someone other than your husband or wife — forbidden by the seventh commandment" },
+    { t:"COHABIT", p:"aos1", topic:"Marriage and the Family", clue:"To live together as a couple without being married" },
+    { t:"CELIBACY", p:"aos1", topic:"Marriage and the Family", clue:"Choosing not to marry or have sex, as Catholic priests and nuns do" },
+    { t:"PROCREATE", p:"aos1", topic:"Marriage and the Family", clue:"To have children — one of the purposes of Christian marriage" },
+    { t:"NURTURE", p:"aos1", topic:"Marriage and the Family", clue:"Raising children in the faith — a purpose of the Christian family" },
+    { t:"EXTENDED", p:"aos1", topic:"Marriage and the Family", clue:"A family type including grandparents, aunts and cousins" },
+    { t:"PARISH", p:"aos1", topic:"Marriage and the Family", clue:"The local church area that supports families through groups and classes" },
+    { t:"PLANNING", p:"aos1", topic:"Marriage and the Family", clue:"Family ___ — controlling how many children you have and when" },
+    { t:"HUMANAE", p:"aos1", topic:"Marriage and the Family", clue:"___ Vitae (1968) — the Catholic teaching against artificial contraception" },
+    { t:"DIVORCE", p:"aos1", topic:"Marriage and the Family", clue:"The legal ending of a marriage" },
+    { t:"ANNULMENT", p:"aos1", topic:"Marriage and the Family", clue:"A Catholic declaration that a marriage was never valid in the first place" },
+    { t:"REMARRY", p:"aos1", topic:"Marriage and the Family", clue:"To marry again after divorce — permitted by some denominations, not others" },
+    { t:"EQUALITY", p:"aos1", topic:"Marriage and the Family", clue:"Being of the same worth and status — Genesis 1:27, both made in God's image" },
+    { t:"GALATIANS", p:"aos1", topic:"Marriage and the Family", clue:"___ 3:28 — 'neither male nor female, for you are all one in Christ Jesus'" },
+    { t:"PREJUDICE", p:"aos1", topic:"Marriage and the Family", clue:"Judging someone before you know them — the attitude behind discrimination" },
+    { t:"SEXISM", p:"aos1", topic:"Marriage and the Family", clue:"Treating someone unfairly because of their gender" },
+    // 3. Living the Christian Life
+    { t:"WORSHIP", p:"aos1", topic:"Living the Christian Life", clue:"Showing honour and devotion to God — liturgical, non-liturgical or private" },
+    { t:"LITURGY", p:"aos1", topic:"Living the Christian Life", clue:"A set form of public worship that follows the same order each time" },
+    { t:"INFORMAL", p:"aos1", topic:"Living the Christian Life", clue:"Worship or prayer that is spontaneous, with no set words" },
+    { t:"SACRAMENT", p:"aos1", topic:"Living the Christian Life", clue:"An outward sign of an inward grace — baptism and the Eucharist are two" },
+    { t:"BAPTISM", p:"aos1", topic:"Living the Christian Life", clue:"The sacrament of entry into the Church, using water" },
+    { t:"EUCHARIST", p:"aos1", topic:"Living the Christian Life", clue:"The sacrament of bread and wine, also called Mass or Holy Communion" },
+    { t:"ROSARY", p:"aos1", topic:"Living the Christian Life", clue:"A set of prayers counted on a string of beads" },
+    { t:"STATIONS", p:"aos1", topic:"Living the Christian Life", clue:"The ___ of the Cross — images of Jesus' last journey, prayed through in Lent" },
+    { t:"PIETY", p:"aos1", topic:"Living the Christian Life", clue:"Popular ___ — devotions that come from culture rather than official liturgy" },
+    { t:"LOURDES", p:"aos1", topic:"Living the Christian Life", clue:"French pilgrimage site where Bernadette saw visions and the sick seek healing" },
+    { t:"IONA", p:"aos1", topic:"Living the Christian Life", clue:"Scottish island of pilgrimage and community, known for simple worship" },
+    { t:"TAIZE", p:"aos1", topic:"Living the Christian Life", clue:"French community whose pilgrimage draws young people, known for chanted songs" },
+    { t:"ADVENT", p:"aos1", topic:"Living the Christian Life", clue:"The season of waiting and preparation before Christmas" },
+    { t:"CHRISTMAS", p:"aos1", topic:"Living the Christian Life", clue:"The celebration of the birth of Jesus — the Incarnation" },
+    { t:"EASTER", p:"aos1", topic:"Living the Christian Life", clue:"The celebration of the death and resurrection of Jesus" },
+    { t:"PASCHAL", p:"aos1", topic:"Living the Christian Life", clue:"The ___ Mystery — the life, death, resurrection and ascension of Jesus" },
+    { t:"MISSION", p:"aos1", topic:"Living the Christian Life", clue:"The Church's task of spreading the faith, at home and abroad" },
+    { t:"GREAT", p:"aos1", topic:"Living the Christian Life", clue:"The ___ Commission — Matthew 28:19, 'go and make disciples of all nations'" },
+    { t:"GOSPEL", p:"aos1", topic:"Living the Christian Life", clue:"Good news — and the name for each of the four accounts of Jesus' life" },
+    { t:"ECUMENISM", p:"aos1", topic:"Living the Christian Life", clue:"Different denominations working to build closer relationships" },
+    { t:"FOODBANK", p:"aos1", topic:"Living the Christian Life", clue:"A local church project giving emergency food to people in need" },
+    { t:"CAFOD", p:"aos1", topic:"Living the Christian Life", clue:"Catholic Agency For Overseas Development — a Catholic aid charity" },
+    { t:"TEARFUND", p:"aos1", topic:"Living the Christian Life", clue:"Evangelical Christian charity working with the world's poorest communities" },
+    // 4. Matters of Life and Death
+    { t:"SANCTITY", p:"aos1", topic:"Matters of Life and Death", clue:"The ___ of life — life is holy and God-given, so only God should end it" },
+    { t:"QUALITY", p:"aos1", topic:"Matters of Life and Death", clue:"___ of life — the argument set against sanctity in euthanasia debates" },
+    { t:"ABORTION", p:"aos1", topic:"Matters of Life and Death", clue:"Deliberately ending a pregnancy — legal in the UK up to 24 weeks" },
+    { t:"VIABILITY", p:"aos1", topic:"Matters of Life and Death", clue:"The point at which a foetus could survive outside the womb" },
+    { t:"HOSPICE", p:"aos1", topic:"Matters of Life and Death", clue:"Care that keeps the dying comfortable — the Christian alternative to euthanasia" },
+    { t:"EVOLUTION", p:"aos1", topic:"Matters of Life and Death", clue:"Species developing by natural selection over millions of years" },
+    { t:"DARWIN", p:"aos1", topic:"Matters of Life and Death", clue:"His 1859 Origin of Species challenged a literal reading of Genesis" },
+    { t:"SOUL", p:"aos1", topic:"Matters of Life and Death", clue:"The spiritual part of a person that Christians believe survives death" },
+    { t:"IMMORTAL", p:"aos1", topic:"Matters of Life and Death", clue:"Never dying — what Christians believe the soul is" },
+    { t:"HUMANIST", p:"aos1", topic:"Matters of Life and Death", clue:"A non-religious person who bases morality on reason and human welfare" },
+    { t:"STEWARD", p:"aos1", topic:"Matters of Life and Death", clue:"Someone who looks after creation on God's behalf" },
+    { t:"DOMINION", p:"aos1", topic:"Matters of Life and Death", clue:"Genesis 1:28 — human rule over the earth and its creatures" },
+    { t:"POLLUTION", p:"aos1", topic:"Matters of Life and Death", clue:"Damage to air, land and sea — an abuse of the natural world" },
+    { t:"ANIMALS", p:"aos1", topic:"Matters of Life and Death", clue:"Use and abuse of ___ — experimentation, farming and food" },
+
+    // ===== Paper 2 · Islam =====
+    // 5. Muslim Beliefs
+    { t:"TAWHID", p:"aos2", topic:"Muslim Beliefs", clue:"The oneness of Allah — the most important Muslim belief" },
+    { t:"SHIRK", p:"aos2", topic:"Muslim Beliefs", clue:"The sin of associating anything with Allah — the opposite of Tawhid" },
+    { t:"ARTICLES", p:"aos2", topic:"Muslim Beliefs", clue:"The six beliefs of Sunni Islam are also called the ___ of Faith" },
+    { t:"USUL", p:"aos2", topic:"Muslim Beliefs", clue:"___ ad-Din — the five roots of faith in Shi'a Islam" },
+    { t:"ADALAT", p:"aos2", topic:"Muslim Beliefs", clue:"Divine justice — the Shi'a root of faith saying Allah is always fair" },
+    { t:"IMAMAH", p:"aos2", topic:"Muslim Beliefs", clue:"The Shi'a root of faith about the rightful successors of Muhammad" },
+    { t:"SUNNI", p:"aos2", topic:"Muslim Beliefs", clue:"The largest group of Muslims, who follow the six beliefs and five pillars" },
+    { t:"SHIA", p:"aos2", topic:"Muslim Beliefs", clue:"The group of Muslims who follow the five roots and ten obligatory acts" },
+    { t:"IMMANENT", p:"aos2", topic:"Muslim Beliefs", clue:"Allah is close to believers and part of the world — 'nearer than the jugular vein'" },
+    { t:"MERCIFUL", p:"aos2", topic:"Muslim Beliefs", clue:"Ar-Rahim — every surah but one opens by calling Allah compassionate and this" },
+    { t:"RISALAH", p:"aos2", topic:"Muslim Beliefs", clue:"Prophethood — the channel through which Allah communicates with humanity" },
+    { t:"PROPHET", p:"aos2", topic:"Muslim Beliefs", clue:"A messenger of Allah; Muslims believe there were 124,000 of them" },
+    { t:"IBRAHIM", p:"aos2", topic:"Muslim Beliefs", clue:"The prophet who rebuilt the Ka'aba and was willing to sacrifice his son" },
+    { t:"MUSA", p:"aos2", topic:"Muslim Beliefs", clue:"The prophet given the Tawrat — known to Christians as Moses" },
+    { t:"MUHAMMAD", p:"aos2", topic:"Muslim Beliefs", clue:"The Seal of the Prophets — the last messenger, who received the Qur'an" },
+    { t:"KUTUB", p:"aos2", topic:"Muslim Beliefs", clue:"The Muslim holy books, revealed to the prophets" },
+    { t:"QURAN", p:"aos2", topic:"Muslim Beliefs", clue:"The final revelation, given to Muhammad over 23 years" },
+    { t:"TAWRAT", p:"aos2", topic:"Muslim Beliefs", clue:"The scripture given to Musa — the Torah" },
+    { t:"ZABUR", p:"aos2", topic:"Muslim Beliefs", clue:"The scripture given to Dawud — the Psalms" },
+    { t:"INJIL", p:"aos2", topic:"Muslim Beliefs", clue:"The scripture given to Isa — the Gospel" },
+    { t:"MALAIKAH", p:"aos2", topic:"Muslim Beliefs", clue:"Angels — created from light, they always obey Allah" },
+    { t:"JIBRIL", p:"aos2", topic:"Muslim Beliefs", clue:"The angel who brought the revelation of the Qur'an to Muhammad" },
+    { t:"QADR", p:"aos2", topic:"Muslim Beliefs", clue:"Al-___ — the belief that Allah has already decreed what will happen" },
+    { t:"AKHIRAH", p:"aos2", topic:"Muslim Beliefs", clue:"Life after death — the last of the six beliefs" },
+    { t:"BARZAKH", p:"aos2", topic:"Muslim Beliefs", clue:"The barrier state between death and the Day of Judgement" },
+    { t:"JANNAH", p:"aos2", topic:"Muslim Beliefs", clue:"Paradise — the garden promised to those who submit to Allah" },
+    { t:"JAHANNAM", p:"aos2", topic:"Muslim Beliefs", clue:"Hell — the place of punishment for those who reject Allah" },
+    // 6. Crime and Punishment
+    { t:"JUSTICE", p:"aos2", topic:"Crime and Punishment", clue:"Giving people what they are due — Surah 5:8 commands Muslims to stand firm for it" },
+    { t:"CRIME", p:"aos2", topic:"Crime and Punishment", clue:"An act that breaks the law of the land" },
+    { t:"SHARIAH", p:"aos2", topic:"Crime and Punishment", clue:"Islamic law, drawn from the Qur'an and the Sunnah" },
+    { t:"NIYYAH", p:"aos2", topic:"Crime and Punishment", clue:"Intention — Muslims believe an action is judged by this" },
+    { t:"POVERTY", p:"aos2", topic:"Crime and Punishment", clue:"Having too little to live on — a social cause of crime" },
+    { t:"GREED", p:"aos2", topic:"Crime and Punishment", clue:"Wanting far more than you need — a cause of crime and of war" },
+    { t:"HATE", p:"aos2", topic:"Crime and Punishment", clue:"___ crime — an offence motivated by prejudice against a group" },
+    { t:"EVIL", p:"aos2", topic:"Crime and Punishment", clue:"Deliberate wrongdoing; the moral kind is caused by human choice" },
+    { t:"SUFFERING", p:"aos2", topic:"Crime and Punishment", clue:"Pain and hardship — Muslims see it as a test from Allah" },
+    { t:"REVENGE", p:"aos2", topic:"Crime and Punishment", clue:"Getting even — the everyday word for the aim of punishment called retribution" },
+    { t:"DETER", p:"aos2", topic:"Crime and Punishment", clue:"To put others off offending — the aim of punishment that works by warning" },
+    { t:"REFORM", p:"aos2", topic:"Crime and Punishment", clue:"To change an offender for the better — the aim most religious believers prefer" },
+    { t:"PRISON", p:"aos2", topic:"Crime and Punishment", clue:"Where offenders are held; it protects the public but may not reform" },
+    { t:"PAROLE", p:"aos2", topic:"Crime and Punishment", clue:"Early release from prison, on conditions and under supervision" },
+    { t:"CORPORAL", p:"aos2", topic:"Crime and Punishment", clue:"___ punishment — physical punishment such as caning or lashing" },
+    { t:"CAPITAL", p:"aos2", topic:"Crime and Punishment", clue:"___ punishment — the death penalty, abolished in the UK in 1969" },
+    { t:"QISAS", p:"aos2", topic:"Crime and Punishment", clue:"Like-for-like retaliation in Shari'ah — though the Qur'an says forgiving is better" },
+    { t:"FORGIVE", p:"aos2", topic:"Crime and Punishment", clue:"To stop blaming someone — Muslims believe Allah does this for the truly repentant" },
+    { t:"TAWBAH", p:"aos2", topic:"Crime and Punishment", clue:"Repentance — turning back to Allah and intending not to sin again" },
+    { t:"VICTIM", p:"aos2", topic:"Crime and Punishment", clue:"The person harmed by a crime, whose rights justice must also protect" },
+    // 7. Living the Muslim Life
+    { t:"PILLARS", p:"aos2", topic:"Living the Muslim Life", clue:"The five duties that hold up a Sunni Muslim's faith" },
+    { t:"SHAHADAH", p:"aos2", topic:"Living the Muslim Life", clue:"The declaration of faith: there is no god but Allah and Muhammad is his prophet" },
+    { t:"SALAH", p:"aos2", topic:"Living the Muslim Life", clue:"Prayer performed five times a day facing Makkah" },
+    { t:"WUDU", p:"aos2", topic:"Living the Muslim Life", clue:"The ritual washing done before prayer" },
+    { t:"QIBLAH", p:"aos2", topic:"Living the Muslim Life", clue:"The direction of prayer, marked in a mosque by the mihrab" },
+    { t:"MOSQUE", p:"aos2", topic:"Living the Muslim Life", clue:"The Muslim place of worship and community" },
+    { t:"JUMMAH", p:"aos2", topic:"Living the Muslim Life", clue:"Friday midday congregational prayer at the mosque" },
+    { t:"IMAM", p:"aos2", topic:"Living the Muslim Life", clue:"The person who leads prayer in the mosque" },
+    { t:"SAWM", p:"aos2", topic:"Living the Muslim Life", clue:"Fasting from dawn to sunset — the fourth pillar" },
+    { t:"RAMADAN", p:"aos2", topic:"Living the Muslim Life", clue:"The ninth month of the Islamic year, when Muslims fast" },
+    { t:"LAYLAT", p:"aos2", topic:"Living the Muslim Life", clue:"___ al-Qadr, the Night of Power — 'better than a thousand months'" },
+    { t:"ZAKAH", p:"aos2", topic:"Living the Muslim Life", clue:"The annual payment of 2.5% of surplus wealth to those in need" },
+    { t:"KHUMS", p:"aos2", topic:"Living the Muslim Life", clue:"The Shi'a payment of one fifth of surplus income" },
+    { t:"HAJJ", p:"aos2", topic:"Living the Muslim Life", clue:"The pilgrimage to Makkah, made once in a lifetime if able" },
+    { t:"IHRAM", p:"aos2", topic:"Living the Muslim Life", clue:"The two white sheets worn on Hajj, showing everyone is equal before Allah" },
+    { t:"MAKKAH", p:"aos2", topic:"Living the Muslim Life", clue:"The city of the Ka'aba, birthplace of Muhammad" },
+    { t:"ARAFAT", p:"aos2", topic:"Living the Muslim Life", clue:"The plain where pilgrims stand and pray on the key day of Hajj" },
+    { t:"JIHAD", p:"aos2", topic:"Living the Muslim Life", clue:"Struggle in the way of Allah — greater or lesser" },
+    { t:"GREATER", p:"aos2", topic:"Living the Muslim Life", clue:"The ___ jihad — the daily inner struggle to be a better Muslim" },
+    { t:"ASHURA", p:"aos2", topic:"Living the Muslim Life", clue:"The day Shi'a Muslims mourn the death of Husayn at Karbala" },
+    { t:"UMMAH", p:"aos2", topic:"Living the Muslim Life", clue:"The worldwide community of Muslims" },
+    { t:"HALAL", p:"aos2", topic:"Living the Muslim Life", clue:"Permitted under Islamic law — the opposite of haram" },
+    // 8. Peace and Conflict
+    { t:"PEACE", p:"aos2", topic:"Peace and Conflict", clue:"The absence of conflict — and the meaning at the root of the word Islam" },
+    { t:"HARMONY", p:"aos2", topic:"Peace and Conflict", clue:"People living together well despite their differences" },
+    { t:"RECONCILE", p:"aos2", topic:"Peace and Conflict", clue:"To bring together people who were enemies" },
+    { t:"PACIFISM", p:"aos2", topic:"Peace and Conflict", clue:"The belief that all violence and war are wrong — held by Quakers" },
+    { t:"QUAKER", p:"aos2", topic:"Peace and Conflict", clue:"Member of the Christian group whose peace testimony refuses all war" },
+    { t:"PROTEST", p:"aos2", topic:"Peace and Conflict", clue:"Expressing disagreement publicly — acceptable to most believers if peaceful" },
+    { t:"VIOLENCE", p:"aos2", topic:"Peace and Conflict", clue:"Using force to hurt or damage — most Muslims accept it only in self-defence" },
+    { t:"TERRORISM", p:"aos2", topic:"Peace and Conflict", clue:"Using violence and fear against civilians for political ends — condemned by Islam" },
+    { t:"RETALIATE", p:"aos2", topic:"Peace and Conflict", clue:"To hit back after an attack — one of the reasons nations go to war" },
+    { t:"DEFENCE", p:"aos2", topic:"Peace and Conflict", clue:"Self-___ — the one reason for fighting that Surah 2:190 allows" },
+    { t:"AUTHORITY", p:"aos2", topic:"Peace and Conflict", clue:"A Just War must be declared by a proper ___, not by an individual" },
+    { t:"CRUSADE", p:"aos2", topic:"Peace and Conflict", clue:"A medieval Christian holy war fought to take back the Holy Land" },
+    { t:"LESSER", p:"aos2", topic:"Peace and Conflict", clue:"The ___ jihad — the outward struggle, allowed only under strict conditions" },
+    { t:"WEAPONS", p:"aos2", topic:"Peace and Conflict", clue:"___ of mass destruction — nuclear, chemical and biological" },
+    { t:"NUCLEAR", p:"aos2", topic:"Peace and Conflict", clue:"The most destructive class of weapon; some argue it keeps the peace by deterrence" },
+    { t:"CHEMICAL", p:"aos2", topic:"Peace and Conflict", clue:"Weapons using poison gas — banned, and unable to spare civilians" },
+    { t:"REFUGEE", p:"aos2", topic:"Peace and Conflict", clue:"Someone forced to flee their country by war or persecution" },
+    { t:"RELIEF", p:"aos2", topic:"Peace and Conflict", clue:"Islamic ___ — the Muslim charity that helps victims of war and disaster" }
+  ],
+
+  // ---------- CONNECTIONS · SORT 16 ----------
+  connections: [
+    { id:"g1", p:"aos1", title:"Christian beliefs", groups:[
+      { name:"The Trinity", why:"One God in three persons, as stated in the Nicene Creed", items:["Father","Son","Holy Spirit","Nicene Creed"] },
+      { name:"The last days of Jesus", why:"The events of Holy Week, from the upper room to the empty tomb", items:["Last Supper","Betrayal","Crucifixion","Resurrection"] },
+      { name:"Christian eschatology", why:"What Christians believe happens after death", items:["Judgement","Heaven","Hell","Purgatory"] },
+      { name:"Solutions to the problem of evil", why:"How Christians answer 'why does a loving God allow suffering?'", items:["Free will","Vale of soul-making","Jesus suffered too","Prayer and charity"] }
+    ]},
+    { id:"g2", p:"aos1", title:"Creation and salvation", groups:[
+      { name:"The Genesis account", why:"What Genesis 1–3 actually describes", items:["Six days","Let there be light","Adam and Eve","Garden of Eden"] },
+      { name:"Ways of reading Genesis", why:"Literal and metaphorical understandings of creation", items:["Literal","Metaphorical","Creationism","Symbolic myth"] },
+      { name:"Scientific explanations", why:"The non-religious account of origins Christians must respond to", items:["Big Bang","Evolution","Darwin","Fossil record"] },
+      { name:"Salvation words", why:"How Christians describe being saved through Christ", items:["Grace","Atonement","Redemption","Sacrifice"] }
+    ]},
+    { id:"g3", p:"aos1", title:"Marriage and the family", groups:[
+      { name:"Purposes of marriage", why:"Why Christians marry — Genesis 2:24 and Mark 10:9", items:["Procreation","Nurture of children","Lifelong union","Faithful love"] },
+      { name:"When a marriage ends", why:"Divorce, and the Catholic alternative to it", items:["Divorce","Annulment","Remarriage","Separation"] },
+      { name:"Types of family", why:"The family structures the spec expects you to know", items:["Nuclear","Extended","Blended","Single-parent"] },
+      { name:"Support in the local parish", why:"How the local church helps families", items:["Baptism classes","Marriage preparation","Youth groups","Sunday school"] }
+    ]},
+    { id:"g4", p:"aos1", title:"Living the Christian life", groups:[
+      { name:"Sacraments", why:"Outward signs of inward grace", items:["Baptism","Eucharist","Confirmation","Anointing the sick"] },
+      { name:"Places of pilgrimage", why:"Where Christians travel for spiritual reasons", items:["Lourdes","Iona","Taize","Jerusalem"] },
+      { name:"Types of prayer", why:"Set and spontaneous ways of speaking to God", items:["The Lord's Prayer","Formulaic","Informal","The Rosary"] },
+      { name:"Christian charities", why:"The Church acting in the worldwide community", items:["CAFOD","Christian Aid","Tearfund","Trussell Trust"] }
+    ]},
+    { id:"g5", p:"aos1", title:"Matters of life and death", groups:[
+      { name:"Arguments against abortion", why:"The sanctity of life applied to the unborn", items:["Sanctity of life","Made in God's image","Do not murder","Adoption instead"] },
+      { name:"Arguments for a choice", why:"Quality-of-life reasoning and UK law", items:["Quality of life","Rape or abuse","Mother's health","24-week limit"] },
+      { name:"Care of the dying", why:"The Christian alternative to euthanasia", items:["Hospice","Palliative care","Pain relief","Chaplaincy"] },
+      { name:"The natural world", why:"Use and abuse of the environment", items:["Stewardship","Dominion","Pollution","Conservation"] }
+    ]},
+    { id:"g6", p:"aos1", title:"Christianity: the whole paper", groups:[
+      { name:"Titles for Jesus", why:"Who Christians believe Jesus is", items:["Messiah","Son of God","The Word","Saviour"] },
+      { name:"Christmas and Easter", why:"The two great celebrations of the Christian year", items:["Advent","Nativity","Good Friday","Empty tomb"] },
+      { name:"The Church in the world", why:"Spreading the faith and working together", items:["Mission","Evangelism","Great Commission","Ecumenism"] },
+      { name:"Books of the Bible", why:"Where the key Christian teachings are found", items:["Genesis","John","Mark","Galatians"] }
+    ]},
+    { id:"g7", p:"aos2", title:"Muslim beliefs", groups:[
+      { name:"Six beliefs of Sunni Islam", why:"The Articles of Faith all Sunni Muslims hold", items:["Tawhid","Risalah","Malaikah","Akhirah"] },
+      { name:"Five roots of Shi'a Islam", why:"Usul ad-Din — the Shi'a foundations of faith", items:["Adalat","Nubuwwah","Imamah","Mi'ad"] },
+      { name:"Muslim holy books", why:"The Kutub revealed to the prophets", items:["Qur'an","Tawrat","Zabur","Injil"] },
+      { name:"Life after death", why:"The stages of Akhirah, from the grave to the garden", items:["Barzakh","Day of Judgement","Jannah","Jahannam"] }
+    ]},
+    { id:"g8", p:"aos2", title:"Allah, prophets and angels", groups:[
+      { name:"Prophets of Allah", why:"Risalah — the messengers, from the first to the last", items:["Adam","Ibrahim","Musa","Isa"] },
+      { name:"Angels", why:"Malaikah — created from light, always obeying Allah", items:["Jibril","Mika'il","Izra'il","Made of light"] },
+      { name:"The nature of Allah", why:"Qualities named in the Qur'an and the 99 names", items:["Immanent","Transcendent","Beneficent","Just"] },
+      { name:"The Ka'aba", why:"The house of Allah at the centre of Makkah", items:["Black Stone","Seven circuits","Rebuilt by Ibrahim","Direction of prayer"] }
+    ]},
+    { id:"g9", p:"aos2", title:"Crime and punishment", groups:[
+      { name:"Aims of punishment", why:"What punishment is meant to achieve", items:["Retribution","Deterrence","Reformation","Protection"] },
+      { name:"Causes of crime", why:"Why people offend — social and personal reasons", items:["Poverty","Greed","Upbringing","Addiction"] },
+      { name:"Treatment of criminals", why:"How offenders are dealt with", items:["Prison","Community service","Corporal punishment","Parole"] },
+      { name:"Islam and forgiveness", why:"Repentance, intention and the mercy of Allah", items:["Tawbah","Niyyah","Allah is Ar-Rahim","Forgiving is better"] }
+    ]},
+    { id:"g10", p:"aos2", title:"Living the Muslim life", groups:[
+      { name:"Five Pillars", why:"The duties that hold up a Sunni Muslim's faith", items:["Shahadah","Salah","Zakah","Sawm"] },
+      { name:"On Hajj", why:"What pilgrims actually do at Makkah", items:["Ihram","Arafat","Seven circuits","Stoning the pillars"] },
+      { name:"Ramadan", why:"The month of fasting and the night the Qur'an came", items:["Fasting dawn to dusk","Night of Power","Qur'an revealed","Id-ul-Fitr"] },
+      { name:"Shi'a practice", why:"What is distinctive to Shi'a Muslims", items:["Ten Obligatory Acts","Khums","Ashura","Imamah"] }
+    ]},
+    { id:"g11", p:"aos2", title:"Peace and conflict", groups:[
+      { name:"Just War conditions", why:"The rules a war must meet to be justified", items:["Just cause","Proper authority","Last resort","Proportionate force"] },
+      { name:"Reasons for war", why:"Why nations actually fight", items:["Greed","Self-defence","Retaliation","Resources"] },
+      { name:"Weapons of mass destruction", why:"Why WMD are so hard to justify", items:["Nuclear","Chemical","Biological","Kills civilians"] },
+      { name:"Peacemaking", why:"How believers respond to war and its victims", items:["Islamic Relief","Muslim Aid","Reconciliation","Pacifism"] }
+    ]},
+    { id:"g12", p:"aos2", title:"Jihad and the ummah", groups:[
+      { name:"Greater jihad", why:"The inner struggle Muhammad called the greater one", items:["Inner struggle","Daily prayer","Resisting temptation","Studying the Qur'an"] },
+      { name:"Rules for lesser jihad", why:"The strict conditions that make fighting permitted", items:["Declared by a leader","Self-defence only","Civilians protected","Never the aggressor"] },
+      { name:"Why terrorism is not jihad", why:"It breaks every condition of the lesser jihad", items:["Targets civilians","No proper authority","Surah 5:32","Spreads fear"] },
+      { name:"The ummah", why:"The worldwide community that the pillars build", items:["Worldwide community","Zakah for the poor","Hajj unites Muslims","One body"] }
+    ]}
+  ],
+
+  // ---------- CONCEPT DROP (Tetris-style) ----------
+  drop: [
+    { id:"p1", p:"aos1", title:"Christian Beliefs", cols:["Trinity","Creation","Salvation","Afterlife"], items:[
+      ["Father, Son, Spirit",0],["Nicene Creed",0],["Three in one",0],["Baptism of Jesus",0],["Council of Nicaea",0],
+      ["Genesis 1",1],["Let there be light",1],["Adam and Eve",1],["Literal or metaphor",1],["God the Creator",1],
+      ["Grace",2],["Atonement",2],["The cross",2],["Repentance",2],["Jesus the Redeemer",2],
+      ["Judgement",3],["Heaven",3],["Hell",3],["Purgatory",3],["Resurrection body",3]
+    ]},
+    { id:"p2", p:"aos1", title:"Marriage and the Family", cols:["Marriage","Family","Divorce","Equality"], items:[
+      ["Lifelong vows",0],["Mark 10:9",0],["Sacrament",0],["Faithfulness",0],["Church wedding",0],
+      ["Procreation",1],["Nurture in faith",1],["Extended family",1],["Sunday school",1],["Baptism classes",1],
+      ["Annulment",2],["Remarriage",2],["Adultery",2],["Second chance",2],["Broken vows",2],
+      ["Genesis 1:27",3],["Galatians 3:28",3],["Sexism",3],["Equal but different",3],["Women priests",3]
+    ]},
+    { id:"p3", p:"aos1", title:"Living the Christian Life", cols:["Worship","Sacraments","Pilgrimage","Charity"], items:[
+      ["Liturgical",0],["Informal",0],["Private prayer",0],["The Rosary",0],["The Lord's Prayer",0],
+      ["Baptism",1],["Eucharist",1],["Confirmation",1],["Outward sign",1],["Bread and wine",1],
+      ["Lourdes",2],["Iona",2],["Taize",2],["Jerusalem",2],["Journey for faith",2],
+      ["CAFOD",3],["Christian Aid",3],["Tearfund",3],["Food bank",3],["Street pastors",3]
+    ]},
+    { id:"p4", p:"aos1", title:"Matters of Life and Death", cols:["Origins","Abortion","Euthanasia","Environment"], items:[
+      ["Big Bang",0],["Evolution",0],["Genesis 1",0],["Darwin",0],["Awe and wonder",0],
+      ["24-week limit",1],["Sanctity of life",1],["Viability",1],["1967 Abortion Act",1],["Adoption instead",1],
+      ["Hospice care",2],["Palliative care",2],["Quality of life",2],["Right to die",2],["Do not kill",2],
+      ["Stewardship",3],["Dominion",3],["Pollution",3],["Animal testing",3],["Conservation",3]
+    ]},
+    { id:"p5", p:"aos2", title:"Muslim Beliefs", cols:["Nature of Allah","Prophets and books","Angels and al-Qadr","Akhirah"], items:[
+      ["Tawhid",0],["Shirk is the worst sin",0],["Immanent",0],["Transcendent",0],["99 names",0],
+      ["Risalah",1],["Ibrahim",1],["Musa and the Tawrat",1],["The Qur'an",1],["Seal of the Prophets",1],
+      ["Jibril",2],["Made of light",2],["Predestination",2],["Allah knows all",2],["Free will and Qadr",2],
+      ["Barzakh",3],["Day of Judgement",3],["Book of deeds",3],["Jannah",3],["Jahannam",3]
+    ]},
+    { id:"p6", p:"aos2", title:"Crime and Punishment", cols:["Causes of crime","Aims of punishment","Treatment","Forgiveness"], items:[
+      ["Poverty",0],["Greed",0],["Upbringing",0],["Addiction",0],["Hate of a group",0],
+      ["Retribution",1],["Deterrence",1],["Reformation",1],["Protection",1],["Getting even",1],
+      ["Prison",2],["Community service",2],["Corporal punishment",2],["Parole",2],["Fair trial",2],
+      ["Tawbah",3],["Niyyah",3],["Allah is Ar-Rahim",3],["Forgiving is better",3],["A fresh start",3]
+    ]},
+    { id:"p7", p:"aos2", title:"Living the Muslim Life", cols:["Shahadah and Salah","Sawm and Zakah","Hajj","Jihad and festivals"], items:[
+      ["Declaration of faith",0],["Five times a day",0],["Wudu",0],["Facing Makkah",0],["Jummah prayer",0],
+      ["Ramadan",1],["Dawn to sunset",1],["2.5% of wealth",1],["Khums",1],["Night of Power",1],
+      ["Ihram",2],["Arafat",2],["Seven circuits",2],["Stoning the pillars",2],["Once in a lifetime",2],
+      ["Greater jihad",3],["Lesser jihad",3],["Id-ul-Fitr",3],["Id-ul-Adha",3],["Ashura",3]
+    ]},
+    { id:"p8", p:"aos2", title:"Peace and Conflict", cols:["Peace","Reasons for war","Just War and jihad","Peacemaking"], items:[
+      ["Harmony",0],["Islam means peace",0],["Reconciliation",0],["Forgiveness",0],["Justice first",0],
+      ["Greed",1],["Self-defence",1],["Retaliation",1],["Resources",1],["Fear of attack",1],
+      ["Just cause",2],["Proper authority",2],["Last resort",2],["Civilians protected",2],["Proportionate force",2],
+      ["Islamic Relief",3],["Muslim Aid",3],["Pacifism",3],["Quakers",3],["Peaceful protest",3]
+    ]}
+  ],
+
+  // ---------- KNOCK-OUT (slingshot) · f:true = FALSE statement (knock it out) ----------
+  knockout: [
+    { id:"n1", p:"aos1", title:"The Trinity and creation", items:[
+      { s:"Christians believe in one God who is Father, Son and Holy Spirit.", f:false },
+      { s:"The Trinity means Christians believe in three separate Gods.", f:true, why:"One God in three persons — three Gods would be polytheism, which Christianity rejects." },
+      { s:"The Nicene Creed was agreed at the Council of Nicaea in 325.", f:false },
+      { s:"All Christians read the Genesis creation account literally.", f:true, why:"Many read it metaphorically — as a story about who created, not how." },
+      { s:"John 1 describes Jesus as the Word, present at creation.", f:false },
+      { s:"Genesis says God created the world in seven days of work.", f:true, why:"Six days of creating; on the seventh God rested." },
+      { s:"Christians believe God is omnipotent, loving and just.", f:false },
+      { s:"The Big Bang theory is rejected by all Christian denominations.", f:true, why:"Many Christians accept it as the method God used — it was first proposed by a Catholic priest." }
+    ]},
+    { id:"n2", p:"aos1", title:"Jesus and salvation", items:[
+      { s:"The Incarnation means God became human in Jesus.", f:false },
+      { s:"The Ascension is the name for Jesus rising from the dead.", f:true, why:"That is the Resurrection; the Ascension is his return to heaven forty days later." },
+      { s:"Atonement means the restoring of the relationship between God and humanity.", f:false },
+      { s:"Christians believe people earn salvation by good works alone.", f:true, why:"Salvation comes through grace — undeserved love — though denominations weigh works differently." },
+      { s:"Jesus shared bread and wine with his disciples at the Last Supper.", f:false },
+      { s:"Judas betrayed Jesus in the Garden of Eden.", f:true, why:"The Garden of Gethsemane. Eden is in the Genesis creation account." },
+      { s:"Grace is the undeserved love and mercy God gives to humanity.", f:false },
+      { s:"Christians believe Jesus was only human and not divine.", f:true, why:"He is fully human and fully God — the doctrine of the Incarnation." }
+    ]},
+    { id:"n3", p:"aos1", title:"Afterlife, evil and suffering", items:[
+      { s:"Christians believe in a judgement of the living and the dead.", f:false },
+      { s:"Purgatory is a belief shared by all Christian denominations.", f:true, why:"It is a Catholic belief; most Protestants reject it as unbiblical." },
+      { s:"Hell is described as eternal separation from God.", f:false },
+      { s:"Moral evil is caused by earthquakes and disease.", f:true, why:"That is natural evil; moral evil is caused by human choices." },
+      { s:"Free will is used to explain why God allows moral evil.", f:false },
+      { s:"The vale of soul-making argues suffering is completely pointless.", f:true, why:"The opposite: suffering has a purpose because it develops character." },
+      { s:"Christians point to Jesus' own suffering as a response to the problem of evil.", f:false },
+      { s:"Christians believe suffering proves God does not exist.", f:true, why:"That is a non-religious response; Christians offer theodicies instead." }
+    ]},
+    { id:"n4", p:"aos1", title:"Marriage and the family", items:[
+      { s:"Mark 10:9 teaches that what God has joined, no one should separate.", f:false },
+      { s:"An annulment is the same thing as a divorce.", f:true, why:"An annulment declares the marriage was never valid; divorce ends a valid one." },
+      { s:"Procreation and nurture of children are purposes of Christian marriage.", f:false },
+      { s:"The Catholic Church permits artificial contraception.", f:true, why:"Humanae Vitae (1968) allows only natural methods; Anglicans permit artificial ones." },
+      { s:"Galatians 3:28 says there is neither male nor female in Christ.", f:false },
+      { s:"Christianity teaches that men and women have unequal worth.", f:true, why:"Genesis 1:27 — both made in God's image, so equal in value." },
+      { s:"Some denominations allow remarriage in church after divorce.", f:false },
+      { s:"Cohabitation is encouraged by Christian teaching as preparation for marriage.", f:true, why:"Most churches teach sex belongs within marriage, so cohabiting is discouraged." }
+    ]},
+    { id:"n5", p:"aos1", title:"Worship, prayer and sacraments", items:[
+      { s:"Liturgical worship follows a set order that is the same each time.", f:false },
+      { s:"A sacrament is a private prayer said alone at home.", f:true, why:"A sacrament is an outward sign of an inward grace, such as baptism or the Eucharist." },
+      { s:"The Eucharist uses bread and wine and recalls the Last Supper.", f:false },
+      { s:"The Lord's Prayer is an example of informal, spontaneous prayer.", f:true, why:"It is a set (formulaic) prayer — the one Jesus taught his disciples." },
+      { s:"Baptism is the sacrament of entry into the Church.", f:false },
+      { s:"Quakers place great importance on elaborate liturgy and ritual.", f:true, why:"Quaker worship is silent and non-liturgical, with no set words." },
+      { s:"The Rosary is a set of prayers counted on beads.", f:false },
+      { s:"Only Catholics practise infant baptism.", f:true, why:"Anglicans, Orthodox and Methodists baptise infants too; Baptists baptise believers." }
+    ]},
+    { id:"n6", p:"aos1", title:"Pilgrimage, mission and charity", items:[
+      { s:"Lourdes is a pilgrimage site associated with healing.", f:false },
+      { s:"Iona is a pilgrimage site in France.", f:true, why:"Iona is a Scottish island; Taize is the French community." },
+      { s:"The Great Commission is Jesus' command to make disciples of all nations.", f:false },
+      { s:"CAFOD is an evangelical Protestant charity.", f:true, why:"CAFOD is the Catholic Agency For Overseas Development; Tearfund is evangelical." },
+      { s:"Ecumenism means different denominations working more closely together.", f:false },
+      { s:"Pilgrimage is compulsory for all Christians.", f:true, why:"It is voluntary in Christianity — unlike Hajj, which is a pillar of Islam." },
+      { s:"Food banks are one way the local church serves its community.", f:false },
+      { s:"Evangelism means keeping the Christian faith private.", f:true, why:"It means spreading the faith by teaching others about it." }
+    ]},
+    { id:"n7", p:"aos1", title:"Matters of life and death", items:[
+      { s:"Sanctity of life means life is holy and God-given.", f:false },
+      { s:"UK law permits abortion up to 36 weeks in all circumstances.", f:true, why:"The general limit is 24 weeks; beyond that only in exceptional circumstances." },
+      { s:"A hospice offers care that keeps dying people comfortable.", f:false },
+      { s:"Euthanasia is legal in the United Kingdom.", f:true, why:"It remains illegal in the UK, which is why the debate continues." },
+      { s:"Stewardship means caring for creation on God's behalf.", f:false },
+      { s:"Christians who accept evolution must reject belief in God as creator.", f:true, why:"Many hold both — evolution as the process, God as the one behind it." },
+      { s:"Quality of life arguments are used to support euthanasia.", f:false },
+      { s:"Dominion in Genesis 1:28 means humans may use the earth however they wish.", f:true, why:"Most Christians read dominion as responsible rule — stewardship, not exploitation." }
+    ]},
+    { id:"n8", p:"aos2", title:"Allah and Muslim beliefs", items:[
+      { s:"Tawhid is the belief in the oneness of Allah.", f:false },
+      { s:"Shirk means worshipping Allah alone.", f:true, why:"Shirk is associating anything with Allah — the opposite of Tawhid, and the gravest sin." },
+      { s:"Muslims believe Allah is both immanent and transcendent.", f:false },
+      { s:"The six beliefs of Islam are followed by Shi'a Muslims.", f:true, why:"The six beliefs are Sunni; Shi'a Muslims follow the five roots of Usul ad-Din." },
+      { s:"Adalat, divine justice, is one of the five roots of Shi'a Islam.", f:false },
+      { s:"Muslims believe Allah can be pictured in art and statues.", f:true, why:"Depicting Allah is forbidden; Allah is beyond human imagining." },
+      { s:"Nearly every surah of the Qur'an begins by calling Allah compassionate and merciful.", f:false },
+      { s:"Muslims believe Allah had a son.", f:true, why:"Surah 112 states that Allah 'begets not, nor is He begotten'." }
+    ]},
+    { id:"n9", p:"aos2", title:"Prophets, books, angels and Akhirah", items:[
+      { s:"Risalah means prophethood — the channel of Allah's message.", f:false },
+      { s:"Muhammad was the first of the prophets.", f:true, why:"Adam was the first; Muhammad is the last, the Seal of the Prophets." },
+      { s:"Jibril brought the revelation of the Qur'an to Muhammad.", f:false },
+      { s:"The Tawrat was revealed to Isa.", f:true, why:"The Tawrat went to Musa; the Injil is the book given to Isa." },
+      { s:"Barzakh is the state between death and the Day of Judgement.", f:false },
+      { s:"Angels have free will and can choose to disobey Allah.", f:true, why:"Angels are made of light and always obey; only humans and jinn have free will." },
+      { s:"Al-Qadr is the belief that Allah has decreed what will happen.", f:false },
+      { s:"Muslims believe the Qur'an has been changed over the centuries.", f:true, why:"Muslims hold it is preserved exactly as revealed — unlike the earlier books." }
+    ]},
+    { id:"n10", p:"aos2", title:"Crime and punishment", items:[
+      { s:"Retribution means punishment as getting even for the crime.", f:false },
+      { s:"Deterrence means changing an offender so they do not reoffend.", f:true, why:"That is reformation; deterrence puts others off by making an example." },
+      { s:"Muslims believe an action is judged by its intention, or niyyah.", f:false },
+      { s:"The Qur'an teaches that revenge is always better than forgiveness.", f:true, why:"Qisas is permitted, but the Qur'an says forgiving and reconciling is better." },
+      { s:"Poverty, greed and upbringing are given as causes of crime.", f:false },
+      { s:"Capital punishment is still used in the United Kingdom.", f:true, why:"It was abolished for murder in 1969 — though it remains legal in some Muslim countries." },
+      { s:"Tawbah means repentance — turning back to Allah.", f:false },
+      { s:"All Muslims support the death penalty in every case.", f:true, why:"Views differ: some point to Shari'ah, others to mercy and the risk of error." }
+    ]},
+    { id:"n11", p:"aos2", title:"Living the Muslim life", items:[
+      { s:"The Shahadah is the declaration that there is no god but Allah.", f:false },
+      { s:"Salah is performed three times a day.", f:true, why:"Five times a day for Sunni Muslims — Shi'a Muslims may combine them into three sessions." },
+      { s:"Zakah is 2.5% of surplus wealth given each year.", f:false },
+      { s:"Sawm means fasting from sunset to dawn.", f:true, why:"The fast runs from dawn to sunset during Ramadan." },
+      { s:"Hajj must be made once in a lifetime by those who are able.", f:false },
+      { s:"Ihram clothing is worn to show the wealth of the pilgrim.", f:true, why:"It shows the opposite — everyone stands equal before Allah." },
+      { s:"The greater jihad is the inner struggle to be a better Muslim.", f:false },
+      { s:"Id-ul-Fitr celebrates Ibrahim's willingness to sacrifice his son.", f:true, why:"That is Id-ul-Adha; Id-ul-Fitr marks the end of Ramadan." }
+    ]},
+    { id:"n12", p:"aos2", title:"Peace and conflict", items:[
+      { s:"A Just War must be declared by a proper authority.", f:false },
+      { s:"Islam teaches that Muslims should attack first if they suspect an enemy.", f:true, why:"Surah 2:190 permits fighting only in self-defence, and forbids aggression." },
+      { s:"Pacifism is the belief that all violence and war are wrong.", f:false },
+      { s:"Terrorism is a recognised form of lesser jihad.", f:true, why:"It breaks every condition — no proper authority, and civilians are targeted." },
+      { s:"Weapons of mass destruction cannot distinguish soldiers from civilians.", f:false },
+      { s:"Quakers believe war is justified when a country is attacked.", f:true, why:"Their peace testimony refuses all war, without exception." },
+      { s:"Islamic Relief and Muslim Aid help victims of war and disaster.", f:false },
+      { s:"Surah 5:32 says that killing one person is a small matter.", f:true, why:"It says killing one person is like killing all humanity, and saving one is like saving all." }
+    ]}
+  ]
+};
+
+</script>
+<script>
+// ================= CORE: store · xp · audio · toast · modal · router · hub =================
+const $ = (s, r=document) => r.querySelector(s);
+const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
+const KEY = 'philarcade_' + COURSE.id;
+const RANKS = [[0,'Novice'],[200,'Apprentice'],[600,'Scholar'],[1500,'Philosopher'],[3000,'Sage'],[6000,'Doctor of the Arcade']];
+
+const DEFAULT = () => ({ xp:0, played:0, sound:true, paper:'all',
+  wordle:{ played:0, won:0, streak:0, maxStreak:0, dist:[0,0,0,0,0,0], lastWinDay:null, daily:{}, recent:[] },
+  conn:{ solved:{} }, drop:{ best:{} }, knock:{ best:{}, done:{} } });
+let S = DEFAULT();
+function load(){ try{ const raw = localStorage.getItem(KEY); if(raw){ const o = JSON.parse(raw); S = Object.assign(DEFAULT(), o); S.wordle = Object.assign(DEFAULT().wordle, o.wordle||{}); S.conn=Object.assign(DEFAULT().conn,o.conn||{}); S.drop=Object.assign(DEFAULT().drop,o.drop||{}); S.knock=Object.assign(DEFAULT().knock,o.knock||{}); } }catch(e){} }
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
+load();
+
+// ---- helpers ----
+const todayKey = () => { const d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); };
+function hashStr(s){ let h=2166136261; for(let i=0;i<s.length;i++){ h^=s.charCodeAt(i); h=Math.imul(h,16777619); } return h>>>0; }
+function rng(seed){ let a=seed>>>0; return function(){ a|=0; a=a+0x6D2B79F5|0; let t=Math.imul(a^a>>>15,1|a); t=t+Math.imul(t^t>>>7,61|t)^t; return ((t^t>>>14)>>>0)/4294967296; }; }
+function shuffle(arr, r=Math.random){ const a=arr.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(r()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+const pick = (arr, r=Math.random) => arr[Math.floor(r()*arr.length)];
+const paperOf = id => COURSE.papers.find(p=>p.id===id);
+const inPaper = item => S.paper==='all' || item.p===S.paper;
+const esc = s => String(s).replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+// ---- XP & rank ----
+function rankOf(xp){ let cur=RANKS[0], next=null; for(let i=0;i<RANKS.length;i++){ if(xp>=RANKS[i][0]) cur=RANKS[i]; else { next=RANKS[i]; break; } } return {cur,next}; }
+function renderXP(){ $('#xpVal').textContent=S.xp; const {cur,next}=rankOf(S.xp); $('#rankName').textContent=cur[1];
+  if(next){ const pct=Math.min(100,Math.round(100*(S.xp-cur[0])/(next[0]-cur[0]))); $('#rankBar').style.width=pct+'%'; $('#rankNext').textContent=(next[0]-S.xp)+' XP to '+next[1]; }
+  else { $('#rankBar').style.width='100%'; $('#rankNext').textContent='Top rank reached'; } }
+function addXP(n, label){ if(!n) return; S.xp=Math.max(0,S.xp+n); save(); renderXP(); const pill=$('#xpPill'); pill.classList.remove('bump'); void pill.offsetWidth; pill.classList.add('bump'); if(n>0) toast('+'+n+' XP'+(label?' · '+label:''),'gold'); }
+
+// ---- audio ----
+let AC=null;
+function blip(kind){ if(!S.sound) return; try{ AC=AC||new (window.AudioContext||window.webkitAudioContext)(); if(AC.state==='suspended') AC.resume();
+  const now=AC.currentTime; const seq={ tap:[[520,.05]], ok:[[660,.07],[880,.09]], bad:[[220,.12],[180,.14]], win:[[523,.08],[659,.08],[784,.1],[1047,.18]], lose:[[330,.12],[262,.12],[196,.22]], pop:[[900,.04]], land:[[300,.05]], hit:[[150,.08],[110,.1]], launch:[[420,.05],[600,.06]] }[kind]||[[500,.05]];
+  let t=now; for(const [f,d] of seq){ const o=AC.createOscillator(), g=AC.createGain(); o.type=kind==='bad'||kind==='hit'||kind==='lose'?'sawtooth':'triangle'; o.frequency.setValueAtTime(f,t); g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(0.12,t+0.01); g.gain.exponentialRampToValueAtTime(0.0001,t+d); o.connect(g).connect(AC.destination); o.start(t); o.stop(t+d+0.02); t+=d*0.85; } }catch(e){} }
+$('#soundBtn').addEventListener('click',()=>{ S.sound=!S.sound; save(); $('#soundBtn').textContent=S.sound?'🔊':'🔇'; if(S.sound) blip('tap'); });
+$('#soundBtn').textContent=S.sound?'🔊':'🔇';
+
+// ---- toast ----
+let toastT=null;
+function toast(msg, kind='', ms=1700){ const t=$('#toast'); t.textContent=msg; t.className='show '+kind; clearTimeout(toastT); toastT=setTimeout(()=>t.className='',ms); }
+
+// ---- modal ----
+function modal({title, html, acts=[]}){ const m=$('#modal'); $('#m-title').textContent=title; $('#m-body').innerHTML=html; const a=$('#m-acts'); a.innerHTML='';
+  acts.forEach(b=>{ const el=document.createElement('button'); el.className='btn'+(b.ghost?' ghost':'')+(b.gold?' gold':''); el.textContent=b.label; el.onclick=()=>{ closeModal(); b.fn&&b.fn(); }; a.appendChild(el); });
+  m.hidden=false; setTimeout(()=>{ const first=a.querySelector('button:last-child'); first&&first.focus(); },30); }
+function closeModal(){ $('#modal').hidden=true; }
+$('#modal').addEventListener('click',e=>{ if(e.target.id==='modal') closeModal(); });
+
+// ---- confetti ----
+const CF=$('#confetti'), cfx=CF.getContext('2d'); let cfParts=[], cfRun=false;
+function confetti(n=140){ if(matchMedia('(prefers-reduced-motion: reduce)').matches) return; CF.width=innerWidth; CF.height=innerHeight; const cols=['#C9A227','#E4C25A','#12294D','#3C7A5A','#B0413E','#86B3E8','#FFFFFF'];
+  for(let i=0;i<n;i++) cfParts.push({x:innerWidth/2+(Math.random()-.5)*200,y:innerHeight*0.35,vx:(Math.random()-.5)*14,vy:-Math.random()*12-4,g:.35,w:6+Math.random()*6,h:8+Math.random()*8,r:Math.random()*6.28,vr:(Math.random()-.5)*.3,c:pick(cols),life:90+Math.random()*50});
+  if(!cfRun){ cfRun=true; requestAnimationFrame(cfTick); } }
+function cfTick(){ cfx.clearRect(0,0,CF.width,CF.height); cfParts=cfParts.filter(p=>p.life>0&&p.y<CF.height+20);
+  for(const p of cfParts){ p.vy+=p.g; p.x+=p.vx; p.y+=p.vy; p.vx*=.99; p.r+=p.vr; p.life--; cfx.save(); cfx.translate(p.x,p.y); cfx.rotate(p.r); cfx.fillStyle=p.c; cfx.globalAlpha=Math.min(1,p.life/30); cfx.fillRect(-p.w/2,-p.h/2,p.w,p.h); cfx.restore(); }
+  if(cfParts.length) requestAnimationFrame(cfTick); else { cfRun=false; cfx.clearRect(0,0,CF.width,CF.height); } }
+
+// ---- router ----
+const GAMES = {}; // id -> {enter(), leave()}
+let current='hub';
+function go(id){ const prev=current; if(GAMES[prev]&&GAMES[prev].leave) GAMES[prev].leave(); $$('.screen').forEach(s=>s.hidden=true); $('#scr-'+id).hidden=false; current=id; $('#backBtn').hidden=(id==='hub'); window.scrollTo({top:0,behavior:'instant'}); if(id==='hub') renderHub(); else if(GAMES[id]&&GAMES[id].enter) GAMES[id].enter(); }
+$('#backBtn').addEventListener('click',()=>{ blip('tap'); go('hub'); });
+$$('.game[data-go]').forEach(b=>b.addEventListener('click',()=>{ blip('tap'); go(b.dataset.go); }));
+
+// ---- paper filter ----
+function renderChips(){ const c=$('#paperChips'); c.innerHTML=''; const all=[{id:'all',label:'Whole course',col:'#12294D'}].concat(COURSE.papers);
+  all.forEach(p=>{ const b=document.createElement('button'); b.className='chip'+(S.paper===p.id?' on':''); b.style.setProperty('--c',p.col); b.innerHTML='<i></i>'+esc(p.label); b.onclick=()=>{ S.paper=p.id; save(); blip('tap'); renderHub(); }; c.appendChild(b); }); }
+
+// ---- hub ----
+function renderHub(){ renderXP(); renderChips();
+  const t=COURSE.terms.filter(inPaper).length, cn=COURSE.connections.filter(inPaper), dr=COURSE.drop.filter(inPaper).length, ko=COURSE.knockout.filter(inPaper);
+  $('#mWordle').textContent=t+' terms'; $('#mConnect').textContent=cn.length+' puzzles · '+cn.filter(c=>S.conn.solved[c.id]).length+' solved'; $('#mDrop').textContent=dr+' sets'; $('#mKnock').textContent=ko.length+' rounds · '+ko.filter(k=>S.knock.done[k.id]).length+' cleared';
+  $('#poolNote').textContent=S.paper==='all'?'Drawing on the whole course':'Drawing on '+paperOf(S.paper).label;
+  $('#stStreak').textContent=S.wordle.streak; $('#stPlayed').textContent=S.played; $('#stSolved').textContent=Object.keys(S.conn.solved).length+Object.keys(S.knock.done).length+S.wordle.won; }
+function bumpPlayed(){ S.played++; save(); }
+renderHub();
+
+</script>
+<script>
+// ================= GAME 1 · KEY TERM (Wordle-style) =================
+(function(){
+  const W = { mode:'daily', term:null, len:0, row:0, cur:'', guesses:[], done:false, won:false, keys:{}, hints:0 };
+  const grid=$('#w-grid'), kbd=$('#w-kbd');
+  const ROWS=['QWERTYUIOP','ASDFGHJKL','ENTER,Z,X,C,V,B,N,M,⌫'];
+
+  function pool(){ const p=COURSE.terms.filter(inPaper); return p.length?p:COURSE.terms; }
+  function dailyTerm(){ const day=todayKey(); const idx=hashStr('kt-'+day)%COURSE.terms.length; return COURSE.terms[idx]; }
+  function practiceTerm(){ const p=pool().filter(t=>!S.wordle.recent.includes(t.t)); return pick(p.length?p:pool()); }
+
+  function start(mode){ W.mode=mode; $('#w-daily').classList.toggle('on',mode==='daily'); $('#w-practice').classList.toggle('on',mode==='practice'); $('#w-new').hidden=(mode==='daily');
+    W.row=0; W.cur=''; W.guesses=[]; W.done=false; W.won=false; W.keys={}; W.hints=0;
+    if(mode==='daily'){ W.term=dailyTerm(); const d=S.wordle.daily[todayKey()]; if(d){ W.guesses=d.guesses.slice(); W.row=W.guesses.length; W.done=d.done; W.won=d.won; W.hints=d.hints||0; W.guesses.forEach(g=>evaluate(g).forEach((st,i)=>mark(g[i],st))); } }
+    else { W.term=practiceTerm(); }
+    W.len=W.term.t.length;
+    $('#w-sub').textContent = mode==='daily' ? 'Today’s term · '+new Date().toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long'}) : 'Practice · '+(S.paper==='all'?'whole course':paperOf(S.paper).label);
+    $('#w-clue').textContent=W.term.clue; $('#w-paper').textContent=paperOf(W.term.p).label; $('#w-topic').hidden=!(W.hints>=1); $('#w-topic').textContent='Topic: '+W.term.topic; $('#w-hint').disabled=W.done||W.hints>=2; $('#w-hint').textContent=W.hints===0?'Hint: topic (−5 XP)':W.hints===1?'Hint: first letter (−5 XP)':'No more hints';
+    renderGrid(); renderKbd(); if(W.done) setTimeout(()=>finish(true),150); }
+
+  function renderGrid(){ grid.innerHTML=''; const cell=Math.min(58,Math.floor((Math.min(innerWidth,520)-40-6*(W.len-1))/W.len)); grid.style.gridTemplateColumns='1fr';
+    for(let r=0;r<6;r++){ const row=document.createElement('div'); row.className='w-row'; row.style.gridTemplateColumns=`repeat(${W.len},${cell}px)`; row.dataset.r=r;
+      for(let c=0;c<W.len;c++){ const d=document.createElement('div'); d.className='cell'; if(r<W.guesses.length){ const g=W.guesses[r]; const st=evaluate(g)[c]; d.textContent=g[c]; d.classList.add(st); } else if(r===W.row&&!W.done){ if(W.cur[c]){ d.textContent=W.cur[c]; d.classList.add('filled'); } else if(W.hints>=2&&c===0){ d.textContent=W.term.t[0]; d.style.color='#9aa'; } }
+        row.appendChild(d); } grid.appendChild(row); } }
+  function renderKbd(){ kbd.innerHTML=''; ROWS.forEach((r,i)=>{ const row=document.createElement('div'); row.className='krow'; const keys=i===2?r.split(','):r.split(''); keys.forEach(k=>{ const b=document.createElement('button'); b.className='key'+(k.length>1?' wide':'')+(W.keys[k]?' '+W.keys[k]:''); b.textContent=k; b.dataset.k=k; b.onclick=()=>press(k); row.appendChild(b); }); kbd.appendChild(row); }); }
+  function mark(ch,st){ const rank={absent:1,present:2,correct:3}; if((rank[st]||0)>(rank[W.keys[ch]]||0)) W.keys[ch]=st; }
+
+  function evaluate(g){ const t=W.term.t, res=Array(W.len).fill('absent'), left={}; for(let i=0;i<W.len;i++){ if(g[i]===t[i]) res[i]='correct'; else left[t[i]]=(left[t[i]]||0)+1; }
+    for(let i=0;i<W.len;i++){ if(res[i]!=='correct'&&left[g[i]]>0){ res[i]='present'; left[g[i]]--; } } return res; }
+
+  function press(k){ if(W.done||current!=='wordle') return; if(k==='ENTER'||k==='Enter') return submit(); if(k==='⌫'||k==='Backspace'){ W.cur=W.cur.slice(0,-1); renderRow(); return; }
+    if(/^[A-Z]$/i.test(k)&&W.cur.length<W.len){ W.cur+=k.toUpperCase(); blip('tap'); renderRow(); } }
+  function renderRow(){ const row=grid.children[W.row]; if(!row) return; Array.from(row.children).forEach((d,c)=>{ d.className='cell'; d.style.color=''; if(W.cur[c]){ d.textContent=W.cur[c]; d.classList.add('filled'); } else if(W.hints>=2&&c===0){ d.textContent=W.term.t[0]; d.style.color='#9aa'; } else d.textContent=''; }); }
+  function submit(){ if(W.cur.length<W.len){ const row=grid.children[W.row]; row.classList.remove('shake'); void row.offsetWidth; row.classList.add('shake'); toast('Not enough letters'); blip('bad'); return; }
+    const g=W.cur; const res=evaluate(g); const row=grid.children[W.row]; W.guesses.push(g); W.cur='';
+    Array.from(row.children).forEach((d,i)=>{ setTimeout(()=>{ d.classList.add('flip'); setTimeout(()=>{ d.classList.add(res[i]); mark(g[i],res[i]); renderKbd(); },250); }, i*160); });
+    const won=res.every(s=>s==='correct'); W.row++;
+    setTimeout(()=>{ if(won){ W.done=true; W.won=true; finish(false); } else if(W.row>=6){ W.done=true; W.won=false; finish(false); } else { renderRow(); if(W.mode==='daily') persistDaily(); } }, W.len*160+300); }
+
+  function persistDaily(){ S.wordle.daily[todayKey()]={guesses:W.guesses.slice(),done:W.done,won:W.won,hints:W.hints}; save(); }
+
+  function finish(restored){ $('#w-hint').disabled=true; if(!restored){ bumpPlayed(); S.wordle.played++; if(W.mode==='daily') persistDaily(); if(W.mode==='practice'){ S.wordle.recent=[W.term.t].concat(S.wordle.recent).slice(0,12); }
+      if(W.won){ S.wordle.won++; S.wordle.dist[W.row-1]++; const day=todayKey(); if(W.mode==='daily'){ const y=new Date(); y.setDate(y.getDate()-1); const yk=y.getFullYear()+'-'+String(y.getMonth()+1).padStart(2,'0')+'-'+String(y.getDate()).padStart(2,'0'); S.wordle.streak = (S.wordle.lastWinDay===yk)? S.wordle.streak+1 : (S.wordle.lastWinDay===day? S.wordle.streak : 1); S.wordle.lastWinDay=day; S.wordle.maxStreak=Math.max(S.wordle.maxStreak,S.wordle.streak); }
+        save(); const xp=(7-W.row)*15+10+(W.mode==='daily'?20:0); blip('win'); confetti(); setTimeout(()=>addXP(xp,'Key Term'),300); }
+      else { S.wordle.streak = W.mode==='daily' ? 0 : S.wordle.streak; save(); blip('lose'); } }
+    const t=W.term; const verdict = W.won ? ['Genius','Magnificent','Impressive','Splendid','Great','Phew'][W.row-1] : 'Not this time';
+    modal({ title: verdict, html: `<div class="term">${esc(t.t)}</div><div>${esc(t.clue)}</div><div class="kv"><span>Topic</span><b>${esc(t.topic)}</b><span>Paper</span><b>${esc(paperOf(t.p).label)}</b></div>${W.won?'':'<div class="why">Say it, write it, use it in a sentence — then come back tomorrow.</div>'}`,
+      acts: W.mode==='daily' ? [{label:'Practice more',ghost:true,fn:()=>start('practice')},{label:'Back to arcade',fn:()=>go('hub')}] : [{label:'Back to arcade',ghost:true,fn:()=>go('hub')},{label:'Next word ▶',gold:true,fn:()=>start('practice')}] }); }
+
+  function hint(){ if(W.done||W.hints>=2) return; W.hints++; addXP(-5); blip('pop'); if(W.hints===1){ $('#w-topic').hidden=false; $('#w-hint').textContent='Hint: first letter (−5 XP)'; } else { $('#w-hint').textContent='No more hints'; $('#w-hint').disabled=true; renderRow(); } if(W.mode==='daily') persistDaily(); }
+
+  function stats(){ const w=S.wordle; const max=Math.max(1,...w.dist); const dist=w.dist.map((n,i)=>`<div><span>${i+1}</span><i style="width:${Math.max(8,Math.round(100*n/max))}%">${n}</i></div>`).join('');
+    modal({title:'Key Term stats', html:`<div class="kv"><span>Played</span><b>${w.played}</b><span>Won</span><b>${w.won} (${w.played?Math.round(100*w.won/w.played):0}%)</b><span>Current streak</span><b>${w.streak} day${w.streak===1?'':'s'}</b><span>Best streak</span><b>${w.maxStreak}</b></div><div style="margin-top:12px;font-weight:700">Guess distribution</div><div class="dist">${dist}</div>`, acts:[{label:'Close'}]}); }
+
+  $('#w-daily').onclick=()=>{ blip('tap'); start('daily'); }; $('#w-practice').onclick=()=>{ blip('tap'); start('practice'); };
+  $('#w-new').onclick=()=>{ blip('tap'); start('practice'); }; $('#w-hint').onclick=hint; $('#w-stats').onclick=stats;
+  document.addEventListener('keydown',e=>{ if(current!=='wordle'||!$('#modal').hidden) return; if(e.key==='Enter'||e.key==='Backspace'||/^[a-zA-Z]$/.test(e.key)){ e.preventDefault(); press(e.key); } });
+  window.addEventListener('resize',()=>{ if(current==='wordle') { renderGrid(); } });
+  GAMES.wordle={ enter(){ start(S.wordle.daily[todayKey()]&&S.wordle.daily[todayKey()].done?'practice':'daily'); }, leave(){} };
+})();
+
+// ================= GAME 2 · SORT SIXTEEN (Connections-style) =================
+(function(){
+  const TIER=['var(--t0)','var(--t1)','var(--t2)','var(--t3)'];
+  const C = { puzzle:null, tiles:[], sel:new Set(), solved:[], mistakes:0, tried:new Set(), done:false };
+  const grid=$('#cn-grid'), solvedBox=$('#cn-solved');
+
+  function renderList(){ const list=$('#cn-list'); list.innerHTML=''; const pz=COURSE.connections.filter(inPaper);
+    if(!pz.length){ list.innerHTML='<p class="help">No puzzles for this paper yet.</p>'; return; }
+    pz.forEach(p=>{ const b=document.createElement('button'); b.className='row'; b.style.setProperty('--c',paperOf(p.p).col); const done=S.conn.solved[p.id];
+      b.innerHTML=`<span class="tag">${esc(paperOf(p.p).label.replace('Paper ','P').replace(' · ',' '))}</span><b>${esc(p.title)}</b>${done?`<span class="done">✓ solved${done.perfect?' · perfect':''}</span>`:'<span class="best">4 groups</span>'}`;
+      b.onclick=()=>{ blip('tap'); startPuzzle(p); }; list.appendChild(b); }); }
+
+  function startPuzzle(p){ C.puzzle=p; C.sel=new Set(); C.solved=[]; C.mistakes=0; C.tried=new Set(); C.done=false;
+    C.tiles=shuffle(p.groups.flatMap((g,gi)=>g.items.map(t=>({t,g:gi}))));
+    $('#cn-pick').hidden=true; $('#cn-board').hidden=false; $('#cn-title').textContent=p.title; $('#cn-sub').textContent=paperOf(p.p).label+' · four groups of four';
+    solvedBox.innerHTML=''; renderGrid(); renderLives(); }
+  function renderGrid(){ grid.innerHTML=''; C.tiles.forEach((tile,i)=>{ const b=document.createElement('button'); b.className='tile'+(tile.t.length>14?' long':'')+(tile.t.length>20?' xlong':'')+(C.sel.has(i)?' sel':''); b.textContent=tile.t; b.onclick=()=>toggle(i,b); grid.appendChild(b); }); $('#cn-submit').disabled=C.sel.size!==4; }
+  function toggle(i,b){ if(C.done) return; if(C.sel.has(i)){ C.sel.delete(i); b.classList.remove('sel'); } else { if(C.sel.size>=4) return; C.sel.add(i); b.classList.add('sel'); } blip('tap'); $('#cn-submit').disabled=C.sel.size!==4; }
+  function renderLives(){ $$('#cn-lives i').forEach((d,i)=>d.classList.toggle('off',i<C.mistakes)); }
+
+  function submit(){ if(C.sel.size!==4||C.done) return; const idx=Array.from(C.sel); const key=idx.map(i=>C.tiles[i].t).sort().join('|');
+    if(C.tried.has(key)){ toast('Already tried that'); blip('bad'); return; } C.tried.add(key);
+    const counts={}; idx.forEach(i=>{ const g=C.tiles[i].g; counts[g]=(counts[g]||0)+1; }); const best=Math.max(...Object.values(counts));
+    if(best===4){ const g=C.tiles[idx[0]].g; solveGroup(g); return; }
+    C.mistakes++; renderLives(); blip('bad'); const tiles=$$('.tile.sel'); tiles.forEach(t=>{ t.classList.remove('bounce'); void t.offsetWidth; t.classList.add('bounce'); });
+    if(C.mistakes>=4){ lose(); return; }
+    toast(best===3?'One away…':'Not a group', best===3?'gold':'bad'); }
+
+  function solveGroup(g){ const gr=C.puzzle.groups[g]; C.solved.push(g); C.tiles=C.tiles.filter(t=>t.g!==g); C.sel=new Set(); blip('ok');
+    const div=document.createElement('div'); div.className='cn-group'; div.style.background=TIER[g]; div.innerHTML=`<b>${esc(gr.name)}</b><span>${gr.items.map(esc).join(', ')}</span><small>${esc(gr.why)}</small>`; solvedBox.appendChild(div); renderGrid();
+    if(C.solved.length===4) win(); }
+  function win(){ C.done=true; bumpPlayed(); const perfect=C.mistakes===0; S.conn.solved[C.puzzle.id]={perfect, when:todayKey()}; save(); const xp=60+(4-C.mistakes)*15; blip('win'); confetti(); setTimeout(()=>addXP(xp,'Sort Sixteen'),300);
+    const next=COURSE.connections.filter(inPaper).find(p=>!S.conn.solved[p.id]);
+    setTimeout(()=>modal({title:perfect?'Perfect!':C.mistakes===1?'Excellent':'Solved', html:`<div>You found all four groups in <b>${C.puzzle.title}</b> with ${C.mistakes} mistake${C.mistakes===1?'':'s'}.</div><div class="why">Revision move: cover the answers and say <em>why</em> each group belongs together — that "why" is the AO1 point in an exam answer.</div>`,
+      acts:[{label:'All puzzles',ghost:true,fn:backToList}, next?{label:'Next puzzle ▶',gold:true,fn:()=>startPuzzle(next)}:{label:'Back to arcade',fn:()=>go('hub')}]}),700); }
+  function lose(){ C.done=true; bumpPlayed(); save(); blip('lose'); const remaining=C.puzzle.groups.map((g,i)=>i).filter(i=>!C.solved.includes(i));
+    remaining.forEach(g=>{ const gr=C.puzzle.groups[g]; const div=document.createElement('div'); div.className='cn-group'; div.style.background=TIER[g]; div.style.opacity='.85'; div.innerHTML=`<b>${esc(gr.name)}</b><span>${gr.items.map(esc).join(', ')}</span><small>${esc(gr.why)}</small>`; solvedBox.appendChild(div); });
+    C.tiles=[]; renderGrid();
+    setTimeout(()=>modal({title:'Out of mistakes', html:`<div>Here are the groups you were looking for — read the "why" lines, then try again.</div>`, acts:[{label:'All puzzles',ghost:true,fn:backToList},{label:'Try again',gold:true,fn:()=>startPuzzle(C.puzzle)}]}),500); }
+  function backToList(){ $('#cn-board').hidden=true; $('#cn-pick').hidden=false; renderList(); }
+
+  $('#cn-submit').onclick=submit; $('#cn-shuffle').onclick=()=>{ if(C.done) return; const selT=new Set(Array.from(C.sel).map(i=>C.tiles[i].t)); C.tiles=shuffle(C.tiles); C.sel=new Set(C.tiles.map((t,i)=>selT.has(t.t)?i:-1).filter(i=>i>=0)); renderGrid(); blip('tap'); };
+  $('#cn-clear').onclick=()=>{ C.sel=new Set(); renderGrid(); }; $('#cn-back').onclick=backToList;
+  $('#cn-random').onclick=()=>{ const pz=COURSE.connections.filter(inPaper); const un=pz.filter(p=>!S.conn.solved[p.id]); const p=pick(un.length?un:pz); if(p){ blip('tap'); startPuzzle(p); } };
+  GAMES.connect={ enter(){ $('#cn-board').hidden=true; $('#cn-pick').hidden=false; renderList(); }, leave(){} };
+})();
+
+// ================= GAME 3 · CONCEPT DROP (Tetris-style) =================
+(function(){
+  const LW=520, LH=440, COLS=4, ROWS=8, colW=LW/COLS, rowH=LH/ROWS;
+  const cv=$('#dr-canvas'), ctx=cv.getContext('2d');
+  const D = { set:null, running:false, paused:false, over:false, score:0, level:1, streak:0, correct:0, stacks:[[],[],[],[]], block:null, queue:[], next:null, fx:[], soft:false, last:0, raf:0, flashCol:-1, flashKind:'', flashT:0 };
+
+  function fitCanvas(){ const dpr=Math.min(2,window.devicePixelRatio||1); cv.width=LW*dpr; cv.height=LH*dpr; cv.style.height='auto'; ctx.setTransform(dpr,0,0,dpr,0,0); }
+
+  function renderList(){ const list=$('#dr-list'); list.innerHTML=''; const sets=COURSE.drop.filter(inPaper); if(!sets.length){ list.innerHTML='<p class="help">No sets for this paper yet.</p>'; return; }
+    sets.forEach(s=>{ const b=document.createElement('button'); b.className='row'; b.style.setProperty('--c',paperOf(s.p).col); const best=S.drop.best[s.id]||0;
+      b.innerHTML=`<span class="tag">${esc(paperOf(s.p).label.replace('Paper ','P').replace(' · ',' '))}</span><b>${esc(s.title)}<br><small style="font-weight:400;color:var(--muted)">${s.cols.map(esc).join(' · ')}</small></b><span class="best">${best?'Best '+best:s.items.length+' concepts'}</span>`;
+      b.onclick=()=>{ blip('tap'); startSet(s); }; list.appendChild(b); }); }
+
+  function startSet(s){ D.set=s; D.score=0; D.level=1; D.streak=0; D.correct=0; D.stacks=[[],[],[],[]]; D.fx=[]; D.over=false; D.paused=false; D.queue=[]; D.block=null; D.next=null;
+    $('#dr-pick').hidden=true; $('#dr-game').hidden=false; $('#dr-title').textContent=s.title; const cols=$('#dr-cols'); cols.innerHTML=''; s.cols.forEach(c=>{ const d=document.createElement('div'); d.textContent=c; cols.appendChild(d); });
+    fitCanvas(); hud(); spawn(); D.running=true; D.last=performance.now(); cancelAnimationFrame(D.raf); D.raf=requestAnimationFrame(loop); }
+  function hud(){ $('#dr-score').textContent=D.score; $('#dr-level').textContent=D.level; $('#dr-streak').textContent=D.streak; $('#dr-next').textContent=D.next?D.next[0]:'—'; $('#dr-pause').textContent=D.paused?'Resume':'Pause'; }
+  function draw1(){ if(!D.queue.length){ let q=shuffle(D.set.items); if(D.block&&q[0]&&q[0][0]===D.block.label) q.push(q.shift()); D.queue=q; } return D.queue.shift(); }
+  function spawn(){ const it=D.next||draw1(); D.next=draw1(); D.block={label:it[0], c:it[1], col:1+Math.floor(Math.random()*2), y:-rowH, landed:false}; hud(); }
+  function floorY(col){ return LH-D.stacks[col].length*rowH; }
+  function speed(){ return (D.soft?380:0) + 42 + (D.level-1)*16; }
+
+  function move(dir){ if(!D.block||D.over||D.paused) return; const n=D.block.col+dir; if(n<0||n>=COLS) return; if(D.block.y+rowH>floorY(n)) { blip('bad'); return; } D.block.col=n; blip('tap'); }
+  function hardDrop(){ if(!D.block||D.over||D.paused) return; D.block.y=floorY(D.block.col)-rowH; land(); }
+  function land(){ const b=D.block; if(!b) return; const col=b.col; b.landed=true; const ok=col===b.c; D.flashCol=col; D.flashKind=ok?'hit':'miss'; D.flashT=0.5;
+    if(ok){ D.correct++; D.streak++; const pts=10*D.level+(D.streak>=3?5:0); D.score+=pts; blip('ok'); addFx('+'+pts, col, floorY(col)-rowH/2, '#3C7A5A'); burst(col, floorY(col)-rowH/2);
+      if(D.streak%5===0){ const tallest=D.stacks.reduce((m,s,i)=>s.length>D.stacks[m].length?i:m,0); if(D.stacks[tallest].length){ D.stacks[tallest].pop(); toast('Streak ×5 — one mistake cleared','good'); blip('pop'); } }
+      if(D.correct%8===0){ D.level++; toast('Level '+D.level+' — faster!','gold'); } }
+    else { D.streak=0; D.stacks[col].push({label:b.label, c:b.c}); blip('land'); toast('✗ '+b.label+' → '+D.set.cols[b.c],'bad',2200); if(D.stacks[col].length>=ROWS){ gameOver(); return; } }
+    D.block=null; hud(); setTimeout(()=>{ if(!D.over&&D.running) spawn(); }, 140); }
+  function addFx(text,col,y,color){ D.fx.push({text,x:col*colW+colW/2,y,vy:-40,life:1,color}); }
+  function burst(col,y){ for(let i=0;i<14;i++) D.fx.push({p:true,x:col*colW+colW/2,y,vx:(Math.random()-.5)*220,vy:-Math.random()*160-40,life:.8,color:Math.random()<.5?'#C9A227':'#12294D'}); }
+
+  function gameOver(){ D.over=true; D.running=false; bumpPlayed(); const best=S.drop.best[D.set.id]||0; const nb=Math.max(best,D.score); S.drop.best[D.set.id]=nb; save(); blip('lose'); draw();
+    const xp=Math.min(200,Math.round(D.score/4)); if(xp) setTimeout(()=>addXP(xp,'Concept Drop'),300);
+    const wrong=D.stacks.flat(); const list=wrong.slice(-6).map(w=>`<li><b>${esc(w.label)}</b> → ${esc(D.set.cols[w.c])}</li>`).join('');
+    setTimeout(()=>modal({title:'The well is full', html:`<div class="kv"><span>Score</span><b>${D.score}</b><span>Best</span><b>${nb}${D.score>=nb&&D.score>best?' · new best!':''}</b><span>Level</span><b>${D.level}</b><span>Correct drops</span><b>${D.correct}</b></div>${wrong.length?`<div class="why"><b>Where those belonged:</b><ul style="margin:6px 0 0;padding-left:18px">${list}</ul></div>`:''}`,
+      acts:[{label:'All sets',ghost:true,fn:backToList},{label:'Play again',gold:true,fn:()=>startSet(D.set)}]}),600); }
+  function backToList(){ D.running=false; cancelAnimationFrame(D.raf); $('#dr-game').hidden=true; $('#dr-pick').hidden=false; renderList(); }
+  function togglePause(force){ if(D.over) return; D.paused=force!==undefined?force:!D.paused; hud(); if(!D.paused){ D.last=performance.now(); cancelAnimationFrame(D.raf); D.raf=requestAnimationFrame(loop); } else draw(); }
+
+  function loop(t){ if(!D.running) return; const dt=Math.min(0.05,(t-D.last)/1000); D.last=t; if(!D.paused) step(dt); draw(); if(!D.paused) D.raf=requestAnimationFrame(loop); }
+  function step(dt){ const b=D.block; if(b&&!b.landed){ b.y+=speed()*dt; if(b.y+rowH>=floorY(b.col)){ b.y=floorY(b.col)-rowH; land(); } }
+    D.fx=D.fx.filter(f=>f.life>0); for(const f of D.fx){ f.life-=dt*(f.p?1.3:0.9); if(f.p){ f.vy+=600*dt; f.x+=f.vx*dt; f.y+=f.vy*dt; } else f.y+=f.vy*dt; }
+    if(D.flashT>0) D.flashT-=dt; const hs=$$('#dr-cols div'); hs.forEach((h,i)=>{ h.className=(i===D.flashCol&&D.flashT>0)?D.flashKind:''; }); }
+
+  function wrap(text,maxW){ const words=text.split(' '); const lines=[]; let cur=''; for(const w of words){ const t=cur?cur+' '+w:w; if(ctx.measureText(t).width<=maxW||!cur) cur=t; else { lines.push(cur); cur=w; } } if(cur) lines.push(cur); return lines; }
+  function drawBlock(x,y,label,fill,stroke,textCol,sub){ const w=colW-8,h=rowH-6; ctx.fillStyle=fill; ctx.strokeStyle=stroke; ctx.lineWidth=2; roundRect(x+4,y+3,w,h,8); ctx.fill(); ctx.stroke();
+    let size=sub?13:15; let lines; do{ ctx.font='700 '+size+'px '+getComputedStyle(document.body).fontFamily; lines=wrap(label,w-12); size--; } while((lines.length>2||lines.some(l=>ctx.measureText(l).width>w-12))&&size>9);
+    ctx.fillStyle=textCol; ctx.textAlign='center'; ctx.textBaseline='middle'; const lh=size+3; const startY=y+3+h/2-(lines.length-1)*lh/2-(sub?6:0); lines.forEach((l,i)=>ctx.fillText(l,x+colW/2,startY+i*lh));
+    if(sub){ ctx.font='400 10px '+getComputedStyle(document.body).fontFamily; ctx.fillStyle='#B0413E'; ctx.fillText('→ '+sub, x+colW/2, y+3+h-9); } }
+  function roundRect(x,y,w,h,r){ ctx.beginPath(); ctx.moveTo(x+r,y); ctx.arcTo(x+w,y,x+w,y+h,r); ctx.arcTo(x+w,y+h,x,y+h,r); ctx.arcTo(x,y+h,x,y,r); ctx.arcTo(x,y,x+w,y,r); ctx.closePath(); }
+  function draw(){ ctx.clearRect(0,0,LW,LH); ctx.fillStyle='#FFFFFF'; ctx.fillRect(0,0,LW,LH);
+    ctx.strokeStyle='#F1EADA'; ctx.lineWidth=1; for(let r=1;r<ROWS;r++){ ctx.beginPath(); ctx.moveTo(0,r*rowH); ctx.lineTo(LW,r*rowH); ctx.stroke(); }
+    for(let c=1;c<COLS;c++){ ctx.beginPath(); ctx.moveTo(c*colW,0); ctx.lineTo(c*colW,LH); ctx.strokeStyle='#E6DCC6'; ctx.stroke(); }
+    if(D.flashT>0&&D.flashCol>=0){ ctx.fillStyle=D.flashKind==='hit'?'rgba(60,122,90,'+(D.flashT*0.35)+')':'rgba(176,65,62,'+(D.flashT*0.35)+')'; ctx.fillRect(D.flashCol*colW,0,colW,LH); }
+    D.stacks.forEach((st,c)=>st.forEach((blk,i)=>drawBlock(c*colW, LH-(i+1)*rowH, blk.label, '#F6E3E2', '#B0413E', '#12294D', D.set.cols[blk.c])));
+    const b=D.block; if(b&&!b.landed){ const gy=floorY(b.col)-rowH; ctx.setLineDash([6,5]); ctx.strokeStyle='#C9A227'; ctx.lineWidth=2; roundRect(b.col*colW+4,gy+3,colW-8,rowH-6,8); ctx.stroke(); ctx.setLineDash([]); drawBlock(b.col*colW, b.y, b.label, '#E4C25A', '#12294D', '#12294D'); }
+    for(const f of D.fx){ ctx.globalAlpha=Math.max(0,Math.min(1,f.life)); if(f.p){ ctx.fillStyle=f.color; ctx.fillRect(f.x-4,f.y-4,8,8); } else { ctx.font='900 20px '+getComputedStyle(document.body).fontFamily; ctx.fillStyle=f.color; ctx.textAlign='center'; ctx.fillText(f.text,f.x,f.y); } ctx.globalAlpha=1; }
+    if(D.paused&&!D.over){ ctx.fillStyle='rgba(18,41,77,.55)'; ctx.fillRect(0,0,LW,LH); ctx.fillStyle='#fff'; ctx.font='900 30px '+getComputedStyle(document.body).fontFamily; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText('Paused',LW/2,LH/2-14); ctx.font='400 15px '+getComputedStyle(document.body).fontFamily; ctx.fillText('Press Resume or P',LW/2,LH/2+18); }
+    if(D.over){ ctx.fillStyle='rgba(176,65,62,.18)'; ctx.fillRect(0,0,LW,LH); } }
+
+  // controls
+  $$('.dr-ctl button').forEach(b=>{ const k=b.dataset.k; if(k==='down'){ b.addEventListener('pointerdown',e=>{ e.preventDefault(); D.soft=true; }); ['pointerup','pointerleave','pointercancel'].forEach(ev=>b.addEventListener(ev,()=>D.soft=false)); }
+    else b.addEventListener('click',()=>{ if(k==='left') move(-1); else if(k==='right') move(1); else if(k==='drop') hardDrop(); }); });
+  document.addEventListener('keydown',e=>{ if(current!=='drop'||$('#dr-game').hidden||!$('#modal').hidden) return; if(e.key==='ArrowLeft'){ e.preventDefault(); move(-1); } else if(e.key==='ArrowRight'){ e.preventDefault(); move(1); } else if(e.key==='ArrowDown'){ e.preventDefault(); D.soft=true; } else if(e.key===' '||e.key==='ArrowUp'){ e.preventDefault(); hardDrop(); } else if(e.key==='p'||e.key==='P'){ togglePause(); } });
+  document.addEventListener('keyup',e=>{ if(e.key==='ArrowDown') D.soft=false; });
+  let px=0,py=0,pt=0; cv.addEventListener('pointerdown',e=>{ px=e.clientX; py=e.clientY; pt=Date.now(); cv.setPointerCapture(e.pointerId); });
+  cv.addEventListener('pointerup',e=>{ const dx=e.clientX-px, dy=e.clientY-py; if(D.paused){ togglePause(false); return; } if(Math.abs(dx)>28&&Math.abs(dx)>Math.abs(dy)) move(dx>0?1:-1); else if(dy>40) hardDrop(); else if(Date.now()-pt<250){ const r=cv.getBoundingClientRect(); move(e.clientX-r.left<r.width/2?-1:1); } });
+  $('#dr-pause').onclick=()=>togglePause();
+  window.addEventListener('resize',()=>{ if(current==='drop'&&!$('#dr-game').hidden){ fitCanvas(); draw(); } });
+  GAMES.drop={ _D:D, enter(){ $('#dr-game').hidden=true; $('#dr-pick').hidden=false; renderList(); }, leave(){ if(D.running&&!D.over) togglePause(true); D.running=false; cancelAnimationFrame(D.raf); } };
+})();
+
+// ================= GAME 4 · KNOCK-OUT (slingshot) =================
+(function(){
+  const LW=720, LH=380, GROUND=334, G=880, R=13, ANCHOR={x:120,y:268}, MAXPULL=92, K=9.5;
+  const COLX=[360,480,600], CW=108, CH=48, LAYOUT=[3,3,2];
+  const cv=$('#ko-canvas'), ctx=cv.getContext('2d');
+  const KO = { round:null, crates:[], order:[], bird:null, state:'rest', shots:7, hearts:3, score:0, left:4, fx:[], hitSet:new Set(), raf:0, running:false, done:false, last:0, drag:null, flyT:0 };
+
+  function fitCanvas(){ const dpr=Math.min(2,window.devicePixelRatio||1); cv.width=LW*dpr; cv.height=LH*dpr; cv.style.height='auto'; ctx.setTransform(dpr,0,0,dpr,0,0); }
+  const font=(w,s)=>w+' '+s+'px '+getComputedStyle(document.body).fontFamily;
+
+  function renderList(){ const list=$('#ko-list'); list.innerHTML=''; const rs=COURSE.knockout.filter(inPaper); if(!rs.length){ list.innerHTML='<p class="help">No rounds for this paper yet.</p>'; return; }
+    rs.forEach(r=>{ const b=document.createElement('button'); b.className='row'; b.style.setProperty('--c',paperOf(r.p).col); const d=S.knock.done[r.id];
+      b.innerHTML=`<span class="tag">${esc(paperOf(r.p).label.replace('Paper ','P').replace(' · ',' '))}</span><b>${esc(r.title)}</b>${d?`<span class="done">✓ cleared · ${d.score}</span>`:'<span class="best">8 statements</span>'}`;
+      b.onclick=()=>{ blip('tap'); startRound(r); }; list.appendChild(b); }); }
+
+  function startRound(r){ KO.round=r; KO.order=shuffle(r.items.map((it,i)=>({...it,i}))); KO.shots=7; KO.hearts=3; KO.score=0; KO.fx=[]; KO.done=false; KO.hitSet=new Set(); KO.state='rest';
+    KO.crates=[]; let k=0; LAYOUT.forEach((n,c)=>{ for(let j=0;j<n;j++){ const st=KO.order[k]; KO.crates.push({n:k+1, st, col:c, x:COLX[c], y:GROUND-CH*(j+1), w:CW, h:CH, alive:true, vy:0, flash:0, shake:0}); k++; } });
+    KO.left=KO.order.filter(s=>s.f).length; resetBird();
+    $('#ko-pick').hidden=true; $('#ko-game').hidden=false; $('#ko-title').textContent=r.title; renderItems(); hud(); fitCanvas(); KO.running=true; KO.last=performance.now(); cancelAnimationFrame(KO.raf); KO.raf=requestAnimationFrame(loop); }
+  function resetBird(){ KO.bird={x:ANCHOR.x,y:ANCHOR.y,vx:0,vy:0}; KO.state='rest'; KO.spent=false; KO.hitSet=new Set(); KO.flyT=0; }
+  function hud(){ $('#ko-shots').textContent=KO.shots; $('#ko-score').textContent=KO.score; $('#ko-left').textContent=KO.left; $('#ko-hearts').textContent='♥'.repeat(KO.hearts)+'♡'.repeat(3-KO.hearts); }
+  function renderItems(){ const box=$('#ko-items'); box.innerHTML=''; KO.order.forEach((st,k)=>{ const d=document.createElement('div'); d.className='ko-item'; d.id='ko-i'+k; d.innerHTML=`<span class="n">${k+1}</span><div>${esc(st.s)}<small></small></div>`; box.appendChild(d); }); }
+  function markItem(k,cls,note){ const d=$('#ko-i'+k); if(!d) return; d.classList.add(cls); if(note) d.querySelector('small').textContent=note; }
+
+  // ---- pointer ----
+  function toLocal(e){ const r=cv.getBoundingClientRect(); return {x:(e.clientX-r.left)*(LW/r.width), y:(e.clientY-r.top)*(LH/r.height)}; }
+  cv.addEventListener('pointerdown',e=>{ if(KO.done||KO.state!=='rest') return; const p=toLocal(e); const d=Math.hypot(p.x-KO.bird.x,p.y-KO.bird.y); if(d<48){ KO.state='drag'; cv.setPointerCapture(e.pointerId); e.preventDefault(); dragTo(p); } });
+  cv.addEventListener('pointermove',e=>{ if(KO.state!=='drag') return; dragTo(toLocal(e)); });
+  function dragTo(p){ let dx=p.x-ANCHOR.x, dy=p.y-ANCHOR.y; const d=Math.hypot(dx,dy); if(d>MAXPULL){ dx*=MAXPULL/d; dy*=MAXPULL/d; } KO.bird.x=ANCHOR.x+dx; KO.bird.y=ANCHOR.y+dy; }
+  function release(){ if(KO.state!=='drag') return; const dx=ANCHOR.x-KO.bird.x, dy=ANCHOR.y-KO.bird.y; if(Math.hypot(dx,dy)<14){ KO.bird.x=ANCHOR.x; KO.bird.y=ANCHOR.y; KO.state='rest'; return; }
+    KO.bird.vx=dx*K; KO.bird.vy=dy*K; KO.state='fly'; KO.shots--; KO.flyT=0; hud(); blip('launch'); }
+  ['pointerup','pointercancel'].forEach(ev=>cv.addEventListener(ev,release));
+  cv.addEventListener('pointerleave',()=>{ if(KO.state==='drag') release(); });
+
+  // ---- loop ----
+  function loop(t){ if(!KO.running) return; const dt=Math.min(0.04,(t-KO.last)/1000); KO.last=t; step(dt); draw(); KO.raf=requestAnimationFrame(loop); }
+  function step(dt){
+    if(KO.state==='fly'){ const b=KO.bird; const n=4, h=dt/n; KO.flyT+=dt;
+      for(let i=0;i<n;i++){ b.vy+=G*h; b.x+=b.vx*h; b.y+=b.vy*h;
+        if(b.y+R>GROUND){ b.y=GROUND-R; b.vy=-b.vy*0.35; b.vx*=0.8; if(Math.abs(b.vy)<40) b.vy=0; }
+        if(!KO.spent) for(const c of KO.crates){ if(!c.alive||KO.hitSet.has(c)) continue; const cx=Math.max(c.x,Math.min(b.x,c.x+c.w)), cy=Math.max(c.y,Math.min(b.y,c.y+c.h)); const dx=b.x-cx, dy=b.y-cy; if(dx*dx+dy*dy<R*R){ hitCrate(c,dx,dy); } } }
+      const slow=Math.hypot(b.vx,b.vy)<30&&b.y>=GROUND-R-1; if(b.x>LW+40||b.x<-40||slow||KO.flyT>6) endShot(); }
+    // crate gravity (settle by column)
+    for(let c=0;c<COLX.length;c++){ const col=KO.crates.filter(k=>k.col===c&&k.alive).sort((a,b)=>b.y-a.y); col.forEach((k,idx)=>{ const target=GROUND-CH*(idx+1); if(k.y<target){ k.vy+=G*dt; k.y=Math.min(target,k.y+k.vy*dt); if(k.y>=target){ k.vy=0; blip('land'); } } }); }
+    for(const c of KO.crates){ if(c.flash>0) c.flash-=dt; if(c.shake>0) c.shake-=dt; }
+    KO.fx=KO.fx.filter(f=>f.life>0); for(const f of KO.fx){ f.life-=dt*1.2; f.vy+=700*dt; f.x+=f.vx*dt; f.y+=f.vy*dt; f.r+=f.vr*dt; } }
+
+  function hitCrate(c,dx,dy){ const b=KO.bird; KO.hitSet.add(c); KO.spent=true;
+    if(c.st.f){ c.alive=false; KO.score+=100; KO.left--; blip('ok'); shatter(c); markItem(c.n-1,'false-hit','✓ Knocked out — '+c.st.why); b.vx*=0.3; b.vy=Math.min(b.vy,0)*0.3-60; hud(); toast('✓ False — knocked out','good'); }
+    else { KO.hearts--; c.flash=0.6; c.shake=0.4; blip('hit'); markItem(c.n-1,'true-hit','✗ That one is true — it should stay standing'); hud(); toast('✗ That statement is TRUE','bad');
+      const d=Math.hypot(dx,dy)||1, nx=dx/d, ny=dy/d; const dot=b.vx*nx+b.vy*ny; b.vx=(b.vx-2*dot*nx)*0.45; b.vy=(b.vy-2*dot*ny)*0.45; b.x+=nx*(R+2); b.y+=ny*(R+2); } }
+  function shatter(c){ for(let i=0;i<16;i++) KO.fx.push({x:c.x+Math.random()*c.w,y:c.y+Math.random()*c.h,vx:(Math.random()-.5)*360,vy:-Math.random()*260,life:1,r:Math.random()*6,vr:(Math.random()-.5)*8,s:6+Math.random()*8,col:Math.random()<.5?'#FBF7EE':'#C9A227'}); }
+
+  function endShot(){ if(KO.done) return; if(KO.left<=0){ win(); return; } if(KO.hearts<=0){ fail('Out of lives'); return; } if(KO.shots<=0){ fail('Out of shots'); return; } resetBird(); }
+  function win(){ KO.done=true; KO.state='done'; bumpPlayed(); const bonus=KO.shots*50+KO.hearts*30; KO.score+=bonus; const prev=S.knock.done[KO.round.id]; S.knock.done[KO.round.id]={score:Math.max(KO.score,prev?prev.score:0)}; save(); hud(); blip('win'); confetti();
+    const xp=Math.min(160,Math.round(KO.score/4)); setTimeout(()=>addXP(xp,'Knock-out'),300);
+    const next=COURSE.knockout.filter(inPaper).find(r=>!S.knock.done[r.id]);
+    setTimeout(()=>modal({title:'Tower cleared', html:`<div class="kv"><span>Score</span><b>${KO.score}</b><span>Bonus</span><b>+${bonus} (${KO.shots} shot${KO.shots===1?'':'s'} spare, ${KO.hearts} ${KO.hearts===1?'life':'lives'} left)</b></div><div class="why">Every false statement you hit is a misattribution or a reversal an examiner looks for. Read the corrections in green below before you move on.</div>`,
+      acts:[{label:'All rounds',ghost:true,fn:backToList}, next?{label:'Next round ▶',gold:true,fn:()=>startRound(next)}:{label:'Back to arcade',fn:()=>go('hub')}]}),700); }
+  function fail(reason){ KO.done=true; KO.state='done'; bumpPlayed(); save(); blip('lose'); KO.order.forEach((st,k)=>{ const c=KO.crates.find(x=>x.n===k+1); if(st.f&&c.alive) markItem(k,'reveal','This one was false — '+st.why); });
+    setTimeout(()=>modal({title:reason, html:`<div>${KO.left} false statement${KO.left===1?'':'s'} still standing. They are marked in gold below with the correction — read them, then try the tower again.</div>`, acts:[{label:'All rounds',ghost:true,fn:backToList},{label:'Try again',gold:true,fn:()=>startRound(KO.round)}]}),500); }
+  function backToList(){ KO.running=false; cancelAnimationFrame(KO.raf); $('#ko-game').hidden=true; $('#ko-pick').hidden=false; renderList(); }
+
+  // ---- draw ----
+  function roundRect(x,y,w,h,r){ ctx.beginPath(); ctx.moveTo(x+r,y); ctx.arcTo(x+w,y,x+w,y+h,r); ctx.arcTo(x+w,y+h,x,y+h,r); ctx.arcTo(x,y+h,x,y,r); ctx.arcTo(x,y,x+w,y,r); ctx.closePath(); }
+  function draw(){ ctx.clearRect(0,0,LW,LH);
+    // hills + ground
+    ctx.fillStyle='#E3ECE4'; ctx.beginPath(); ctx.ellipse(220,GROUND+10,260,70,0,Math.PI,0); ctx.fill(); ctx.fillStyle='#D9E6DA'; ctx.beginPath(); ctx.ellipse(560,GROUND+14,300,60,0,Math.PI,0); ctx.fill();
+    ctx.fillStyle='#CFC3A6'; ctx.fillRect(0,GROUND,LW,LH-GROUND); ctx.fillStyle='#8FA36B'; ctx.fillRect(0,GROUND,LW,6);
+    // slingshot
+    ctx.strokeStyle='#6B4A2B'; ctx.lineWidth=9; ctx.lineCap='round'; ctx.beginPath(); ctx.moveTo(120,GROUND); ctx.lineTo(120,290); ctx.moveTo(120,292); ctx.lineTo(104,262); ctx.moveTo(120,292); ctx.lineTo(136,262); ctx.stroke();
+    const b=KO.bird; if(KO.state==='drag'||KO.state==='rest'){ ctx.strokeStyle='#3B2A1A'; ctx.lineWidth=3; ctx.beginPath(); ctx.moveTo(104,262); ctx.lineTo(b.x,b.y); ctx.moveTo(136,262); ctx.lineTo(b.x,b.y); ctx.stroke(); }
+    // trajectory preview
+    if(KO.state==='drag'){ let px=b.x,py=b.y,vx=(ANCHOR.x-b.x)*K,vy=(ANCHOR.y-b.y)*K; ctx.fillStyle='rgba(18,41,77,.35)'; for(let i=0;i<22;i++){ vy+=G*0.045; px+=vx*0.045; py+=vy*0.045; if(py>GROUND) break; ctx.beginPath(); ctx.arc(px,py,3,0,6.28); ctx.fill(); } }
+    // crates
+    for(const c of KO.crates){ if(!c.alive) continue; const sx=c.shake>0?Math.sin(c.shake*60)*3:0; ctx.fillStyle=c.flash>0?'#F3C7C4':'#FBF7EE'; ctx.strokeStyle=c.flash>0?'#B0413E':'#12294D'; ctx.lineWidth=2; roundRect(c.x+sx,c.y,c.w,c.h,6); ctx.fill(); ctx.stroke();
+      ctx.fillStyle='#12294D'; ctx.beginPath(); ctx.arc(c.x+sx+18,c.y+c.h/2,13,0,6.28); ctx.fill(); ctx.fillStyle='#fff'; ctx.font=font('700',15); ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText(c.n,c.x+sx+18,c.y+c.h/2+1);
+      ctx.fillStyle='#16213A'; ctx.font=font('700',11); ctx.textAlign='left'; const words=c.st.s.replace(/[.]+$/,'').split(' '); let line1='',line2='',full=false; for(const w of words){ if(!line2&&ctx.measureText((line1+' '+w).trim()).width<c.w-42) line1=(line1+' '+w).trim(); else if(ctx.measureText((line2+' '+w+'…').trim()).width<c.w-42) line2=(line2+' '+w).trim(); else { full=true; break; } } if(full) line2=line2+'…';
+      ctx.fillText(line1,c.x+sx+36,c.y+c.h/2-(line2?7:0)); if(line2) ctx.fillText(line2,c.x+sx+36,c.y+c.h/2+7); }
+    // shards
+    for(const f of KO.fx){ ctx.save(); ctx.globalAlpha=Math.max(0,f.life); ctx.translate(f.x,f.y); ctx.rotate(f.r); ctx.fillStyle=f.col; ctx.strokeStyle='#12294D'; ctx.lineWidth=1; ctx.fillRect(-f.s/2,-f.s/2,f.s,f.s); ctx.strokeRect(-f.s/2,-f.s/2,f.s,f.s); ctx.restore(); }
+    // bird
+    if(KO.state!=='done'){ ctx.fillStyle='#E4C25A'; ctx.strokeStyle='#12294D'; ctx.lineWidth=2.5; ctx.beginPath(); ctx.arc(b.x,b.y,R,0,6.28); ctx.fill(); ctx.stroke(); ctx.fillStyle='#12294D'; ctx.beginPath(); ctx.arc(b.x+4,b.y-3,2.4,0,6.28); ctx.arc(b.x-3,b.y-3,2.4,0,6.28); ctx.fill(); ctx.lineWidth=1.8; ctx.beginPath(); ctx.arc(b.x+1,b.y+3,4,0.15*Math.PI,0.85*Math.PI); ctx.stroke(); }
+    // prompt
+    if(KO.state==='rest'&&!KO.done){ ctx.fillStyle='rgba(18,41,77,.6)'; ctx.font=font('700',13); ctx.textAlign='left'; ctx.textBaseline='alphabetic'; ctx.fillText('← pull back and release',150,240); } }
+
+  $('#ko-retry').onclick=()=>{ blip('tap'); startRound(KO.round); };
+  window.addEventListener('resize',()=>{ if(current==='knock'&&!$('#ko-game').hidden){ fitCanvas(); draw(); } });
+  GAMES.knock={ _K:KO, enter(){ $('#ko-game').hidden=true; $('#ko-pick').hidden=false; renderList(); }, leave(){ KO.running=false; cancelAnimationFrame(KO.raf); } };
+})();
+
+</script>
+
+</body>
+</html>
