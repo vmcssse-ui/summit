@@ -158,6 +158,16 @@ footer{background:var(--ink-2);color:#AFB4C6;padding:26px 0;font-size:.82rem;mar
 .taskbtn{background:var(--ink);border:1px solid var(--ink);border-radius:7px;color:#fff;font-family:inherit;
  font-size:.74rem;padding:3px 10px;cursor:pointer}
 .taskbtn:hover{background:#000}
+
+/* --- mobile fit: long resource filenames wrap inside their button (same rule the Year 11 pages use) --- */
+.res-btn{min-width:0}
+.res-btn .lb,.lb{min-width:0}
+.res-btn .lb em,.lb em{word-break:break-word;overflow-wrap:anywhere}
+/* grids must not insist on a column wider than a narrow phone */
+.shelf-g{grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr))}
+.pods{grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr))}
+.how3{grid-template-columns:repeat(auto-fit,minmax(min(250px,100%),1fr))}
+.legend{grid-template-columns:repeat(auto-fit,minmax(min(160px,100%),1fr))}
 </style></head><body><header class="hero"><div class="wrap"><div class="crest"><svg viewBox="0 0 64 64" aria-hidden="true"><rect x="2" y="2" width="60" height="60" rx="13" fill="#12141f" stroke="#F2B705" stroke-width="1.5"/><g fill="none" stroke="#EEF0F7" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M32 12 L14 46 h36 z"/><path d="M25 33 l7-8 7 8"/></g><circle cx="32" cy="20" r="3" fill="#F2B705"/></svg><div class="who">Edexcel GCSE (9&#8211;1) Religious Studies B &#183; Papers 1 &amp; 2<b>Harlington School &#183; Year 10 &#183; 2026&#8211;27</b></div></div><span class="pill">Supported edition</span><h1>Your year, week by week</h1><div class="tagline">listen &#183; read &#183; complete</div><p class="sub">Thirty-four weeks, from the first lesson in September to the last one in July. Find your week. Do the three things in it. That is all you have to do.</p><a class="homelink" href="year10.html">&#8592; All of Year 10</a><div class="heroband"><div><b>4</b><span>units before the exam</span></div><div><b>9</b><span>assessments</span></div><div><b>40</b><span>podcast episodes</span></div><div><b>52pp</b><span>Student Companion</span></div></div></div></header>
 <!--ARCADEBOX-->
 <section class="raq-wrap" aria-label="Revision arcade">
